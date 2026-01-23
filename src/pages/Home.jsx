@@ -20,6 +20,7 @@ function Home() {
 
       {/* ================= PAGE CONTENT ================= */}
       <div className="home-wrapper">
+
         {/* ================= HERO SECTION ================= */}
         <div className="container-fluid home-hero px-0">
           <div className="container">
@@ -67,6 +68,7 @@ function Home() {
         {/* ================= INFO SECTION ================= */}
         <div className="kalesh-info-section">
           <div className="container">
+
             {/* FULL WIDTH TOP IMAGE */}
             <div className="info-image-row mt-4 mt-md-5">
               <img
@@ -100,6 +102,7 @@ function Home() {
         <div className="container-fluid section-poll py-4 py-md-5">
           <div className="container">
             <div className="row align-items-center gy-5 gy-lg-0">
+
               {/* LEFT IMAGE COLUMN */}
               <div className="col-12 col-lg-6">
                 <div className="poll-image-container text-center">
@@ -135,6 +138,7 @@ function Home() {
         <div className="container-fluid section-profile py-4 py-md-5">
           <div className="container">
             <div className="row align-items-center gy-5 gy-lg-0">
+              
               {/* LEFT CONTENT COLUMN */}
               <div className="col-12 col-lg-6 order-2 order-lg-1">
                 <div className="profile-content px-3 px-lg-5">
