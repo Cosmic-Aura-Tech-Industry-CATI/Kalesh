@@ -56,12 +56,6 @@ function Navbar() {
             </Link>
           </li>
           <li className="nav-item">
-            <Link className="nav-link" to="/careers" onClick={handleLinkClick}>
-              Careers
-            </Link>
-          </li>
-
-          <li className="nav-item">
             <Link className="nav-link" to="/privacy" onClick={handleLinkClick}>
               Privacy
             </Link>
@@ -74,6 +68,11 @@ function Navbar() {
           <li className="nav-item">
             <Link className="nav-link" to="/faq" onClick={handleLinkClick}>
               FAQ
+            </Link>
+          </li>
+          <li className="nav-item">
+            <Link className="nav-link" to="/careers" onClick={handleLinkClick}>
+              Careers
             </Link>
           </li>
         </ul>

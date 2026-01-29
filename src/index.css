@@ -510,6 +510,69 @@ a:hover {
   flex-wrap: wrap;
 }
 
+/* Section Styles */
+.section-header {
+  margin-bottom: 3rem;
+}
+
+.section-title {
+  font-size: 2rem;
+  font-weight: 700;
+  margin-bottom: 1rem;
+  color: var(--text-primary);
+  position: relative;
+  display: inline-block;
+}
+
+.section-title::after {
+  content: '';
+  position: absolute;
+  bottom: -8px;
+  left: 0;
+  width: 60px;
+  height: 3px;
+  background: var(--primary-color);
+  border-radius: 2px;
+}
+
+.section-subtitle {
+  color: var(--text-secondary);
+  font-size: 1.125rem;
+  max-width: 600px;
+}
+
+/* Animated Gradient Hero Title */
+.hero-title {
+  font-size: clamp(2rem, 5vw, 3.5rem);
+  font-weight: 800;
+  line-height: 1.2;
+  background: linear-gradient(
+    90deg,
+    #ff6a00,
+    #ff8c00,
+    #ffd700,
+    #ff8c00,
+    #ff6a00
+  );
+  background-size: 300% 100%;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  margin-bottom: 1rem;
+  animation: gradientFlow 8s ease infinite;
+  letter-spacing: -0.5px;
+}
+
+@keyframes gradientFlow {
+  0%, 100% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+}
+
+
 /* MOBILE FIX */
 @media (max-width: 768px) {
   .hero-buttons {
@@ -727,9 +790,6 @@ a:hover {
     max-width: 260px;
   }
 }
-
-
-
 
 
 /* =========================
@@ -1494,36 +1554,7 @@ a:hover {
 }
 
 
-/* Animated Gradient Hero Title */
-.hero-title {
-  font-size: clamp(2rem, 5vw, 3.5rem);
-  font-weight: 800;
-  line-height: 1.2;
-  background: linear-gradient(
-    90deg,
-    #ff6a00,
-    #ff8c00,
-    #ffd700,
-    #ff8c00,
-    #ff6a00
-  );
-  background-size: 300% 100%;
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-  margin-bottom: 1rem;
-  animation: gradientFlow 8s ease infinite;
-  letter-spacing: -0.5px;
-}
 
-@keyframes gradientFlow {
-  0%, 100% {
-    background-position: 0% 50%;
-  }
-  50% {
-    background-position: 100% 50%;
-  }
-}
 
 
 /* ContactUs.css - Futuristic Black Theme */
@@ -1644,36 +1675,7 @@ a:hover {
   line-height: 1.6;
 }
 
-/* Section Styles */
-.section-header {
-  margin-bottom: 3rem;
-}
 
-.section-title {
-  font-size: 2rem;
-  font-weight: 700;
-  margin-bottom: 1rem;
-  color: var(--text-primary);
-  position: relative;
-  display: inline-block;
-}
-
-.section-title::after {
-  content: '';
-  position: absolute;
-  bottom: -8px;
-  left: 0;
-  width: 60px;
-  height: 3px;
-  background: var(--primary-color);
-  border-radius: 2px;
-}
-
-.section-subtitle {
-  color: var(--text-secondary);
-  font-size: 1.125rem;
-  max-width: 600px;
-}
 
 /* Team Section */
 .team-section {
@@ -2953,5 +2955,3 @@ a:focus {
     box-shadow: none !important;
   }
 }
-
-
