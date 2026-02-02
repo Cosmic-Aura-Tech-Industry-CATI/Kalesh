@@ -315,13 +315,15 @@ function About() {
         </div>
       </section>
 
+
+
       {/* ================= ABOUT SECTION ================= */}
       <section id="about" className="about-section">
         <div className="container">
           {/* Section Header */}
           <div className="section-header">
             <div className="section-title-wrapper">
-              <h1 className="section-title">About</h1>
+              <h1 className="section-title">About Us</h1>
               <div className="title-underline">
                 <div className="underline-line"></div>
                 <div className="underline-dot"></div>
@@ -338,7 +340,7 @@ function About() {
                   <div className="card-icon">
                     <i className="fas fa-users"></i>
                   </div>
-                  <h1>The Problem</h1>
+                  <h3>The Problem</h3>
                 </div>
                 <div className="card-content">
                   <p>

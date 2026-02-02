@@ -131,7 +131,9 @@
   opacity: 1;
 }
 
-/* ===== HERO SECTION ===== */
+                                  /* ===== HERO SECTION ===== */
+
+                                  
 .hero-section {
   min-height: 100vh;
   display: flex;
@@ -142,6 +144,7 @@
 }
 
 /* Animated Grid Background */
+
 .hero-bg-grid {
   position: absolute;
   top: 0;
@@ -372,7 +375,12 @@
   100% { background-position: 100% 50%; }
 }
 
-/* ===== COMING SOON CARD WITH TIMER ===== */
+
+
+
+               /* ===== COMING SOON CARD WITH TIMER ===== */
+
+
 .coming-soon-card {
   background: rgba(255, 255, 255, 0.03);
   backdrop-filter: blur(25px);
@@ -423,8 +431,10 @@
   font-weight: 700;
   letter-spacing: 2px;
   text-transform: uppercase;
+  text-align: center;
   position: relative;
   overflow: hidden;
+  margin-left: 45px;
   box-shadow: 0 10px 20px rgba(255, 106, 0, 0.3);
 }
 
@@ -456,6 +466,7 @@
   background-clip: text;
   background-size: 200% 200%;
   animation: textShine 3s infinite alternate;
+  
 }
 
 @keyframes textShine {
