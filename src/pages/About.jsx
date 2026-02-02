@@ -10,8 +10,8 @@ import "./about.css";
 
 function About() {
   useEffect(() => {
-      window.scrollTo(0, 0);
-    }, []);
+    window.scrollTo(0, 0);
+  }, []);
   const [activeSection, setActiveSection] = useState("hero");
   const [timeLeft, setTimeLeft] = useState({
     days: 0,
@@ -32,10 +32,10 @@ function About() {
       if (difference > 0) {
         const days = Math.floor(difference / (1000 * 60 * 60 * 24));
         const hours = Math.floor(
-          (difference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)
+          (difference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60),
         );
         const minutes = Math.floor(
-          (difference % (1000 * 60 * 60)) / (1000 * 60)
+          (difference % (1000 * 60 * 60)) / (1000 * 60),
         );
         const seconds = Math.floor((difference % (1000 * 60)) / 1000);
 
@@ -151,7 +151,7 @@ function About() {
 
   const handleNotifyClick = () => {
     alert(
-      "Thank you! We will notify you when Kalesh launches on March 16, 2026!"
+      "Thank you! We will notify you when Kalesh launches on March 16, 2026!",
     );
   };
 
@@ -167,342 +167,377 @@ function About() {
       />
 
       <div className="about-page-wrapper">
-      {/* Animated Background Particles */}
-      <div className="animated-particles">
-        {[...Array(20)].map((_, i) => (
-          <div
-            key={i}
-            className="particle"
-            style={{
-              width: `${Math.random() * 4 + 2}px`,
-              height: `${Math.random() * 4 + 2}px`,
-              left: `${Math.random() * 100}%`,
-              top: `${Math.random() * 100}%`,
-              animationDelay: `${Math.random() * 20}s`,
-              animationDuration: `${Math.random() * 30 + 20}s`,
-              background:
-                i % 3 === 0 ? "#ff6a00" : i % 3 === 1 ? "#ffd700" : "#00ffcc",
-            }}
-          />
-        ))}
-      </div>
+        {/* Animated Background Particles */}
+        <div className="animated-particles">
+          {[...Array(20)].map((_, i) => (
+            <div
+              key={i}
+              className="particle"
+              style={{
+                width: `${Math.random() * 4 + 2}px`,
+                height: `${Math.random() * 4 + 2}px`,
+                left: `${Math.random() * 100}%`,
+                top: `${Math.random() * 100}%`,
+                animationDelay: `${Math.random() * 20}s`,
+                animationDuration: `${Math.random() * 30 + 20}s`,
+                background:
+                  i % 3 === 0 ? "#ff6a00" : i % 3 === 1 ? "#ffd700" : "#00ffcc",
+              }}
+            />
+          ))}
+        </div>
 
-      {/* Floating Orbs */}
-      <div className="floating-orb orb-1"></div>
-      <div className="floating-orb orb-2"></div>
-      <div className="floating-orb orb-3"></div>
+        {/* Floating Orbs */}
+        <div className="floating-orb orb-1"></div>
+        <div className="floating-orb orb-2"></div>
+        <div className="floating-orb orb-3"></div>
 
-      {/* Animated Grid Background */}
-      <div className="hero-bg-grid"></div>
+        {/* Animated Grid Background */}
+        <div className="hero-bg-grid"></div>
 
-      {/* Navigation Dots */}
-      <div className="nav-dots">
-        {["hero", "about", "team"].map((section) => (
-          <button
-            key={section}
-            className={`nav-dot ${activeSection === section ? "active" : ""}`}
-            onClick={() => scrollToSection(section)}
-            aria-label={`Go to ${section} section`}
-          >
-            <div className="dot-inner"></div>
-          </button>
-        ))}
-      </div>
+        {/* Navigation Dots */}
+        <div className="nav-dots">
+          {["hero", "about", "team"].map((section) => (
+            <button
+              key={section}
+              className={`nav-dot ${activeSection === section ? "active" : ""}`}
+              onClick={() => scrollToSection(section)}
+              aria-label={`Go to ${section} section`}
+            >
+              <div className="dot-inner"></div>
+            </button>
+          ))}
+        </div>
 
-      {/* ================= HERO SECTION ================= */}
-      <section id="hero" className="hero-section">
-        <div className="container">
-          <div className="hero-content-wrapper">
-            <div className="hero-grid">
-              {/* Left - Logo and Slogan */}
-              <div className="hero-left">
-                <div className="logo-container">
-                  <div className="logo-3d-wrapper">
-                    <img
-                      src="/logo.png"
-                      alt="Kalesh Logo"
-                      className="hero-logo"
-                    />
-                    <div className="logo-hologram"></div>
+        {/* ================= HERO SECTION ================= */}
+        <section id="hero" className="hero-section">
+          <div className="container">
+            <div className="hero-content-wrapper">
+              <div className="hero-grid">
+                {/* Left - Logo and Slogan */}
+                <div className="hero-left">
+                  <div className="logo-container">
+                    <div className="logo-3d-wrapper">
+                      <img
+                        src="/logo.png"
+                        alt="Kalesh Logo"
+                        className="hero-logo"
+                      />
+                      <div className="logo-hologram"></div>
+                    </div>
                   </div>
-                </div>
 
-                <div className="hero-slogan">
-                  <h1 className="kalesh-text">
-                    <span className="k-letter">K</span>
-                    <span className="alesh-text">ALESH</span>
-                  </h1>
-                  <p className="tagline">
-                    A Platform Where Your Opinion Matters
-                    <br />
-                    <span className="highlight">Not Your Identity</span>
-                  </p>
-                </div>
-              </div>
-
-              {/* Right - Coming Soon Button */}
-              <div className="hero-right">
-                <div className="coming-soon-card">
-                  <div
-                    className="coming-soon-badge"
-                    style={{ marginBottom: "60px" }}
-                  >
-                    <span className="badge-text">COMING SOON</span>
-                    <div className="badge-glow"></div>
-                  </div>
-                  <div className="coming-soon-content">
-                    <h1>
-                      Get Ready for{" "}
-                      <span className="kalesh-gradient">Kalesh</span>
+                  <div className="hero-slogan">
+                    <h1 className="kalesh-text">
+                      <span className="k-letter">K</span>
+                      <span className="alesh-text">ALESH</span>
                     </h1>
-                    <p>
-                      India's first anonymous social media platform is launching
-                      on March 16, 2026
+                    <p className="tagline">
+                      A Platform Where Your Opinion Matters
+                      <br />
+                      <span className="highlight">Not Your Identity</span>
                     </p>
-                    <button className="notify-btn" onClick={handleNotifyClick}>
-                      <span className="btn-text">Notify Me</span>
-                      <span className="btn-icon">→</span>
-                    </button>
                   </div>
+                </div>
 
-                  {/* Countdown Timer */}
-                  <div className="countdown-timer">
-                    <div className="timer-glow"></div>
-                    <div className="timer-grid">
-                      {/* Days */}
-                      <div className="timer-item">
-                        <span className="timer-value">
-                          {formatNumber(timeLeft.days)}
-                        </span>
-                        <span className="timer-label">Days</span>
-                      </div>
-
-                      {/* Separator */}
-                      <div className="timer-separator">:</div>
-
-                      {/* Hours */}
-                      <div className="timer-item">
-                        <span className="timer-value">
-                          {formatNumber(timeLeft.hours)}
-                        </span>
-                        <span className="timer-label">Hours</span>
-                      </div>
-
-                      {/* Separator */}
-                      <div className="timer-separator">:</div>
-
-                      {/* Minutes */}
-                      <div className="timer-item">
-                        <span className="timer-value">
-                          {formatNumber(timeLeft.minutes)}
-                        </span>
-                        <span className="timer-label">Minutes</span>
-                      </div>
+                {/* Right - Coming Soon Button */}
+                <div className="hero-right">
+                  <div className="coming-soon-card">
+                    <div
+                      className="coming-soon-badge"
+                      style={{ marginBottom: "60px" }}
+                    >
+                      <span className="badge-text">COMING SOON</span>
+                      <div className="badge-glow"></div>
                     </div>
-
-                    {/* Launch Date Info */}
-                    <div className="launch-date-info">
-                      <p className="launch-date">
-                        Launch Date:{" "}
-                        <span className="date-highlight">March 16, 2026</span>
+                    <div className="coming-soon-content">
+                      <h1>
+                        Get Ready for{" "}
+                        <span className="kalesh-gradient">Kalesh</span>
+                      </h1>
+                      <p>
+                        India's first anonymous social media platform is
+                        launching on March 16, 2026
                       </p>
+                      <button
+                        className="notify-btn"
+                        onClick={handleNotifyClick}
+                      >
+                        <span className="btn-text">Notify Me</span>
+                        <span className="btn-icon">→</span>
+                      </button>
+                    </div>
+
+                    {/* Countdown Timer */}
+                    <div className="countdown-timer">
+                      <div className="timer-glow"></div>
+                      <div className="timer-grid">
+                        {/* Days */}
+                        <div className="timer-item">
+                          <span className="timer-value">
+                            {formatNumber(timeLeft.days)}
+                          </span>
+                          <span className="timer-label">Days</span>
+                        </div>
+
+                        {/* Separator */}
+                        <div className="timer-separator">:</div>
+
+                        {/* Hours */}
+                        <div className="timer-item">
+                          <span className="timer-value">
+                            {formatNumber(timeLeft.hours)}
+                          </span>
+                          <span className="timer-label">Hours</span>
+                        </div>
+
+                        {/* Separator */}
+                        <div className="timer-separator">:</div>
+
+                        {/* Minutes */}
+                        <div className="timer-item">
+                          <span className="timer-value">
+                            {formatNumber(timeLeft.minutes)}
+                          </span>
+                          <span className="timer-label">Minutes</span>
+                        </div>
+                      </div>
+
+                      {/* Launch Date Info */}
+                      <div className="launch-date-info">
+                        <p className="launch-date">
+                          Launch Date:{" "}
+                          <span className="date-highlight">March 16, 2026</span>
+                        </p>
+                      </div>
                     </div>
                   </div>
                 </div>
               </div>
             </div>
           </div>
-        </div>
-      </section>
+        </section>
 
-
-
-      {/* ================= ABOUT SECTION ================= */}
-      <section id="about" className="about-section">
-        <div className="container">
-          {/* Section Header */}
-          <div className="section-header">
-            <div className="section-title-wrapper">
-              <h1 className="section-title">About Us</h1>
-              <div className="title-underline">
-                <div className="underline-line"></div>
-                <div className="underline-dot"></div>
+        {/* ================= ABOUT SECTION ================= */}
+        <section id="about" className="about-section">
+          <div className="container">
+            {/* Section Header */}
+            <div className="section-header">
+              <div className="section-title-wrapper">
+                <h1 className="section-title">About Us</h1>
+                <div className="title-underline">
+                  <div className="underline-line"></div>
+                  <div className="underline-dot"></div>
+                </div>
               </div>
             </div>
-          </div>
 
-          {/* Content Grid */}
-          <div className="about-content-grid">
-            {/* Left Column */}
-            <div className="about-column">
+            <div className="about-column mb-5">
               <div className="about-card futuristic-card">
                 <div className="card-header">
-                  <div className="card-icon">
-                    <i className="fas fa-users"></i>
-                  </div>
-                  <h3>The Problem</h3>
+                  
                 </div>
                 <div className="card-content">
-                  <p>
-                    In today's digital ecosystem, most social media platforms
-                    are identity-driven and centered around public profiles,
-                    likes, and followers, which creates social pressure and
-                    discourages honest expression. Users often hesitate to share
-                    their real opinions due to fear of judgment, online
-                    backlash, screenshots, and long-term reputational impact.
-                  </p>
-                  <p>
-                    This environment particularly affects Gen-Z users, students,
-                    and introverts, who lack a safe and comfortable space to
-                    express themselves freely. Additionally, existing platforms
-                    prioritize reach based on popularity rather than content
-                    relevance, making it difficult for new users to be heard and
-                    preventing brands and institutions from receiving instant,
-                    unbiased audience feedback.
-                  </p>
-                </div>
-              </div>
-            </div>
-
-            {/* Right Column */}
-            <div className="about-column">
-              <div className="about-card futuristic-card">
-                <div className="card-header">
-                  <div className="card-icon">
-                    <i className="fas fa-bullseye"></i>
-                  </div>
-                  <h3>The Solution</h3>
-                </div>
-                <div className="card-content">
-                  <p>
-                    Kalesh solves this problem by offering a fully anonymous,
-                    real-time opinion and polling platform that removes identity
-                    pressure and promotes authentic participation. Users can
-                    create live polls, vote instantly, and engage in discussions
-                    without revealing their identity, ensuring opinions are
-                    judged by content rather than personal branding.
-                  </p>
-                  <p>
-                    The real-time engagement model allows users to participate
-                    immediately after joining, while colleges, brands, and
-                    creators gain access to honest and unbiased feedback. With
-                    strong moderation and safety controls, Kalesh provides a
-                    secure, judgment-free environment that enables genuine
-                    expression and meaningful engagement.
+                  <p className="content-justify">
+                    Kalesh was created to challenge the way opinions are shared
+                    online. In a digital world dominated by profiles, likes,
+                    followers, and social validation, many people hesitate to
+                    express what they truly feel. Fear of judgment, screenshots,
+                    online backlash, and long-term reputation often silence
+                    honest voices. <br /> We believe opinions should be valued for
+                    their content, not the identity behind them. That’s why
+                    Kalesh is built as a fully anonymous, real-time opinion and
+                    polling platform where users can speak freely without
+                    pressure. <br /> Our platform empowers Gen-Z users, students,
+                    introverts, and creators to share thoughts, create live
+                    polls, and participate in discussions without revealing who
+                    they are. With instant engagement and no popularity bias,
+                    every opinion gets a fair chance to be heard. <br /> At the same
+                    time, brands, colleges, and institutions gain access to
+                    honest, unbiased audience feedback in real time. Backed by
+                    strong moderation and safety controls, Kalesh offers a
+                    secure, judgment-free space designed for authentic
+                    expression. <br /> Kalesh isn’t just another social platform — it’s
+                    a shift toward real conversations, real opinions, and real
+                    engagement
                   </p>
                 </div>
               </div>
             </div>
-          </div>
 
-          {/* Stats Section */}
-          <div className="stats-section">
-            <div className="stats-grid">
-              <div className="stat-item">
-                <div className="stat-value">100%</div>
-                <div className="stat-label">Anonymous</div>
-              </div>
-              <div className="stat-item">
-                <div className="stat-value">Real-time</div>
-                <div className="stat-label">Polling</div>
-              </div>
-              <div className="stat-item">
-                <div className="stat-value">Zero</div>
-                <div className="stat-label">Judgment</div>
-              </div>
-              <div className="stat-item">
-                <div className="stat-value">Safe</div>
-                <div className="stat-label">Space</div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* ================= TEAM SECTION ================= */}
-      <section id="team" className="team-section">
-        <div className="container">
-          {/* Section Header */}
-          <div className="section-header">
-            <div className="section-title-wrapper">
-              <h2 className="section-title">Our Super Team</h2>
-              <div className="title-underline">
-                <div className="underline-line"></div>
-                <div className="underline-dot"></div>
-              </div>
-            </div>
-            <p className="section-subtitle">
-              The brilliant minds behind Kalesh's revolutionary platform
-            </p>
-          </div>
-
-          {/* Team Grid */}
-          <div className="team-grid">
-            {teamMembers.map((member) => (
-              <div key={member.id} className="team-member-card">
-                {/* Card Inner Glow */}
-                <div className="card-inner-glow"></div>
-
-                {/* Floating Elements */}
-                <div className="card-floating-element floating-1"></div>
-                <div className="card-floating-element floating-2"></div>
-                <div className="card-floating-element floating-3"></div>
-                <div className="card-floating-element floating-4"></div>
-
-                {/* Member Image */}
-                <div className="member-image-container">
-                  <div className="image-hologram-frame">
-                    <img
-                      src={member.image}
-                      alt={member.name}
-                      className="member-image"
-                    />
-                    <div className="image-hologram-overlay"></div>
-                  </div>
-                  <div className="image-particle-effect"></div>
-                </div>
-
-                {/* Member Info */}
-                <div className="member-info">
-                  <h3 className="member-name">{member.name}</h3>
-                  <div className="member-role">
-                    <span className="role-neon-badge">{member.role}</span>
-                  </div>
-                  <p className="member-description">{member.description}</p>
-                </div>
-
-                {/* LinkedIn Button */}
-                <div className="member-connect">
-                  <a
-                    href={member.linkedin}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="neon-linkedin-btn"
-                  >
-                    <div className="linkedin-icon">
-                      <i className="fab fa-linkedin-in"></i>
+            {/* Content Grid */}
+            <div className="about-content-grid">
+              {/* Left Column */}
+              <div className="about-column">
+                <div className="about-card futuristic-card">
+                  <div className="card-header">
+                    <div className="card-icon">
+                      <i className="fas fa-users"></i>
                     </div>
-                    <span className="connect-text">Connect on LinkedIn</span>
-                  </a>
+                    <h3>The Problem</h3>
+                  </div>
+                  <div className="card-content">
+                    <p>
+                      In today's digital ecosystem, most social media platforms
+                      are identity-driven and centered around public profiles,
+                      likes, and followers, which creates social pressure and
+                      discourages honest expression. Users often hesitate to
+                      share their real opinions due to fear of judgment, online
+                      backlash, screenshots, and long-term reputational impact.
+                    </p>
+                    <p>
+                      This environment particularly affects Gen-Z users,
+                      students, and introverts, who lack a safe and comfortable
+                      space to express themselves freely. Additionally, existing
+                      platforms prioritize reach based on popularity rather than
+                      content relevance, making it difficult for new users to be
+                      heard and preventing brands and institutions from
+                      receiving instant, unbiased audience feedback.
+                    </p>
+                  </div>
                 </div>
               </div>
-            ))}
-          </div>
 
-          {/* Team Call to Action */}
-          <div className="team-cta">
-            <div className="cta-hologram-card">
-              <h3>Join Our Mission</h3>
-              <p>Be part of the revolution in social media</p>
-              <button className="hologram-cta-btn" onClick={handleCTAClick}>
-                <span>View Careers</span>
-                <i className="fas fa-arrow-right"></i>
-              </button>
+              {/* Right Column */}
+              <div className="about-column">
+                <div className="about-card futuristic-card">
+                  <div className="card-header">
+                    <div className="card-icon">
+                      <i className="fas fa-bullseye"></i>
+                    </div>
+                    <h3>The Solution</h3>
+                  </div>
+                  <div className="card-content">
+                    <p>
+                      Kalesh solves this problem by offering a fully anonymous,
+                      real-time opinion and polling platform that removes
+                      identity pressure and promotes authentic participation.
+                      Users can create live polls, vote instantly, and engage in
+                      discussions without revealing their identity, ensuring
+                      opinions are judged by content rather than personal
+                      branding.
+                    </p>
+                    <p>
+                      The real-time engagement model allows users to participate
+                      immediately after joining, while colleges, brands, and
+                      creators gain access to honest and unbiased feedback. With
+                      strong moderation and safety controls, Kalesh provides a
+                      secure, judgment-free environment that enables genuine
+                      expression and meaningful engagement.
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            {/* Stats Section */}
+            <div className="stats-section">
+              <div className="stats-grid">
+                <div className="stat-item">
+                  <div className="stat-value">100%</div>
+                  <div className="stat-label">Anonymous</div>
+                </div>
+                <div className="stat-item">
+                  <div className="stat-value">Real-time</div>
+                  <div className="stat-label">Polling</div>
+                </div>
+                <div className="stat-item">
+                  <div className="stat-value">Zero</div>
+                  <div className="stat-label">Judgment</div>
+                </div>
+                <div className="stat-item">
+                  <div className="stat-value">Safe</div>
+                  <div className="stat-label">Space</div>
+                </div>
+              </div>
             </div>
           </div>
-        </div>
-      </section>
-    </div>
+        </section>
+
+        {/* ================= TEAM SECTION ================= */}
+        <section id="team" className="team-section">
+          <div className="container">
+            {/* Section Header */}
+            <div className="section-header">
+              <div className="section-title-wrapper">
+                <h2 className="section-title">Our Super Team</h2>
+                <div className="title-underline">
+                  <div className="underline-line"></div>
+                  <div className="underline-dot"></div>
+                </div>
+              </div>
+              <p className="section-subtitle">
+                The brilliant minds behind Kalesh's revolutionary platform
+              </p>
+            </div>
+
+            {/* Team Grid */}
+            <div className="team-grid">
+              {teamMembers.map((member) => (
+                <div key={member.id} className="team-member-card">
+                  {/* Card Inner Glow */}
+                  <div className="card-inner-glow"></div>
+
+                  {/* Floating Elements */}
+                  <div className="card-floating-element floating-1"></div>
+                  <div className="card-floating-element floating-2"></div>
+                  <div className="card-floating-element floating-3"></div>
+                  <div className="card-floating-element floating-4"></div>
+
+                  {/* Member Image */}
+                  <div className="member-image-container">
+                    <div className="image-hologram-frame">
+                      <img
+                        src={member.image}
+                        alt={member.name}
+                        className="member-image"
+                      />
+                      <div className="image-hologram-overlay"></div>
+                    </div>
+                    <div className="image-particle-effect"></div>
+                  </div>
+
+                  {/* Member Info */}
+                  <div className="member-info">
+                    <h3 className="member-name">{member.name}</h3>
+                    <div className="member-role">
+                      <span className="role-neon-badge">{member.role}</span>
+                    </div>
+                    <p className="member-description">{member.description}</p>
+                  </div>
+
+                  {/* LinkedIn Button */}
+                  <div className="member-connect">
+                    <a
+                      href={member.linkedin}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="neon-linkedin-btn"
+                    >
+                      <div className="linkedin-icon">
+                        <i className="fab fa-linkedin-in"></i>
+                      </div>
+                      <span className="connect-text">Connect on LinkedIn</span>
+                    </a>
+                  </div>
+                </div>
+              ))}
+            </div>
+
+            {/* Team Call to Action */}
+            <div className="team-cta">
+              <div className="cta-hologram-card">
+                <h3>Join Our Mission</h3>
+                <p>Be part of the revolution in social media</p>
+                <button className="hologram-cta-btn" onClick={handleCTAClick}>
+                  <span>View Careers</span>
+                  <i className="fas fa-arrow-right"></i>
+                </button>
+              </div>
+            </div>
+          </div>
+        </section>
+      </div>
     </>
   );
 }
