@@ -251,10 +251,10 @@ function About() {
                     <div className="badge-glow"></div>
                   </div>
                   <div className="coming-soon-content">
-                    <h3>
+                    <h1>
                       Get Ready for{" "}
                       <span className="kalesh-gradient">Kalesh</span>
-                    </h3>
+                    </h1>
                     <p>
                       India's first anonymous social media platform is launching
                       on March 16, 2026
@@ -321,7 +321,7 @@ function About() {
           {/* Section Header */}
           <div className="section-header">
             <div className="section-title-wrapper">
-              <h2 className="section-title">About</h2>
+              <h1 className="section-title">About</h1>
               <div className="title-underline">
                 <div className="underline-line"></div>
                 <div className="underline-dot"></div>
@@ -338,7 +338,7 @@ function About() {
                   <div className="card-icon">
                     <i className="fas fa-users"></i>
                   </div>
-                  <h3>The Problem</h3>
+                  <h1>The Problem</h1>
                 </div>
                 <div className="card-content">
                   <p>

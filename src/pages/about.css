@@ -409,7 +409,7 @@
 
 @keyframes borderFlow {
   0% { background-position: 0% 50%; }
-  100% { background-position: 300% 50%; }
+  100% { background-position: 300% 50%;}
 }
 
 .coming-soon-badge {
@@ -2007,7 +2007,7 @@
     font-size: 1.5rem;
   }
   
-  .card-header h3 {
+  .card-header h1 {
     font-size: 1.8rem;
   }
   
@@ -2069,7 +2069,7 @@
     font-size: 1.2rem;
   }
   
-  .card-header h3 {
+  .card-header h1 {
     font-size: 1.5rem;
   }
   
@@ -2137,3 +2137,11 @@
     font-size: 1.8rem;
   }
 }
+
+
+
+
+
+
+
+

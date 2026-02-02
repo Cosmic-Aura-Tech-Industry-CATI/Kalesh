@@ -466,9 +466,13 @@ a:hover {
   );
 }
 
-/* ==================================================
-   7. HOME HERO SECTION
-================================================== */
+
+
+
+
+                        /* ==================================================
+                                     7. HOME HERO SECTION
+                          ================================================== */
 
 .home-wrapper {
   width: 100%;
@@ -516,24 +520,27 @@ a:hover {
 }
 
 .section-title {
-  font-size: 2rem;
-  font-weight: 700;
+  font-size: clamp(2rem, 5vw, 3.5rem);
+  font-weight: 800;
+  line-height: 1.2;
+  background: linear-gradient(
+    90deg,
+    #ff6a00,
+    #ff8c00,
+    #ffd700,
+    #ff8c00,
+    #ff6a00
+  );
+  background-size: 300% 100%;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
   margin-bottom: 1rem;
-  color: var(--text-primary);
-  position: relative;
-  display: inline-block;
+  animation: gradientFlow 8s ease infinite;
+  letter-spacing: -0.5px;
 }
 
-.section-title::after {
-  content: '';
-  position: absolute;
-  bottom: -8px;
-  left: 0;
-  width: 60px;
-  height: 3px;
-  background: var(--primary-color);
-  border-radius: 2px;
-}
+
 
 .section-subtitle {
   color: var(--text-secondary);
@@ -597,11 +604,24 @@ a:hover {
 }
 
 .info-content {
-  padding: 0px 0px;
-  width: 100%;
-  margin: 0 auto;
-  height: auto;
-  text-align: center;
+  font-size: clamp(3.5rem, 5vw, 4rem);
+  font-weight: 800;
+  line-height: 1.2;
+  background: linear-gradient(
+    90deg,
+    #ff6a00,
+    #ff8c00,
+    #ffd700,
+    #ff8c00,
+    #ff6a00
+  );
+  background-size: 300% 100%;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  margin-bottom: 1rem;
+  animation: gradientFlow 8s ease infinite;
+  letter-spacing: -0.5px;
 }
 
 .info-image-row {
