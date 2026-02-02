@@ -73,9 +73,13 @@ a:hover {
   color: #ff6a00;
 }
 
-/* ==================================================
-   4. NAVBAR
-================================================== */
+
+
+                           /* ==================================================
+                                           4. NAVBAR
+                              ================================================== */
+
+
 
 .navbar {
   background-color: #0b0b0b !important;
@@ -2287,8 +2291,10 @@ a:focus {
   box-shadow: 0 8px 30px rgba(255, 106, 0, 0.3);
 }
 
-/* =========================
-   11. PROMO PAGE STYLES */
+                     
+
+                              /* =========================
+                                  11. PROMO PAGE STYLES */
 
 
 
@@ -2319,27 +2325,34 @@ a:focus {
 
 .promo-row {
   display: grid;
-  grid-template-columns: 1fr 1.3fr;
+  grid-template-columns: 1fr 1fr;
   gap: 60px;
+  
   align-items: center;
 }
 
-.promo-image-col {
+.promo-image-col-6 {
   display: flex;
+  margin-left: 40px;
   justify-content: center;
+  align-items: center;
+  overflow: hidden;
 }
 
-.promo-text-col {
+.promo-text-col-6 {
   display: flex;
+  margin-right: 40px;
   flex-direction: column;
   justify-content: center;
 }
 
 .promo-image {
   width: 100%;
-  max-width: 820px;
-  height: 400px;
-  box-shadow: 0 0 60px rgba(255, 106, 0, 0.25);
+  max-width: 100%;
+  height: auto;              /*  fixed height hatao */
+  object-fit: contain; 
+  overflow: hidden;      /*  image kabhi cut nahi hogi */
+  
   border-radius: 18px;
   display: block;
   margin: auto;
@@ -2538,9 +2551,7 @@ a:focus {
     gap: 40px;
   }
   
-  .promo-image {
-    height: 300px;
-  }
+  
   
   .promo-title {
     font-size: 2.5rem;
@@ -2579,29 +2590,36 @@ a:focus {
   .promo-row {
     grid-template-columns: 1fr;
     gap: 30px;
-    text-align: center;
+    align-items: center;
   }
   
-  .promo-image-col {
+  .promo-image-col-6 {
     order: 2;
+    margin-right: 35px;
   }
   
-  .promo-text-col {
+  .promo-text-col-6 {
     order: 1;
+    margin-left: 35px;
+  
   }
   
   .promo-image {
-    height: 250px;
-    max-width: 100%;
+    width: 95%;
+    
+    
   }
   
   .promo-title {
     font-size: 2rem;
+    text-align: center;
+    
     margin-bottom: 1.2rem;
   }
   
   .promo-para {
     font-size: 15px;
+   
     text-align: center;
   }
   
@@ -2656,10 +2674,11 @@ a:focus {
   
   .promo-row {
     gap: 20px;
+    align-items: center;
   }
   
   .promo-image {
-    height: 200px;
+    width: 100%;
   }
   
   .promo-title {
@@ -2726,9 +2745,7 @@ a:focus {
     padding: 12px;
   }
   
-  .promo-image {
-    height: 180px;
-  }
+  
   
   .promo-title {
     font-size: 1.4rem;

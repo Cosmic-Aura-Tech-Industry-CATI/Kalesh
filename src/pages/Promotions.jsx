@@ -77,9 +77,9 @@ function Promotions() {
 
       <div className="promo-page">
       {/* IMAGE + TEXT */}
-      <div className="promo-info-container">
+      
         <div className="promo-row">
-          <div className="promo-image-col">
+          <div className="promo-image-col-6 ">
             <img
               src="/promotion-image.png"
               alt="How can we help you"
@@ -87,8 +87,8 @@ function Promotions() {
             />
           </div>
 
-          <div className="promo-text-col">
-            <h2 className="promo-title">Let’s Collaborate</h2>
+          <div className="promo-text-col-6">
+            <h1 className="promo-title">Let’s Collaborate</h1>
             <p className="promo-para">
               Connect with Kalesh for influencer and brand collaborations,
               partnerships, or support. Reach out via our contact form or choose
@@ -97,7 +97,7 @@ function Promotions() {
             </p>
           </div>
         </div>
-      </div>
+      
 
       {/* For collaborations and promotions */}
 
