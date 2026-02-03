@@ -76,8 +76,6 @@ function Promotions() {
       </Helmet>
 
       <div className="promo-page">
-      {/* IMAGE + TEXT */}
-      
         <div className="promo-row">
           <div className="promo-image-col-6 ">
             <img
@@ -103,16 +101,17 @@ function Promotions() {
 
       {/* BETWEEN TEXT */}
       <div className="promo-between-text container text-center ">
-        <h2 className="promo-between-title fs-1 fw-bold">
+        <h2 className="promo-between-title fs-1 fw-bold ">
           For collaboration and promotion.
         </h2>
       </div>
 
       {/* FORM */}
-      <div className="promo-form-container gold-theme">
-        <div className="promo-between-text container text-center ">
+      <div className="promo-form-container gold-theme  mt-5">
+        <div className="promo-between-text container text-center mt-4 mb-4">
           <h2 className="promo-between-title fs-1 fw-bold">Contact Us.</h2>
         </div>
+
         <form className="promo-form gold-form" onSubmit={handleSubmit}>
           {/* NAME */}
           <div className="gold-field">
