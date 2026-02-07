@@ -18,24 +18,25 @@ function Home() {
         twitterDescription="India's first real-time anonymous opinion and polling social platform."
       />
 
-      {/* ================= PAGE CONTENT ================= */}
       <div className="home-wrapper">
-
         {/* ================= HERO SECTION ================= */}
-        <div className="container-fluid home-hero px-0">
-          <div className="container">
-            <div className="row align-items-center gy-5 gy-lg-0">
+        <div className="container-fluid home-hero">
+          <div className="container-fluid px-0">
+            <div className="row align-items-center g-0">
+              {/* Hero TEXT */}
+
               <div className="col-12 col-lg-6 order-2 order-lg-1">
-                <div className="hero-content px-3 px-md-0">
+                <div className="hero-content">
                   <h1 className="hero-title">
                     India&apos;s First Anonymous Social Media Platform
                   </h1>
 
-                  <p className="hero-subtitle mt-3 mt-md-4">
-                    A platform where your opinion matters, not your identity.
+                  <p className="hero-subtitle ">
+                    A platform where your opinion matters, not your
+                    identity.{" "}
                   </p>
 
-                  <div className="hero-buttons d-flex flex-column flex-sm-row gap-3 mt-4 mt-md-5">
+                  <div className="hero-buttons d-flex flex-column flex-sm-row gap-4 mt-4 mt-md-5">
                     <button className="btn-kalesh">
                       Download App (Coming Soon)
                     </button>
@@ -47,14 +48,21 @@ function Home() {
                 </div>
               </div>
 
+              {/* 🔥 HERO IMAGE – LCP FIX */}
               <div className="col-12 col-lg-6 order-1 order-lg-2">
-                <div className="hero-image text-center px-3 px-md-0">
+                <div className="hero-image align-items-center d-flex justify-content-center mx-5">
                   <img
-                    src="/logo.png"
+                    src="/images/logo-600.webp"
+                    srcSet="
+                      /images/logo-600.webp 600w,
+                    "
+                    sizes="(max-width: 768px) 90vw, 600px"
+                    width="400"
+                    height="300"
                     className="img-fluid logo-glow"
                     alt="Kalesh anonymous social media platform logo"
-                    loading="eager"
                     fetchpriority="high"
+                    decoding="async"
                   />
                 </div>
               </div>
@@ -62,37 +70,38 @@ function Home() {
           </div>
         </div>
 
-        {/* 🔽 REST OF YOUR SECTIONS (UNCHANGED UI) */}
-        {/* Your existing sections stay exactly as they are */}
-
         {/* ================= INFO SECTION ================= */}
         <div className="kalesh-info-section">
           <div className="container">
-
-            {/* FULL WIDTH TOP IMAGE */}
             <div className="info-image-row mt-4 mt-md-5">
               <img
-                src="/logoupper.png"
-                alt="Kalesh Top Banner"
+                src="/images/logoupper-1200.webp"
+                width="1200"
+                height="290 "
                 className="info-full-image"
+                alt="Kalesh Top Banner"
                 loading="lazy"
+                decoding="async"
               />
             </div>
 
-            {/* CONTENT */}
-            <div className="info-content text-center px-3 px-md-5">
-              <h2 className="info-title mb-3">No Profile Pressure</h2>
-              <h2 className="info-title mb-3">No Judgment</h2>
-              <h2 className="info-title mb-3 mb-md-4">Just Honest Opinions</h2>
+            <div className="info-content text-center g-0">
+              <h2 className="info-title mb-3 fs-3">No Profile Pressure</h2>
+              <h2 className="info-title mb-3 fs-3">No Judgment</h2>
+              <h2 className="info-title mb-3 mb-md-4 fs-3">
+                Just Honest Opinions
+              </h2>
             </div>
 
-            {/* FULL WIDTH BOTTOM IMAGE */}
             <div className="info-image-row mb-4 mb-md-5">
               <img
-                src="/logolower.png"
-                alt="Kalesh Bottom Banner"
+                src="/images/logolower-1200.webp"
+                width="1200"
+                height="290"
                 className="info-full-image"
+                alt="Kalesh Bottom Banner"
                 loading="lazy"
+                decoding="async"
               />
             </div>
           </div>
@@ -101,20 +110,22 @@ function Home() {
         {/* ===== REAL-TIME POLL INFO DIV ===== */}
         <div className="container-fluid section-poll py-4 py-md-5">
           <div className="container">
-            <div className="row align-items-center gy-5 gy-lg-0">
-
+            <div className="row align-items-center mt-5 mb-5">
+              
               {/* LEFT IMAGE COLUMN */}
               <div className="col-12 col-lg-6">
                 <div className="poll-image-container text-center">
                   <img
-                    src="/realtime_opinion_poll_on_kalesh.png"
+                    src="/images/realtime_poll-800.webp"
+                    width="400"
+                    height="600"
                     alt="Real-time Poll on kalesh"
                     className="poll-image img-fluid"
                     loading="lazy"
+                    decoding="async"
                   />
                 </div>
               </div>
-
               {/* RIGHT CONTENT COLUMN */}
               <div className="col-12 col-lg-6">
                 <div className="poll-content px-3 px-lg-5">
@@ -122,7 +133,6 @@ function Home() {
                     Live poll broadcasting with instant voting and maximum user
                     engagement
                   </h2>
-
                   <p className="section-description mt-3 mt-md-4">
                     Whether you're a new user or a well-established influencer, we
                     deliver fair, equal, and real engagement for everyone on the
@@ -133,11 +143,11 @@ function Home() {
             </div>
           </div>
         </div>
-
-        {/* ===== PROFILE ANONYMITY INFO DIV ===== */}
-        <div className="container-fluid section-profile py-4 py-md-5">
+        
+        {/* ===== CREATE POLLS INFO DIV ===== */}
+        <div className="container-fluid section-create-poll py-4 py-md-5">
           <div className="container">
-            <div className="row align-items-center gy-5 gy-lg-0">
+            <div className="row align-items-center mt-5 mb-5">
               
               {/* LEFT CONTENT COLUMN */}
               <div className="col-12 col-lg-6 order-2 order-lg-1">
@@ -145,7 +155,6 @@ function Home() {
                   <h2 className="section-title">
                     An anonymous platform that provides complete profile anonymity.
                   </h2>
-
                   <p className="section-description mt-3 mt-md-4">
                     India's first anonymous social media platform that allows
                     users to create a fully anonymous profile for safe, private,
@@ -158,10 +167,13 @@ function Home() {
               <div className="col-12 col-lg-6 order-1 order-lg-2">
                 <div className="profile-image-container text-center">
                   <img
-                    src="/kalesh_anonymous_Social_Profile.png"
+                    src="/images/anonymous_profile-800.webp"
+                    width="400"
+                    height="800"
                     alt="kalesh_anonymous_Social_Profile"
                     className="profile-image img-fluid"
                     loading="lazy"
+                    decoding="async"
                   />
                 </div>
               </div>
@@ -172,15 +184,19 @@ function Home() {
         {/* ===== ANONYMOUS CHAT INFO DIV ===== */}
         <div className="container-fluid section-chat py-4 py-md-5">
           <div className="container">
-            <div className="row align-items-center gy-5 gy-lg-0">
+            <div className="row align-items-center mt-5 mb-5">
+              
               {/* LEFT IMAGE COLUMN */}
               <div className="col-12 col-lg-6">
                 <div className="chat-image-container text-center">
                   <img
-                    src="/end_to_end_encrypted_anonymous_individual_chat.png"
+                    src="/images/anonymous_chat-800.webp"
+                    width="400"
+                    height="800"
                     alt="end_to_end_encrypted_anonymous_individual_chat"
                     className="chat-image img-fluid"
                     loading="lazy"
+                    decoding="async"
                   />
                 </div>
               </div>
@@ -191,7 +207,6 @@ function Home() {
                   <h2 className="section-title">
                     We chat securely and anonymously
                   </h2>
-
                   <p className="section-description mt-3 mt-md-4">
                     When your vibe matches with a stranger, you connect through
                     one-on-one private chats that are secure, anonymous, and
@@ -206,11 +221,12 @@ function Home() {
         {/* ===== CREATE POLLS INFO DIV ===== */}
         <div className="container-fluid section-create py-4 py-md-5">
           <div className="container">
-            <div className="row align-items-center gy-5 gy-lg-0">
+            <div className="row align-items-center mt-5 mb-5">
+              
               {/* LEFT CONTENT COLUMN */}
               <div className="col-12 col-lg-6 order-2 order-lg-1">
                 <div className="create-content px-3 px-lg-5">
-                  <h2 className="section-title">Create polls freely, your way</h2>
+                  <h2 className="section-title ">Create polls freely, your way</h2>
                   <p className="section-description mt-3 mt-md-4">
                     With real-time voting, instant reach, and high user
                     engagement.
@@ -222,10 +238,13 @@ function Home() {
               <div className="col-12 col-lg-6 order-1 order-lg-2">
                 <div className="create-image-container text-center">
                   <img
-                    src="/anonymous_opinion_poll_creation.png"
+                    src="/images/create_poll-800.webp"
+                    width="400"
+                    height="800"
                     alt="anonymous_opinion_poll_creation"
                     className="create-poll-image img-fluid"
                     loading="lazy"
+                    decoding="async"
                   />
                 </div>
               </div>
@@ -237,4 +256,4 @@ function Home() {
   );
 }
 
-export default Home;   
+export default Home;
