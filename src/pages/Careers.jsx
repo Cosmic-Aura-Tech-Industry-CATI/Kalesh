@@ -1,5 +1,6 @@
 import { useState, useRef } from "react";
 import { useEffect } from 'react';
+import "../styles/pages/careers.css";
 import SEO from "../components/SEO";
 import axios from "axios";
 
