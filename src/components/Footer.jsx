@@ -93,17 +93,17 @@ function Footer() {
 
             {/* SOCIAL ICONS */}
             <div className="col-12 col-md-4 text-center text-md-end footer-socials">
-              <a href="#" aria-label="X (Twitter)">
+              <a href="https://x.com/KaleshThe76740" aria-label="X (Twitter)">
                 <i className="fa-brands fa-x-twitter"></i>
               </a>
-              <a href="#" aria-label="Facebook">
+              <a href="https://www.facebook.com/profile.php?id=61587629125145" aria-label="Facebook">
                 <i className="fa-brands fa-facebook-f"></i>
               </a>
-              <a href="#" aria-label="Instagram">
+              <a href="https://www.instagram.com/thekalesh47?igsh=MTdqd3Y2aHBsOWFxMg==" aria-label="Instagram">
                 <i className="fa-brands fa-instagram"></i>
               </a>
-              <a href="#" aria-label="YouTube">
-                <i className="fa-brands fa-youtube"></i>
+              <a href="https://www.linkedin.com/company/kalesh47/" aria-label="LinkedIn">
+                <i className="fa-brands fa-linkedin-in"></i>
               </a>
             </div>
           </div>

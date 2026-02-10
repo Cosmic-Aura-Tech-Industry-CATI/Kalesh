@@ -1167,7 +1167,7 @@ a:hover {
 .social-icons a:nth-child(1):hover { color: #eb6c6c; }      /* X */
 .social-icons a:nth-child(2):hover { color: #1877f2; }      /* Facebook */
 .social-icons a:nth-child(3):hover { color: #e1306c; }      /* Instagram */
-.social-icons a:nth-child(4):hover { color: #ff0000; }      /* YouTube */
+.social-icons a:nth-child(4):hover { color: #0a66c2; }      /* LinkedIn */
 
 /* MOBILE */
 @media (max-width: 768px) {
@@ -3148,17 +3148,10 @@ a:focus {
 }
 
 /* BRAND COLORS ON HOVER */
-.footer-socials a:nth-child(1):hover { color: #ffffff; }      /* X */
+.footer-socials a:nth-child(1):hover { color: #eb6c6c; }      /* X */
 .footer-socials a:nth-child(2):hover { color: #1877f2; }      /* Facebook */
-.footer-socials a:nth-child(3):hover { color: linear-gradient(
-  45deg,
-  #f09433 0%,
-  #e6683c 25%,
-  #dc2743 50%,
-  #cc2366 75%,
-  #bc1888 100%
-); }      /* Instagram */
-.footer-socials a:nth-child(4):hover { color: #ff0000; }      /* YouTube */
+.footer-socials a:nth-child(3):hover { color: #e1306c; }      /* Instagram */
+.footer-socials a:nth-child(4):hover { color: #0a66c2; }      /* LinkedIn */
 
 
 /* ================= RESPONSIVE ================= */

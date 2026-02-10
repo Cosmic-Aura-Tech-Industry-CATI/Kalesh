@@ -277,17 +277,17 @@ function Careers() {
               </h2>
             </div>
             <div className="col-md-6 text-md-end social-icons mt-4">
-              <a href="#" aria-label="X" className="social-icon-link">
+              <a href="https://x.com/KaleshThe76740" aria-label="X" className="social-icon-link">
                 <i className="fa-brands fa-x-twitter"></i>
               </a>
-              <a href="#" aria-label="Facebook" className="social-icon-link">
+              <a href="https://www.facebook.com/profile.php?id=61587629125145" aria-label="Facebook" className="social-icon-link">
                 <i className="fa-brands fa-facebook-f"></i>
               </a>
-              <a href="#" aria-label="Instagram" className="social-icon-link">
+              <a href="https://www.instagram.com/thekalesh47?igsh=MTdqd3Y2aHBsOWFxMg==" aria-label="Instagram" className="social-icon-link">
                 <i className="fa-brands fa-instagram"></i>
               </a>
-              <a href="#" aria-label="YouTube" className="social-icon-link">
-                <i className="fa-brands fa-youtube"></i>
+              <a href="https://www.linkedin.com/company/kalesh47/" aria-label="LinkedIn" className="social-icon-link">
+                <i className="fa-brands fa-linkedin-in"></i>
               </a>
             </div>
           </div>
