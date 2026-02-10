@@ -1,5 +1,6 @@
 import { useEffect } from "react";
 import SEO from "../components/SEO";
+import "../styles/pages/home.css";
 
 function Home() {
   useEffect(() => {
