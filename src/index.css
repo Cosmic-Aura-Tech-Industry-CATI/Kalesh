@@ -96,17 +96,13 @@ a:hover {
 .home-hero {
   width: 100%;
   max-width: 100%;
+  min-height: 90vh;
   overflow-x: hidden;
   height: fit-content;
   object-fit: contain;
   background: linear-gradient(135deg, #0a0a0a, #111);
   background-color: #0b0b0b;
   border-bottom: 1px solid rgba(212, 175, 55, 0.2);
-}
-
-.home-hero .col-lg-6 {
- 
-  
 }
 
 
@@ -116,7 +112,6 @@ a:hover {
   padding-top: 3rem;
   padding-bottom: 3rem;
   margin: 0;
-  
   max-width: 100%;
   
 }
