@@ -70,6 +70,25 @@ a:hover {
   color: #ff6a00 !important;
 }
 
+/* Make room for the fixed navbar so content isn't hidden underneath */
+:root {
+  --navbar-height: 70px; /* default desktop navbar height */
+}
+
+@media (max-width: 991px) {
+  :root {
+    --navbar-height: 110px; /* accommodate taller mobile collapsed menu */
+  }
+}
+
+.app-layout main {
+  padding-top: var(--navbar-height);
+}
+
+.navbar.fixed-top {
+  z-index: 1050;
+}
+
 
 
 

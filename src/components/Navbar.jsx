@@ -15,7 +15,7 @@ function Navbar() {
   };
 
   return (
-    <nav className="navbar navbar-expand-lg navbar-dark bg-dark px-4">
+    <nav className="navbar navbar-expand-lg navbar-dark bg-dark px-4 fixed-top">
       <Link className="navbar-brand d-flex align-items-center mx-4" to="/">
         <img src="/images/kalesh_navbar_logo.webp" alt="logo" height="45" className="me-2" />
         
