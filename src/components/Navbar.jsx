@@ -41,7 +41,7 @@ function Navbar() {
         
         {/* Mobile Menu Logo */}
         <div className="mobile-menu-logo d-lg-none">
-          <img src="/kalesh_navbar_logo.png" alt="Kalesh Logo" height="50" />
+          <img src="/images/kalesh_navbar_logo.webp" alt="Kalesh Logo" height="50" />
         </div>
         
         <ul className="navbar-nav ms-auto gap-1 mx-4">
