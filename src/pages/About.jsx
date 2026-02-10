@@ -6,7 +6,7 @@ import nish from "../assets/Nishkarsh_Mishra.png";
 import sheelu from "../assets/Sheelu_Singh.png";
 import mridul from "../assets/Mridul_Mishra.png";
 import sid from "../assets/Siddhant_Shekhar.png";
-import "./about.css";
+import "../styles/pages/about.css";
 
 function About() {
   useEffect(() => {
