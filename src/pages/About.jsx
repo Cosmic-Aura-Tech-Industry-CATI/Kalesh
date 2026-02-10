@@ -219,9 +219,11 @@ function About() {
                   <div className="logo-container">
                     <div className="logo-3d-wrapper">
                       <img
-                        src="/logo.png"
+                        src="/images/logo-600.webp"
                         alt="Kalesh Logo"
                         className="hero-logo"
+                        loading="lazy"
+                        decoding="async"
                       />
                       <div className="logo-hologram"></div>
                     </div>
@@ -334,9 +336,7 @@ function About() {
 
             <div className="about-column mb-5">
               <div className="about-card futuristic-card">
-                <div className="card-header">
-                  
-                </div>
+                <div className="card-header"></div>
                 <div className="card-content">
                   <p className="content-justify">
                     Kalesh was created to challenge the way opinions are shared
@@ -344,22 +344,22 @@ function About() {
                     followers, and social validation, many people hesitate to
                     express what they truly feel. Fear of judgment, screenshots,
                     online backlash, and long-term reputation often silence
-                    honest voices. <br /> We believe opinions should be valued for
-                    their content, not the identity behind them. That’s why
+                    honest voices. <br /> We believe opinions should be valued
+                    for their content, not the identity behind them. That’s why
                     Kalesh is built as a fully anonymous, real-time opinion and
                     polling platform where users can speak freely without
-                    pressure. <br /> Our platform empowers Gen-Z users, students,
-                    introverts, and creators to share thoughts, create live
-                    polls, and participate in discussions without revealing who
-                    they are. With instant engagement and no popularity bias,
-                    every opinion gets a fair chance to be heard. <br /> At the same
-                    time, brands, colleges, and institutions gain access to
-                    honest, unbiased audience feedback in real time. Backed by
-                    strong moderation and safety controls, Kalesh offers a
-                    secure, judgment-free space designed for authentic
-                    expression. <br /> Kalesh isn’t just another social platform — it’s
-                    a shift toward real conversations, real opinions, and real
-                    engagement
+                    pressure. <br /> Our platform empowers Gen-Z users,
+                    students, introverts, and creators to share thoughts, create
+                    live polls, and participate in discussions without revealing
+                    who they are. With instant engagement and no popularity
+                    bias, every opinion gets a fair chance to be heard. <br />{" "}
+                    At the same time, brands, colleges, and institutions gain
+                    access to honest, unbiased audience feedback in real time.
+                    Backed by strong moderation and safety controls, Kalesh
+                    offers a secure, judgment-free space designed for authentic
+                    expression. <br /> Kalesh isn’t just another social platform
+                    — it’s a shift toward real conversations, real opinions, and
+                    real engagement
                   </p>
                 </div>
               </div>
