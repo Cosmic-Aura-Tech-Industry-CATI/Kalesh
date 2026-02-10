@@ -402,8 +402,8 @@ function FAQ() {
                           <span className="faq-number">{String(index + 1).padStart(2, '0')}</span>
                           <h2 className="faq-accordion-question">{faq.question}</h2>
                         </div>
-                        <div className="faq-accordion-icon">
-                          {expandedFaq === index ? '−' : '+'}
+                        <div className="faq-accordion-icon" aria-hidden="true">
+                          <i className="fa-solid fa-chevron-circle-down"></i>
                         </div>
                       </button>
                       
