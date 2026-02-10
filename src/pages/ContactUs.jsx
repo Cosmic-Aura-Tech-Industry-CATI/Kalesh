@@ -1,4 +1,5 @@
 import { useState , useEffect} from "react";
+import "../styles/pages/contactus.css";
 import SEO from "../components/SEO";
 import axios from "axios";
 
