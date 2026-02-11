@@ -74,18 +74,18 @@ function About() {
     {
       id: 2,
       name: "Swatantra Singh",
-      role: "CFO",
+      role: "CTO",
       description:
-        "Swatantra Singh serves as the CFO of Kalesh, managing the company's financial strategy and sustainability. He oversees budgeting, revenue planning, unit economics, and investor financials, ensuring disciplined growth and strong profitability as Kalesh scales.",
+        "Swatantra Singh serves as the CTO of Kalesh, managing the company's financial strategy and sustainability. He oversees budgeting, revenue planning, unit economics, and investor financials, ensuring disciplined growth and strong profitability as Kalesh scales.",
       linkedin: "https://www.linkedin.com/in/swatantra-singh308/",
       image: swat,
     },
     {
       id: 3,
       name: "Nishkarsh Mishra",
-      role: "COO",
+      role: "CFO",
       description:
-        "Nishkarsh Mishra is the COO of Kalesh, responsible for overseeing day-to-day operations and execution. He manages product rollout, team coordination, and go-to-market execution, ensuring smooth operations and scalable growth across campuses and partnerships.",
+        "Nishkarsh Mishra is the CFO of Kalesh, responsible for overseeing day-to-day operations and execution. He manages product rollout, team coordination, and go-to-market execution, ensuring smooth operations and scalable growth across campuses and partnerships.",
       linkedin: "https://www.linkedin.com/in/0nishkarshm/",
       image: nish,
     },
