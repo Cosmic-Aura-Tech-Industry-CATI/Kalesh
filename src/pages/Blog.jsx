@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
+import { Helmet } from 'react-helmet-async';
 import './blog.css';
 
 const Blog = () => {
@@ -65,7 +66,13 @@ const Blog = () => {
   const recentBlogs = blogs.filter(blog => !blog.featured);
 
   return (
-    <div className="whatsapp-blog">
+    <>
+      <Helmet>
+        <title>Kalesh Blog – Latest Updates, Features & News</title>
+        <meta name="description" content="Stay up to date on the newest features, updates, and news from Kalesh. Discover insights about anonymous social media and live polling." />
+        <link rel="canonical" href="https://thekalesh.com/blog" />
+      </Helmet>
+      <div className="whatsapp-blog">
       {/* Header Section */}
       <header className="blog-header">
         <div className="container-fluid">
@@ -188,6 +195,7 @@ const Blog = () => {
      
       
     </div>
+    </>
   );
 };
 

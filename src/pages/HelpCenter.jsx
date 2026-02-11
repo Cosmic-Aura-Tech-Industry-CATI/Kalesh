@@ -1,5 +1,6 @@
 import { useState, useMemo, useCallback } from "react";
 import { useEffect } from 'react';
+import { Helmet } from "react-helmet-async";
 import SEO from "../components/SEO";
 import "../styles/pages/helpcenter.css";
 
@@ -197,6 +198,11 @@ const HelpCenter = () => {
 
   return (
     <>
+      <Helmet>
+        <title>Help Center – Kalesh Anonymous Support & FAQs</title>
+        <meta name="description" content="Get help with Kalesh's anonymous platform. Find answers to FAQs about privacy, safety, polls, and more. 100% anonymous support." />
+        <link rel="canonical" href="https://thekalesh.com/help" />
+      </Helmet>
       <SEO
         title="Help Center – Kalesh Anonymous Support & FAQs"
         description="Get help with Kalesh's anonymous platform. Find answers to FAQs about privacy, safety, polls, and more. 100% anonymous support."

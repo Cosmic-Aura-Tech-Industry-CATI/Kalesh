@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import { Helmet } from "react-helmet-async";
 import SEO from "../components/SEO";
 import shikhar from "../assets/Shikhar_Dixit.png";
 import swat from "../assets/Swatantra_Singh.png";
@@ -161,6 +162,54 @@ function About() {
 
   return (
     <>
+      <Helmet>
+        <title>About Kalesh – India's First Anonymous Opinion Platform</title>
+        <meta name="description" content="Learn about Kalesh, India's first real-time anonymous opinion and polling platform built for Gen Z and judgment-free expression." />
+        <link rel="canonical" href="https://thekalesh.com/about" />
+        <script type="application/ld+json">
+          {JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "AboutPage",
+            "name": "About Kalesh",
+            "description": "Learn about Kalesh - India's first anonymous social media platform",
+            "url": "https://thekalesh.com/about",
+            "mainEntity": {
+              "@type": "Organization",
+              "name": "Kalesh",
+              "description": "India's first anonymous opinion and real-time polling social platform for Gen Z",
+              "url": "https://thekalesh.com",
+              "logo": "https://thekalesh.com/logo.png",
+              "foundingDate": "2025",
+              "sameAs": [
+                "https://x.com/KaleshThe76740",
+                "https://www.facebook.com/profile.php?id=61587629125145",
+                "https://www.instagram.com/thekalesh47",
+                "https://www.linkedin.com/company/kalesh47/"
+              ]
+            }
+          })}
+        </script>
+        <script type="application/ld+json">
+          {JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "BreadcrumbList",
+            "itemListElement": [
+              {
+                "@type": "ListItem",
+                "position": 1,
+                "name": "Home",
+                "item": "https://thekalesh.com"
+              },
+              {
+                "@type": "ListItem",
+                "position": 2,
+                "name": "About",
+                "item": "https://thekalesh.com/about"
+              }
+            ]
+          })}
+        </script>
+      </Helmet>
       <SEO
         title="About Kalesh – India’s First Anonymous Opinion Platform"
         description="Learn about Kalesh, India's first real-time anonymous opinion and polling platform built for Gen Z and judgment-free expression."

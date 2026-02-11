@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { Link, useNavigate, useLocation } from 'react-router-dom';
+import { Helmet } from 'react-helmet-async';
 import './Viewpage.css';
 
 const ViewBlog = () => {
@@ -196,7 +197,13 @@ const ViewBlog = () => {
   };
 
   return (
-    <div className="view-blog">
+    <>
+      <Helmet>
+        <title>All Blog Posts – Kalesh Blog</title>
+        <meta name="description" content="Explore all blog posts from Kalesh. Learn about anonymous social media, live polls, privacy, and more from India's first anonymous opinion platform." />
+        <link rel="canonical" href="https://thekalesh.com/blog/viewpage" />
+      </Helmet>
+      <div className="view-blog">
       {/* Back to Blog Button */}
       <div className="back-to-blog">
         <div className="back-container">
@@ -435,6 +442,7 @@ const ViewBlog = () => {
         </div>
       </section>
     </div>
+    </>
   );
 };
 

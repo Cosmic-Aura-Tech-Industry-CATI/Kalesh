@@ -1,9 +1,39 @@
 import React from "react";
+import { Helmet } from "react-helmet-async";
 import "./Blogpage1.css";
 
 const BlogPage1 = () => {
   return (
-    <div className="blog-detail-page">
+    <>
+      <Helmet>
+        <title>Introducing Kalesh – Anonymous Opinion Platform | Kalesh Blog</title>
+        <meta name="description" content="Discover Kalesh, India's first anonymous social media platform. Learn how we're revolutionizing online expression with judgment-free opinions and live polls." />
+        <link rel="canonical" href="https://thekalesh.com/blog/blog1" />
+        <script type="application/ld+json">
+          {JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "Article",
+            "headline": "Introducing Kalesh",
+            "description": "Discover Kalesh, India's first anonymous social media platform.",
+            "image": "https://thekalesh.com/images/blog-image.webp",
+            "author": {
+              "@type": "Organization",
+              "name": "Kalesh"
+            },
+            "publisher": {
+              "@type": "Organization",
+              "name": "Kalesh",
+              "logo": {
+                "@type": "ImageObject",
+                "url": "https://thekalesh.com/logo.png"
+              }
+            },
+            "datePublished": "2026-02-03",
+            "dateModified": "2026-02-03"
+          })}
+        </script>
+      </Helmet>
+      <div className="blog-detail-page">
       {/* Navigation Bar */}
       <nav className="blog-nav">
         <div className="container-fluid">
@@ -357,6 +387,7 @@ Welcome to Kalesh — where your voice matters, not your identity.
 
       {/* Footer */}
     </div>
+    </>
   );
 };
 

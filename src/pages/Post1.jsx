@@ -1,10 +1,39 @@
 // post1.jsx
 import React from "react";
+import { Helmet } from "react-helmet-async";
 import "./Blogpage1.css"; // Linking to your existing CSS
 
 const Post1 = () => {
   return (
-    <div className="blog-detail-page">
+    <>
+      <Helmet>
+        <title>What Is Anonymous Social Media? | Kalesh Blog</title>
+        <meta name="description" content="Learn how anonymous social media works, its benefits, and why platforms like Kalesh are changing online expression forever." />
+        <link rel="canonical" href="https://thekalesh.com/blog/Post1" />
+        <script type="application/ld+json">
+          {JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "Article",
+            "headline": "What Is Anonymous Social Media and How Does It Work?",
+            "description": "Learn how anonymous social media works and its benefits.",
+            "author": {
+              "@type": "Organization",
+              "name": "Kalesh"
+            },
+            "publisher": {
+              "@type": "Organization",
+              "name": "Kalesh",
+              "logo": {
+                "@type": "ImageObject",
+                "url": "https://thekalesh.com/logo.png"
+              }
+            },
+            "datePublished": "2026-02-05",
+            "dateModified": "2026-02-05"
+          })}
+        </script>
+      </Helmet>
+      <div className="blog-detail-page">
       {/* Navigation Bar */}
       <nav className="blog-nav">
         <div className="container-fluid">
@@ -236,6 +265,7 @@ const Post1 = () => {
       {/* Footer */}
       
     </div>
+    </>
   );
 };
 

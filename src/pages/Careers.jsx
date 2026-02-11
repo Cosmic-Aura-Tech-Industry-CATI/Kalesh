@@ -1,5 +1,6 @@
 import { useState, useRef } from "react";
 import { useEffect } from 'react';
+import { Helmet } from "react-helmet-async";
 import "../styles/pages/careers.css";
 import SEO from "../components/SEO";
 import axios from "axios";
@@ -72,6 +73,11 @@ function Careers() {
 
   return (
     <>
+      <Helmet>
+        <title>Careers at Kalesh – Join Our Anonymous Social Media Team</title>
+        <meta name="description" content="Join the Kalesh team and build the future of anonymous social media. We're looking for passionate individuals to create a safe, judgment-free platform. Apply now!" />
+        <link rel="canonical" href="https://thekalesh.com/careers" />
+      </Helmet>
       <SEO
         title="Careers at Kalesh – Join Our Anonymous Social Media Team"
         description="Join the Kalesh team and build the future of anonymous social media. We're looking for passionate individuals to create a safe, judgment-free platform. Apply now!"

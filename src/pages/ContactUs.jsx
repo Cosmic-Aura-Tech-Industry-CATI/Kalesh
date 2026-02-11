@@ -1,4 +1,5 @@
 import { useState , useEffect} from "react";
+import { Helmet } from "react-helmet-async";
 import "../styles/pages/contactus.css";
 import SEO from "../components/SEO";
 import axios from "axios";
@@ -103,6 +104,11 @@ function ContactUs() {
 
   return (
     <>
+      <Helmet>
+        <title>Contact Us – Get in Touch with Kalesh</title>
+        <meta name="description" content="Contact the Kalesh team anonymously. We're here to help with your questions, support needs, and feedback." />
+        <link rel="canonical" href="https://thekalesh.com/contact" />
+      </Helmet>
       <SEO
         title="Get in Touch | Kalesh"
         description="Contact the Kalesh team anonymously. We're here to help."

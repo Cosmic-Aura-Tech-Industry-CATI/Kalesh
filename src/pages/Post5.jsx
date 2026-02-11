@@ -1,10 +1,39 @@
 // post1.jsx
 import React from "react";
+import { Helmet } from "react-helmet-async";
 import "./Blogpage1.css"; // Linking to your existing CSS
 
 const Post5 = () => {
   return (
-    <div className="blog-detail-page">
+    <>
+      <Helmet>
+        <title>Privacy & Security on Kalesh | Kalesh Blog</title>
+        <meta name="description" content="Learn how Kalesh protects your anonymity with end-to-end encryption, secure authentication, and strict privacy policies." />
+        <link rel="canonical" href="https://thekalesh.com/blog/Post5" />
+        <script type="application/ld+json">
+          {JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "Article",
+            "headline": "Privacy & Security on Kalesh",
+            "description": "Learn how Kalesh protects your anonymity.",
+            "author": {
+              "@type": "Organization",
+              "name": "Kalesh"
+            },
+            "publisher": {
+              "@type": "Organization",
+              "name": "Kalesh",
+              "logo": {
+                "@type": "ImageObject",
+                "url": "https://thekalesh.com/logo.png"
+              }
+            },
+            "datePublished": "2026-02-09",
+            "dateModified": "2026-02-09"
+          })}
+        </script>
+      </Helmet>
+      <div className="blog-detail-page">
       {/* Navigation Bar */}
       <nav className="blog-nav">
         <div className="container-fluid">
@@ -241,6 +270,7 @@ const Post5 = () => {
 
       {/* Footer */}
     </div>
+    </>
   );
 };
 

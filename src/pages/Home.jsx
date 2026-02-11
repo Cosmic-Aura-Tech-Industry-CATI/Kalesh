@@ -1,4 +1,5 @@
 import { useEffect } from "react";
+import { Helmet } from "react-helmet-async";
 import SEO from "../components/SEO";
 import "../styles/pages/home.css";
 
@@ -8,8 +9,11 @@ function Home() {
   }, []);
 
   return (
-    <>
-      {/* ================= SEO META ================= */}
+    <>      <Helmet>
+        <title>Kalesh — India's Anonymous Social Media Platform</title>
+        <meta name="description" content="Kalesh is India's anonymous social media platform where you can speak freely without revealing your identity. Join real-time live polls and share opinions anonymously." />
+        <link rel="canonical" href="https://thekalesh.com/" />
+      </Helmet>      {/* ================= SEO META ================= */}
       <SEO
         title="Kalesh — India’s Anonymous Social Media Platform"
         description="Kalesh is India’s anonymous social media platform where you can speak freely without revealing your identity."

@@ -1,9 +1,38 @@
 import React from "react";
+import { Helmet } from "react-helmet-async";
 import "./Blogpage1.css";
 
 const Post3 = () => {
   return (
-    <div className="blog-detail-page">
+    <>
+      <Helmet>
+        <title>Anonymous vs Public Comments: Which Is Safer? | Kalesh Blog</title>
+        <meta name="description" content="Compare anonymous and public commenting. Learn why anonymous comments on Kalesh protect users and keep discussions opinion-driven." />
+        <link rel="canonical" href="https://thekalesh.com/blog/Post3" />
+        <script type="application/ld+json">
+          {JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "Article",
+            "headline": "Anonymous vs Public Comments: Which Is Safer?",
+            "description": "Compare anonymous and public commenting on Kalesh.",
+            "author": {
+              "@type": "Organization",
+              "name": "Kalesh"
+            },
+            "publisher": {
+              "@type": "Organization",
+              "name": "Kalesh",
+              "logo": {
+                "@type": "ImageObject",
+                "url": "https://thekalesh.com/logo.png"
+              }
+            },
+            "datePublished": "2026-02-10",
+            "dateModified": "2026-02-10"
+          })}
+        </script>
+      </Helmet>
+      <div className="blog-detail-page">
       {/* Navigation Bar */}
       <nav className="blog-nav">
         <div className="container-fluid">
@@ -276,6 +305,7 @@ const Post3 = () => {
       {/* Footer */}
       
     </div>
+    </>
   );
 };
 

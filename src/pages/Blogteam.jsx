@@ -1,4 +1,5 @@
 import React from 'react';
+import { Helmet } from 'react-helmet-async';
 import './Blogteam.css';
 
 const Blogteam = () => {
@@ -58,7 +59,13 @@ const Blogteam = () => {
 
 
   return (
-    <div className="team-page">
+    <>
+      <Helmet>
+        <title>Meet The Team Behind Kalesh | Kalesh Blog</title>
+        <meta name="description" content="Meet the passionate team building Kalesh - India's first anonymous social media platform. Learn about our mission-driven approach to online expression." />
+        <link rel="canonical" href="https://thekalesh.com/blog/team" />
+      </Helmet>
+      <div className="team-page">
       {/* Navigation */}
       <nav className="team-nav">
         <div className="container-fluid">
@@ -155,6 +162,7 @@ const Blogteam = () => {
       </section>
 
     </div>
+    </>
   );
 };
 

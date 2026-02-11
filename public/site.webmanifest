@@ -1,21 +1,28 @@
 {
-  "name": "MyWebSite",
+  "name": "Kalesh - India's Anonymous Social Media Platform",
   "short_name": "Kalesh",
+  "description": "India's first anonymous social media platform for real-time opinions and live polls",
+  "start_url": "/",
+  "scope": "/",
   "icons": [
     {
       "src": "/public/web-app-manifest-192x192.png",
       "sizes": "192x192",
       "type": "image/png",
-      "purpose": "maskable"
+      "purpose": "maskable any"
     },
     {
       "src": "/public/web-app-manifest-512x512.png",
       "sizes": "512x512",
       "type": "image/png",
-      "purpose": "maskable"
+      "purpose": "maskable any"
     }
   ],
-  "theme_color": "#060000",
-  "background_color": "#060000",
-  "display": "standalone"
+  "theme_color": "#ff6a00",
+  "background_color": "#0b0b0b",
+  "display": "standalone",
+  "orientation": "portrait-primary",
+  "categories": ["social", "entertainment", "lifestyle"],
+  "lang": "en-IN",
+  "dir": "ltr"
 }

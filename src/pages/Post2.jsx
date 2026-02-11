@@ -1,9 +1,38 @@
 import React from "react";
+import { Helmet } from "react-helmet-async";
 import "./Blogpage1.css";
 
 const Post2 = () => {
   return (
-    <div className="blog-detail-page">
+    <>
+      <Helmet>
+        <title>What Are Live Polls and Why Are They Effective? | Kalesh Blog</title>
+        <meta name="description" content="Discover the power of live polling. Learn how real-time voting and anonymous participation create instant, honest opinions on Kalesh." />
+        <link rel="canonical" href="https://thekalesh.com/blog/Post2" />
+        <script type="application/ld+json">
+          {JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "Article",
+            "headline": "What Are Live Polls and Why Are They So Effective?",
+            "description": "Discover the power of live polling with Kalesh.",
+            "author": {
+              "@type": "Organization",
+              "name": "Kalesh"
+            },
+            "publisher": {
+              "@type": "Organization",
+              "name": "Kalesh",
+              "logo": {
+                "@type": "ImageObject",
+                "url": "https://thekalesh.com/logo.png"
+              }
+            },
+            "datePublished": "2026-02-10",
+            "dateModified": "2026-02-10"
+          })}
+        </script>
+      </Helmet>
+      <div className="blog-detail-page">
       {/* Navigation Bar */}
       <nav className="blog-nav">
         <div className="container-fluid">
@@ -275,6 +304,7 @@ const Post2 = () => {
       {/* Footer */}
       
     </div>
+    </>
   );
 };
 
