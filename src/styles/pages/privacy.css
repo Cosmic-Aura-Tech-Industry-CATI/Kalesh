@@ -1,0 +1,220 @@
+/* ==================================================
+   PRIVACY PAGE STYLES
+================================================== */
+
+.privacy-page {
+  background-color: #0b0b0b;
+  color: #ffffff;
+  min-height: 100vh;
+  padding-top: 80px;
+}
+
+/* ==================================================
+   HERO SECTION
+================================================== */
+
+.hero-title {
+  font-size: clamp(2rem, 5vw, 3.5rem);
+  font-weight: 800;
+  line-height: 1.2;
+  background: linear-gradient(
+    90deg,
+    #ff6a00,
+    #ff8c00,
+    #ffd700,
+    #ff8c00,
+    #ff6a00
+  );
+  background-size: 300% 100%;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  margin-bottom: 1rem;
+  animation: gradientFlow 8s ease infinite;
+  letter-spacing: -0.5px;
+}
+
+@keyframes gradientFlow {
+  0%, 100% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+}
+
+/* ==================================================
+   SECTION TITLES
+================================================== */
+
+.section-title {
+  font-size: clamp(2rem, 5vw, 3.5rem);
+  font-weight: 800;
+  line-height: 1.2;
+  background: linear-gradient(
+    90deg,
+    #ff6a00,
+    #ff8c00,
+    #ffd700,
+    #ff8c00,
+    #ff6a00
+  );
+  background-size: 300% 100%;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  margin-bottom: 1rem;
+  animation: gradientFlow 8s ease infinite;
+  letter-spacing: -0.5px;
+}
+
+/* ==================================================
+   KALESH DIVIDER
+================================================== */
+
+.kalesh-divider {
+  width: 100%;
+  height: 1px;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    #d4af37,
+    transparent
+  );
+}
+
+/* ==================================================
+   LOGO GLOW EFFECT
+================================================== */
+
+.logo-glow {
+  filter: drop-shadow(0 0 40px rgba(255, 106, 0, 0.7));
+}
+
+/* ==================================================
+   GOLDEN ORANGE FORM CONTAINER
+================================================== */
+
+.golden-orange-form-container {
+  background: linear-gradient(145deg, 
+    rgba(25, 25, 25, 0.95),
+    rgba(20, 20, 20, 0.98)
+  );
+  border-radius: 20px;
+  padding: 3rem;
+  position: relative;
+  box-shadow: 
+    0 15px 50px rgba(255, 106, 0, 0.15),
+    0 5px 20px rgba(0, 0, 0, 0.4),
+    inset 0 1px 0 rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(12px);
+  max-width: 800px;
+  margin: 0 auto;
+  overflow: hidden;
+}
+
+.golden-orange-form-container::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(
+    135deg,
+    rgba(255, 106, 0, 0.1) 0%,
+    rgba(255, 215, 0, 0.1) 50%,
+    rgba(255, 106, 0, 0.1) 100%
+  );
+  border-radius: 20px;
+  z-index: -1;
+}
+
+/* ==================================================
+   GLASS CARD
+================================================== */
+
+.glass-card {
+  background: linear-gradient(
+    135deg,
+    rgba(255, 255, 255, 0.05),
+    rgba(0, 0, 0, 0.2)
+  );
+  border: 2px solid rgba(255, 106, 0, 0.2);
+  border-radius: 15px;
+  padding: 1.5rem;
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  box-shadow: 
+    inset 0 2px 10px rgba(0, 0, 0, 0.2),
+    0 4px 20px rgba(0, 0, 0, 0.1);
+  transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.glass-card:hover {
+  border-color: #ff6a00;
+  box-shadow: 
+    0 0 0 4px rgba(255, 106, 0, 0.15),
+    0 0 30px rgba(255, 106, 0, 0.2),
+    inset 0 2px 10px rgba(0, 0, 0, 0.3);
+  background: linear-gradient(
+    135deg,
+    rgba(255, 255, 255, 0.08),
+    rgba(0, 0, 0, 0.25)
+  );
+  transform: translateY(-2px);
+}
+
+/* ==================================================
+   TEXT STYLES
+================================================== */
+
+.text-muted {
+  color: #b3b3b3 !important;
+}
+
+/* ==================================================
+   MOBILE RESPONSIVE
+================================================== */
+
+@media (max-width: 768px) {
+  .privacy-page {
+    padding-top: 60px;
+  }
+
+  .hero-title {
+    font-size: 2rem;
+  }
+
+  .section-title {
+    font-size: 1.5rem;
+  }
+
+  .golden-orange-form-container {
+    padding: 1.5rem;
+    margin: 0 1rem;
+  }
+
+  .glass-card {
+    padding: 1rem;
+  }
+
+  .logo-glow {
+    max-width: 100%;
+    height: auto;
+  }
+}
+
+@media (max-width: 480px) {
+  .hero-title {
+    font-size: 1.75rem;
+  }
+
+  .section-title {
+    font-size: 1.25rem;
+  }
+
+  .golden-orange-form-container {
+    padding: 1rem;
+  }
+}

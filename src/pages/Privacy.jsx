@@ -1,7 +1,7 @@
 import React from 'react';
 import { Helmet } from "react-helmet-async";
 import SEO from "../components/SEO";
-import '../index.css';
+import '../styles/pages/Privacy.css';
 
 // Import images from assets folder
 import AnonymityImg from '../assets/AnonymityImg.png';
