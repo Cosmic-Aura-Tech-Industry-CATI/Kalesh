@@ -1,7 +1,8 @@
 import { useState, useMemo, useCallback } from "react";
 import { useEffect } from 'react';
 import SEO from "../components/SEO";
-import "./helpcenter.css";
+import "../styles/pages/helpcenter.css";
+
 
 const HelpCenter = () => {
   useEffect(() => {

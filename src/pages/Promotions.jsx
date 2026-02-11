@@ -1,5 +1,6 @@
 import { useState , useEffect } from "react";
 import { Helmet } from "react-helmet-async";
+import "../styles/pages/promotions.css";
 
 function Promotions() {
   useEffect(() => {
