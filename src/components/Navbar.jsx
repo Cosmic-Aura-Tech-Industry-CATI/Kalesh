@@ -61,8 +61,8 @@ function Navbar() {
             </Link>
           </li>
           <li className="nav-item">
-            <Link className="nav-link" to="/promotions" onClick={handleLinkClick}>
-              Promotions
+            <Link className="nav-link" to="/blog" onClick={handleLinkClick}>
+              Blog
             </Link>
           </li>
           <li className="nav-item">

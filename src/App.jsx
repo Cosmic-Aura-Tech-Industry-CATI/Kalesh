@@ -17,6 +17,18 @@ const PrivacyPolicy = lazy(() => import("./pages/PrivacyPolicy"));
 const CommunityGuidelines = lazy(() => import("./pages/CommunityGuidelines"));
 const SecurityAdvisory = lazy(() => import("./pages/SecurityAdvisory"));
 const FAQ = lazy(() => import("./pages/faq"));
+const Blog = lazy(() => import("./pages/Blog"));
+const Blogpage1 = lazy(() => import("./pages/Blogpage1"));
+const Blogteam = lazy(() => import("./pages/Blogteam"));
+const Post1 = lazy(() => import("./pages/Post1"));
+const Post2 = lazy(() => import("./pages/Post2"));
+const Post3 = lazy(() => import("./pages/Post3"));
+const Post4 = lazy(() => import("./pages/Post4"));
+const Post5 = lazy(() => import("./pages/Post5"));
+const Viewpage = lazy(() => import("./pages/Viewpage"));
+
+
+
 
 function App() {
   // 🔥 FIX MOBILE 100vh ISSUE (GLOBAL)
@@ -56,6 +68,16 @@ function App() {
             <Route path="/termsandconditions" element={<TermsAndConditions />} />
             <Route path="/privacypolicy" element={<PrivacyPolicy />} />
             <Route path="/faq" element={<FAQ />} />
+            <Route path="/blog" element={<Blog />} />
+            <Route path="/blog/blog1" element={<Blogpage1 />} />
+            <Route path="/blog/blogteam" element={<Blogteam />} />
+            <Route path="/blog/Post1" element={<Post1 />} />
+            <Route path="/blog/Post2" element={<Post2 />} />
+            <Route path="/blog/Post3" element={<Post3 />} />
+            <Route path="/blog/Post4" element={<Post4 />} />
+            <Route path="/blog/Post5" element={<Post5 />} />
+            <Route path="/blog/Viewpage" element={<Viewpage />} />
+
             <Route
               path="/communityguidelines"
               element={<CommunityGuidelines />}
