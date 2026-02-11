@@ -15,7 +15,7 @@ const BlogPage1 = () => {
               <img
                 src="/images/logo.png"
                 alt="Kalesh Logo"
-                style={{ width: "2.5rem", height: "2.9rem" }}
+                style={{ width: "2.5rem", height: "2.5rem" }}
               />
               <span>Kalesh Blog</span>
             </div>
