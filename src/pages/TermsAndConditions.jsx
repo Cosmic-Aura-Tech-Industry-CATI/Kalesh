@@ -1,5 +1,6 @@
 import { useEffect } from 'react';
 import { Helmet } from "react-helmet-async";
+import SEO from "../components/SEO";
 import './GlassComponents.css';
 
 function TermsAndConditions() {
@@ -15,8 +16,17 @@ function TermsAndConditions() {
           name="description"
           content="Read Kalesh's terms and conditions for anonymous social media. Learn about user responsibilities, anonymity, content policies, and platform rules."
         />
-        <link rel="canonical" href="https://thekalesh.com/terms" />
+        <link rel="canonical" href="https://thekalesh.com/termsandconditions" />
+        <meta name="robots" content="index, follow" />
       </Helmet>
+      <SEO
+        title="Terms & Conditions – Kalesh Anonymous Platform Rules"
+        description="Read Kalesh's terms and conditions for anonymous social media. Learn about user responsibilities, anonymity, content policies, and platform rules."
+        ogTitle="Terms & Conditions - Kalesh"
+        ogDescription="Understand Kalesh's platform rules and user responsibilities for anonymous social media."
+        twitterTitle="Terms & Conditions - Kalesh"
+        twitterDescription="Read Kalesh's terms and conditions for India's anonymous opinion platform."
+      />
 
       <div className="glass-container">
         {/* Add aria-hidden for decorative elements */}

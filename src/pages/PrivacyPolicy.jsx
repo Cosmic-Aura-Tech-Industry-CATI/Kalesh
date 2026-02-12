@@ -1,5 +1,6 @@
 import { useEffect } from 'react';
 import { Helmet } from "react-helmet-async";
+import SEO from "../components/SEO";
 import './GlassComponents.css';
 
 function PrivacyPolicy() {
@@ -12,7 +13,17 @@ function PrivacyPolicy() {
       <Helmet>
         <title>Privacy Policy - Kalesh</title>
         <meta name="description" content="Read Kalesh's Privacy Policy to understand how we collect, use, and protect your data on our anonymous social media platform." />
+        <link rel="canonical" href="https://thekalesh.com/privacypolicy" />
+        <meta name="robots" content="index, follow" />
       </Helmet>
+      <SEO
+        title="Privacy Policy - Kalesh"
+        description="Read Kalesh's Privacy Policy to understand how we collect, use, and protect your data on our anonymous social media platform."
+        ogTitle="Privacy Policy - Kalesh"
+        ogDescription="Learn about Kalesh's commitment to protecting your privacy and data on India's anonymous social media platform."
+        twitterTitle="Privacy Policy - Kalesh"
+        twitterDescription="Read how Kalesh protects user privacy and data on our anonymous opinion platform."
+      />
       <div className="glass-container">
       <div className="glass-top-gradient"></div>
       <div className="glass-bottom-gradient"></div>

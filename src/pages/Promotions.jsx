@@ -87,7 +87,7 @@ function Promotions() {
           </div>
 
           <div className="promo-text-col-6">
-            <h1 className="promo-title">Let’s Collaborate</h1>
+            <h1 className="promo-title">Partner with Kalesh – Promotions & Brand Collaborations</h1>
             <p className="promo-para">
               Connect with Kalesh for influencer and brand collaborations,
               partnerships, or support. Reach out via our contact form or choose

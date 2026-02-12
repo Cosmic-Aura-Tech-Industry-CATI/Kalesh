@@ -1,5 +1,6 @@
 import { useEffect, useState, useMemo } from 'react';
 import { Helmet } from 'react-helmet-async';
+import SEO from "../components/SEO";
 import './GlassComponents.css';
 
 function FAQ() {
@@ -251,6 +252,7 @@ function FAQ() {
           content="Kalesh FAQ, anonymous social media India, real-time polls, anonymous chat, privacy protection, student social app, Gen-Z app India, honest discussions, how to use Kalesh, Kalesh features, safe anonymous platform, college social app"
         />
         <link rel="canonical" href="https://thekalesh.com/faq" />
+        <meta name="robots" content="index, follow" />
         
         {/* Open Graph Tags */}
         <meta property="og:title" content="Frequently Asked Questions (FAQ) – Kalesh Anonymous Platform" />

@@ -80,11 +80,10 @@ const Blog = () => {
             <div className="header-left">
               <h6 className="blog-label">KALESH BLOG</h6>
               <h1 className="blog-main-title">
-                The latest from
-                <span className="gradient-title" style={{ marginLeft: '0.25em' }}>Kalesh</span>
+                Latest Updates & News from Kalesh
               </h1>
               <p className="blog-subtitle">
-                Stay up to date on the newest features, updates, and news from Kalesh.
+                Stay up to date on the newest features, updates, and news from India's first anonymous social media platform.
               </p>
             </div>
             <div className="header-right">

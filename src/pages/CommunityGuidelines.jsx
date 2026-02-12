@@ -1,5 +1,6 @@
 import { useEffect } from 'react';
 import { Helmet } from "react-helmet-async";
+import SEO from "../components/SEO";
 import './GlassComponents.css';
 
 function CommunityGuidelines() {
@@ -19,8 +20,17 @@ function CommunityGuidelines() {
           name="keywords" 
           content="community guidelines, anonymous platform rules, Kalesh policies, respectful discussion, privacy protection"
         />
-        <link rel="canonical" href="https://thekalesh.com/community-guidelines" />
+        <link rel="canonical" href="https://thekalesh.com/communityguidelines" />
+        <meta name="robots" content="index, follow" />
       </Helmet>
+      <SEO
+        title="Community Guidelines – Kalesh Anonymous Platform Rules"
+        description="Learn Kalesh's community guidelines for safe anonymous expression. Understand rules for respectful discussions, privacy protection, and content policies."
+        ogTitle="Community Guidelines - Kalesh"
+        ogDescription="Understand Kalesh's community guidelines for safe and respectful anonymous discussions."
+        twitterTitle="Community Guidelines - Kalesh"
+        twitterDescription="Learn the community rules for India's anonymous opinion platform."
+      />
 
       <div className="glass-container">
         <div className="glass-top-gradient" aria-hidden="true"></div>
