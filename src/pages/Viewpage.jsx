@@ -4,6 +4,10 @@ import { Helmet } from 'react-helmet-async';
 import './Viewpage.css';
 
 const ViewBlog = () => {
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+
   const navigate = useNavigate();
   const location = useLocation();
   
