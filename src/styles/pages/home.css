@@ -117,7 +117,7 @@
   transition: all 0.3s ease;
 }
 
-.hero-buttons.btn-outline-kalesh:hover {
+.hero-buttons .btn-outline-kalesh:hover {
   background-color: rgba(212, 175, 55, 0.1);
   color: #ff6a00;
 }
