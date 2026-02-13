@@ -47,7 +47,7 @@ function Promotions() {
 
     try {
       // 🔗 BACKEND API (change URL)
-      const res = await fetch("http://localhost:8000/api/v1/promotions", {
+      const res = await fetch("http://165.227.2.98:8000/api/v1/promotions", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(form),

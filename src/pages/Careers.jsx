@@ -48,7 +48,7 @@ function Careers() {
       setLoading(true);
 
       const res = await axios.post(
-        "http://localhost:8000/api/v1/applications",
+        "http://165.227.2.98:8000/api/v1/applications",
         data
       );
 
