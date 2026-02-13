@@ -2,19 +2,14 @@
 
 /* =================================7. HOME PAGE STYLES ======================================== */
 
-
-/* ============================ ROOT HELPERS ================= */
-
-.home-wrapper {
-  width: 100%;
-  overflow-x: hidden;
-}
-
 /* ================= HERO SECTION ================= */
 
 .home-hero {
   width: 100%;
   max-width: 100%;
+  padding-top: 60px;
+  padding-bottom: 60px;
+  margin: 0;
   min-height: 90vh;
   overflow-x: hidden;
   height: fit-content;
@@ -25,15 +20,13 @@
 }
 
 
-.container-fluid{
-  width: 100%;
-  max-width: 100%;
-  padding-top: 3rem;
-  padding-bottom: 3rem;
-  margin: 0;
-  max-width: 100%;
-  
+
+.hero-content,
+.hero-image {
+  padding-top: 40px;
+  padding-bottom: 40px;
 }
+
 
 .container-fluid img {
   display: block;
@@ -41,12 +34,7 @@
   margin-right: auto;
 }
 
-.row{
-  width: 100%;
-  max-width: 100%;
-  margin-top: 0px;
-  margin-bottom: 0px;
-}
+
 
 /* ===== HERO CONTENT ALIGNMENT FIX ===== */
 .hero-content {

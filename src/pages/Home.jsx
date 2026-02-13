@@ -9,11 +9,17 @@ function Home() {
   }, []);
 
   return (
-    <>      <Helmet>
+    <>
+      {" "}
+      <Helmet>
         <title>Kalesh — India's Anonymous Social Media Platform</title>
-        <meta name="description" content="Kalesh is India's anonymous social media platform where you can speak freely without revealing your identity. Join real-time live polls and share opinions anonymously." />
+        <meta
+          name="description"
+          content="Kalesh is India's anonymous social media platform where you can speak freely without revealing your identity. Join real-time live polls and share opinions anonymously."
+        />
         <link rel="canonical" href="https://thekalesh.com/" />
-      </Helmet>      {/* ================= SEO META ================= */}
+      </Helmet>{" "}
+      {/* ================= SEO META ================= */}
       <SEO
         title="Kalesh — India’s Anonymous Social Media Platform"
         description="Kalesh is India’s anonymous social media platform where you can speak freely without revealing your identity."
@@ -22,54 +28,50 @@ function Home() {
         twitterTitle="Kalesh – Anonymous Opinion Platform"
         twitterDescription="India's first real-time anonymous opinion and polling social platform."
       />
-
       <div className="home-wrapper">
         {/* ================= HERO SECTION ================= */}
-        <div className="container-fluid home-hero">
-          <div className="container-fluid px-0">
-            <div className="row align-items-center g-0">
-              {/* Hero TEXT */}
+        <div className="container-fluid home-hero px-0">
+          <div className="row align-items-center g-0">
+            {/* Hero TEXT */}
 
-              <div className="col-12 col-lg-6 order-2 order-lg-1">
-                <div className="hero-content">
-                  <h1 className="hero-title">
-                    India&apos;s First Anonymous Social Media Platform
-                  </h1>
+            <div className="col-12 col-lg-6 ">
+              <div className="hero-content">
+                <h1 className="hero-title">
+                  India&apos;s First Anonymous Social Media Platform
+                </h1>
 
-                  <p className="hero-subtitle ">
-                    A platform where your opinion matters, not your
-                    identity.{" "}
-                  </p>
+                <p className="hero-subtitle ">
+                  A platform where your opinion matters, not your identity.{" "}
+                </p>
 
-                  <div className="hero-buttons d-flex flex-column flex-sm-row gap-4 mt-4 mt-md-5">
-                    <button className="btn-kalesh">
-                      Download App (Coming Soon)
-                    </button>
+                <div className="hero-buttons d-flex flex-column flex-sm-row gap-4 mt-4 mt-md-5">
+                  <button className="btn-kalesh">
+                    Download App (Coming Soon)
+                  </button>
 
-                    <button className="btn-outline-kalesh">
-                      Join the Kalesh Community
-                    </button>
-                  </div>
+                  <button className="btn-outline-kalesh">
+                    Join the Kalesh Community
+                  </button>
                 </div>
               </div>
+            </div>
 
-              {/* 🔥 HERO IMAGE – LCP FIX */}
-              <div className="col-12 col-lg-6 order-1 order-lg-2">
-                <div className="hero-image align-items-center d-flex justify-content-center mx-5">
-                  <img
-                    src="/images/logo-600.webp"
-                    srcSet="
+            {/* 🔥 HERO IMAGE – LCP FIX */}
+            <div className="col-12 col-lg-6 ">
+              <div className="hero-image align-items-center d-flex justify-content-center">
+                <img
+                  src="/images/logo-600.webp"
+                  srcSet="
                       /images/logo-600.webp 600w,
                     "
-                    sizes="(max-width: 768px) 90vw, 600px"
-                    width="400"
-                    height="300"
-                    className="img-fluid logo-glow"
-                    alt="Kalesh anonymous social media platform logo"
-                    fetchpriority="high"
-                    decoding="async"
-                  />
-                </div>
+                  sizes="(max-width: 768px) 90vw, 600px"
+                  width="400"
+                  height="300"
+                  className="img-fluid logo-glow"
+                  alt="Kalesh anonymous social media platform logo"
+                  fetchpriority="high"
+                  decoding="async"
+                />
               </div>
             </div>
           </div>
@@ -116,7 +118,6 @@ function Home() {
         <div className="container-fluid section-poll py-4 py-md-5">
           <div className="container">
             <div className="row align-items-center mt-5 mb-5">
-              
               {/* LEFT IMAGE COLUMN */}
               <div className="col-12 col-lg-6">
                 <div className="poll-image-container text-center">
@@ -139,26 +140,26 @@ function Home() {
                     engagement
                   </h2>
                   <p className="section-description mt-3 mt-md-4">
-                    Whether you're a new user or a well-established influencer, we
-                    deliver fair, equal, and real engagement for everyone on the
-                    platform
+                    Whether you're a new user or a well-established influencer,
+                    we deliver fair, equal, and real engagement for everyone on
+                    the platform
                   </p>
                 </div>
               </div>
             </div>
           </div>
         </div>
-        
+
         {/* ===== CREATE POLLS INFO DIV ===== */}
         <div className="container-fluid section-create-poll py-4 py-md-5">
           <div className="container">
             <div className="row align-items-center mt-5 mb-5">
-              
               {/* LEFT CONTENT COLUMN */}
               <div className="col-12 col-lg-6 order-2 order-lg-1">
                 <div className="profile-content px-3 px-lg-5">
                   <h2 className="section-title">
-                    An anonymous platform that provides complete profile anonymity.
+                    An anonymous platform that provides complete profile
+                    anonymity.
                   </h2>
                   <p className="section-description mt-3 mt-md-4">
                     India's first anonymous social media platform that allows
@@ -190,7 +191,6 @@ function Home() {
         <div className="container-fluid section-chat py-4 py-md-5">
           <div className="container">
             <div className="row align-items-center mt-5 mb-5">
-              
               {/* LEFT IMAGE COLUMN */}
               <div className="col-12 col-lg-6">
                 <div className="chat-image-container text-center">
@@ -227,11 +227,12 @@ function Home() {
         <div className="container-fluid section-create py-4 py-md-5">
           <div className="container">
             <div className="row align-items-center mt-5 mb-5">
-              
               {/* LEFT CONTENT COLUMN */}
               <div className="col-12 col-lg-6 order-2 order-lg-1">
                 <div className="create-content px-3 px-lg-5">
-                  <h2 className="section-title ">Create polls freely, your way</h2>
+                  <h2 className="section-title ">
+                    Create polls freely, your way
+                  </h2>
                   <p className="section-description mt-3 mt-md-4">
                     With real-time voting, instant reach, and high user
                     engagement.

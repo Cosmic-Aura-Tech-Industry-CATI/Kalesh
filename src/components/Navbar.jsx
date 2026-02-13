@@ -1,6 +1,9 @@
 import { Link } from "react-router-dom";
 import { useRef } from "react";
 import { Collapse } from "bootstrap";
+import "../styles/components/navbar.css";
+
+
 
 function Navbar() {
   const menuRef = useRef(null);
@@ -15,7 +18,7 @@ function Navbar() {
   };
 
   return (
-    <nav className="navbar navbar-expand-lg navbar-dark bg-dark px-4 fixed-top">
+    <nav className="navbar navbar-expand-lg navbar-dark  px-4 sticky-top">
       <Link className="navbar-brand d-flex align-items-center mx-4" to="/">
         <img src="/images/kalesh_navbar_logo.webp" alt="logo" height="45" className="me-2" />
         

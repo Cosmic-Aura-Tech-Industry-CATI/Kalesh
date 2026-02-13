@@ -1,10 +1,16 @@
 import { useEffect, Suspense, lazy } from "react";
 import { Routes, Route } from "react-router-dom";
 
+import ScrollbarTop from "./components/ScrollbarTop";
+
+
 import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
 
+
+
 // Lazy load all page components to reduce initial bundle size and improve load times
+
 const Home = lazy(() => import("./pages/Home"));
 const About = lazy(() => import("./pages/About"));
 const Privacy = lazy(() => import("./pages/Privacy"));
@@ -53,6 +59,8 @@ function App() {
   return (
     <div className="app-layout">
       <Navbar />
+
+      <ScrollbarTop />
 
       {/* MAIN CONTENT */}
       <main style={{ flex: 1 }}>
