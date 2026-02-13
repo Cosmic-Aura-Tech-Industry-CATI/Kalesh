@@ -1131,3 +1131,94 @@
     width: 100px;
   }
 }
+
+
+/* resume file changes  */
+
+.file-selected-info {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-top: 10px;
+  padding: 12px 16px;
+  background: linear-gradient(135deg, rgba(255,215,0,0.1) 0%, rgba(255,140,0,0.1) 100%);
+  border-radius: 8px;
+  color: #b8860b;
+  font-size: 14px;
+  border-left: 4px solid #ffd700;
+  animation: slideIn 0.3s ease;
+}
+
+.file-info {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.file-info i {
+  color: #4CAF50;
+  font-size: 16px;
+}
+
+.file-name {
+  font-weight: 500;
+  color: #8B4513;
+  word-break: break-all;
+}
+
+.file-size {
+  font-size: 12px;
+  color: #b8860b;
+  background: rgba(255,215,0,0.3);
+  padding: 2px 8px;
+  border-radius: 12px;
+}
+
+.file-remove-btn {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  background: #dc3545;
+  color: white;
+  border: none;
+  padding: 6px 12px;
+  border-radius: 6px;
+  font-size: 13px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  white-space: nowrap;
+}
+
+.file-remove-btn i {
+  font-size: 14px;
+}
+
+.file-remove-btn:hover {
+  background: #c82333;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(220,53,69,0.3);
+}
+
+.file-remove-btn:active {
+  transform: translateY(0);
+}
+
+@keyframes slideIn {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Optional: If you want a more compact version */
+.file-remove-btn.compact {
+  padding: 4px 8px;
+  font-size: 12px;
+}

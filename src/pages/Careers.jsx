@@ -20,6 +20,35 @@ function Careers() {
   const [loading, setLoading] = useState(false);
   const [showPopup, setShowPopup] = useState(false);
   const fileInputRef = useRef(null);
+    const [selectedFileName, setSelectedFileName] = useState('');
+  const [selectedFileSize, setSelectedFileSize] = useState('');
+  
+
+  const handleFileChange = (e) => {
+    const file = e.target.files[0];
+    if (file) {
+      setSelectedFileName(file.name);
+      
+      // Format file size
+      const size = file.size < 1024 * 1024 
+        ? Math.round(file.size / 1024) + ' KB'
+        : (file.size / (1024 * 1024)).toFixed(2) + ' MB';
+      setSelectedFileSize(size);
+      
+      // Call your existing handleChange function
+      // handleChange(e); // Uncomment this line
+    }
+  };
+
+  const handleFileRemove = () => {
+    setSelectedFileName('');
+    setSelectedFileSize('');
+    if (fileInputRef.current) {
+      fileInputRef.current.value = '';
+    }
+    // If you need to clear from parent form
+    // onChange({ target: { name: 'resume', value: null } });
+  };
 
   const handleChange = (e) => {
     const { name, value, files } = e.target;
@@ -212,39 +241,61 @@ function Careers() {
                 </div>
               </div>
 
-              <div className="form-group-golden mb-5">
-  <label className="golden-orange-label">
-    <i className="fas fa-file-upload label-icon"></i>
-    Resume
-  </label>
-  <div 
-    className="golden-file-upload" 
-    onClick={() => fileInputRef.current.click()}
-    style={{ cursor: 'pointer' }}
-  >
-    <label htmlFor="resume-upload" className="file-upload-label">
-      <div className="file-upload-content">
-        <i className="fa-solid fa-cloud-arrow-up file-upload-icon"></i>
-        <span className="file-upload-text">
-          Click to upload your resume
-        </span>
-        <span className="file-upload-hint">
-          PDF, DOC, DOCX up to 5MB
-        </span>
+<div className="form-group-golden mb-5">
+      <label className="golden-orange-label">
+        <i className="fas fa-file-upload label-icon"></i>
+        Resume
+      </label>
+      <div 
+        className="golden-file-upload" 
+        onClick={() => !selectedFileName && fileInputRef.current.click()}
+        style={{ cursor: selectedFileName ? 'default' : 'pointer' }}
+      >
+        <label htmlFor="resume-upload" className="file-upload-label">
+          <div className="file-upload-content">
+            <i className="fa-solid fa-cloud-arrow-up file-upload-icon"></i>
+            <span className="file-upload-text">
+              Click to upload your resume
+            </span>
+            <span className="file-upload-hint">
+              PDF, DOC, DOCX up to 5MB
+            </span>
+          </div>
+          <div className="file-upload-border"></div>
+          <input
+            type="file"
+            name="resume"
+            accept=".pdf,.doc,.docx"
+            onChange={handleFileChange}
+            required
+            ref={fileInputRef}
+            style={{ display: 'none' }}
+          />
+        </label>
       </div>
-      <div className="file-upload-border"></div>
-      <input
-        type="file"
-        name="resume"
-        accept=".pdf,.doc,.docx"
-        onChange={handleChange}
-        required
-        ref={fileInputRef}
-        style={{ display: 'none' }} // Hide the actual input
-      />
-    </label>
-  </div>
-</div>
+      
+      {/* Show selected filename with remove option */}
+      {selectedFileName && (
+        <div className="file-selected-info">
+          <div className="file-info">
+            <i className="fas fa-check-circle"></i>
+            <span className="file-name">Selected: {selectedFileName}</span>
+            {selectedFileSize && (
+              <span className="file-size">({selectedFileSize})</span>
+            )}
+          </div>
+          <button 
+            type="button" 
+            className="file-remove-btn"
+            onClick={handleFileRemove}
+            title="Remove file"
+          >
+            <i className="fas fa-times"></i>
+            Remove
+          </button>
+        </div>
+      )}
+    </div>
 
               <button type="submit" className="golden-orange-submit-btn" disabled={loading}>
                 {loading ? (
