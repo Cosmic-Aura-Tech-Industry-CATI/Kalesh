@@ -36,7 +36,7 @@ function ContactUs() {
       message: ""
     });
 
-    axios.post('http://165.227.2.98:8000/api/v1/contact', formData)
+    axios.post('https://api.thekalesh.com/api/v1/contact', formData)
       .then(response => {
         console.log("Response:", response.data);
       })
