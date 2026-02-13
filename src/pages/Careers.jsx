@@ -213,39 +213,38 @@ function Careers() {
               </div>
 
               <div className="form-group-golden mb-5">
-                <label className="golden-orange-label">
-                  <i className="fas fa-file-upload label-icon"></i>
-                  Resume
-                </label>
-                <div className="golden-file-upload">
-                  <label htmlFor="resume-upload" className="file-upload-label">
-                    <div className="file-upload-content">
-                      <i className="fa-solid fa-cloud-arrow-up file-upload-icon"></i>
-                      <span className="file-upload-text">
-                        Click to upload your resume{" "}
-                         {/*<input
-                          type="file"
-                          id="resume-upload"
-                          className="file-upload-input"
-                          accept=".pdf,.doc,.docx"
-                        />*/}
-                      </span>
-                      <span className="file-upload-hint">
-                        PDF, DOC, DOCX up to 5MB
-                      </span>
-                    </div>
-                    <div className="file-upload-border"></div>
-                    <input
-                      type="file"
-                      name="resume"
-                      accept=".pdf,.doc,.docx"
-                      onChange={handleChange}
-                      required
-                      ref={fileInputRef}
-                    />
-                  </label>
-                </div>
-              </div>
+  <label className="golden-orange-label">
+    <i className="fas fa-file-upload label-icon"></i>
+    Resume
+  </label>
+  <div 
+    className="golden-file-upload" 
+    onClick={() => fileInputRef.current.click()}
+    style={{ cursor: 'pointer' }}
+  >
+    <label htmlFor="resume-upload" className="file-upload-label">
+      <div className="file-upload-content">
+        <i className="fa-solid fa-cloud-arrow-up file-upload-icon"></i>
+        <span className="file-upload-text">
+          Click to upload your resume
+        </span>
+        <span className="file-upload-hint">
+          PDF, DOC, DOCX up to 5MB
+        </span>
+      </div>
+      <div className="file-upload-border"></div>
+      <input
+        type="file"
+        name="resume"
+        accept=".pdf,.doc,.docx"
+        onChange={handleChange}
+        required
+        ref={fileInputRef}
+        style={{ display: 'none' }} // Hide the actual input
+      />
+    </label>
+  </div>
+</div>
 
               <button type="submit" className="golden-orange-submit-btn" disabled={loading}>
                 {loading ? (
