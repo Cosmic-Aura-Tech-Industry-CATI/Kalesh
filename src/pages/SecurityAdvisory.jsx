@@ -1,5 +1,6 @@
 import { useEffect } from 'react';
 import { Helmet } from 'react-helmet-async';
+import SEO from "../components/SEO";
 import './GlassComponents.css';
 
 function SectionCard({ number, title, content }) {
@@ -67,8 +68,17 @@ function SecurityAdvisory() {
           name="description"
           content="Learn about Kalesh's security measures, data protection, encryption, and privacy safeguards for anonymous social media and real-time polling."
         />
-        <link rel="canonical" href="https://thekalesh.com/security-advisory" />
+        <link rel="canonical" href="https://thekalesh.com/securityadvisory" />
+        <meta name="robots" content="index, follow" />
       </Helmet>
+      <SEO
+        title="Security Advisory – Kalesh Platform Security & Data Protection"
+        description="Learn about Kalesh's security measures, data protection, encryption, and privacy safeguards for anonymous social media and real-time polling."
+        ogTitle="Security Advisory - Kalesh"
+        ogDescription="Discover how Kalesh protects user security and data on India's anonymous social media platform."
+        twitterTitle="Security Advisory - Kalesh"
+        twitterDescription="Learn about Kalesh's security measures and data protection for anonymous users."
+      />
 
       <div className="glass-container">
         {/* Top gradient overlay layer */}

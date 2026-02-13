@@ -1,8 +1,12 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Helmet } from 'react-helmet-async';
 import './Blogteam.css';
 
 const Blogteam = () => {
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+
   const teamMembers = [
     {
       id: 1,

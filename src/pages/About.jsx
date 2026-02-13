@@ -279,10 +279,13 @@ function About() {
                   </div>
 
                   <div className="hero-slogan">
-                    <h1 className="kalesh-text">
+                    <h1 style={{ position: 'absolute', width: '1px', height: '1px', padding: 0, margin: '-1px', overflow: 'hidden', clip: 'rect(0,0,0,0)', whiteSpace: 'nowrap', border: 0 }}>
+                      About 
+                    </h1>
+                    <div className="kalesh-text" aria-hidden="true">
                       <span className="k-letter">K</span>
                       <span className="alesh-text">ALESH</span>
-                    </h1>
+                    </div>
                     <p className="tagline">
                       A Platform Where Your Opinion Matters
                       <br />

@@ -4,126 +4,147 @@
 
   <url>
     <loc>https://thekalesh.com/</loc>
+    <lastmod>2026-02-12</lastmod>
     <priority>1.0</priority>
     <changefreq>daily</changefreq>
   </url>
 
   <url>
     <loc>https://thekalesh.com/about</loc>
+    <lastmod>2026-02-12</lastmod>
     <priority>0.8</priority>
     <changefreq>monthly</changefreq>
   </url>
 
   <url>
     <loc>https://thekalesh.com/privacy</loc>
+    <lastmod>2026-02-10</lastmod>
     <priority>0.6</priority>
     <changefreq>monthly</changefreq>
   </url>
 
   <url>
     <loc>https://thekalesh.com/promotions</loc>
+    <lastmod>2026-02-12</lastmod>
     <priority>0.7</priority>
     <changefreq>monthly</changefreq>
   </url>
 
   <url>
     <loc>https://thekalesh.com/careers</loc>
+    <lastmod>2026-02-12</lastmod>
     <priority>0.7</priority>
     <changefreq>weekly</changefreq>
   </url>
 
   <url>
     <loc>https://thekalesh.com/contactus</loc>
+    <lastmod>2026-02-10</lastmod>
     <priority>0.7</priority>
     <changefreq>monthly</changefreq>
   </url>
 
   <url>
     <loc>https://thekalesh.com/helpcenter</loc>
+    <lastmod>2026-02-10</lastmod>
     <priority>0.8</priority>
     <changefreq>weekly</changefreq>
   </url>
 
   <url>
     <loc>https://thekalesh.com/termsandconditions</loc>
+    <lastmod>2026-01-15</lastmod>
     <priority>0.6</priority>
     <changefreq>yearly</changefreq>
   </url>
 
   <url>
     <loc>https://thekalesh.com/privacypolicy</loc>
+    <lastmod>2026-01-15</lastmod>
     <priority>0.6</priority>
     <changefreq>yearly</changefreq>
   </url>
 
   <url>
     <loc>https://thekalesh.com/communityguidelines</loc>
+    <lastmod>2026-01-15</lastmod>
     <priority>0.6</priority>
     <changefreq>yearly</changefreq>
   </url>
 
   <url>
     <loc>https://thekalesh.com/securityadvisory</loc>
+    <lastmod>2026-02-10</lastmod>
     <priority>0.6</priority>
     <changefreq>yearly</changefreq>
   </url>
 
   <url>
     <loc>https://thekalesh.com/faq</loc>
+    <lastmod>2026-02-10</lastmod>
     <priority>0.7</priority>
     <changefreq>monthly</changefreq>
   </url>
 
   <url>
     <loc>https://thekalesh.com/blog</loc>
+    <lastmod>2026-02-12</lastmod>
     <priority>0.8</priority>
     <changefreq>weekly</changefreq>
   </url>
 
   <url>
     <loc>https://thekalesh.com/blog/blog1</loc>
+    <lastmod>2026-02-03</lastmod>
     <priority>0.7</priority>
     <changefreq>monthly</changefreq>
   </url>
 
   <url>
     <loc>https://thekalesh.com/blog/blogteam</loc>
+    <lastmod>2026-02-05</lastmod>
     <priority>0.7</priority>
     <changefreq>monthly</changefreq>
   </url>
 
   <url>
     <loc>https://thekalesh.com/blog/Viewpage</loc>
+    <lastmod>2026-02-12</lastmod>
     <priority>0.7</priority>
     <changefreq>weekly</changefreq>
   </url>
 
   <url>
     <loc>https://thekalesh.com/blog/Post1</loc>
+    <lastmod>2026-02-10</lastmod>
     <priority>0.6</priority>
     <changefreq>monthly</changefreq>
   </url>
 
   <url>
     <loc>https://thekalesh.com/blog/Post2</loc>
+    <lastmod>2026-02-10</lastmod>
     <priority>0.6</priority>
     <changefreq>monthly</changefreq>
   </url>
 
   <url>
     <loc>https://thekalesh.com/blog/Post3</loc>
+    <lastmod>2026-02-10</lastmod>
     <priority>0.6</priority>
     <changefreq>monthly</changefreq>
   </url>
 
   <url>
     <loc>https://thekalesh.com/blog/Post4</loc>
+    <lastmod>2026-02-10</lastmod>
     <priority>0.6</priority>
     <changefreq>monthly</changefreq>
   </url>
 
   <url>
     <loc>https://thekalesh.com/blog/Post5</loc>
+    <lastmod>2026-02-10</lastmod>
     <priority>0.6</priority>
     <changefreq>monthly</changefreq>
   </url>

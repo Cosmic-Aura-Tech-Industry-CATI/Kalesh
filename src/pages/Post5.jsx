@@ -1,9 +1,13 @@
 // post1.jsx
-import React from "react";
+import React, { useEffect } from "react";
 import { Helmet } from "react-helmet-async";
 import "./Blogpage1.css"; // Linking to your existing CSS
 
 const Post5 = () => {
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+
   return (
     <>
       <Helmet>
