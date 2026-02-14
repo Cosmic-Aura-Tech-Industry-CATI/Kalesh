@@ -9,13 +9,13 @@
 
   .admin-wrapper,
   .admin-wrapper body {
-    @apply bg-gradient-to-br from-[#0b0b0f] to-[#1a1a2e] text-white;
+    @apply bg-[#0b0b0b] text-white;
   }
 
   .admin-wrapper input, 
   .admin-wrapper textarea, 
   .admin-wrapper select {
-    @apply bg-[#0f0f15] border border-gray-700 text-white placeholder-gray-500 focus:border-orange-500 focus:ring-1 focus:ring-orange-500/50;
+    @apply bg-[#1a1a1a] border border-[#d4af37]/30 text-white placeholder-gray-500 focus:border-[#ff6a00] focus:ring-1 focus:ring-[#ff6a00]/50;
   }
 
   .admin-wrapper input::placeholder {
@@ -26,7 +26,7 @@
 @layer components {
   /* Admin Container */
   .admin-container {
-    @apply bg-gradient-to-br from-[#0b0b0f] to-[#1a1a2e] min-h-screen text-white;
+    @apply bg-[#0b0b0b] min-h-screen text-white;
   }
 
   .admin-page-wrapper {
@@ -35,15 +35,15 @@
 
   /* Shadows & Effects */
   .card-shadow {
-    @apply shadow-lg shadow-black/20;
+    @apply shadow-lg shadow-black/50;
   }
   
   .hover-lift {
-    @apply hover:shadow-xl hover:shadow-black/30 hover:translate-y-[-2px] transition-all duration-200;
+    @apply hover:shadow-xl hover:shadow-[#ff6a00]/20 hover:translate-y-[-2px] transition-all duration-200;
   }
   
   .gradient-text {
-    @apply bg-gradient-to-r from-orange-500 to-yellow-500 bg-clip-text text-transparent;
+    @apply bg-gradient-to-r from-[#ff6a00] to-[#ffd700] bg-clip-text text-transparent;
   }
   
   .glass-effect {
@@ -52,7 +52,7 @@
 
   /* Admin Cards & Containers */
   .admin-card {
-    @apply bg-[#141420] border border-gray-700 rounded-lg p-6 card-shadow;
+    @apply bg-[#1a1a1a] border border-[#d4af37]/20 rounded-lg p-6 card-shadow;
   }
 
   .admin-card-lg {
@@ -65,7 +65,7 @@
 
   /* Admin Header */
   .admin-header {
-    @apply sticky top-0 z-40 bg-[#141420]/95 backdrop-blur border-b border-gray-700;
+    @apply sticky top-0 z-40 bg-[#0b0b0b]/95 backdrop-blur border-b border-[#d4af37]/20;
   }
 
   .admin-header-content {
@@ -74,7 +74,7 @@
 
   /* Admin Sidebar */
   .admin-sidebar {
-    @apply fixed left-0 top-0 h-screen w-64 bg-[#0f0f15] border-r border-gray-700 z-50 overflow-y-auto;
+    @apply fixed left-0 top-0 h-screen w-64 bg-[#0b0b0b] border-r border-[#d4af37]/20 z-50 overflow-y-auto;
   }
 
   .admin-sidebar-menu {
@@ -82,11 +82,11 @@
   }
 
   .admin-sidebar-item {
-    @apply flex items-center gap-3 px-4 py-3 rounded-lg cursor-pointer transition-all duration-200 text-gray-400 hover:text-orange-500 hover:bg-orange-500/10;
+    @apply flex items-center gap-3 px-4 py-3 rounded-lg cursor-pointer transition-all duration-200 text-gray-400 hover:text-[#ff6a00] hover:bg-[#ff6a00]/10;
   }
 
   .admin-sidebar-item.active {
-    @apply text-orange-500 bg-orange-500/20;
+    @apply text-[#ff6a00] bg-[#ff6a00]/20;
   }
 
   /* Admin Main */
@@ -96,7 +96,22 @@
 
   /* Page Title */
   .admin-page-title {
-    @apply text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-6 sm:mb-8;
+    @apply text-2xl sm:text-3xl md:text-4xl font-bold mb-6 sm:mb-8;
+    background: linear-gradient(135deg, #ff6a00, #ffd700, #ff6a00);
+    background-size: 300% 100%;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    animation: gradientFlow 8s ease infinite;
+  }
+  
+  @keyframes gradientFlow {
+    0%, 100% {
+      background-position: 0% 50%;
+    }
+    50% {
+      background-position: 100% 50%;
+    }
   }
 
   .admin-page-subtitle {
@@ -109,15 +124,15 @@
   }
 
   .admin-table thead {
-    @apply bg-[#0f0f15] border-b border-gray-700;
+    @apply bg-[#1a1a1a] border-b border-[#d4af37]/20;
   }
 
   .admin-table th {
-    @apply text-left px-6 py-4 font-semibold text-gray-300 text-sm;
+    @apply text-left px-6 py-4 font-semibold text-[#d4af37] text-sm;
   }
 
   .admin-table tbody tr {
-    @apply border-b border-gray-700 hover:bg-orange-500/5 transition-colors;
+    @apply border-b border-[#d4af37]/10 hover:bg-[#ff6a00]/5 transition-colors;
   }
 
   .admin-table td {
@@ -126,11 +141,12 @@
 
   /* Buttons */
   .admin-btn-primary {
-    @apply bg-gradient-to-r from-orange-500 to-yellow-500 hover:from-orange-600 hover:to-yellow-600 text-white font-medium px-4 py-2 rounded-lg transition-all duration-200 active:scale-95;
+    background: linear-gradient(135deg, #ff2a2a, #ff6a00);
+    @apply hover:shadow-lg hover:shadow-[#ff6a00]/50 text-white font-medium px-4 py-2 rounded-lg transition-all duration-200 active:scale-95;
   }
 
   .admin-btn-secondary {
-    @apply bg-[#1a1a2e] hover:bg-[#252538] text-gray-300 font-medium px-4 py-2 rounded-lg border border-gray-700 transition-all duration-200;
+    @apply bg-[#1a1a1a] hover:bg-[#242424] text-gray-300 font-medium px-4 py-2 rounded-lg border border-[#d4af37]/30 transition-all duration-200;
   }
 
   .admin-btn-danger {
@@ -143,19 +159,19 @@
   }
 
   .admin-form-label {
-    @apply block text-xs sm:text-sm font-medium text-gray-300 mb-2;
+    @apply block text-xs sm:text-sm font-medium text-[#d4af37] mb-2;
   }
 
   .admin-form-input {
-    @apply w-full px-4 py-2.5 bg-[#0f0f15] border border-gray-700 rounded-lg text-white placeholder-gray-600 focus:border-orange-500 focus:ring-1 focus:ring-orange-500/50 transition-all;
+    @apply w-full px-4 py-2.5 bg-[#1a1a1a] border border-[#d4af37]/30 rounded-lg text-white placeholder-gray-600 focus:border-[#ff6a00] focus:ring-1 focus:ring-[#ff6a00]/50 transition-all;
   }
 
   .admin-form-textarea {
-    @apply w-full px-4 py-2.5 bg-[#0f0f15] border border-gray-700 rounded-lg text-white resize-none placeholder-gray-600 focus:border-orange-500 focus:ring-1 focus:ring-orange-500/50 transition-all;
+    @apply w-full px-4 py-2.5 bg-[#1a1a1a] border border-[#d4af37]/30 rounded-lg text-white resize-none placeholder-gray-600 focus:border-[#ff6a00] focus:ring-1 focus:ring-[#ff6a00]/50 transition-all;
   }
 
   .admin-form-select {
-    @apply w-full px-4 py-2.5 bg-[#0f0f15] border border-gray-700 rounded-lg text-white focus:border-orange-500 focus:ring-1 focus:ring-orange-500/50 transition-all;
+    @apply w-full px-4 py-2.5 bg-[#1a1a1a] border border-[#d4af37]/30 rounded-lg text-white focus:border-[#ff6a00] focus:ring-1 focus:ring-[#ff6a00]/50 transition-all;
   }
 
   /* Badges & Pills */
@@ -164,7 +180,7 @@
   }
 
   .admin-badge-primary {
-    @apply admin-badge bg-orange-500/20 text-orange-400;
+    @apply admin-badge bg-[#ff6a00]/20 text-[#ffd700];
   }
 
   .admin-badge-success {
@@ -176,7 +192,7 @@
   }
 
   .admin-badge-warning {
-    @apply admin-badge bg-yellow-500/20 text-yellow-400;
+    @apply admin-badge bg-[#ffd700]/20 text-[#ffd700];
   }
 
   /* Stats */
@@ -198,15 +214,15 @@
   }
 
   .admin-modal-content {
-    @apply bg-[#141420] border border-gray-700 rounded-lg max-w-md w-full mx-4;
+    @apply bg-[#1a1a1a] border border-[#d4af37]/20 rounded-lg max-w-md w-full mx-4;
   }
 
   .admin-modal-header {
-    @apply px-6 py-4 border-b border-gray-700 flex items-center justify-between;
+    @apply px-6 py-4 border-b border-[#d4af37]/20 flex items-center justify-between;
   }
 
   .admin-modal-title {
-    @apply text-lg font-semibold text-white;
+    @apply text-lg font-semibold text-[#d4af37];
   }
 
   .admin-modal-body {
@@ -214,7 +230,7 @@
   }
 
   .admin-modal-footer {
-    @apply px-6 py-4 border-t border-gray-700 flex justify-end gap-3;
+    @apply px-6 py-4 border-t border-[#d4af37]/20 flex justify-end gap-3;
   }
 
   /* Stat Cards Grid */

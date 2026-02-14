@@ -40,11 +40,11 @@ export default function Sidebar({ open, onClose }) {
 
       {/* Sidebar */}
       <div
-        className={`w-64 bg-[#141420]/95 backdrop-blur-md h-screen fixed left-0 top-0 border-r border-gray-800 z-40 transition-transform lg:translate-x-0 ${
+        className={`w-64 bg-[#0b0b0b]/95 backdrop-blur-md h-screen fixed left-0 top-0 border-r border-[#d4af37]/20 z-40 transition-transform lg:translate-x-0 ${
           open ? 'translate-x-0' : '-translate-x-full'
         }`}
       >
-        <div className="p-6 border-b border-gray-800/50">
+        <div className="p-6 border-b border-[#d4af37]/20">
           <h1 className="text-xl sm:text-2xl font-bold gradient-text">
             KALESH ADMIN
           </h1>
@@ -62,8 +62,8 @@ export default function Sidebar({ open, onClose }) {
                 onClick={onClose}
                 className={`flex items-center gap-3 px-4 py-3 rounded-lg mb-2 transition-all group ${
                   isActive
-                    ? 'bg-gradient-to-r from-orange-500 to-yellow-500 text-white shadow-lg shadow-orange-500/20'
-                    : 'text-gray-400 hover:bg-[#1a1a2e]/80 hover:text-orange-400 hover:translate-x-1'
+                    ? 'bg-gradient-to-r from-[#ff6a00] to-[#ffd700] text-white shadow-lg shadow-[#ff6a00]/30'
+                    : 'text-gray-400 hover:bg-[#1a1a1a]/80 hover:text-[#ff6a00] hover:translate-x-1'
                 }`}
               >
                 <Icon size={20} className="group-hover:rotate-12 transition-transform" />
