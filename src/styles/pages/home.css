@@ -18,7 +18,12 @@
   border-bottom: 1px solid rgba(212, 175, 55, 0.2);
 }
 
-
+.home-hero .row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  
+}  
 
 .hero-content,
 .hero-image {
@@ -26,13 +31,11 @@
   padding-bottom: 40px;
 }
 
-
-.container-fluid img {
+.home-hero img {
   display: block;
   margin-left: auto;
   margin-right: auto;
 }
-
 
 
 /* ===== HERO CONTENT ALIGNMENT FIX ===== */
@@ -135,9 +138,6 @@
   object-fit: contain;
   filter: drop-shadow(0 0 20px rgba(255, 106, 0, 0.7));
 }
-
-
-
 
 
 /* ============================================ RESPONSIVE Code for hero======================================================= */
@@ -331,7 +331,6 @@
   }
 }
 
-
 /* =====================================================
    HERO – FINAL MOBILE OVERRIDE (GUARANTEED FIX)
    ===================================================== */
@@ -419,13 +418,13 @@
 
 .info-full-image {
   width: 100%;
-  max-width: 1200px;   /* desktop limit */
+  max-width: 1425px;   /* desktop limit */
+  max-height: 295px;
   display: block;
   margin-left: auto;
   margin-right: auto;
   aspect-ratio: 3 / 1; /* CLS FIX */
 }
-
 
 .info-content {
   margin: 40px auto;
@@ -448,15 +447,12 @@
   margin-bottom: 1rem;
   animation: gradientFlow 8s ease infinite;
   letter-spacing: -0.5px;
+  
 }
-
-
 
 
 /* ================= COMMON SECTIONS ================= */
 /* ==================POLL INFO DIV========================= */
-
-
 /* ===== COMMON SECTION FIX ===== */
 .section-poll,
 .section-create-poll,
