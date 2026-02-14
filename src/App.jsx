@@ -51,7 +51,7 @@ function AdminLayout({ children }) {
 
   // Import admin CSS only when admin layout is used
   useEffect(() => {
-    import('./admin/admin.css');
+    import('./admin/style/admin.css');
   }, []);
 
   if (isLoginPage) {
