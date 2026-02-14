@@ -5,8 +5,11 @@
 .navbar {
   background-color: #0b0b0b !important;
   border-bottom: 1px solid rgba(212, 175, 55, 0.2);
-  
+  z-index: 1030; /* Bootstrap standard */
 }
+
+
+
 
 .navbar-brand {
   font-weight: 800;

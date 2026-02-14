@@ -1,26 +1,28 @@
 /*==== Globle css for all. ====*/
 
-.home-wrapper {              /*==== Globle css of home page. ====*/   
-  width: 100%;
-  overflow-x: hidden;
-}
+
 
 html, body {
   overflow-x: hidden;
   scroll-behavior: auto;
+  height: 100%;
 }
 
 .app-main {
-  min-height: 100vh;      /*==== 👉 Page ki height kam se kam full screen ke barabar hogi. Agar kisi page pe content kam hai (jaise About page me 2 line text hi hai),
-  to footer upar nahi chipkega — page full screen bhara hua lagega.. ====*/
   display: flex;
   flex-direction: column;
+  
+}
+
+.app-main main {
+  flex: 1;
 }
 
 
 body {
   background-color: #0b0b0b;
   color: #ffffff;
+  margin: 0;
   font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
     Roboto, Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue",
     sans-serif;

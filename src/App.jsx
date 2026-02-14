@@ -57,7 +57,7 @@ function App() {
   }, []);
 
   return (
-    <div className="app-layout">
+    <div className="app-main">
       <Navbar />
 
       <ScrollbarTop />
