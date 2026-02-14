@@ -69,10 +69,11 @@
     position: fixed;
     top: 0;
     left: 0;
-    width: 100%;
+    right: 0;
+    width: 100vw;
     height: 100vh;
     z-index: 1050;
-    padding: 60px 15px 30px;
+    padding: 80px 5% 40px;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -118,11 +119,14 @@
 
   .mobile-menu-logo {
     text-align: center;
-    margin-bottom: 25px;
-    padding-bottom: 15px;
+    margin: 0 auto 30px;
+    padding-bottom: 20px;
     border-bottom: 2px solid rgba(255, 106, 0, 0.4);
-    width: 100%;
-    max-width: 240px;
+    width: 90%;
+    max-width: 300px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
   }
 
   .mobile-menu-logo img {
@@ -137,25 +141,39 @@
   .navbar-nav {
     display: flex !important;
     flex-direction: column;
-    gap: 10px !important;
-    margin: 0 !important;
-    padding: 0;
-    width: 100%;
-    max-width: 280px;
+    gap: 12px !important;
+    margin: 0 auto !important;
+    padding: 0 !important;
+    width: 90%;
+    max-width: 300px;
     align-items: center;
+    justify-content: center;
+  }
+
+  /* Override Bootstrap utility classes that cause right alignment */
+  .navbar-nav.ms-auto {
+    margin-left: 0 !important;
+    margin-right: 0 !important;
+  }
+
+  .navbar-nav.mx-4 {
+    margin-left: 0 !important;
+    margin-right: 0 !important;
   }
 
   .nav-item {
     text-align: center;
-    margin-bottom: 8px !important;
+    margin-bottom: 0 !important;
     width: 100%;
+    display: flex;
+    justify-content: center;
   }
 
   .nav-link {
     color: #ffffff !important;
-    font-size: 1rem;
+    font-size: 16px;
     font-weight: 600;
-    padding: 10px 18px !important;
+    padding: 12px 20px !important;
     border-radius: 12px !important;
     background: rgba(255, 255, 255, 0.05) !important;
     border: 1px solid rgba(255, 106, 0, 0.2) !important;
@@ -163,7 +181,9 @@
     -webkit-backdrop-filter: blur(10px);
     display: block !important;
     width: 100% !important;
-    margin-right: 0 !important;
+    margin: 0 !important;
+    text-align: center;
+    transition: all 0.3s ease;
   }
 
   .nav-link:hover {
@@ -182,45 +202,47 @@
 
   .navbar-login-btn-container {
     display: flex !important;
-    width: 100%;
-    max-width: 280px;
-    margin-top: 25px;
-    padding-top: 20px;
-    margin-bottom: 0;
+    width: 90%;
+    max-width: 320px;
+    margin: 30px auto 0;
+    padding-top: 25px;
     border-top: 2px solid rgba(255, 106, 0, 0.4);
     justify-content: center;
   }
 
   .navbar-login-btn {
     width: 100%;
-    padding: 13px 20px !important;
+    padding: 14px 24px !important;
     font-size: 17px;
     font-weight: 700;
     border-radius: 12px;
     text-align: center;
     background: linear-gradient(135deg, #ff6a00, #ffa500);
-    color: #ffffff;
+    color: #ffffff !important;
     transition: all 0.3s ease;
     border: none;
     box-shadow: 0 4px 15px rgba(255, 106, 0, 0.4);
+    text-decoration: none;
+    display: block;
   }
 
   .navbar-login-btn:hover {
     transform: scale(1.05);
     box-shadow: 0 6px 20px rgba(255, 106, 0, 0.6);
-    color: #ffffff;
+    color: #ffffff !important;
+    text-decoration: none;
   }
 
   .mobile-menu-copyright {
     text-align: center;
-    margin-top: 20px;
-    padding-top: 15px;
+    margin: 25px auto 0;
+    padding-top: 20px;
     border-top: 1px solid rgba(255, 106, 0, 0.3);
     color: rgba(255, 255, 255, 0.7);
     font-size: 0.8rem;
     font-weight: 400;
-    width: 100%;
-    max-width: 280px;
+    width: 90%;
+    max-width: 300px;
   }
 
   .navbar-toggler {
@@ -265,13 +287,14 @@
     position: fixed;
     top: 0;
     left: 0;
-    width: 100%;
+    right: 0;
+    width: 100vw;
     height: 100vh;
     z-index: 1050;
-    padding: 40px 30px;
+    padding: 80px 5% 40px;
     display: flex;
     flex-direction: column;
-    justify-content: space-between;
+    justify-content: center;
     align-items: center;
     overflow-y: auto;
     opacity: 0;
@@ -314,10 +337,14 @@
 
   .mobile-menu-logo {
     text-align: center;
-    margin-bottom: 40px;
+    margin: 0 auto 35px;
     padding-bottom: 25px;
     border-bottom: 2px solid rgba(255, 106, 0, 0.4);
-    order: -1;
+    width: 90%;
+    max-width: 300px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
   }
 
   .mobile-menu-logo img {
@@ -333,25 +360,38 @@
     display: flex !important;
     flex-direction: column;
     gap: 14px !important;
-    margin: 0 !important;
-    padding: 0;
-    width: 100%;
-    max-width: 260px;
-    flex: 1;
+    margin: 0 auto !important;
+    padding: 0 !important;
+    width: 90%;
+    max-width: 300px;
+    align-items: center;
     justify-content: center;
+  }
+
+  /* Override Bootstrap utility classes that cause right alignment */
+  .navbar-nav.ms-auto {
+    margin-left: 0 !important;
+    margin-right: 0 !important;
+  }
+
+  .navbar-nav.mx-4 {
+    margin-left: 0 !important;
+    margin-right: 0 !important;
   }
 
   .nav-item {
     text-align: center;
-    margin-bottom: 9px !important;
+    margin-bottom: 0 !important;
     width: 100%;
+    display: flex;
+    justify-content: center;
   }
 
   .nav-link {
     color: #ffffff !important;
-    font-size: 1.05rem;
+    font-size: 17px;
     font-weight: 600;
-    padding: 12px 20px !important;
+    padding: 13px 22px !important;
     border-radius: 13px !important;
     background: rgba(255, 255, 255, 0.05) !important;
     border: 1px solid rgba(255, 106, 0, 0.2) !important;
@@ -359,7 +399,9 @@
     -webkit-backdrop-filter: blur(10px);
     display: block !important;
     width: 100% !important;
-    margin-right: 0 !important;
+    margin: 0 !important;
+    text-align: center;
+    transition: all 0.3s ease;
   }
 
   .nav-link:hover {
@@ -378,37 +420,47 @@
 
   .navbar-login-btn-container {
     display: flex !important;
-    width: 100%;
-    max-width: 260px;
-    margin-top: auto;
+    width: 90%;
+    max-width: 320px;
+    margin: 30px auto 0;
     padding-top: 25px;
-    margin-bottom: 25px;
     border-top: 2px solid rgba(255, 106, 0, 0.4);
     justify-content: center;
-    order: 1;
   }
 
   .navbar-login-btn {
     width: 100%;
-    padding: 13px 22px !important;
+    padding: 14px 22px !important;
     font-size: 17px;
-    font-weight: 600;
-    border-radius: 11px;
+    font-weight: 700;
+    border-radius: 12px;
+    text-align: center;
+    background: linear-gradient(135deg, #ff6a00, #ffa500);
+    color: #ffffff !important;
+    transition: all 0.3s ease;
+    border: none;
+    box-shadow: 0 4px 15px rgba(255, 106, 0, 0.4);
+    text-decoration: none;
+    display: block;
   }
 
   .navbar-login-btn:hover {
     transform: scale(1.05);
+    box-shadow: 0 6px 20px rgba(255, 106, 0, 0.6);
+    color: #ffffff !important;
+    text-decoration: none;
   }
 
   .mobile-menu-copyright {
     text-align: center;
-    margin-top: auto;
+    margin: 25px auto 0;
     padding-top: 25px;
-    border-top: 2px solid rgba(255, 106, 0, 0.4);
-    color: rgba(255, 255, 255, 0.8);
-    font-size: 0.9rem;
-    font-weight: 500;
-    order: 2;
+    border-top: 1px solid rgba(255, 106, 0, 0.3);
+    color: rgba(255, 255, 255, 0.7);
+    font-size: 0.85rem;
+    font-weight: 400;
+    width: 90%;
+    max-width: 300px;
   }
 
   .navbar-toggler {
@@ -453,13 +505,14 @@
     position: fixed;
     top: 0;
     left: 0;
-    width: 100%;
+    right: 0;
+    width: 100vw;
     height: 100vh;
     z-index: 1050;
-    padding: 50px 40px;
+    padding: 90px 5% 50px;
     display: flex;
     flex-direction: column;
-    justify-content: space-between;
+    justify-content: center;
     align-items: center;
     overflow-y: auto;
     opacity: 0;
@@ -502,10 +555,14 @@
 
   .mobile-menu-logo {
     text-align: center;
-    margin-bottom: 50px;
+    margin: 0 auto 40px;
     padding-bottom: 30px;
     border-bottom: 2px solid rgba(255, 106, 0, 0.4);
-    order: -1;
+    width: 90%;
+    max-width: 320px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
   }
 
   .mobile-menu-logo img {
@@ -521,25 +578,38 @@
     display: flex !important;
     flex-direction: column;
     gap: 16px !important;
-    margin: 0 !important;
-    padding: 0;
-    width: 100%;
-    max-width: 270px;
-    flex: 1;
+    margin: 0 auto !important;
+    padding: 0 !important;
+    width: 90%;
+    max-width: 320px;
+    align-items: center;
     justify-content: center;
+  }
+
+  /* Override Bootstrap utility classes that cause right alignment */
+  .navbar-nav.ms-auto {
+    margin-left: 0 !important;
+    margin-right: 0 !important;
+  }
+
+  .navbar-nav.mx-4 {
+    margin-left: 0 !important;
+    margin-right: 0 !important;
   }
 
   .nav-item {
     text-align: center;
-    margin-bottom: 10px !important;
+    margin-bottom: 0 !important;
     width: 100%;
+    display: flex;
+    justify-content: center;
   }
 
   .nav-link {
     color: #ffffff !important;
-    font-size: 1.1rem;
+    font-size: 18px;
     font-weight: 600;
-    padding: 13px 22px !important;
+    padding: 14px 24px !important;
     border-radius: 14px !important;
     background: rgba(255, 255, 255, 0.05) !important;
     border: 1px solid rgba(255, 106, 0, 0.2) !important;
@@ -547,7 +617,9 @@
     -webkit-backdrop-filter: blur(10px);
     display: block !important;
     width: 100% !important;
-    margin-right: 0 !important;
+    margin: 0 !important;
+    text-align: center;
+    transition: all 0.3s ease;
   }
 
   .nav-link:hover {
@@ -566,37 +638,47 @@
 
   .navbar-login-btn-container {
     display: flex !important;
-    width: 100%;
-    max-width: 270px;
-    margin-top: auto;
+    width: 90%;
+    max-width: 320px;
+    margin: 35px auto 0;
     padding-top: 30px;
-    margin-bottom: 30px;
     border-top: 2px solid rgba(255, 106, 0, 0.4);
     justify-content: center;
-    order: 1;
   }
 
   .navbar-login-btn {
     width: 100%;
-    padding: 14px 24px !important;
+    padding: 15px 26px !important;
     font-size: 18px;
-    font-weight: 600;
-    border-radius: 12px;
+    font-weight: 700;
+    border-radius: 14px;
+    text-align: center;
+    background: linear-gradient(135deg, #ff6a00, #ffa500);
+    color: #ffffff !important;
+    transition: all 0.3s ease;
+    border: none;
+    box-shadow: 0 4px 15px rgba(255, 106, 0, 0.4);
+    text-decoration: none;
+    display: block;
   }
 
   .navbar-login-btn:hover {
     transform: scale(1.05);
+    box-shadow: 0 6px 20px rgba(255, 106, 0, 0.6);
+    color: #ffffff !important;
+    text-decoration: none;
   }
 
   .mobile-menu-copyright {
     text-align: center;
-    margin-top: auto;
+    margin: 30px auto 0;
     padding-top: 30px;
-    border-top: 2px solid rgba(255, 106, 0, 0.4);
-    color: rgba(255, 255, 255, 0.8);
-    font-size: 0.95rem;
-    font-weight: 500;
-    order: 2;
+    border-top: 1px solid rgba(255, 106, 0, 0.3);
+    color: rgba(255, 255, 255, 0.7);
+    font-size: 0.85rem;
+    font-weight: 400;
+    width: 90%;
+    max-width: 320px;
   }
 
   .navbar-toggler {
