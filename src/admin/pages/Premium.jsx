@@ -3,7 +3,7 @@ import Table from '../components/Table';
 import Button from '../components/Button';
 import Modal from '../components/Modal';
 import { mockPremiumUsers } from '../data/mockData';
-import '../admin.css';
+import '../style/admin.css';
 
 export default function Premium() {
   const [users] = useState(mockPremiumUsers);

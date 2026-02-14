@@ -1,7 +1,7 @@
 import { Users, TrendingUp, FileText, AlertCircle, Ban, Crown, DollarSign } from 'lucide-react';
 import StatCard from '../components/StatCard';
 import { mockStats } from '../data/mockData';
-import '../admin.css';
+import '../style/admin.css';
 
 export default function Dashboard() {
   return (

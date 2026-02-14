@@ -3,7 +3,7 @@ import { DollarSign, TrendingUp } from 'lucide-react';
 import Table from '../components/Table';
 import StatCard from '../components/StatCard';
 import { mockPayments } from '../data/mockData';
-import '../admin.css';
+import '../style/admin.css';
 
 export default function Payments() {
   const [payments] = useState(mockPayments);

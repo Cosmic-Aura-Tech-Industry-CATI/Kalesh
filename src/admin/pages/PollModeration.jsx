@@ -2,7 +2,7 @@ import { useState } from 'react';
 import Table from '../components/Table';
 import Button from '../components/Button';
 import { mockPolls } from '../data/mockData';
-import '../admin.css';
+import '../style/admin.css';
 
 export default function PollModeration() {
   const [polls] = useState(mockPolls);

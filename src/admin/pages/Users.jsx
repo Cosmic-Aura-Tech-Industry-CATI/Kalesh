@@ -2,7 +2,7 @@ import { useState } from 'react';
 import Table from '../components/Table';
 import Button from '../components/Button';
 import { mockUsers } from '../data/mockData';
-import '../admin.css';
+import '../style/admin.css';
 
 export default function Users() {
   const [users] = useState(mockUsers);

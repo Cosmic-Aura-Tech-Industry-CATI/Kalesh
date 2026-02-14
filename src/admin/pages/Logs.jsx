@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import Table from '../components/Table';
 import { mockLogs } from '../data/mockData';
-import '../admin.css';
+import '../style/admin.css';
 
 export default function Logs() {
   const [logs] = useState(mockLogs);

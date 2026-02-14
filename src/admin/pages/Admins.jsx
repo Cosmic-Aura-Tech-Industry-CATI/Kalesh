@@ -3,7 +3,7 @@ import Table from '../components/Table';
 import Button from '../components/Button';
 import Modal from '../components/Modal';
 import { mockAdmins } from '../data/mockData';
-import '../admin.css';
+import '../style/admin.css';
 
 export default function Admins() {
   const [admins] = useState(mockAdmins);

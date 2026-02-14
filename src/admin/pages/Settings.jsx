@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import Button from '../components/Button';
 import { mockSettings } from '../data/mockData';
-import '../admin.css';
+import '../style/admin.css';
 
 export default function Settings() {
   const [reportCategories, setReportCategories] = useState(mockSettings.reportCategories);

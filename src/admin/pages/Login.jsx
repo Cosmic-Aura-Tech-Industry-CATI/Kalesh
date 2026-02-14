@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { LogIn } from 'lucide-react';
 import Button from '../components/Button';
-import '../admin.css';
+import "../style/admin.css";
 
 export default function Login() {
   const navigate = useNavigate();
