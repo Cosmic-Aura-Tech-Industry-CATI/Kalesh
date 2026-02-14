@@ -240,7 +240,7 @@
   width: 100%;
   height: 100%;
   object-fit: contain;
-  filter: drop-shadow(0 0 50px rgba(255, 106, 0, 0.7));
+  filter: drop-shadow(0 0 20px rgba(255, 106, 0, 0.7));
   animation: logo3D 20s infinite linear;
   transform-style: preserve-3d;
 }

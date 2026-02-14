@@ -35,7 +35,7 @@ function Home() {
         <div className="row align-items-center g-0">
           {/* Hero TEXT */}
 
-          <div className="col-12 col-lg-6 ">
+          <div className="col-12 col-lg-6 order-2 order-lg-1">
             <div className="hero-content">
               <h1 className="hero-title">
                 India&apos;s First Anonymous Social Media Platform
@@ -58,17 +58,19 @@ function Home() {
           </div>
 
           {/* 🔥 HERO IMAGE – LCP FIX */}
-          <div className="col-12 col-lg-6 ">
+          <div className="col-12 col-lg-6 order-1 order-lg-2">
             <div className="hero-image align-items-center d-flex justify-content-center">
               <img
                 src="/images/logo-600.webp"
                 srcSet="
+                      /images/logo-400.webp 400w,
                       /images/logo-600.webp 600w,
+                      /images/logo-1000.webp 1000w
                     "
                 sizes="(max-width: 768px) 90vw, 600px"
                 width="400"
                 height="300"
-                className="img-fluid logo-glow"
+                className="img-fluid"
                 alt="Kalesh anonymous social media platform logo"
                 fetchpriority="high"
                 decoding="async"

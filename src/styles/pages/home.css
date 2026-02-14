@@ -124,20 +124,27 @@
 
 /* HERO IMAGE styles */
 
+
+
+
 .hero-image img { 
   height: auto;   
   max-height: 420px; /* 👈 desktop height control */
   width: auto;
   max-width: 100%;
   object-fit: contain;
-  filter: drop-shadow(0 0 40px rgba(255, 106, 0, 0.7));
+  filter: drop-shadow(0 0 20px rgba(255, 106, 0, 0.7));
 }
+
+
+
 
 
 /* ============================================ RESPONSIVE Code for hero======================================================= */
 
 
 /* ===========MOBILE (Android + iPhone)============= */
+
 
 @media (max-width: 768px) {
   .home-hero .col-lg-6 {
@@ -391,6 +398,7 @@
   flex-direction: column;
   justify-content: center;
 }
+
 /* ===== COMMON IMAGE STYLE ===== */
 .poll-image,
 .profile-image,
@@ -400,7 +408,7 @@
   max-width: 320px;
   height: auto;
   margin: 0 auto;
-  filter: drop-shadow(0 0 40px rgba(255, 106, 0, 0.6));
+  filter: drop-shadow(0 0 20px rgba(255, 106, 0, 0.6));
 }
 
 .section-description {
@@ -437,7 +445,7 @@
 .profile-image {
   width: 100%;
   max-width: 320px;
-  filter: drop-shadow(0 0 40px rgba(255, 106, 0, 0.6));
+  filter: drop-shadow(0 0 20px rgba(255, 106, 0, 0.6));
 }
 .profile-content h2 {
   font-size: 36px;
@@ -466,7 +474,7 @@
 .chat-image {
   width: 100%;
   max-width: 320px;
-  filter: drop-shadow(0 0 40px rgba(255, 106, 0, 0.6));
+  filter: drop-shadow(0 0 20px rgba(255, 106, 0, 0.6));
 }
 .chat-content h2 {
   font-size: 36px;
@@ -495,7 +503,7 @@
 .create-poll-image {
   width: 100%;
   max-width: 320px;
-  filter: drop-shadow(0 0 40px rgba(255, 106, 0, 0.6));
+  filter: drop-shadow(0 0 20px rgba(255, 106, 0, 0.6));
 }
 .create-content h2 {
   font-size: 42px;
