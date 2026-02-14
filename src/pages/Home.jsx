@@ -28,6 +28,8 @@ function Home() {
         twitterTitle="Kalesh – Anonymous Opinion Platform"
         twitterDescription="India's first real-time anonymous opinion and polling social platform."
       />
+
+      
       {/* ================= HERO SECTION ================= */}
       <div className="container-fluid home-hero px-0">
         <div className="row align-items-center g-0">
@@ -75,6 +77,8 @@ function Home() {
           </div>
         </div>
       </div>
+
+
       {/* ================= INFO SECTION ================= */}
       <div className="kalesh-info-section">
         <div className="container">

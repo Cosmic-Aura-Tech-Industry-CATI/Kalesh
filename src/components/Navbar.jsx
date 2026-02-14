@@ -1,28 +1,32 @@
-import { Link } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 import { useRef } from "react";
 import { Collapse } from "bootstrap";
 import "../styles/components/navbar.css";
-
-
 
 function Navbar() {
   const menuRef = useRef(null);
 
   const handleLinkClick = () => {
     if (menuRef.current) {
-      const collapse = new Collapse(menuRef.current, {
-        hide: true
-      });
-      collapse.hide();
+      const collapse = Collapse.getInstance(menuRef.current);
+      collapse?.hide();
     }
   };
 
+  const getNavClass = ({ isActive }) =>
+    isActive ? "nav-link active-link" : "nav-link";
+
   return (
-    <nav className="navbar navbar-expand-lg navbar-dark  px-4 sticky-top">
-      <Link className="navbar-brand d-flex align-items-center mx-4" to="/">
-        <img src="/images/kalesh_navbar_logo.webp" alt="logo" height="45" className="me-2" />
-        
-      </Link>
+    <nav className="navbar navbar-expand-lg navbar-dark px-4 sticky-top">
+      
+      <NavLink className="navbar-brand d-flex align-items-center mx-4" to="/">
+        <img
+          src="/images/kalesh_navbar_logo.webp"
+          alt="logo"
+          height="45"
+          className="me-2"
+        />
+      </NavLink>
 
       <button
         className="navbar-toggler"
@@ -33,6 +37,7 @@ function Navbar() {
       </button>
 
       <div className="collapse navbar-collapse" id="menu" ref={menuRef}>
+        
         {/* Close Button */}
         <button
           className="mobile-menu-close"
@@ -41,49 +46,60 @@ function Navbar() {
         >
           <i className="fas fa-times"></i>
         </button>
-        
-        {/* Mobile Menu Logo */}
+
+        {/* Mobile Logo */}
         <div className="mobile-menu-logo d-lg-none">
-          <img src="/images/kalesh_navbar_logo.webp" alt="Kalesh Logo" height="50" />
+          <img
+            src="/images/kalesh_navbar_logo.webp"
+            alt="Kalesh Logo"
+            height="50"
+          />
         </div>
-        
+
         <ul className="navbar-nav ms-auto gap-1 mx-4">
+
           <li className="nav-item">
-            <Link className="nav-link" to="/" onClick={handleLinkClick}>
+            <NavLink to="/" end className={getNavClass} onClick={handleLinkClick}>
               Home
-            </Link>
+            </NavLink>
           </li>
+
           <li className="nav-item">
-            <Link className="nav-link" to="/about" onClick={handleLinkClick}>
+            <NavLink to="/about" className={getNavClass} onClick={handleLinkClick}>
               About
-            </Link>
+            </NavLink>
           </li>
+
           <li className="nav-item">
-            <Link className="nav-link" to="/privacy" onClick={handleLinkClick}>
+            <NavLink to="/privacy" className={getNavClass} onClick={handleLinkClick}>
               Privacy
-            </Link>
+            </NavLink>
           </li>
+
           <li className="nav-item">
-            <Link className="nav-link" to="/blog" onClick={handleLinkClick}>
+            <NavLink to="/blog" className={getNavClass} onClick={handleLinkClick}>
               Blog
-            </Link>
+            </NavLink>
           </li>
+
           <li className="nav-item">
-            <Link className="nav-link" to="/faq" onClick={handleLinkClick}>
+            <NavLink to="/faq" className={getNavClass} onClick={handleLinkClick}>
               FAQ
-            </Link>
+            </NavLink>
           </li>
+
           <li className="nav-item">
-            <Link className="nav-link" to="/careers" onClick={handleLinkClick}>
+            <NavLink to="/careers" className={getNavClass} onClick={handleLinkClick}>
               Careers
-            </Link>
+            </NavLink>
           </li>
+
         </ul>
-        
-        {/* Mobile Menu Copyright */}
+
         <div className="mobile-menu-copyright d-lg-none">
           © 2026 Kalesh
         </div>
+
       </div>
     </nav>
   );
