@@ -1,4 +1,4 @@
-import { useState , useEffect} from "react";
+import { useState, useEffect } from "react";
 import { Helmet } from "react-helmet-async";
 import "../styles/pages/contactus.css";
 import SEO from "../components/SEO";
@@ -38,10 +38,10 @@ function ContactUs() {
 
     axios.post('https://api.thekalesh.com/api/v1/contact', formData)
       .then(response => {
-        console.log("Response:", response.data);
+        // Form submitted successfully
       })
       .catch(error => {
-        console.error("Error submitting form:", error);
+        // Handle error silently or show user-friendly message
       });
 
   };

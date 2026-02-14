@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { Helmet } from "react-helmet-async";
 import "./blog.css";
@@ -79,10 +79,10 @@ const Blog = () => {
     axios
       .post("https://api.thekalesh.com/api/v1/subscribe", { email: mailId })
       .then((response) => {
-        console.log("Response:", response.data);
+        // Subscription successful
       })
       .catch((error) => {
-        console.error("Error submitting form:", error);
+        // Handle error silently or show user-friendly message
       });
   };
 

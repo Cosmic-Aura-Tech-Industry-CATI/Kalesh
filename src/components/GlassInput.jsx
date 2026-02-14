@@ -1,6 +1,6 @@
-import React from "react";
+import { memo } from "react";
 
-const GlassInput = React.memo(({ placeholder }) => {
+const GlassInput = memo(({ placeholder }) => {
   return (
     <input
       className="glass-input"

@@ -1,4 +1,4 @@
-import { useState , useEffect } from "react";
+import { useState, useEffect } from "react";
 import { Helmet } from "react-helmet-async";
 import "../styles/pages/promotions.css";
 
@@ -58,7 +58,6 @@ function Promotions() {
       setSuccess("✅ Message sent successfully!");
       setForm({ name: "", email: "", phone: "", message: "" });
     } catch (err) {
-      console.error(err);
       setSuccess("❌ Something went wrong. Try again.");
     }
 

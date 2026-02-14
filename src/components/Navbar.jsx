@@ -96,6 +96,12 @@ function Navbar() {
 
         </ul>
 
+        <div className="navbar-login-btn-container">
+          <a href="/admin/login" className="navbar-login-btn">
+            Admin Login
+          </a>
+        </div>
+
         <div className="mobile-menu-copyright d-lg-none">
           © 2026 Kalesh
         </div>

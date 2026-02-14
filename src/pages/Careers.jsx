@@ -1,5 +1,4 @@
-import { useState, useRef } from "react";
-import { useEffect } from 'react';
+import { useState, useRef, useEffect } from "react";
 import { Helmet } from "react-helmet-async";
 import "../styles/pages/careers.css";
 import SEO from "../components/SEO";
@@ -52,7 +51,6 @@ function Careers() {
 
   const handleChange = (e) => {
     const { name, value, files } = e.target;
-    console.log(name);
     if (name === "resume") {
       setFormData({ ...formData, resume: files[0] });
     } else {
