@@ -56,7 +56,7 @@ function Navbar() {
           />
         </div>
 
-        <ul className="navbar-nav ms-auto gap-1 mx-4">
+        <ul className="navbar-nav ms-auto gap-3 mx-4">
 
           <li className="nav-item">
             <NavLink to="/" end className={getNavClass} onClick={handleLinkClick}>
