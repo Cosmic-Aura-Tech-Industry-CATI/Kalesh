@@ -60,6 +60,7 @@
   font-size: 32px;
   font-weight: 700;
   background: linear-gradient(90deg, #ff6a00, #ffd700);
+  background-clip: text;
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
 }
@@ -134,4 +135,75 @@
   align-items: center;
   justify-content: center;
   gap: 8px;
+}
+
+
+/* =====================================================
+   RESPONSIVE BREAKPOINTS
+===================================================== */
+
+/* Tablet */
+@media (max-width: 768px) {
+
+  .admin-login-container {
+    max-width: 420px;
+  }
+
+  .admin-login-card {
+    padding: 26px;
+  }
+
+  .admin-login-title {
+    font-size: 26px;
+  }
+
+  .admin-login-logo {
+    width: 75px;
+  }
+}
+
+
+/* Mobile */
+@media (max-width: 480px) {
+
+  .admin-login-page {
+    padding: 15px;
+  }
+
+  .admin-login-card {
+    padding: 22px;
+    border-radius: 14px;
+  }
+
+  .admin-login-title {
+    font-size: 20px;
+    
+  }
+
+  .admin-login-subtitle {
+    font-size: 15px;
+  }
+
+  .admin-form-input {
+    padding: 10px 14px;
+    font-size: 13px;
+  }
+
+  .admin-login-logo {
+    width: 65px;
+  }
+}
+
+/* Mobile Responsive */
+
+@media (max-width: 992px) {
+    .admin-login-title-wrapper { 
+      padding: 8px 16px; 
+        
+    }
+    .admin-login-card {
+      padding: 40px 8px;
+      text-align: center;
+
+    }
 }
