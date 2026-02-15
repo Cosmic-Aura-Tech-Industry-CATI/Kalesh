@@ -76,7 +76,7 @@
     padding: 80px 5% 40px;
     display: flex;
     flex-direction: column;
-    justify-content: center;
+    justify-content: flex-start;
     align-items: center;
     overflow-y: auto;
     opacity: 0;
@@ -294,7 +294,7 @@
     padding: 80px 5% 40px;
     display: flex;
     flex-direction: column;
-    justify-content: center;
+    justify-content: flex-start;
     align-items: center;
     overflow-y: auto;
     opacity: 0;
@@ -507,12 +507,12 @@
     left: 0;
     right: 0;
     width: 100vw;
-    height: 100vh;
+    height: 100dvh;
     z-index: 1050;
-    padding: 90px 5% 50px;
+    padding: 55px 5% 25px;
     display: flex;
     flex-direction: column;
-    justify-content: center;
+    justify-content: flex-start;
     align-items: center;
     overflow-y: auto;
     opacity: 0;
@@ -555,7 +555,7 @@
 
   .mobile-menu-logo {
     text-align: center;
-    margin: 0 auto 40px;
+    margin: 0 auto 30px;
     padding-bottom: 30px;
     border-bottom: 2px solid rgba(255, 106, 0, 0.4);
     width: 90%;
@@ -584,6 +584,7 @@
     max-width: 320px;
     align-items: center;
     justify-content: center;
+    
   }
 
   /* Override Bootstrap utility classes that cause right alignment */
