@@ -518,6 +518,7 @@
   }
   .poll-content h2 {
     font-size: 28px;
+    text-align: center;
   }
   .poll-image {
     max-width: 260px;
@@ -621,15 +622,14 @@
   .poll-image-container,
   .profile-image-container,
   .chat-image-container {
-    margin-left: 18px;
+    margin-left: 0px;
   }
 
   .poll-content,
   .profile-content,
   .chat-content,
   .create-content {
-    margin-left: 15px;
-    
+    margin-left: 0px;
     text-align: center;
     padding: 0 12px;
   }
@@ -639,11 +639,15 @@
     margin-top: 50px;
   }
 
+  .section-description {
+    text-align: center;
+  }
+
   .poll-image,
   .profile-image,
   .chat-image,
   .create-poll-image {
-    max-width: 240px;
+    max-width: 230px;
   }
 }
 
