@@ -1376,3 +1376,151 @@
   flex-wrap: wrap;
   position: relative;
 }
+
+/* ==================================================
+   9. AUTHOR INPUT STYLES
+================================================== */
+.author-input-toggle {
+  margin-bottom: 15px;
+}
+
+.toggle-author-btn {
+  background: rgba(255, 106, 0, 0.1);
+  border: 1px solid rgba(255, 106, 0, 0.3);
+  color: #ff6a00;
+  padding: 8px 16px;
+  border-radius: 20px;
+  font-size: 0.9rem;
+  font-weight: 500;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  transition: all 0.3s ease;
+}
+
+.toggle-author-btn:hover {
+  background: rgba(255, 106, 0, 0.2);
+  border-color: #ff6a00;
+  transform: translateY(-2px);
+}
+
+.toggle-author-btn.small {
+  padding: 5px 12px;
+  font-size: 0.8rem;
+}
+
+.author-input-container {
+  margin-bottom: 20px;
+  animation: slideDown 0.3s ease;
+}
+
+@keyframes slideDown {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.author-input {
+  width: 100%;
+  padding: 12px 15px;
+  background: rgba(0, 0, 0, 0.3);
+  border: 1px solid rgba(255, 106, 0, 0.3);
+  border-radius: 8px;
+  color: #ffffff;
+  font-size: 0.95rem;
+  transition: all 0.3s ease;
+  margin-bottom: 5px;
+}
+
+.author-input:focus {
+  outline: none;
+  border-color: #ff6a00;
+  background: rgba(0, 0, 0, 0.5);
+  box-shadow: 0 0 15px rgba(255, 106, 0, 0.2);
+}
+
+.author-input::placeholder {
+  color: rgba(255, 255, 255, 0.4);
+}
+
+.input-hint {
+  display: block;
+  color: #888;
+  font-size: 0.8rem;
+  margin-top: 5px;
+}
+
+.anonymous-badge strong {
+  color: #ff6a00;
+  margin-left: 5px;
+  font-weight: 600;
+}
+
+.anonymous-badge.small {
+  font-size: 0.8rem;
+  padding: 4px 8px;
+  background: rgba(255, 106, 0, 0.05);
+  border-radius: 4px;
+}
+
+.reply-buttons {
+  display: flex;
+  gap: 10px;
+}
+
+/* Adjust reply form layout */
+.reply-form .reply-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.reply-form .reply-actions .anonymous-badge.small {
+  align-self: flex-start;
+}
+
+.reply-form .reply-actions .reply-buttons {
+  display: flex;
+  gap: 10px;
+  justify-content: flex-end;
+}
+
+@media (max-width: 768px) {
+  .toggle-author-btn {
+    width: 100%;
+    justify-content: center;
+  }
+  
+  .reply-form .reply-actions .reply-buttons {
+    flex-direction: column;
+  }
+  
+  .cancel-reply-btn,
+  .submit-reply-btn {
+    width: 100%;
+    text-align: center;
+  }
+}
+
+@media (max-width: 480px) {
+  .author-input {
+    font-size: 0.9rem;
+    padding: 10px 12px;
+  }
+  
+  .input-hint {
+    font-size: 0.75rem;
+  }
+  
+  .anonymous-badge.small {
+    font-size: 0.75rem;
+    width: 100%;
+    text-align: center;
+  }
+}
