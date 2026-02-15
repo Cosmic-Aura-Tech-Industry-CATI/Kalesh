@@ -5,9 +5,7 @@ import "./Blogpage1.css"; // Linking to your existing CSS
 
 const Post1 = () => {
   // State for comments
-  const [comments, setComments] = useState([
-
-  ]);
+  const [comments, setComments] = useState([]);
 
   const [newComment, setNewComment] = useState("");
   const [replyTo, setReplyTo] = useState(null);

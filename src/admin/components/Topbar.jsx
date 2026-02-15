@@ -1,12 +1,12 @@
 import { Bell, LogOut, User, Menu } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
+import { useLogout } from '../../hooks/useAuth';
 
 export default function Topbar({ onMenuClick }) {
   const navigate = useNavigate();
+  const { mutate: logout } = useLogout();
 
-  const handleLogout = () => {
-    navigate('/admin/login');
-  };
+  const handleLogout = logout;
 
   return (
     <div className="h-16 bg-[#0b0b0b]/95 backdrop-blur-md border-b border-[#d4af37]/20 fixed top-0 right-0 left-0 lg:left-64 z-20 flex items-center justify-between px-4 sm:px-6 card-shadow">

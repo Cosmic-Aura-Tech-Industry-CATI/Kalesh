@@ -1,25 +1,39 @@
 import { useState } from 'react';
+import { useForm } from 'react-hook-form';
 import Table from '../components/Table';
 import Button from '../components/Button';
 import Modal from '../components/Modal';
 import { mockAdmins } from '../data/mockData';
+import { useCreateAdmin } from '../../hooks/useAdmins';
 import '../style/admin.css';
 
 export default function Admins() {
-  const [admins] = useState(mockAdmins);
+  const [admins] = useState(mockAdmins); 
+  const { mutate: createAdmin, isPending } = useCreateAdmin();
   const [isModalOpen, setIsModalOpen] = useState(false);
+
+  const {
+    register,
+    handleSubmit,
+    reset,
+    formState: { errors },
+  } = useForm();
 
   const handleDisable = (adminId) => {
     alert(`Admin ${adminId} disabled`);
   };
 
   const handleAddAdmin = () => {
+    reset();
     setIsModalOpen(true);
   };
 
-  const handleSubmit = () => {
-    alert('New admin added');
-    setIsModalOpen(false);
+  const onSubmit = (data) => {
+    createAdmin(data, {
+      onSuccess: () => {
+        setIsModalOpen(false);
+      },
+    });
   };
 
   const columns = [
@@ -67,19 +81,22 @@ export default function Admins() {
         <Button onClick={handleAddAdmin}>Add Admin</Button>
       </div>
 
-      <Table columns={columns} data={admins} />
+    
+        <Table columns={columns} data={admins} />
 
       <Modal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} title="Add New Admin">
-        <div className="space-y-4">
+        <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
           <div>
             <label className="block text-xs sm:text-sm font-medium text-gray-300 mb-2">
               Name
             </label>
             <input
               type="text"
+              {...register('name', { required: 'Name is required' })}
               className="w-full px-3 sm:px-4 py-2 bg-[#1a1a2e] border border-gray-700 rounded-lg text-sm text-white focus:outline-none focus:border-orange-500"
               placeholder="Enter name"
             />
+            {errors.name && <span className="text-red-500 text-xs">{errors.name.message}</span>}
           </div>
           <div>
             <label className="block text-xs sm:text-sm font-medium text-gray-300 mb-2">
@@ -87,24 +104,36 @@ export default function Admins() {
             </label>
             <input
               type="email"
+              {...register('email', {
+                required: 'Email is required',
+                pattern: {
+                  value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
+                  message: 'Invalid email address',
+                },
+              })}
               className="w-full px-3 sm:px-4 py-2 bg-[#1a1a2e] border border-gray-700 rounded-lg text-sm text-white focus:outline-none focus:border-orange-500"
               placeholder="Enter email"
             />
+            {errors.email && <span className="text-red-500 text-xs">{errors.email.message}</span>}
           </div>
           <div>
             <label className="block text-xs sm:text-sm font-medium text-gray-300 mb-2">
               Role
             </label>
-            <select className="w-full px-3 sm:px-4 py-2 bg-[#1a1a2e] border border-gray-700 rounded-lg text-sm text-white focus:outline-none focus:border-orange-500">
-              <option>Moderator</option>
-              <option>Support</option>
-              <option>Super Admin</option>
+            <select
+              {...register('role', { required: 'Role is required' })}
+              className="w-full px-3 sm:px-4 py-2 bg-[#1a1a2e] border border-gray-700 rounded-lg text-sm text-white focus:outline-none focus:border-orange-500"
+            >
+              <option value="Moderator">Moderator</option>
+              <option value="Support">Support</option>
+              <option value="Super Admin">Super Admin</option>
             </select>
+            {errors.role && <span className="text-red-500 text-xs">{errors.role.message}</span>}
           </div>
-          <Button onClick={handleSubmit} className="w-full">
-            Add Admin
+          <Button type="submit" className="w-full" disabled={isPending}>
+            {isPending ? 'Adding...' : 'Add Admin'}
           </Button>
-        </div>
+        </form>
       </Modal>
     </div>
   );

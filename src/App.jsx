@@ -1,4 +1,5 @@
 import { useEffect, Suspense, lazy, useState } from "react";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { Routes, Route, useLocation } from "react-router-dom";
 
 import ScrollbarTop from "./components/ScrollbarTop";
@@ -19,6 +20,7 @@ import AdminLogs from "./admin/pages/Logs";
 import AdminSettings from "./admin/pages/Settings";
 import AdminSidebar from "./admin/components/Sidebar";
 import AdminTopbar from "./admin/components/Topbar";
+import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 
 // Lazy load all page components to reduce initial bundle size and improve load times
 const Home = lazy(() => import("./pages/Home"));
@@ -43,15 +45,23 @@ const Post4 = lazy(() => import("./pages/Post4"));
 const Post5 = lazy(() => import("./pages/Post5"));
 const Viewpage = lazy(() => import("./pages/Viewpage"));
 
+const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: {
+      staleTime: 0,
+    },
+  },
+});
+
 // Admin Layout Component
 function AdminLayout({ children }) {
   const location = useLocation();
   const [sidebarOpen, setSidebarOpen] = useState(false);
-  const isLoginPage = location.pathname === '/admin/login';
+  const isLoginPage = location.pathname === "/admin/login";
 
   // Import admin CSS only when admin layout is used
   useEffect(() => {
-    import('./admin/style/admin.css');
+    import("./admin/style/admin.css");
   }, []);
 
   if (isLoginPage) {
@@ -63,9 +73,7 @@ function AdminLayout({ children }) {
       <AdminSidebar open={sidebarOpen} onClose={() => setSidebarOpen(false)} />
       <AdminTopbar onMenuClick={() => setSidebarOpen(!sidebarOpen)} />
       <main className="lg:ml-64 pt-24 lg:pt-40 p-4 sm:p-6 md:p-8 bg-gradient-to-br from-[#0b0b0f] to-[#1a1a2e] min-h-screen">
-        <div className="max-w-7xl mx-auto">
-          {children}
-        </div>
+        <div className="max-w-7xl mx-auto">{children}</div>
       </main>
     </div>
   );
@@ -74,7 +82,7 @@ function AdminLayout({ children }) {
 // Main Routes Component to handle conditional rendering
 function MainRoutes() {
   const location = useLocation();
-  const isAdminRoute = location.pathname.startsWith('/admin');
+  const isAdminRoute = location.pathname.startsWith("/admin");
 
   return (
     <>
@@ -92,7 +100,10 @@ function MainRoutes() {
             <Route path="/careers" element={<Careers />} />
             <Route path="/contactus" element={<ContactUs />} />
             <Route path="/helpcenter" element={<HelpCenter />} />
-            <Route path="/termsandconditions" element={<TermsAndConditions />} />
+            <Route
+              path="/termsandconditions"
+              element={<TermsAndConditions />}
+            />
             <Route path="/privacypolicy" element={<PrivacyPolicy />} />
             <Route path="/faq" element={<FAQ />} />
             <Route path="/blog" element={<Blog />} />
@@ -104,7 +115,10 @@ function MainRoutes() {
             <Route path="/blog/Post4" element={<Post4 />} />
             <Route path="/blog/Post5" element={<Post5 />} />
             <Route path="/blog/Viewpage" element={<Viewpage />} />
-            <Route path="/communityguidelines" element={<CommunityGuidelines />} />
+            <Route
+              path="/communityguidelines"
+              element={<CommunityGuidelines />}
+            />
             <Route path="/securityadvisory" element={<SecurityAdvisory />} />
 
             {/* Admin Routes */}
@@ -219,9 +233,12 @@ function App() {
   }, []);
 
   return (
-    <div className="app-main">
-      <MainRoutes />
-    </div>
+    <QueryClientProvider client={queryClient}>
+      <ReactQueryDevtools initialIsOpen={false} />
+      <div className="app-main">
+        <MainRoutes />
+      </div>
+    </QueryClientProvider>
   );
 }
 
