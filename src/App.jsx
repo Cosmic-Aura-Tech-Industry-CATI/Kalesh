@@ -1,6 +1,6 @@
 import { useEffect, Suspense, lazy, useState } from "react";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { Routes, Route, useLocation, useNavigate } from "react-router-dom";
+import { Routes, Route, useLocation, useNavigate, Outlet } from "react-router-dom";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 
 import ScrollbarTop from "./components/ScrollbarTop";
@@ -24,8 +24,7 @@ import AdminSidebar from "./admin/components/Sidebar";
 import AdminTopbar from "./admin/components/Topbar";
 import AdminJobs from "./admin/pages/AdminJobs";
 
-
-// Lazy load all page components to reduce initial bundle size and improve load times
+// Lazy Public Pages
 const Home = lazy(() => import("./pages/Home"));
 const About = lazy(() => import("./pages/About"));
 const Privacy = lazy(() => import("./pages/Privacy"));
@@ -50,51 +49,45 @@ const Viewpage = lazy(() => import("./pages/Viewpage"));
 
 const queryClient = new QueryClient({
   defaultOptions: {
-    queries: {
-      staleTime: 0,
-    },
+    queries: { staleTime: 0 },
   },
 });
 
-// Admin Layout Component
-function AdminLayout({ children }) {
+
+// ================= ADMIN LAYOUT =================
+function AdminLayout() {
   const location = useLocation();
   const navigate = useNavigate();
   const [sidebarOpen, setSidebarOpen] = useState(false);
-  const isLoginPage = location.pathname === "/admin/login";
 
-  // Import admin CSS only when admin layout is used
   useEffect(() => {
     import("./admin/style/admin.css");
   }, []);
 
   useEffect(() => {
-    if (!isLoginPage && !AuthService.isAuthenticated()) {
-      alert("You are not authorized to access this route");
+    if (!AuthService.isAuthenticated()) {
       navigate("/");
     }
-  }, [isLoginPage, navigate]);
+  }, [navigate]);
 
-  if (!isLoginPage && !AuthService.isAuthenticated()) {
-    return null;
-  }
-
-  if (isLoginPage) {
-    return <div className="admin-wrapper">{children}</div>;
-  }
+  if (!AuthService.isAuthenticated()) return null;
 
   return (
     <div className="admin-wrapper min-h-screen bg-gradient-to-br from-[#0b0b0f] to-[#1a1a2e]">
       <AdminSidebar open={sidebarOpen} onClose={() => setSidebarOpen(false)} />
       <AdminTopbar onMenuClick={() => setSidebarOpen(!sidebarOpen)} />
-      <main className="lg:ml-64 pt-24 lg:pt-40 p-4 sm:p-6 md:p-8 bg-gradient-to-br from-[#0b0b0f] to-[#1a1a2e] min-h-screen">
-        <div className="max-w-7xl mx-auto">{children}</div>
+
+      <main className="lg:ml-64 pt-24 lg:pt-40 p-4 sm:p-6 md:p-8 min-h-screen">
+        <div className="max-w-7xl mx-auto">
+          <Outlet />
+        </div>
       </main>
     </div>
   );
 }
 
-// Main Routes Component to handle conditional rendering
+
+// ================= MAIN ROUTES =================
 function MainRoutes() {
   const location = useLocation();
   const isAdminRoute = location.pathname.startsWith("/admin");
@@ -107,7 +100,8 @@ function MainRoutes() {
       <main style={{ flex: 1 }}>
         <Suspense fallback={<div>Loading...</div>}>
           <Routes>
-            {/* Public Routes */}
+
+            {/* PUBLIC ROUTES */}
             <Route path="/" element={<Home />} />
             <Route path="/about" element={<About />} />
             <Route path="/privacy" element={<Privacy />} />
@@ -115,10 +109,7 @@ function MainRoutes() {
             <Route path="/careers" element={<Careers />} />
             <Route path="/contactus" element={<ContactUs />} />
             <Route path="/helpcenter" element={<HelpCenter />} />
-            <Route
-              path="/termsandconditions"
-              element={<TermsAndConditions />}
-            />
+            <Route path="/termsandconditions" element={<TermsAndConditions />} />
             <Route path="/privacypolicy" element={<PrivacyPolicy />} />
             <Route path="/faq" element={<FAQ />} />
             <Route path="/blog" element={<Blog />} />
@@ -130,95 +121,29 @@ function MainRoutes() {
             <Route path="/blog/Post4" element={<Post4 />} />
             <Route path="/blog/Post5" element={<Post5 />} />
             <Route path="/blog/Viewpage" element={<Viewpage />} />
-            <Route path="/admin/jobs" element={<AdminJobs />} />
-            <Route
-              path="/communityguidelines"
-              element={<CommunityGuidelines />}
-            />
+            <Route path="/communityguidelines" element={<CommunityGuidelines />} />
             <Route path="/securityadvisory" element={<SecurityAdvisory />} />
 
-            {/* Admin Routes */}
+            {/* ADMIN LOGIN (No Layout) */}
             <Route path="/admin/login" element={<AdminLogin />} />
-            <Route
-              path="/admin/dashboard"
-              element={
-                <AdminLayout>
-                  <AdminDashboard />
-                </AdminLayout>
-              }
-            />
-            <Route
-              path="/admin/reported-polls"
-              element={
-                <AdminLayout>
-                  <AdminReportedPolls />
-                </AdminLayout>
-              }
-            />
-            <Route
-              path="/admin/poll-moderation"
-              element={
-                <AdminLayout>
-                  <AdminPollModeration />
-                </AdminLayout>
-              }
-            />
-            <Route
-              path="/admin/users"
-              element={
-                <AdminLayout>
-                  <AdminUsers />
-                </AdminLayout>
-              }
-            />
-            <Route
-              path="/admin/banned-users"
-              element={
-                <AdminLayout>
-                  <AdminBannedUsers />
-                </AdminLayout>
-              }
-            />
-            <Route
-              path="/admin/premium"
-              element={
-                <AdminLayout>
-                  <AdminPremium />
-                </AdminLayout>
-              }
-            />
-            <Route
-              path="/admin/payments"
-              element={
-                <AdminLayout>
-                  <AdminPayments />
-                </AdminLayout>
-              }
-            />
-            <Route
-              path="/admin/admins"
-              element={
-                <AdminLayout>
-                  <AdminAdmins />
-                </AdminLayout>
-              }
-            />
-            <Route
-              path="/admin/logs"
-              element={
-                <AdminLayout>
-                  <AdminLogs />
-                </AdminLayout>
-              }
-            />
-            <Route
-              path="/admin/settings"
-              element={
-                <AdminLayout>
-                  <AdminSettings />
-                </AdminLayout>
-              }
-            />
+
+            {/* ADMIN PROTECTED ROUTES */}
+            <Route path="/admin" element={<AdminLayout />}>
+              <Route path="dashboard" element={<AdminDashboard />} />
+              <Route path="reported-polls" element={<AdminReportedPolls />} />
+              <Route path="poll-moderation" element={<AdminPollModeration />} />
+              <Route path="users" element={<AdminUsers />} />
+              
+              {/* ✅ FIXED — NOW INSIDE ADMIN LAYOUT */}
+              <Route path="jobs" element={<AdminJobs />} />
+              <Route path="banned-users" element={<AdminBannedUsers />} />
+              <Route path="premium" element={<AdminPremium />} />
+              <Route path="payments" element={<AdminPayments />} />
+              <Route path="admins" element={<AdminAdmins />} />
+              <Route path="logs" element={<AdminLogs />} />
+              <Route path="settings" element={<AdminSettings />} />
+            </Route>
+
           </Routes>
         </Suspense>
       </main>
@@ -228,8 +153,9 @@ function MainRoutes() {
   );
 }
 
+
+// ================= APP ROOT =================
 function App() {
-  // 🔥 FIX MOBILE 100vh ISSUE (GLOBAL)
   useEffect(() => {
     const setVh = () => {
       document.documentElement.style.setProperty(

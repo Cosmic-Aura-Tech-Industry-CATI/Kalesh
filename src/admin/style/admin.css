@@ -263,3 +263,16 @@
     @apply flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-4 sm:mb-6;
   }
 }
+
+/*===== Admin Layout Common CSS ====*/
+
+.admin-content-wrapper {
+  margin-left: 16rem;   /* sidebar width */
+  padding-top: 4rem;    /* topbar height */
+}
+
+@media (max-width: 768px) {
+  .admin-content-wrapper {
+    margin-left: 0;
+  }
+}
