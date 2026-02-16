@@ -2,13 +2,9 @@ import axios from "axios";
 import { AuthService } from "../services/auth.service";
 
 export const axiosInstance = axios.create({
-  baseURL: "http://localhost:8000/api/v1",
+  baseURL: import.meta.env.VITE_API_URL,
   withCredentials: true,
-  headers: {
-    "Content-Type": "application/json",
-  },
 });
-
 
 axiosInstance.interceptors.request.use(
   (config) => {
@@ -20,6 +16,5 @@ axiosInstance.interceptors.request.use(
   },
   (error) => Promise.reject(error)
 );
-
 
 export default axiosInstance;
