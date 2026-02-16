@@ -10,6 +10,7 @@ import {
   Shield,
   ScrollText,
   Settings,
+  Briefcase,
 } from "lucide-react";
 import "../style/sidebar.css";
 
@@ -18,6 +19,7 @@ const adminMenuItems = [
   { path: "/admin/reported-polls", icon: AlertCircle, label: "Reported Polls" },
   { path: "/admin/poll-moderation", icon: FileText, label: "Poll Moderation" },
   { path: "/admin/users", icon: Users, label: "Users" },
+  { path: "/admin/jobs", icon: Briefcase, label: "Jobs" },
   { path: "/admin/banned-users", icon: Ban, label: "Banned Users" },
   { path: "/admin/premium", icon: Crown, label: "Premium" },
   { path: "/admin/payments", icon: CreditCard, label: "Payments" },
@@ -46,9 +48,7 @@ export default function AdminSidebar({ isOpen, onClose }) {
         }`}
       >
         {/* Sidebar Header */}
-        <div className="admin-sidebar-header">
-          <h1 className="admin-sidebar-title">KALESH ADMIN</h1>
-        </div>
+        
 
         {/* Navigation Menu */}
         <nav className="admin-sidebar-menu">

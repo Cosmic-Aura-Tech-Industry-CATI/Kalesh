@@ -22,6 +22,8 @@ import AdminLogs from "./admin/pages/Logs";
 import AdminSettings from "./admin/pages/Settings";
 import AdminSidebar from "./admin/components/Sidebar";
 import AdminTopbar from "./admin/components/Topbar";
+import AdminJobs from "./admin/pages/AdminJobs";
+
 
 // Lazy load all page components to reduce initial bundle size and improve load times
 const Home = lazy(() => import("./pages/Home"));
@@ -128,6 +130,7 @@ function MainRoutes() {
             <Route path="/blog/Post4" element={<Post4 />} />
             <Route path="/blog/Post5" element={<Post5 />} />
             <Route path="/blog/Viewpage" element={<Viewpage />} />
+            <Route path="/admin/jobs" element={<AdminJobs />} />
             <Route
               path="/communityguidelines"
               element={<CommunityGuidelines />}

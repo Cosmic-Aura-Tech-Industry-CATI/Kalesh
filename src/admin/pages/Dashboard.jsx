@@ -1,14 +1,29 @@
-import { Users, TrendingUp, FileText, AlertCircle, Ban, Crown, DollarSign } from 'lucide-react';
-import StatCard from '../components/StatCard';
-import { mockStats } from '../data/mockData';
-import '../style/admin.css';
+import {
+  Users,
+  TrendingUp,
+  FileText,
+  AlertCircle,
+  Ban,
+  Crown,
+  DollarSign,
+} from "lucide-react";
 
-export default function Dashboard() {
+import StatCard from "../components/StatCard";
+import { mockStats } from "../data/mockData";
+import "../style/dashboard.css"; // 👈 New CSS file
+
+export default function AdminDashboard() {
   return (
-    <div className="admin-section">
-      <h1 className="admin-page-title">Dashboard Overview</h1>
+    <section className="dashboard">
+      <header className="dashboard-header">
+        <h1 className="dashboard-title">Dashboard Overview</h1>
+        <p className="dashboard-subtitle">
+          Key insights and performance metrics of your platform.
+        </p>
+      </header>
 
-      <div className="admin-stats-grid">
+      {/* Primary Stats */}
+      <div className="dashboard-primary-stats">
         <StatCard
           title="Total Users"
           value={mockStats.totalUsers.toLocaleString()}
@@ -16,6 +31,7 @@ export default function Dashboard() {
           trend="+12.5% from last month"
           trendUp={true}
         />
+
         <StatCard
           title="Active Users"
           value={mockStats.activeUsers.toLocaleString()}
@@ -23,6 +39,7 @@ export default function Dashboard() {
           trend="+8.3% from last month"
           trendUp={true}
         />
+
         <StatCard
           title="Total Polls"
           value={mockStats.totalPolls.toLocaleString()}
@@ -30,21 +47,24 @@ export default function Dashboard() {
           trend="+15.2% from last month"
           trendUp={true}
         />
+
         <StatCard
           title="Reported Polls"
           value={mockStats.reportedPolls}
           icon={AlertCircle}
           trend="-5.1% from last month"
-          trendUp={true}
+          trendUp={false}
         />
       </div>
 
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-6">
+      {/* Secondary Stats */}
+      <div className="dashboard-secondary-stats">
         <StatCard
           title="Banned Users"
           value={mockStats.bannedUsers}
           icon={Ban}
         />
+
         <StatCard
           title="Premium Users"
           value={mockStats.premiumUsers.toLocaleString()}
@@ -52,6 +72,7 @@ export default function Dashboard() {
           trend="+24.6% from last month"
           trendUp={true}
         />
+
         <StatCard
           title="Monthly Revenue"
           value={`₹${(mockStats.monthlyRevenue / 1000).toFixed(0)}K`}
@@ -60,6 +81,6 @@ export default function Dashboard() {
           trendUp={true}
         />
       </div>
-    </div>
+    </section>
   );
 }
