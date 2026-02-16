@@ -19,11 +19,11 @@
 
 /* Topbar Inner Container */
 .topbar-container {
-  display: flex;
+  display: grid;
+  grid-template-columns: auto 1fr auto;
   align-items: center;
-  justify-content: space-between;
   height: 100%;
-  padding: 0 1rem;
+  padding: 0 1.5rem;
 }
 
 @media (min-width: 640px) {
@@ -61,12 +61,29 @@
   }
 }
 
+/* Logo */
+.topbar-logo {
+  height: 32px;
+  object-fit: contain;
+}
+
+/* Center Section */
+.topbar-center {
+  display: flex;
+  justify-content: center;
+}
+
 /* Topbar Title */
 .topbar-title {
-  font-size: 1rem;
+  font-size: 1.1rem;
   font-weight: 600;
   color: #d4af37;
+  text-align: center;
   margin: 0;
+  background: linear-gradient(135deg, #ff6a00, #ffd700);
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
 }
 
 @media (min-width: 640px) {
