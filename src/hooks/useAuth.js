@@ -25,7 +25,6 @@ export const useLogin = () => {
  * Navigates to the admin dashboard page.
  */
     onSuccess: (data) => {
-      localStorage.setItem("token", data.token);
       queryClient.setQueryData(["user"], data);
       navigate("/admin/dashboard");
     },
@@ -61,7 +60,6 @@ export const useLogout = () => {
  * and navigates to the login page, replacing the current page in the browser history.
  */
     onSuccess: () => {
-      localStorage.removeItem("token");
       queryClient.removeQueries({ queryKey: ["user"] });
       navigate("/admin/login", {
         replace: true

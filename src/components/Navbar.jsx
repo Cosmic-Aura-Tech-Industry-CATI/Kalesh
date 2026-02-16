@@ -1,15 +1,26 @@
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import { useRef } from "react";
 import { Collapse } from "bootstrap";
+import { AuthService } from "../services/auth.service";
 import "../styles/components/navbar.css";
 
 function Navbar() {
   const menuRef = useRef(null);
+  const navigate = useNavigate();
 
   const handleLinkClick = () => {
     if (menuRef.current) {
       const collapse = Collapse.getInstance(menuRef.current);
       collapse?.hide();
+    }
+  };
+
+  const handleAdminLogin = (e) => {
+    e.preventDefault();
+    if (AuthService.isAuthenticated()) {
+      navigate("/admin/dashboard");
+    } else {
+      navigate("/admin/login");
     }
   };
 
@@ -97,7 +108,7 @@ function Navbar() {
         </ul>
 
         <div className="navbar-login-btn-container">
-          <a href="/admin/login" className="navbar-login-btn">
+          <a onClick={handleAdminLogin} className="navbar-login-btn">
             Admin Login
           </a>
         </div>

@@ -3,7 +3,6 @@ import { useNavigate } from 'react-router-dom';
 import { useLogout } from '../../hooks/useAuth';
 
 export default function Topbar({ onMenuClick }) {
-  const navigate = useNavigate();
   const { mutate: logout } = useLogout();
 
   const handleLogout = logout;

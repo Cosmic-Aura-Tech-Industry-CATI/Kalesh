@@ -1,10 +1,12 @@
 import { useEffect, Suspense, lazy, useState } from "react";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { Routes, Route, useLocation } from "react-router-dom";
+import { Routes, Route, useLocation, useNavigate } from "react-router-dom";
+import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 
 import ScrollbarTop from "./components/ScrollbarTop";
 import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
+import { AuthService } from "./services/auth.service";
 
 // Admin imports
 import AdminLogin from "./admin/pages/Login";
@@ -20,7 +22,6 @@ import AdminLogs from "./admin/pages/Logs";
 import AdminSettings from "./admin/pages/Settings";
 import AdminSidebar from "./admin/components/Sidebar";
 import AdminTopbar from "./admin/components/Topbar";
-import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 
 // Lazy load all page components to reduce initial bundle size and improve load times
 const Home = lazy(() => import("./pages/Home"));
@@ -56,6 +57,7 @@ const queryClient = new QueryClient({
 // Admin Layout Component
 function AdminLayout({ children }) {
   const location = useLocation();
+  const navigate = useNavigate();
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const isLoginPage = location.pathname === "/admin/login";
 
@@ -63,6 +65,17 @@ function AdminLayout({ children }) {
   useEffect(() => {
     import("./admin/style/admin.css");
   }, []);
+
+  useEffect(() => {
+    if (!isLoginPage && !AuthService.isAuthenticated()) {
+      alert("You are not authorized to access this route");
+      navigate("/");
+    }
+  }, [isLoginPage, navigate]);
+
+  if (!isLoginPage && !AuthService.isAuthenticated()) {
+    return null;
+  }
 
   if (isLoginPage) {
     return <div className="admin-wrapper">{children}</div>;

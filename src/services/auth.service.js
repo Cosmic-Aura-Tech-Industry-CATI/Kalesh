@@ -20,7 +20,7 @@ export class AuthService {
       payload
     );
     if (res.data?.token) {
-      localStorage.setItem("token", res.data.token);
+      localStorage.setItem("thekalesh.com-admin-token", res.data.token);
     }
     return res.data;
   }
@@ -35,14 +35,7 @@ export class AuthService {
    * console.log(isLoggedIn); // true
    */
   static async logout() {
-    try {
-      if (API_ENDPOINTS.AUTH.LOGOUT) {
-        await axiosInstance.post(API_ENDPOINTS.AUTH.LOGOUT);
-      }
-    } catch (error) {
-      console.log("Logout API error", error);
-    }
-    localStorage.removeItem("token");
+    localStorage.removeItem("thekalesh.com-admin-token");
     return true;
   }
 
@@ -51,7 +44,7 @@ export class AuthService {
    * @returns {string|null} - The token from local storage, or null if it doesn't exist.
    */
   static getToken() {
-    return localStorage.getItem("token");
+    return localStorage.getItem("thekalesh.com-admin-token");
   }
 
 /**
@@ -60,6 +53,6 @@ export class AuthService {
  * @returns {boolean} - true if a user is authenticated, false otherwise.
  */
   static isAuthenticated() {
-    return !!localStorage.getItem("token");
+    return !!localStorage.getItem("thekalesh.com-admin-token");
   }
 }
