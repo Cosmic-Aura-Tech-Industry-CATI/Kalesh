@@ -14,45 +14,40 @@ import {
 } from "lucide-react";
 import "../style/sidebar.css";
 
-const adminMenuItems = [
+const menuItems = [
   { path: "/admin/dashboard", icon: LayoutDashboard, label: "Dashboard" },
-  { path: "/admin/reported-polls", icon: AlertCircle, label: "Reported Polls" },
-  { path: "/admin/poll-moderation", icon: FileText, label: "Poll Moderation" },
+  { path: "/admin/reported-polls", icon: AlertCircle, label: "Reports" },
   { path: "/admin/users", icon: Users, label: "Users" },
-  { path: "/admin/jobs", icon: Briefcase, label: "Jobs" },
   { path: "/admin/banned-users", icon: Ban, label: "Banned Users" },
-  { path: "/admin/premium", icon: Crown, label: "Premium" },
+  { path: "/admin/jobs", icon: Briefcase, label: "Jobs Posting" },
+  { path: "/admin/premium", icon: Crown, label: "Premium Users" },
   { path: "/admin/payments", icon: CreditCard, label: "Payments" },
-  { path: "/admin/admins", icon: Shield, label: "Admins" },
-  { path: "/admin/logs", icon: ScrollText, label: "Logs" },
+  { path: "/admin/poll-moderation", icon: Shield, label: "Moderation" },
+  { path: "/admin/logs", icon: ScrollText, label: "Activity Logs" },
   { path: "/admin/settings", icon: Settings, label: "Settings" },
 ];
 
-export default function AdminSidebar({ isOpen, onClose }) {
+export default function Sidebar({ sidebarOpen, setSidebarOpen }) {
   const location = useLocation();
 
   return (
     <>
-      {/* Overlay (Mobile Only) */}
-      {isOpen && (
+      {/* Overlay only for mobile */}
+      {sidebarOpen && (
         <div
-          className="admin-sidebar-overlay"
-          onClick={onClose}
+          className="fixed inset-0 bg-black/50 z-40 md:hidden"
+          onClick={() => setSidebarOpen(false)}
         />
       )}
 
-      {/* Sidebar Container */}
       <aside
-        className={`admin-sidebar-container ${
-          isOpen ? "sidebar-open" : "sidebar-closed"
-        }`}
+        className={`
+        admin-sidebar
+        ${!sidebarOpen ? "admin-sidebar--collapsed" : ""}
+      `}
       >
-        {/* Sidebar Header */}
-        
-
-        {/* Navigation Menu */}
         <nav className="admin-sidebar-menu">
-          {adminMenuItems.map((item) => {
+          {menuItems.map((item) => {
             const Icon = item.icon;
             const isActive = location.pathname === item.path;
 
@@ -60,15 +55,10 @@ export default function AdminSidebar({ isOpen, onClose }) {
               <Link
                 key={item.path}
                 to={item.path}
-                onClick={onClose}
-                className={`admin-sidebar-link ${
-                  isActive ? "active-link" : ""
-                }`}
+                className={`admin-sidebar-item ${isActive ? "active" : ""}`}
               >
-                <Icon className="admin-sidebar-icon" size={20} />
-                <span className="admin-sidebar-label">
-                  {item.label}
-                </span>
+                <Icon size={18} />
+                <span className="sidebar-label">{item.label}</span>
               </Link>
             );
           })}

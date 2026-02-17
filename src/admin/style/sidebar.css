@@ -3,9 +3,7 @@
 ================================= */
 
 .admin-sidebar-container {
-  position: fixed;
   top: 4rem;
-  left: 0;
   width: 260px;
   bottom: 0;
   background-color: #0b0b0b;

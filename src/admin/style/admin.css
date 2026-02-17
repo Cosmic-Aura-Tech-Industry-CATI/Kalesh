@@ -74,8 +74,9 @@
 
   /* Admin Sidebar */
   .admin-sidebar {
-    @apply fixed left-0 top-0 h-screen w-64 bg-[#0b0b0b] border-r border-[#d4af37]/20 z-50 overflow-y-auto;
-  }
+    @apply fixed left-0 top-16 h-[calc(100vh-4rem)] w-64 bg-[#0b0b0b] border-r border-[#d4af37]/20 z-50 overflow-y-auto;
+}
+
 
   .admin-sidebar-menu {
     @apply space-y-2 p-4;
@@ -91,7 +92,7 @@
 
   /* Admin Main */
   .admin-main {
-    @apply ml-64 p-6;
+    @apply p-6;
   }
 
   /* Page Title */
@@ -264,15 +265,37 @@
   }
 }
 
-/*===== Admin Layout Common CSS ====*/
-
-.admin-content-wrapper {
-  margin-left: 16rem;   /* sidebar width */
-  padding-top: 4rem;    /* topbar height */
-}
-
 @media (max-width: 768px) {
   .admin-content-wrapper {
     margin-left: 0;
   }
 }
+
+/* Sidebar Base */
+.admin-sidebar {
+  width: 16rem; /* 64 */
+  transition: width 0.3s ease;
+}
+
+/* Collapsed State */
+.admin-sidebar--collapsed {
+  width: 0;
+  overflow: hidden;
+}
+
+/* Hover expand effect */
+.admin-sidebar--collapsed:hover {
+  width: 16rem;
+}
+
+
+/* Hide text when collapsed */
+.admin-sidebar--collapsed .sidebar-label {
+  display: none;
+}
+
+/* Center icons when collapsed */
+.admin-sidebar--collapsed .admin-sidebar-item {
+  justify-content: center;
+}
+

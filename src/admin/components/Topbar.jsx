@@ -1,50 +1,25 @@
-import { Bell, LogOut, User, Menu } from "lucide-react";
-import { useLogout } from "../../hooks/useAuth";
+import { Menu } from "lucide-react";
+
 import "../style/admin.css";
 import "../style/topbar.css";
-
-export default function Topbar({ onMenuClick }) {
-  const { mutate: logout } = useLogout();
-
-  const handleLogout = logout;
-
+export default function Topbar({ setSidebarOpen }) {
   return (
-    <header className="topbar">
-      <div className="topbar-container">
-        {/* LEFT - Logo */}
-        <div className="topbar-left">
-          <img src="/images/kalesh_navbar_logo.webp" alt="Kalesh Logo" className="topbar-logo" />
-        </div>
+    <div className="admin-header">
+      <div className="admin-header-content flex items-center gap-4">
+        {/* Menu Button */}
+        <button
+          className="p-2 bg-red-500"
+          onClick={() => {
+            console.log("clicked");
+            setSidebarOpen((prev) => !prev);
+          }}
+        >
+          <Menu size={22} />
+        </button>
 
-        {/* CENTER - Title */}
-        <div className="topbar-center">
-          <h2 className="topbar-title">Admin Panel</h2>
-        </div>
-
-        {/* RIGHT - Actions */}
-        <div className="topbar-right">
-          <button
-            className="topbar-notification-btn"
-            aria-label="Notifications"
-          >
-            <Bell size={18} />
-            <span className="topbar-notification-badge"></span>
-          </button>
-
-          <div className="topbar-user-info">
-            <User size={16} />
-            <span className="topbar-user-name">Admin User</span>
-          </div>
-
-          <button
-            onClick={handleLogout}
-            className="topbar-logout-btn"
-            aria-label="Logout"
-          >
-            <LogOut size={18} />
-          </button>
-        </div>
+        {/* Logo */}
+        <h1 className="text-xl font-bold gradient-text">KALESH Admin</h1>
       </div>
-    </header>
+    </div>
   );
 }

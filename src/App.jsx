@@ -20,9 +20,12 @@ import AdminPayments from "./admin/pages/Payments";
 import AdminAdmins from "./admin/pages/Admins";
 import AdminLogs from "./admin/pages/Logs";
 import AdminSettings from "./admin/pages/Settings";
+
 import AdminSidebar from "./admin/components/Sidebar";
 import AdminTopbar from "./admin/components/Topbar";
-import AdminJobs from "./admin/pages/AdminJobs";
+
+import JobsPosting from "./admin/pages/JobsPosting";
+import AdminLayout from "./admin/layout/AdminLayout";
 
 // Lazy Public Pages
 const Home = lazy(() => import("./pages/Home"));
@@ -53,38 +56,6 @@ const queryClient = new QueryClient({
   },
 });
 
-
-// ================= ADMIN LAYOUT =================
-function AdminLayout() {
-  const location = useLocation();
-  const navigate = useNavigate();
-  const [sidebarOpen, setSidebarOpen] = useState(false);
-
-  useEffect(() => {
-    import("./admin/style/admin.css");
-  }, []);
-
-  useEffect(() => {
-    if (!AuthService.isAuthenticated()) {
-      navigate("/");
-    }
-  }, [navigate]);
-
-  if (!AuthService.isAuthenticated()) return null;
-
-  return (
-    <div className="admin-wrapper min-h-screen bg-gradient-to-br from-[#0b0b0f] to-[#1a1a2e]">
-      <AdminSidebar open={sidebarOpen} onClose={() => setSidebarOpen(false)} />
-      <AdminTopbar onMenuClick={() => setSidebarOpen(!sidebarOpen)} />
-
-      <main className="lg:ml-64 pt-24 lg:pt-40 p-4 sm:p-6 md:p-8 min-h-screen">
-        <div className="max-w-7xl mx-auto">
-          <Outlet />
-        </div>
-      </main>
-    </div>
-  );
-}
 
 
 // ================= MAIN ROUTES =================
@@ -127,7 +98,7 @@ function MainRoutes() {
             {/* ADMIN LOGIN (No Layout) */}
             <Route path="/admin/login" element={<AdminLogin />} />
 
-            {/* ADMIN PROTECTED ROUTES */}
+              {/* ADMIN PROTECTED ROUTES */}
             <Route path="/admin" element={<AdminLayout />}>
               <Route path="dashboard" element={<AdminDashboard />} />
               <Route path="reported-polls" element={<AdminReportedPolls />} />
@@ -135,7 +106,7 @@ function MainRoutes() {
               <Route path="users" element={<AdminUsers />} />
               
               {/* ✅ FIXED — NOW INSIDE ADMIN LAYOUT */}
-              <Route path="jobs" element={<AdminJobs />} />
+              <Route path="/admin/jobs" element={<JobsPosting />} />
               <Route path="banned-users" element={<AdminBannedUsers />} />
               <Route path="premium" element={<AdminPremium />} />
               <Route path="payments" element={<AdminPayments />} />
