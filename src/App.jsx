@@ -147,7 +147,7 @@ function App() {
 
   return (
     <QueryClientProvider client={queryClient}>
-      <ReactQueryDevtools initialIsOpen={false} />
+      {/* <ReactQueryDevtools initialIsOpen={false} />  */}
       <div className="app-main">
         <MainRoutes />
       </div>

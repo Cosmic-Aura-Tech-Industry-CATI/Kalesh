@@ -5,13 +5,15 @@ import Sidebar from "../components/Sidebar";
 
 export default function AdminLayout() {
   const [sidebarOpen, setSidebarOpen] = useState(true);
+  console.log("Sidebar state:", sidebarOpen);  // 👈 Yaha add karo
 
   return (
     <div className="admin-container min-h-screen">
       <Topbar setSidebarOpen={setSidebarOpen} />
 
       <div className="flex">
-         <aside
+        <Sidebar sidebarOpen={sidebarOpen} setSidebarOpen={setSidebarOpen} />
+        <aside
           className={`
             bg-gray-900
             transition-all
@@ -19,10 +21,9 @@ export default function AdminLayout() {
             ${sidebarOpen ? "w-64" : "w-0"}
             overflow-hidden
           `}
-        >
-          Sidebar
+        >     
         </aside>
-        <Sidebar sidebarOpen={sidebarOpen} />
+       
 
         <main className="flex-1 p-6 transition-all duration-300">
           <Outlet />

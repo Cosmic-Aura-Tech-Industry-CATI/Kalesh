@@ -19,6 +19,8 @@ export default function JobsPosting() {
     company: "",
     location: "",
     type: "Full-Time",
+    skill: "",
+    experience: "",
   });
 
   const [showForm, setShowForm] = useState(false);
@@ -38,6 +40,8 @@ export default function JobsPosting() {
       company: "",
       location: "",
       type: "Full-Time",
+      skill: "",
+      experience: "",
     });
     setShowForm(false);
   };
@@ -51,8 +55,8 @@ export default function JobsPosting() {
       jobs.map((job) =>
         job.id === id
           ? { ...job, status: job.status === "Active" ? "Closed" : "Active" }
-          : job
-      )
+          : job,
+      ),
     );
   };
 
@@ -107,6 +111,30 @@ export default function JobsPosting() {
           </div>
 
           <div className="admin-form-group">
+            <label className="admin-form-label">Skill</label>
+            <input
+              className="admin-form-input"
+              placeholder="e.g. React, Node, UI/UX"
+              value={formData.skill}
+              onChange={(e) =>
+                setFormData({ ...formData, skill: e.target.value })
+              }
+            />
+          </div>
+
+          <div className="admin-form-group">
+            <label className="admin-form-label">Experience</label>
+            <input
+              className="admin-form-input"
+              placeholder="e.g. 2+ Years"
+              value={formData.experience}
+              onChange={(e) =>
+                setFormData({ ...formData, experience: e.target.value })
+              }
+            />
+          </div>
+
+          <div className="admin-form-group">
             <label className="admin-form-label">Job Type</label>
             <select
               className="admin-form-select"
@@ -136,6 +164,8 @@ export default function JobsPosting() {
               <th>Title</th>
               <th>Company</th>
               <th>Location</th>
+              <th>Skill</th>
+              <th>Experience</th>
               <th>Type</th>
               <th>Status</th>
               <th>Actions</th>
@@ -148,6 +178,8 @@ export default function JobsPosting() {
                 <td>{job.title}</td>
                 <td>{job.company}</td>
                 <td>{job.location}</td>
+                <td>{job.skill}</td>
+                <td>{job.experience}</td>
                 <td>{job.type}</td>
                 <td>
                   <span

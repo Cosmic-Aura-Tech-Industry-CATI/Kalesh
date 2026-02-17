@@ -43,7 +43,8 @@ export default function Sidebar({ sidebarOpen, setSidebarOpen }) {
       <aside
         className={`
         admin-sidebar
-        ${!sidebarOpen ? "admin-sidebar--collapsed" : ""}
+        transition-transform duration-300
+        ${sidebarOpen ? "translate-x-0" : "-translate-x-full"}
       `}
       >
         <nav className="admin-sidebar-menu">
@@ -55,6 +56,7 @@ export default function Sidebar({ sidebarOpen, setSidebarOpen }) {
               <Link
                 key={item.path}
                 to={item.path}
+                onClick={() => setSidebarOpen(false)}
                 className={`admin-sidebar-item ${isActive ? "active" : ""}`}
               >
                 <Icon size={18} />
