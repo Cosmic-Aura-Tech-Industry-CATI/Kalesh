@@ -1,140 +1,34 @@
-/* ====================================
-   ADMIN JOBS PAGE
-==================================== */
 
-.admin-jobs-page {
-  padding: 32px;
-  background-color: #0b0b0b;
-  min-height: 100vh;
-  color: white;
+/* ======================================
+   Jobs Posting Page Styles
+====================================== */
+
+.jobs-posting-page {
+  padding: 4rem 0;
 }
 
-/* ====================================
-   HEADER SECTION
-==================================== */
-
-.admin-jobs-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 32px;
-  flex-wrap: wrap;
-  gap: 20px;
+.admin-section-header{
+  margin-bottom: 2rem;
 }
 
-.admin-jobs-title {
-  font-size: 28px;
+.admin-page-title {
+  line-height: 3.5rem;
   font-weight: 700;
-  background: linear-gradient(135deg, #ff6a00, #ffd700);
-  background-clip: text;
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
+}
+/* Improve table spacing */
+.jobs-posting-page .admin-table th,
+.jobs-posting-page .admin-table td {
+  vertical-align: middle;
 }
 
-.admin-jobs-description {
-  font-size: 14px;
-  color: #aaaaaa;
-  margin-top: 6px;
+/* Card enhancement */
+.jobs-posting-page .admin-card {
+  border-radius: 12px;
 }
 
-.admin-jobs-add-button {
-  background: linear-gradient(135deg, #ff2a2a, #ff6a00);
-  color: white;
-  padding: 10px 20px;
-  border-radius: 8px;
-  border: none;
-  cursor: pointer;
-  transition: all 0.3s ease;
-}
-
-.admin-jobs-add-button:hover {
-  box-shadow: 0 0 20px rgba(255, 106, 0, 0.6);
-  transform: scale(1.05);
-}
-
-/* ====================================
-   TABLE SECTION
-==================================== */
-
-.admin-jobs-table-wrapper {
-  background-color: #1a1a1a;
-  border: 1px solid rgba(212, 175, 55, 0.2);
-  border-radius: 10px;
-  overflow-x: auto;
-}
-
-.admin-jobs-table {
-  width: 100%;
-  border-collapse: collapse;
-}
-
-.admin-jobs-table th {
-  text-align: left;
-  padding: 16px;
-  font-size: 14px;
-  color: #d4af37;
-  border-bottom: 1px solid rgba(212, 175, 55, 0.2);
-}
-
-.admin-jobs-table td {
-  padding: 16px;
-  font-size: 14px;
-  color: #cccccc;
-  border-bottom: 1px solid rgba(212, 175, 55, 0.1);
-}
-
-.admin-jobs-table-row:hover {
-  background-color: rgba(255, 106, 0, 0.05);
-}
-
-/* ====================================
-   STATUS BADGES
-==================================== */
-
-.job-status-active {
-  background-color: rgba(0, 255, 0, 0.15);
-  color: #00ff99;
-  padding: 5px 10px;
-  border-radius: 20px;
-  font-size: 12px;
-}
-
-.job-status-pending {
-  background-color: rgba(255, 215, 0, 0.15);
-  color: #ffd700;
-  padding: 5px 10px;
-  border-radius: 20px;
-  font-size: 12px;
-}
-
-/* ====================================
-   ACTION BUTTONS
-==================================== */
-
-.admin-jobs-edit-btn {
-  background-color: transparent;
-  border: 1px solid #d4af37;
-  color: #d4af37;
-  padding: 6px 12px;
-  border-radius: 6px;
-  cursor: pointer;
-  transition: 0.2s ease;
-}
-
-.admin-jobs-edit-btn:hover {
-  background-color: rgba(212, 175, 55, 0.15);
-}
-
-.admin-jobs-delete-btn {
-  background-color: transparent;
-  border: 1px solid #ff4444;
-  color: #ff4444;
-  padding: 6px 12px;
-  border-radius: 6px;
-  cursor: pointer;
-  transition: 0.2s ease;
-}
-
-.admin-jobs-delete-btn:hover {
-  background-color: rgba(255, 68, 68, 0.15);
+/* Responsive tweak */
+@media (max-width: 768px) {
+  .jobs-posting-page {
+    padding-top: 3rem;
+  }
 }

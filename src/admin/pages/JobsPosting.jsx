@@ -1,6 +1,7 @@
 import { useState } from "react";
-import { Plus, Trash2, Edit } from "lucide-react";
+import { Plus, Trash2, Edit, Info } from "lucide-react";
 import "../style/admin.css";
+import "../style/adminjobs.css";
 
 export default function JobsPosting() {
   const [jobs, setJobs] = useState([
@@ -9,8 +10,26 @@ export default function JobsPosting() {
       title: "Frontend Developer",
       company: "Kalesh",
       location: "Remote",
+      skill: "React, Tailwind",
+      experience: "2+ Years",
       type: "Full-Time",
       status: "Active",
+      applicants: [
+        {
+          id: 1,
+          name: "Rahul Sharma",
+          email: "rahul@gmail.com",
+          role: "Frontend Developer",
+          resume: "#",
+        },
+        {
+          id: 2,
+          name: "Anita Verma",
+          email: "anita@gmail.com",
+          role: "Frontend Developer",
+          resume: "#",
+        },
+      ],
     },
   ]);
 
@@ -18,12 +37,14 @@ export default function JobsPosting() {
     title: "",
     company: "",
     location: "",
-    type: "Full-Time",
     skill: "",
     experience: "",
+    type: "Full-Time",
   });
 
   const [showForm, setShowForm] = useState(false);
+  const [selectedJob, setSelectedJob] = useState(null);
+  const [showApplicantsModal, setShowApplicantsModal] = useState(false);
 
   const handleAddJob = () => {
     if (!formData.title || !formData.company) return;
@@ -32,17 +53,20 @@ export default function JobsPosting() {
       id: Date.now(),
       ...formData,
       status: "Active",
+      applicants: [],
     };
 
     setJobs([...jobs, newJob]);
+
     setFormData({
       title: "",
       company: "",
       location: "",
-      type: "Full-Time",
       skill: "",
       experience: "",
+      type: "Full-Time",
     });
+
     setShowForm(false);
   };
 
@@ -50,18 +74,13 @@ export default function JobsPosting() {
     setJobs(jobs.filter((job) => job.id !== id));
   };
 
-  const toggleStatus = (id) => {
-    setJobs(
-      jobs.map((job) =>
-        job.id === id
-          ? { ...job, status: job.status === "Active" ? "Closed" : "Active" }
-          : job,
-      ),
-    );
+  const handleEdit = (job) => {
+    setFormData(job);
+    setShowForm(true);
   };
 
   return (
-    <div className="admin-section">
+    <div className="jobs-posting-page admin-section">
       <div className="admin-section-header">
         <h1 className="admin-page-title">Jobs Posting</h1>
 
@@ -74,65 +93,25 @@ export default function JobsPosting() {
         </button>
       </div>
 
-      {/* Add Job Form */}
+      {/* ================= ADD / EDIT FORM ================= */}
       {showForm && (
         <div className="admin-card mb-6">
-          <div className="admin-form-group">
-            <label className="admin-form-label">Job Title</label>
-            <input
-              className="admin-form-input"
-              value={formData.title}
-              onChange={(e) =>
-                setFormData({ ...formData, title: e.target.value })
-              }
-            />
-          </div>
-
-          <div className="admin-form-group">
-            <label className="admin-form-label">Company</label>
-            <input
-              className="admin-form-input"
-              value={formData.company}
-              onChange={(e) =>
-                setFormData({ ...formData, company: e.target.value })
-              }
-            />
-          </div>
-
-          <div className="admin-form-group">
-            <label className="admin-form-label">Location</label>
-            <input
-              className="admin-form-input"
-              value={formData.location}
-              onChange={(e) =>
-                setFormData({ ...formData, location: e.target.value })
-              }
-            />
-          </div>
-
-          <div className="admin-form-group">
-            <label className="admin-form-label">Skill</label>
-            <input
-              className="admin-form-input"
-              placeholder="e.g. React, Node, UI/UX"
-              value={formData.skill}
-              onChange={(e) =>
-                setFormData({ ...formData, skill: e.target.value })
-              }
-            />
-          </div>
-
-          <div className="admin-form-group">
-            <label className="admin-form-label">Experience</label>
-            <input
-              className="admin-form-input"
-              placeholder="e.g. 2+ Years"
-              value={formData.experience}
-              onChange={(e) =>
-                setFormData({ ...formData, experience: e.target.value })
-              }
-            />
-          </div>
+          {["title", "company", "location", "skill", "experience"].map(
+            (field) => (
+              <div key={field} className="admin-form-group">
+                <label className="admin-form-label">
+                  {field.charAt(0).toUpperCase() + field.slice(1)}
+                </label>
+                <input
+                  className="admin-form-input"
+                  value={formData[field]}
+                  onChange={(e) =>
+                    setFormData({ ...formData, [field]: e.target.value })
+                  }
+                />
+              </div>
+            ),
+          )}
 
           <div className="admin-form-group">
             <label className="admin-form-label">Job Type</label>
@@ -151,12 +130,12 @@ export default function JobsPosting() {
           </div>
 
           <button className="admin-btn-primary mt-4" onClick={handleAddJob}>
-            Post Job
+            Save Job
           </button>
         </div>
       )}
 
-      {/* Jobs Table */}
+      {/* ================= JOBS TABLE ================= */}
       <div className="admin-card">
         <table className="admin-table">
           <thead>
@@ -166,8 +145,7 @@ export default function JobsPosting() {
               <th>Location</th>
               <th>Skill</th>
               <th>Experience</th>
-              <th>Type</th>
-              <th>Status</th>
+              <th>Applicants</th>
               <th>Actions</th>
             </tr>
           </thead>
@@ -180,30 +158,34 @@ export default function JobsPosting() {
                 <td>{job.location}</td>
                 <td>{job.skill}</td>
                 <td>{job.experience}</td>
-                <td>{job.type}</td>
-                <td>
-                  <span
-                    className={
-                      job.status === "Active"
-                        ? "admin-badge-success"
-                        : "admin-badge-danger"
-                    }
-                  >
-                    {job.status}
-                  </span>
-                </td>
+                <td>{job.applicants.length}</td>
+
                 <td className="flex gap-2">
+                  {/* EDIT */}
                   <button
                     className="admin-btn-secondary"
-                    onClick={() => toggleStatus(job.id)}
+                    onClick={() => handleEdit(job)}
                   >
-                    Toggle
+                    <Edit size={16} />
                   </button>
+
+                  {/* DELETE */}
                   <button
                     className="admin-btn-danger"
                     onClick={() => handleDelete(job.id)}
                   >
                     <Trash2 size={16} />
+                  </button>
+
+                  {/* INFO */}
+                  <button
+                    className="admin-btn-secondary"
+                    onClick={() => {
+                      setSelectedJob(job);
+                      setShowApplicantsModal(true);
+                    }}
+                  >
+                    <Info size={16} />
                   </button>
                 </td>
               </tr>
@@ -211,6 +193,68 @@ export default function JobsPosting() {
           </tbody>
         </table>
       </div>
+
+      {/* ================= APPLICANTS MODAL ================= */}
+      {showApplicantsModal && selectedJob && (
+        <div className="admin-modal-overlay">
+          <div className="admin-modal-content max-w-3xl">
+            <div className="admin-modal-header">
+              <h2 className="admin-modal-title">
+                Applicants for {selectedJob.title}
+              </h2>
+              <button
+                className="admin-btn-secondary"
+                onClick={() => setShowApplicantsModal(false)}
+              >
+                Close
+              </button>
+            </div>
+
+            <div className="admin-modal-body">
+              <p className="mb-4 text-sm text-gray-400">
+                Total Applications: {selectedJob.applicants.length}
+              </p>
+
+              <table className="admin-table">
+                <thead>
+                  <tr>
+                    <th>Name</th>
+                    <th>Email</th>
+                    <th>Role Applied</th>
+                    <th>Resume</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {selectedJob.applicants.map((applicant) => (
+                    <tr key={applicant.id}>
+                      <td>{applicant.name}</td>
+                      <td>{applicant.email}</td>
+                      <td>{applicant.role}</td>
+                      <td>
+                        <a
+                          href={applicant.resume}
+                          className="admin-btn-secondary"
+                          download
+                        >
+                          Download
+                        </a>
+                      </td>
+                    </tr>
+                  ))}
+
+                  {selectedJob.applicants.length === 0 && (
+                    <tr>
+                      <td colSpan="4" className="text-center text-gray-400">
+                        No applications yet.
+                      </td>
+                    </tr>
+                  )}
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }

@@ -1,25 +1,97 @@
-import { Menu } from "lucide-react";
+import { Menu, Bell, User, LogOut } from "lucide-react";
+import { useNavigate } from "react-router-dom";
+import { useState } from "react";
+import { AuthService } from "../../services/auth.service";
 
 import "../style/admin.css";
 import "../style/topbar.css";
-export default function Topbar({ setSidebarOpen }) {
-  return (
-    <div className="admin-header">
-      <div className="admin-header-content flex items-center gap-4">
-        {/* Menu Button */}
-        <button
-          className="p-2 bg-red-500"
-          onClick={() => {
-            console.log("clicked");
-            setSidebarOpen((prev) => !prev);
-          }}
-        >
-          <Menu size={22} />
-        </button>
 
-        {/* Logo */}
-        <h1 className="text-xl font-bold gradient-text">KALESH Admin</h1>
+export default function Topbar({ setSidebarOpen }) {
+  const navigate = useNavigate();
+
+  const [showNotifications, setShowNotifications] = useState(false);
+  const [showAdminDetails, setShowAdminDetails] = useState(false);
+
+  const handleLogout = () => {
+    AuthService.logout();
+    navigate("/");
+  };
+
+  return (
+    <header className="admin-topbar">
+      <div className="admin-topbar-container">
+
+        {/* LEFT */}
+        <div className="admin-topbar-left">
+          <button
+            className="admin-sidebar-toggle-btn"
+            onClick={() => setSidebarOpen(prev => !prev)}
+          >
+            <Menu size={22} />
+          </button>
+
+          <h1 className="admin-brand-title">
+            KALESH Admin
+          </h1>
+        </div>
+
+        {/* RIGHT */}
+        <div className="admin-topbar-right">
+
+          {/* 🔔 Notification */}
+          <div className="admin-dropdown-wrapper">
+            <button
+              className="admin-icon-btn"
+              onClick={() => {
+                setShowNotifications(!showNotifications);
+                setShowAdminDetails(false);
+              }}
+            >
+              <Bell size={18} />
+              <span className="admin-notification-badge"></span>
+            </button>
+
+            {showNotifications && (
+              <div className="admin-dropdown">
+                <p>No new notifications</p>
+              </div>
+            )}
+          </div>
+
+          {/* 👤 Admin User */}
+          <div className="admin-dropdown-wrapper">
+            <button
+              className="admin-user-info"
+              onClick={() => {
+                setShowAdminDetails(!showAdminDetails);
+                setShowNotifications(false);
+              }}
+            >
+              <User size={16} />
+              <span className="admin-user-name">
+                Admin User
+              </span>
+            </button>
+
+            {showAdminDetails && (
+              <div className="admin-dropdown">
+                <p><strong>Name:</strong> Super Admin</p>
+                <p><strong>Email:</strong> admin@kalesh.com</p>
+                <p><strong>Role:</strong> Active Admin</p>
+              </div>
+            )}
+          </div>
+
+          {/* 🚪 Logout */}
+          <button
+            className="admin-logout-btn"
+            onClick={handleLogout}
+          >
+            <LogOut size={18} />
+          </button>
+
+        </div>
       </div>
-    </div>
+    </header>
   );
 }
