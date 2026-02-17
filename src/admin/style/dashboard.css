@@ -3,7 +3,7 @@
 ================================================== */
 
 .dashboard {
-  padding: 6rem 0;
+  padding: 1rem 0;
 }
 
 /* ================= HEADER ================= */
@@ -34,7 +34,6 @@
   gap: 1.5rem;
   grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
   margin-bottom: 2.5rem;
-  max-width: 68rem;
 }
 
 /* ================= SECONDARY STATS GRID ================= */
@@ -43,7 +42,6 @@
   display: grid;
   gap: 1.5rem;
   grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-  max-width: 68rem;
 }
 
 /* ================= RESPONSIVE ================= */

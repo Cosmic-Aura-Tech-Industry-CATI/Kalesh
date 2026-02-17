@@ -17,7 +17,7 @@ import AdminUsers from "./admin/pages/Users";
 import AdminBannedUsers from "./admin/pages/BannedUsers";
 import AdminPremium from "./admin/pages/Premium";
 import AdminPayments from "./admin/pages/Payments";
-import AdminAdmins from "./admin/pages/Admins";
+import Admins from "./admin/pages/Admins";
 import AdminLogs from "./admin/pages/Logs";
 import AdminSettings from "./admin/pages/Settings";
 
@@ -110,7 +110,7 @@ function MainRoutes() {
               <Route path="banned-users" element={<AdminBannedUsers />} />
               <Route path="premium" element={<AdminPremium />} />
               <Route path="payments" element={<AdminPayments />} />
-              <Route path="admins" element={<AdminAdmins />} />
+              <Route path="/admin/admins" element={<Admins />} />
               <Route path="logs" element={<AdminLogs />} />
               <Route path="settings" element={<AdminSettings />} />
             </Route>
