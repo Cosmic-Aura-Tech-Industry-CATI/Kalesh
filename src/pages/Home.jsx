@@ -29,7 +29,7 @@ function Home() {
         twitterDescription="India's first real-time anonymous opinion and polling social platform."
       />
       {/* ================= HERO SECTION ================= */}
-      <div className="container-fluid home-hero px-0">
+      <div className="home-hero container-fluid g-0">
         <div className="row align-items-center g-0">
           {/* Hero TEXT */}
 
@@ -82,12 +82,12 @@ function Home() {
       
       {/* ================= INFO SECTION ================= */}
       <div className="kalesh-info-section">
-        <div className="container">
-          <div className="info-image-row mt-4 mt-md-5">
+        <div className="kalesh-info-content container-fluid g-0">
+          <div className="info-image-row">
             <img
               src="/images/logoupper-1200.webp"
               width="1200"
-              height="290 "
+              height="290"
               className="info-full-image"
               alt="Kalesh Top Banner"
               loading="lazy"
@@ -103,7 +103,7 @@ function Home() {
             </h2>
           </div>
 
-          <div className="info-image-row mb-4 mb-md-5">
+          <div className="info-image-row">
             <img
               src="/images/logolower-1200.webp"
               width="1200"
@@ -116,6 +116,8 @@ function Home() {
           </div>
         </div>
       </div>
+
+
       {/* ===== REAL-TIME POLL INFO DIV ===== */}
       <div className="container-fluid section-poll py-4 py-md-5">
         <div className="container">

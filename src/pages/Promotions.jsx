@@ -1,68 +1,37 @@
-import { useState , useEffect } from "react";
+import { useState, useEffect } from "react";
 import { Helmet } from "react-helmet-async";
+import { useForm } from "react-hook-form";
+
+import { useCreatePromotion } from "../hooks/usePublicService";
+
 import "../styles/pages/promotions.css";
 
 function Promotions() {
   useEffect(() => {
-        window.scrollTo(0, 0);
-      }, []);
-  const [form, setForm] = useState({
-    name: "",
-    email: "",
-    phone: "",
-    message: "",
-  });
+    window.scrollTo(0, 0);
+  }, []);
 
-  const [errors, setErrors] = useState({});
-  const [loading, setLoading] = useState(false);
+  const {
+    register,
+    handleSubmit,
+    reset,
+    formState: { errors },
+  } = useForm();
+
+  const { mutate: createPromotion, isPending } = useCreatePromotion();
   const [success, setSuccess] = useState("");
 
-  // HANDLE CHANGE
-  const handleChange = (e) => {
-    setForm({ ...form, [e.target.name]: e.target.value });
-  };
-
-  // VALIDATION
-  const validate = () => {
-    const newErrors = {};
-
-    if (!form.name.trim()) newErrors.name = "Name is required";
-    if (!form.email.match(/^\S+@\S+\.\S+$/))
-      newErrors.email = "Valid email required";
-    if (!form.phone.match(/^[0-9]{10}$/))
-      newErrors.phone = "Enter 10-digit phone number";
-    if (!form.message.trim()) newErrors.message = "Message cannot be empty";
-
-    setErrors(newErrors);
-    return Object.keys(newErrors).length === 0;
-  };
-
-  // SUBMIT (BACKEND CONNECT)
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    if (!validate()) return;
-
-    setLoading(true);
+  const onSubmit = (data) => {
     setSuccess("");
-
-    try {
-      // 🔗 BACKEND API (change URL)
-      const res = await fetch("https://api.thekalesh.com/api/v1/promotions", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(form),
-      });
-
-      if (!res.ok) throw new Error("Failed");
-
-      setSuccess("✅ Message sent successfully!");
-      setForm({ name: "", email: "", phone: "", message: "" });
-    } catch (err) {
-      console.error(err);
-      setSuccess("❌ Something went wrong. Try again.");
-    }
-
-    setLoading(false);
+    createPromotion(data, {
+      onSuccess: () => {
+        setSuccess("✅ Message sent successfully!");
+        reset();
+      },
+      onError: () => {
+        setSuccess("❌ Something went wrong. Try again.");
+      },
+    });
   };
 
   return (
@@ -87,7 +56,9 @@ function Promotions() {
           </div>
 
           <div className="promo-text-col-6">
-            <h1 className="promo-title">Partner with Kalesh – Promotions & Brand Collaborations</h1>
+            <h1 className="promo-title">
+              Partner with Kalesh – Promotions & Brand Collaborations
+            </h1>
             <p className="promo-para">
               Connect with Kalesh for influencer and brand collaborations,
               partnerships, or support. Reach out via our contact form or choose
@@ -96,89 +67,97 @@ function Promotions() {
             </p>
           </div>
         </div>
-      
 
-      {/* For collaborations and promotions */}
+        {/* For collaborations and promotions */}
 
-      {/* BETWEEN TEXT */}
-      <div className="promo-between-text container text-center ">
-        <h2 className="promo-between-title fs-1 fw-bold ">
-          For collaboration and promotion.
-        </h2>
-      </div>
-
-      {/* FORM */}
-      <div className="promo-form-container gold-theme  mt-5">
-        <div className="promo-between-text container text-center mt-4 mb-4">
-          <h2 className="promo-between-title fs-1 fw-bold">Contact Us.</h2>
+        {/* BETWEEN TEXT */}
+        <div className="promo-between-text container text-center ">
+          <h2 className="promo-between-title fs-1 fw-bold ">
+            For collaboration and promotion.
+          </h2>
         </div>
 
-        <form className="promo-form gold-form" onSubmit={handleSubmit}>
-          {/* NAME */}
-          <div className="gold-field">
-            <label>
-              <span className="icon">👤</span> NAME
-            </label>
-            <input
-              name="name"
-              placeholder="Enter your full name"
-              value={form.name}
-              onChange={handleChange}
-            />
-            {errors.name && <small>{errors.name}</small>}
+        {/* FORM */}
+        <div className="promo-form-container gold-theme  mt-5">
+          <div className="promo-between-text container text-center mt-4 mb-4">
+            <h2 className="promo-between-title fs-1 fw-bold">Contact Us.</h2>
           </div>
 
-          {/* EMAIL */}
-          <div className="gold-field">
-            <label>
-              <span className="icon">📧</span> E-MAIL ID
-            </label>
-            <input
-              name="email"
-              placeholder="Enter your email address"
-              value={form.email}
-              onChange={handleChange}
-            />
-            {errors.email && <small>{errors.email}</small>}
-          </div>
+          <form
+            className="promo-form gold-form"
+            onSubmit={handleSubmit(onSubmit)}
+          >
+            {/* NAME */}
+            <div className="gold-field">
+              <label>
+                <span className="icon">👤</span> NAME
+              </label>
+              <input
+                placeholder="Enter your full name"
+                {...register("name", { required: "Name is required" })}
+              />
+              {errors.name && <small>{errors.name.message}</small>}
+            </div>
 
-          {/* PHONE */}
-          <div className="gold-field">
-            <label>
-              <span className="icon">📞</span> PHONE NO
-            </label>
-            <input
-              name="phone"
-              placeholder="Enter your phone number"
-              value={form.phone}
-              onChange={handleChange}
-            />
-            {errors.phone && <small>{errors.phone}</small>}
-          </div>
+            {/* EMAIL */}
+            <div className="gold-field">
+              <label>
+                <span className="icon">📧</span> E-MAIL ID
+              </label>
+              <input
+                placeholder="Enter your email address"
+                {...register("email", {
+                  required: "Valid email required",
+                  pattern: {
+                    value: /^\S+@\S+\.\S+$/,
+                    message: "Valid email required",
+                  },
+                })}
+              />
+              {errors.email && <small>{errors.email.message}</small>}
+            </div>
 
-          {/* MESSAGE */}
-          <div className="gold-field">
-            <label>
-              <span className="icon">💬</span> MESSAGE
-            </label>
-            <textarea
-              name="message"
-              placeholder="Write your message"
-              value={form.message}
-              onChange={handleChange}
-            />
-            {errors.message && <small>{errors.message}</small>}
-          </div>
+            {/* PHONE */}
+            <div className="gold-field">
+              <label>
+                <span className="icon">📞</span> PHONE NO
+              </label>
+              <input
+                placeholder="Enter your phone number"
+                {...register("phone", {
+                  required: "Enter 10-digit phone number",
+                  pattern: {
+                    value: /^[0-9]{10}$/,
+                    message: "Enter 10-digit phone number",
+                  },
+                })}
+              />
+              {errors.phone && <small>{errors.phone.message}</small>}
+            </div>
 
-          {/* BUTTON */}
-          <button className="gold-button" disabled={loading}>
-            {loading ? "Sending..." : "SEND MESSAGE →"}
-          </button>
+            {/* MESSAGE */}
+            <div className="gold-field">
+              <label>
+                <span className="icon">💬</span> MESSAGE
+              </label>
+              <textarea
+                placeholder="Write your message"
+                {...register("message", {
+                  required: "Message cannot be empty",
+                })}
+              />
+              {errors.message && <small>{errors.message.message}</small>}
+            </div>
 
-          {success && <p className="status">{success}</p>}
-        </form>
+            {/* BUTTON */}
+            <button className="gold-button" disabled={isPending}>
+              {isPending ? "Sending..." : "SEND MESSAGE →"}
+            </button>
+
+            {success && <p className="status">{success}</p>}
+          </form>
+        </div>
       </div>
-    </div>
     </>
   );
 }

@@ -1,11 +1,14 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { Helmet } from "react-helmet-async";
-import "./blog.css";
 import axios from "axios";
+
+import "./blog.css";
+import { useSubscribe } from "../hooks/usePublicService";
 
 const Blog = () => {
   const [mailId, setMailId] = useState("");
+  const { mutate: subscribe, isPending } = useSubscribe();
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -76,14 +79,7 @@ const Blog = () => {
 
   const handleSubscribe = (e) => {
     e.preventDefault();
-    axios
-      .post("https://api.thekalesh.com/api/v1/subscribe", { email: mailId })
-      .then((response) => {
-        console.log("Response:", response.data);
-      })
-      .catch((error) => {
-        console.error("Error submitting form:", error);
-      });
+    subscribe({ email: mailId });
   };
 
   const featuredBlogs = blogs.filter((blog) => blog.featured);
@@ -126,7 +122,7 @@ const Blog = () => {
                       required={true}
                     />
                     <button className="btn-subscribe" onClick={handleSubscribe}>
-                      Subscribe
+                      {isPending ? "Subscribing..." : "Subscribe"}
                     </button>
                   </div>
                   <p className="privacy-text">

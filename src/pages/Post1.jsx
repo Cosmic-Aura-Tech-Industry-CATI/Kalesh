@@ -1,5 +1,5 @@
 // post1.jsx
-import React, { useState } from "react";
+import { useState } from "react";
 import { Helmet } from "react-helmet-async";
 import "./Blogpage1.css"; // Linking to your existing CSS
 

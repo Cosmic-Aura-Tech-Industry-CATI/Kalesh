@@ -1,15 +1,26 @@
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import { useRef } from "react";
 import { Collapse } from "bootstrap";
+import { AuthService } from "../services/auth.service";
 import "../styles/components/navbar.css";
 
 function Navbar() {
   const menuRef = useRef(null);
+  const navigate = useNavigate();
 
   const handleLinkClick = () => {
     if (menuRef.current) {
       const collapse = Collapse.getInstance(menuRef.current);
       collapse?.hide();
+    }
+  };
+
+  const handleAdminLogin = (e) => {
+    e.preventDefault();
+    if (AuthService.isAuthenticated()) {
+      navigate("/admin/dashboard");
+    } else {
+      navigate("/admin/login");
     }
   };
 
@@ -56,7 +67,7 @@ function Navbar() {
           />
         </div>
 
-        <ul className="navbar-nav ms-auto gap-1 mx-4">
+        <ul className="navbar-nav ms-auto gap-3 mx-4">
 
           <li className="nav-item">
             <NavLink to="/" end className={getNavClass} onClick={handleLinkClick}>
@@ -95,6 +106,12 @@ function Navbar() {
           </li>
 
         </ul>
+
+        <div className="navbar-login-btn-container">
+          <a onClick={handleAdminLogin} className="navbar-login-btn">
+            Admin Login
+          </a>
+        </div>
 
         <div className="mobile-menu-copyright d-lg-none">
           © 2026 Kalesh
