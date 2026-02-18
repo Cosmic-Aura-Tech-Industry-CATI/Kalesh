@@ -5,23 +5,28 @@ import "./Blogpage1.css"; // Linking to your existing CSS
 
 const Post4 = () => {
   // State for comments
-  const [comments, setComments] = useState([
-    
-  ]);
+  const [comments, setComments] = useState([]);
 
   const [newComment, setNewComment] = useState("");
+  const [commentAuthor, setCommentAuthor] = useState(""); // Anonymous name for comment
   const [replyTo, setReplyTo] = useState(null);
   const [replyContent, setReplyContent] = useState("");
+  const [replyAuthor, setReplyAuthor] = useState(""); // Anonymous name for reply
   const [activeMenu, setActiveMenu] = useState(null);
+  const [showAuthorInput, setShowAuthorInput] = useState(false); // Toggle for comment author input
+  const [showReplyAuthorInput, setShowReplyAuthorInput] = useState(false); // Toggle for reply author input
 
   // Handle new comment submission
   const handleCommentSubmit = (e) => {
     e.preventDefault();
     if (!newComment.trim()) return;
 
+    // Use custom name if provided, otherwise default to "Anonymous User"
+    const author = commentAuthor.trim() || "Anonymous User";
+
     const comment = {
       id: Date.now(),
-      author: "Anonymous User",
+      author: author,
       content: newComment,
       date: new Date().toISOString(),
       likes: 0,
@@ -30,15 +35,20 @@ const Post4 = () => {
 
     setComments([comment, ...comments]);
     setNewComment("");
+    setCommentAuthor(""); // Reset author name
+    setShowAuthorInput(false); // Hide author input after posting
   };
 
   // Handle reply submission
   const handleReplySubmit = (commentId) => {
     if (!replyContent.trim()) return;
 
+    // Use custom name if provided, otherwise default to "Anonymous User"
+    const author = replyAuthor.trim() || "Anonymous User";
+
     const reply = {
       id: Date.now(),
-      author: "Anonymous User",
+      author: author,
       content: replyContent,
       date: new Date().toISOString(),
       likes: 0
@@ -52,6 +62,8 @@ const Post4 = () => {
 
     setReplyTo(null);
     setReplyContent("");
+    setReplyAuthor(""); // Reset reply author
+    setShowReplyAuthorInput(false); // Hide reply author input
   };
 
   // Handle likes
@@ -97,6 +109,16 @@ const Post4 = () => {
   // Toggle menu
   const toggleMenu = (id) => {
     setActiveMenu(activeMenu === id ? null : id);
+  };
+
+  // Toggle author input for comment
+  const toggleAuthorInput = () => {
+    setShowAuthorInput(!showAuthorInput);
+  };
+
+  // Toggle author input for reply
+  const toggleReplyAuthorInput = () => {
+    setShowReplyAuthorInput(!showReplyAuthorInput);
   };
 
   // Format date
@@ -371,7 +393,7 @@ const Post4 = () => {
         </div>
       </article>
 
-      {/* Comments Section - Using exact same classnames from your CSS */}
+      {/* Comments Section */}
       <section className="comments-section">
         <div className="container-fluid">
           <div className="content-wrapper">
@@ -381,13 +403,43 @@ const Post4 = () => {
                 <span className="comment-count">{comments.length}</span>
               </h2>
               <p className="comments-subtitle">
-                Join the conversation anonymously. No login required.
+                Join the conversation anonymously. Choose your anonymous name below.
               </p>
             </div>
 
             {/* Comment Form */}
             <div className="comment-form-container">
               <form onSubmit={handleCommentSubmit} className="comment-form">
+                {/* Anonymous Name Input - Toggleable */}
+                <div className="form-group">
+                  <div className="author-input-toggle">
+                    <button 
+                      type="button" 
+                      className="toggle-author-btn"
+                      onClick={toggleAuthorInput}
+                    >
+                      <i className="fas fa-user-secret"></i>
+                      {showAuthorInput ? 'Hide name option' : 'Choose anonymous name'}
+                    </button>
+                  </div>
+                  
+                  {showAuthorInput && (
+                    <div className="author-input-container">
+                      <input
+                        type="text"
+                        className="author-input"
+                        placeholder="Enter your anonymous name (optional)"
+                        value={commentAuthor}
+                        onChange={(e) => setCommentAuthor(e.target.value)}
+                        maxLength="50"
+                      />
+                      <span className="input-hint">
+                        Leave empty to post as "Anonymous User"
+                      </span>
+                    </div>
+                  )}
+                </div>
+
                 <div className="form-group">
                   <textarea
                     className="comment-input"
@@ -399,7 +451,8 @@ const Post4 = () => {
                 </div>
                 <div className="form-footer">
                   <span className="anonymous-badge">
-                    <i className="fas fa-user-secret"></i> Posting anonymously
+                    <i className="fas fa-user-secret"></i> 
+                    Posting as: <strong>{commentAuthor.trim() || "Anonymous User"}</strong>
                   </span>
                   <button type="submit" className="submit-comment-btn">
                     <i className="fas fa-paper-plane"></i> Post Comment
@@ -466,6 +519,36 @@ const Post4 = () => {
                     {/* Reply Form */}
                     {replyTo === comment.id && (
                       <div className="reply-form">
+                        {/* Anonymous Name Input for Reply - Toggleable */}
+                        <div className="form-group">
+                          <div className="author-input-toggle">
+                            <button 
+                              type="button" 
+                              className="toggle-author-btn small"
+                              onClick={toggleReplyAuthorInput}
+                            >
+                              <i className="fas fa-user-secret"></i>
+                              {showReplyAuthorInput ? 'Hide name option' : 'Choose anonymous name'}
+                            </button>
+                          </div>
+                          
+                          {showReplyAuthorInput && (
+                            <div className="author-input-container">
+                              <input
+                                type="text"
+                                className="author-input"
+                                placeholder="Enter your anonymous name (optional)"
+                                value={replyAuthor}
+                                onChange={(e) => setReplyAuthor(e.target.value)}
+                                maxLength="50"
+                              />
+                              <span className="input-hint">
+                                Leave empty to reply as "Anonymous User"
+                              </span>
+                            </div>
+                          )}
+                        </div>
+
                         <textarea
                           className="reply-input"
                           placeholder="Write your reply..."
@@ -474,21 +557,29 @@ const Post4 = () => {
                           rows="2"
                         ></textarea>
                         <div className="reply-actions">
-                          <button 
-                            className="cancel-reply-btn"
-                            onClick={() => {
-                              setReplyTo(null);
-                              setReplyContent("");
-                            }}
-                          >
-                            Cancel
-                          </button>
-                          <button 
-                            className="submit-reply-btn"
-                            onClick={() => handleReplySubmit(comment.id)}
-                          >
-                            Post Reply
-                          </button>
+                          <span className="anonymous-badge small">
+                            <i className="fas fa-user-secret"></i> 
+                            Replying as: <strong>{replyAuthor.trim() || "Anonymous User"}</strong>
+                          </span>
+                          <div className="reply-buttons">
+                            <button 
+                              className="cancel-reply-btn"
+                              onClick={() => {
+                                setReplyTo(null);
+                                setReplyContent("");
+                                setReplyAuthor("");
+                                setShowReplyAuthorInput(false);
+                              }}
+                            >
+                              Cancel
+                            </button>
+                            <button 
+                              className="submit-reply-btn"
+                              onClick={() => handleReplySubmit(comment.id)}
+                            >
+                              Post Reply
+                            </button>
+                          </div>
                         </div>
                       </div>
                     )}

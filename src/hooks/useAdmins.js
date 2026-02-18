@@ -14,6 +14,7 @@ export const useGetAllAdmins = () => {
   });
 };
 
+
 /**
  * A hook that fetches a user by its id from the API.
  * @param {string} id - The id of the user to be fetched.

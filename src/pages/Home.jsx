@@ -28,15 +28,13 @@ function Home() {
         twitterTitle="Kalesh – Anonymous Opinion Platform"
         twitterDescription="India's first real-time anonymous opinion and polling social platform."
       />
-
-      
       {/* ================= HERO SECTION ================= */}
       <div className="home-hero container-fluid g-0">
         <div className="row align-items-center g-0">
           {/* Hero TEXT */}
 
-          <div className="col-12 col-lg-6 order-2 order-lg-1">
-            <div className="hero-content">
+          <div className="col-12 col-lg-6 order-2 order-lg-1  d-flex justify-content-center justify-content-lg-start">
+            <div className="hero-content w-100 text-center text-lg-start">
               <h1 className="hero-title">
                 India&apos;s First Anonymous Social Media Platform
               </h1>
@@ -45,7 +43,9 @@ function Home() {
                 A platform where your opinion matters, not your identity.{" "}
               </p>
 
-              <div className="hero-buttons d-flex flex-column flex-sm-row gap-4 mt-4 mt-md-5">
+              <div className="hero-buttons d-flex flex-column flex-sm-row 
+              justify-content-center justify-content-lg-start 
+              align-items-center gap-4 mt-4 mt-md-5 w-100">
                 <button className="btn-kalesh">
                   Download App (Coming Soon)
                 </button>
@@ -79,8 +79,7 @@ function Home() {
           </div>
         </div>
       </div>
-
-
+      
       {/* ================= INFO SECTION ================= */}
       <div className="kalesh-info-section">
         <div className="kalesh-info-content container-fluid g-0">

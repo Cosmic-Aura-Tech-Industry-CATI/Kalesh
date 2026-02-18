@@ -9,7 +9,7 @@ function Footer() {
       <div className="container-fluid px-0 py-5">
         <div className="row align-items-center gy-4">
           {/* ===== COLUMN 1 : LOGO + CTA ===== */}
-          <div className="col-3">
+          <div className="col-12 col-sm-6 col-lg-3">
             <div className="footer-brand-wrap">
               <img
                 src="/images/footer-logo-200.webp"
@@ -30,7 +30,7 @@ function Footer() {
           </div>
 
           {/* ===== COLUMN 2 : WHAT WE DO ===== */}
-          <div className="col-3">
+          <div className="col-12 col-sm-6 col-lg-3">
             <h5 className="footer-title">What We Do</h5>
             <ul className="footer-list">
               <li>
@@ -46,7 +46,7 @@ function Footer() {
           </div>
 
           {/* ===== COLUMN 3 : WHO WE ARE ===== */}
-          <div className="col-3">
+          <div className="col-12 col-sm-6 col-lg-3">
             <h5 className="footer-title">Who We Are</h5>
             <ul className="footer-list">
               <li>
@@ -62,7 +62,7 @@ function Footer() {
           </div>
 
           {/* ===== COLUMN 4 : NEED HELP ===== */}
-          <div className="col-3">
+          <div className="col-12 col-sm-6 col-lg-3">
             <h5 className="footer-title">Need Help</h5>
             <ul className="footer-list">
               <li>
