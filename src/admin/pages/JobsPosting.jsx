@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Plus, Trash2, Edit, Info } from "lucide-react";
 import "../style/admin.css";
-import "../style/adminjobs.css";
+import "../style/adminJobs.css";
 
 export default function JobsPosting() {
   const [jobs, setJobs] = useState([
