@@ -1,3 +1,7 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
 /*==== Globle css for all. ====*/
 
 
@@ -6,16 +10,21 @@ html, body {
   overflow-x: hidden;
   scroll-behavior: auto;
   height: 100%;
+  margin: 0;
+  padding: 0;
+  width: 100%;
 }
 
 .app-main {
   display: flex;
   flex-direction: column;
-  
+  min-height: 100vh;
+  width: 100%;
 }
 
 .app-main main {
   flex: 1;
+  width: 100%;
 }
 
 
@@ -77,6 +86,140 @@ a:hover {
 .btn-outline-kalesh:hover {
   background-color: rgba(212, 175, 55, 0.1);
   color: #ff6a00;
+}
+
+/* ==================================================
+   4. GLOBAL RESPONSIVE UTILITIES
+================================================== */
+
+/* Responsive Typography */
+@media (max-width: 576px) {
+  body {
+    font-size: 14px;
+  }
+  
+  h1 {
+    font-size: 1.75rem !important;
+  }
+  
+  h2 {
+    font-size: 1.5rem !important;
+  }
+  
+  h3 {
+    font-size: 1.25rem !important;
+  }
+  
+  h4 {
+    font-size: 1.1rem !important;
+  }
+}
+
+/* Responsive Containers */
+@media (max-width: 768px) {
+  .container,
+  .container-fluid {
+    padding-left: 1rem;
+    padding-right: 1rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .container,
+  .container-fluid {
+    padding-left: 0.75rem;
+    padding-right: 0.75rem;
+  }
+}
+
+/* Responsive Buttons */
+@media (max-width: 576px) {
+  .btn-kalesh,
+  .btn-outline-kalesh {
+    padding: 10px 20px;
+    font-size: 0.9rem;
+  }
+}
+
+/* Responsive Images */
+img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+}
+
+/* Prevent horizontal scroll on all devices */
+* {
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+}
+
+/* Touch-friendly spacing for mobile */
+@media (max-width: 768px) {
+  section {
+    padding-left: 1rem;
+    padding-right: 1rem;
+  }
+}
+
+/* Responsive Row Spacing */
+@media (max-width: 768px) {
+  .row {
+    margin-left: 0;
+    margin-right: 0;
+  }
+  
+  .row > * {
+    padding-left: 0.75rem;
+    padding-right: 0.75rem;
+  }
+}
+
+/* ==================================================
+   5. DEVICE-SPECIFIC FIXES
+================================================== */
+
+/* iPhone SE, iPhone 12/13 Mini */
+@media only screen and (max-width: 375px) {
+  body {
+    font-size: 13px;
+  }
+  
+  .btn-kalesh,
+  .btn-outline-kalesh {
+    font-size: 0.85rem;
+    padding: 8px 16px;
+  }
+}
+
+/* Tablets (iPad, Surface Pro) */
+@media only screen and (min-width: 768px) and (max-width: 1024px) {
+  .container {
+    max-width: 720px;
+  }
+}
+
+/* Large Desktop */
+@media only screen and (min-width: 1440px) {
+  .container {
+    max-width: 1320px;
+  }
+}
+
+/* 4K and Ultra-wide screens */
+@media only screen and (min-width: 2560px) {
+  .container {
+    max-width: 1920px;
+  }
+}
+
+/* Landscape orientation on mobile */
+@media only screen and (max-height: 500px) and (orientation: landscape) {
+  section {
+    padding-top: 2rem;
+    padding-bottom: 2rem;
+  }
 }
 
 

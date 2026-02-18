@@ -1,4 +1,3 @@
-import React from 'react';
 import { Helmet } from "react-helmet-async";
 import SEO from "../components/SEO";
 import '../styles/pages/privacy.css';

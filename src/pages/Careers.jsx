@@ -1,126 +1,97 @@
-import { useState, useRef } from "react";
-import { useEffect } from 'react';
+import { useState, useRef, useEffect } from "react";
 import { Helmet } from "react-helmet-async";
 import "../styles/pages/careers.css";
 import SEO from "../components/SEO";
-import axios from "axios";
+import { useForm } from "react-hook-form";
+import { useCreateApplication } from "../hooks/usePublicService";
 
 function Careers() {
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
-  
-  const [formData, setFormData] = useState({
-    name: "",
-    email: "",
-    phone: "",
-    resume: null,
-  });
 
-  const [loading, setLoading] = useState(false);
+  const {
+    register,
+    handleSubmit,
+    setValue,
+    reset,
+    formState: { errors },
+  } = useForm();
+
+  const {
+    mutate: createApplication,
+    isPending,
+    isLoading,
+  } = useCreateApplication();
+  const isSubmitting = isPending || isLoading;
+
   const [showPopup, setShowPopup] = useState(false);
   const fileInputRef = useRef(null);
-  const [selectedFileName, setSelectedFileName] = useState('');
-  const [selectedFileSize, setSelectedFileSize] = useState('');
+  const [selectedFileName, setSelectedFileName] = useState("");
+  const [selectedFileSize, setSelectedFileSize] = useState("");
 
   const handleFileChange = (e) => {
     const file = e.target.files[0];
     if (file) {
-      // Validate file size (5MB limit)
-      if (file.size > 5 * 1024 * 1024) {
-        alert('File size should be less than 5MB');
-        return;
-      }
-
-      // Validate file type
-      const validTypes = ['application/pdf', 'application/msword', 'application/vnd.openxmlformats-officedocument.wordprocessingml.document'];
-      if (!validTypes.includes(file.type)) {
-        alert('Please upload PDF, DOC, or DOCX files only');
-        return;
-      }
-
       setSelectedFileName(file.name);
-      
+
       // Format file size
-      const size = file.size < 1024 * 1024 
-        ? Math.round(file.size / 1024) + ' KB'
-        : (file.size / (1024 * 1024)).toFixed(2) + ' MB';
+      const size =
+        file.size < 1024 * 1024
+          ? Math.round(file.size / 1024) + " KB"
+          : (file.size / (1024 * 1024)).toFixed(2) + " MB";
       setSelectedFileSize(size);
-      
-      // Update formData with the selected file
-      setFormData(prev => ({ ...prev, resume: file }));
+
+      // Call your existing handleChange function
+      // handleChange(e); // Uncomment this line
     }
   };
 
   const handleFileRemove = () => {
-    setSelectedFileName('');
-    setSelectedFileSize('');
-    setFormData(prev => ({ ...prev, resume: null }));
+    setSelectedFileName("");
+    setSelectedFileSize("");
     if (fileInputRef.current) {
-      fileInputRef.current.value = '';
+      fileInputRef.current.value = "";
     }
+    setValue("resume", null);
   };
 
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setFormData(prev => ({ ...prev, [name]: value }));
-  };
-
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-
-    // Check if resume exists in formData
-    if (!formData.resume) {
-      alert("Please upload your resume");
-      return;
+  const onSubmit = (data) => {
+    if (!data.resume || data.resume.length === 0) {
+      return alert("Please upload your resume");
     }
 
-    const data = new FormData();
-    data.append("name", formData.name);
-    data.append("email", formData.email);
-    data.append("phone", formData.phone);
-    data.append("resume", formData.resume);
+    const formData = new FormData();
+    formData.append("name", data.name);
+    formData.append("email", data.email);
+    formData.append("phone", data.phone);
+    formData.append("resume", data.resume[0]);
 
-    try {
-      setLoading(true);
-
-      const res = await axios.post(
-        "https://api.thekalesh.com/api/v1/applications",
-        data,
-        {
-          headers: {
-            'Content-Type': 'multipart/form-data',
-          },
-        }
-      );
-
-      setShowPopup(true);
-
-      // Reset form
-      setFormData({
-        name: "",
-        email: "",
-        phone: "",
-        resume: null,
-      });
-      setSelectedFileName('');
-      setSelectedFileSize('');
-
-      if (fileInputRef.current) {
-        fileInputRef.current.value = "";
-      }
-    } catch (err) {
-      alert(err.response?.data?.message || "Something went wrong, try again");
-    } finally {
-      setLoading(false);
-    }
+    createApplication(formData, {
+      onSuccess: () => {
+        setShowPopup(true);
+        reset();
+        handleFileRemove();
+      },
+      onError: (err) => {
+        alert(err.response?.data?.message || "Something went wrong, try again");
+      },
+    });
   };
+
+  const resumeRegister = register("resume", {
+    required: true,
+    onChange: handleFileChange,
+  });
 
   return (
     <>
       <Helmet>
         <title>Careers at Kalesh – Join Our Anonymous Social Media Team</title>
-        <meta name="description" content="Join the Kalesh team and build the future of anonymous social media. We're looking for passionate individuals to create a safe, judgment-free platform. Apply now!" />
+        <meta
+          name="description"
+          content="Join the Kalesh team and build the future of anonymous social media. We're looking for passionate individuals to create a safe, judgment-free platform. Apply now!"
+        />
         <link rel="canonical" href="https://thekalesh.com/careers" />
       </Helmet>
       <SEO
@@ -132,7 +103,7 @@ function Careers() {
         {/* TOP HEADING */}
         <div className="container text-center py-5">
           <h1 className="careers-title">
-            Build the future at the heart of change at <br /> Kalesh. 
+            Build the future at the heart of change at <br /> Kalesh.{" "}
           </h1>
         </div>
 
@@ -140,12 +111,12 @@ function Careers() {
         <div className="container py-5">
           <div className="row align-items-center">
             {/* LEFT CONTENT */}
-            <div className="col-md-6 mb-4">
-              <h2 className="careers-subtitle">Purposeful</h2>
-              <p className="careers-text mb-5 fs-5">
+            <div className="col-md-6 mb-4 ">
+              <h2 className="careers-subtitle ">Purposeful</h2>
+              <p className="careers-text mb-5 fs-5 ">
                 Evolving Our Purpose: We continuously refine our mission to
-                empower an enlightened workforce, engage conscious customers, and
-                build a stronger, more connected community.
+                empower an enlightened workforce, engage conscious customers,
+                and build a stronger, more connected community.
               </p>
             </div>
 
@@ -193,7 +164,7 @@ function Careers() {
             {/* FORM WITH GOLDEN-ORANGE BORDER */}
             <div className="golden-orange-form-container">
               <div className="form-decoration-top"></div>
-              <form className="career-form" onSubmit={handleSubmit}>
+              <form className="career-form" onSubmit={handleSubmit(onSubmit)}>
                 <div className="form-group-golden mb-4">
                   <label className="golden-orange-label">
                     <i className="fas fa-user-circle label-icon"></i>
@@ -202,12 +173,9 @@ function Careers() {
                   <div className="golden-input-wrapper">
                     <input
                       type="text"
-                      name="name"
-                      value={formData.name}
-                      onChange={handleChange}
                       className="golden-orange-input"
                       placeholder="Enter your full name"
-                      required
+                      {...register("name", { required: true })}
                     />
                     <span className="golden-input-icon">
                       <i className="fa-regular fa-user"></i>
@@ -223,12 +191,9 @@ function Careers() {
                   <div className="golden-input-wrapper">
                     <input
                       type="email"
-                      name="email"
-                      value={formData.email}
-                      onChange={handleChange}
                       className="golden-orange-input"
                       placeholder="Enter your email"
-                      required
+                      {...register("email", { required: true })}
                     />
                     <span className="golden-input-icon">
                       <i className="fa-regular fa-envelope"></i>
@@ -244,12 +209,9 @@ function Careers() {
                   <div className="golden-input-wrapper">
                     <input
                       type="tel"
-                      name="phone"
-                      value={formData.phone}
-                      onChange={handleChange}
                       className="golden-orange-input"
                       placeholder="Enter your phone"
-                      required
+                      {...register("phone", { required: true })}
                     />
                     <span className="golden-input-icon">
                       <i className="fa-solid fa-phone"></i>
@@ -262,39 +224,56 @@ function Careers() {
                     <i className="fas fa-file-upload label-icon"></i>
                     Resume
                   </label>
-                  
-                  {/* Show file upload box only when no file is selected */}
-                  {!selectedFileName ? (
-                    <div 
-                      className="golden-file-upload" 
-                      onClick={() => fileInputRef.current.click()}
-                      style={{ cursor: 'pointer' }}
+                  <div
+                    className="golden-file-upload"
+                    onClick={() =>
+                      !selectedFileName && fileInputRef.current.click()
+                    }
+                    style={{ cursor: selectedFileName ? "default" : "pointer" }}
+                  >
+                    <label
+                      htmlFor="resume-upload"
+                      className="file-upload-label"
                     >
-                      <div className="file-upload-label">
-                        <div className="file-upload-content">
-                          <i className="fa-solid fa-cloud-arrow-up file-upload-icon"></i>
-                          <span className="file-upload-text">
-                            Click to upload your resume
-                          </span>
-                          <span className="file-upload-hint">
-                            PDF, DOC, DOCX up to 5MB
-                          </span>
-                        </div>
-                        <div className="file-upload-border"></div>
+                      <div className="file-upload-content">
+                        <i className="fa-solid fa-cloud-arrow-up file-upload-icon"></i>
+                        <span className="file-upload-text">
+                          Click to upload your resume
+                        </span>
+                        <span className="file-upload-hint">
+                          PDF, DOC, DOCX up to 5MB
+                        </span>
                       </div>
-                    </div>
-                  ) : (
-                    /* Show selected file info when file is selected */
+                      <div className="file-upload-border"></div>
+                      <input
+                        type="file"
+                        accept=".pdf,.doc,.docx"
+                        {...resumeRegister}
+                        ref={(e) => {
+                          resumeRegister.ref(e);
+                          fileInputRef.current = e;
+                        }}
+                        style={{ display: "none" }}
+                      />
+                    </label>
+                  </div>
+
+                  {/* Show selected filename with remove option */}
+                  {selectedFileName && (
                     <div className="file-selected-info">
                       <div className="file-info">
                         <i className="fas fa-check-circle"></i>
-                        <span className="file-name">Selected: {selectedFileName}</span>
+                        <span className="file-name">
+                          Selected: {selectedFileName}
+                        </span>
                         {selectedFileSize && (
-                          <span className="file-size">({selectedFileSize})</span>
+                          <span className="file-size">
+                            ({selectedFileSize})
+                          </span>
                         )}
                       </div>
-                      <button 
-                        type="button" 
+                      <button
+                        type="button"
                         className="file-remove-btn"
                         onClick={handleFileRemove}
                         title="Remove file"
@@ -304,24 +283,14 @@ function Careers() {
                       </button>
                     </div>
                   )}
-                  
-                  {/* Hidden file input */}
-                  <input
-                    type="file"
-                    name="resume"
-                    accept=".pdf,.doc,.docx,application/pdf,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document"
-                    onChange={handleFileChange}
-                    ref={fileInputRef}
-                    style={{ display: 'none' }}
-                  />
                 </div>
 
-                <button 
-                  type="submit" 
-                  className="golden-orange-submit-btn" 
-                  disabled={loading}
+                <button
+                  type="submit"
+                  className="golden-orange-submit-btn"
+                  disabled={isSubmitting}
                 >
-                  {loading ? (
+                  {isSubmitting ? (
                     <>
                       <div className="loader"></div>
                       <span className="btn-text">SUBMITTING...</span>
@@ -357,16 +326,32 @@ function Careers() {
                 </h2>
               </div>
               <div className="col-md-6 text-md-end social-icons mt-4">
-                <a href="https://x.com/KaleshThe76740" aria-label="X" className="social-icon-link">
+                <a
+                  href="https://x.com/KaleshThe76740"
+                  aria-label="X"
+                  className="social-icon-link"
+                >
                   <i className="fa-brands fa-x-twitter"></i>
                 </a>
-                <a href="https://www.facebook.com/profile.php?id=61587629125145" aria-label="Facebook" className="social-icon-link">
+                <a
+                  href="https://www.facebook.com/profile.php?id=61587629125145"
+                  aria-label="Facebook"
+                  className="social-icon-link"
+                >
                   <i className="fa-brands fa-facebook-f"></i>
                 </a>
-                <a href="https://www.instagram.com/thekalesh47?igsh=MTdqd3Y2aHBsOWFxMg==" aria-label="Instagram" className="social-icon-link">
+                <a
+                  href="https://www.instagram.com/thekalesh47?igsh=MTdqd3Y2aHBsOWFxMg=="
+                  aria-label="Instagram"
+                  className="social-icon-link"
+                >
                   <i className="fa-brands fa-instagram"></i>
                 </a>
-                <a href="https://www.linkedin.com/company/kalesh47/" aria-label="LinkedIn" className="social-icon-link">
+                <a
+                  href="https://www.linkedin.com/company/kalesh47/"
+                  aria-label="LinkedIn"
+                  className="social-icon-link"
+                >
                   <i className="fa-brands fa-linkedin-in"></i>
                 </a>
               </div>
@@ -380,8 +365,13 @@ function Careers() {
             <div className="popup-content" onClick={(e) => e.stopPropagation()}>
               <div className="popup-icon">✓</div>
               <h3 className="popup-title">Form Submitted Successfully!</h3>
-              <p className="popup-message">Our team will connect with you as soon as possible.</p>
-              <button className="popup-close-btn" onClick={() => setShowPopup(false)}>
+              <p className="popup-message">
+                Our team will connect with you as soon as possible.
+              </p>
+              <button
+                className="popup-close-btn"
+                onClick={() => setShowPopup(false)}
+              >
                 Close
               </button>
             </div>
