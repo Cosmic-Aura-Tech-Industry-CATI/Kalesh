@@ -1,81 +1,71 @@
 import { useState } from "react";
+import { useForm } from "react-hook-form";
 import { Plus, Trash2, Edit, Info } from "lucide-react";
+import { useCreateJob, useGetAllJobs, useDeleteJob, useUpdateJob } from "../../hooks/useJobs";
+import { useGetApplicationsByJobId } from "../../hooks/useApplication";
 import "../style/admin.css";
 import "../style/adminJobs.css";
 
 export default function JobsPosting() {
-  const [jobs, setJobs] = useState([
-    {
-      id: 1,
-      title: "Frontend Developer",
-      company: "Kalesh",
-      location: "Remote",
-      skill: "React, Tailwind",
-      experience: "2+ Years",
-      type: "Full-Time",
-      status: "Active",
-      applicants: [
-        {
-          id: 1,
-          name: "Rahul Sharma",
-          email: "rahul@gmail.com",
-          role: "Frontend Developer",
-          resume: "#",
-        },
-        {
-          id: 2,
-          name: "Anita Verma",
-          email: "anita@gmail.com",
-          role: "Frontend Developer",
-          resume: "#",
-        },
-      ],
-    },
-  ]);
+  const { data: jobsData, isLoading } = useGetAllJobs();
+  const { mutate: createJob, isPending: isCreating } = useCreateJob();
+  const { mutate: updateJob, isPending: isUpdating } = useUpdateJob();
+  const { mutate: deleteJob } = useDeleteJob();
 
-  const [formData, setFormData] = useState({
-    title: "",
-    company: "",
-    location: "",
-    skill: "",
-    experience: "",
-    type: "Full-Time",
-  });
+  const jobs = jobsData?.data || [];
+
+  const {
+    register,
+    handleSubmit,
+    reset,
+    setValue,
+    formState: { errors },
+  } = useForm();
 
   const [showForm, setShowForm] = useState(false);
   const [selectedJob, setSelectedJob] = useState(null);
+  const [editingJob, setEditingJob] = useState(null);
   const [showApplicantsModal, setShowApplicantsModal] = useState(false);
 
-  const handleAddJob = () => {
-    if (!formData.title || !formData.company) return;
+  const { data: applicationsData, isLoading: isLoadingApps } = useGetApplicationsByJobId(selectedJob?._id || selectedJob?.id);
+  const applications = applicationsData?.applications || [];
 
-    const newJob = {
-      id: Date.now(),
-      ...formData,
-      status: "Active",
-      applicants: [],
-    };
-
-    setJobs([...jobs, newJob]);
-
-    setFormData({
-      title: "",
-      company: "",
-      location: "",
-      skill: "",
-      experience: "",
-      type: "Full-Time",
-    });
-
-    setShowForm(false);
+  const onSubmit = (data) => {
+    if (editingJob) {
+      updateJob(
+        { ...data, id: editingJob.id || editingJob._id },
+        {
+          onSuccess: () => {
+            setShowForm(false);
+            reset();
+            setEditingJob(null);
+          },
+        }
+      );
+    } else {
+      createJob(data, {
+        onSuccess: () => {
+          setShowForm(false);
+          reset();
+        },
+      });
+    }
   };
 
   const handleDelete = (id) => {
-    setJobs(jobs.filter((job) => job.id !== id));
+    if (window.confirm("Are you sure you want to delete this job?")) {
+      deleteJob(id);
+    }
   };
 
   const handleEdit = (job) => {
-    setFormData(job);
+    setEditingJob(job);
+    setValue("title", job.title);
+    setValue("company", job.company);
+    setValue("location", job.location);
+    setValue("skill", job.skill);
+    setValue("experience", job.experience);
+    setValue("type", job.type);
     setShowForm(true);
   };
 
@@ -86,7 +76,11 @@ export default function JobsPosting() {
 
         <button
           className="admin-btn-primary flex items-center gap-2"
-          onClick={() => setShowForm(!showForm)}
+          onClick={() => {
+            reset();
+            setEditingJob(null);
+            setShowForm(!showForm);
+          }}
         >
           <Plus size={18} />
           Add Job
@@ -95,32 +89,67 @@ export default function JobsPosting() {
 
       {/* ================= ADD / EDIT FORM ================= */}
       {showForm && (
-        <div className="admin-card mb-6">
-          {["title", "company", "location", "skill", "experience"].map(
-            (field) => (
-              <div key={field} className="admin-form-group">
-                <label className="admin-form-label">
-                  {field.charAt(0).toUpperCase() + field.slice(1)}
-                </label>
-                <input
-                  className="admin-form-input"
-                  value={formData[field]}
-                  onChange={(e) =>
-                    setFormData({ ...formData, [field]: e.target.value })
-                  }
-                />
-              </div>
-            ),
-          )}
+        <form onSubmit={handleSubmit(onSubmit)} className="admin-card mb-6">
+          <div className="admin-form-group">
+            <label className="admin-form-label">Title</label>
+            <input
+              className="admin-form-input"
+              {...register("title", { required: "Title is required" })}
+            />
+            {errors.title && (
+              <span className="text-red-500 text-xs">{errors.title.message}</span>
+            )}
+          </div>
+
+          <div className="admin-form-group">
+            <label className="admin-form-label">Company</label>
+            <input
+              className="admin-form-input"
+              {...register("company", { required: "Company is required" })}
+            />
+            {errors.company && (
+              <span className="text-red-500 text-xs">{errors.company.message}</span>
+            )}
+          </div>
+
+          <div className="admin-form-group">
+            <label className="admin-form-label">Location</label>
+            <input
+              className="admin-form-input"
+              {...register("location", { required: "Location is required" })}
+            />
+            {errors.location && (
+              <span className="text-red-500 text-xs">{errors.location.message}</span>
+            )}
+          </div>
+
+          <div className="admin-form-group">
+            <label className="admin-form-label">Skill</label>
+            <input
+              className="admin-form-input"
+              {...register("skill", { required: "Skill is required" })}
+            />
+            {errors.skill && (
+              <span className="text-red-500 text-xs">{errors.skill.message}</span>
+            )}
+          </div>
+
+          <div className="admin-form-group">
+            <label className="admin-form-label">Experience</label>
+            <input
+              className="admin-form-input"
+              {...register("experience", { required: "Experience is required" })}
+            />
+            {errors.experience && (
+              <span className="text-red-500 text-xs">{errors.experience.message}</span>
+            )}
+          </div>
 
           <div className="admin-form-group">
             <label className="admin-form-label">Job Type</label>
             <select
               className="admin-form-select"
-              value={formData.type}
-              onChange={(e) =>
-                setFormData({ ...formData, type: e.target.value })
-              }
+              {...register("type")}
             >
               <option>Full-Time</option>
               <option>Part-Time</option>
@@ -129,69 +158,81 @@ export default function JobsPosting() {
             </select>
           </div>
 
-          <button className="admin-btn-primary mt-4" onClick={handleAddJob}>
-            Save Job
+          <button type="submit" className="admin-btn-primary mt-4" disabled={isCreating || isUpdating}>
+            {isCreating || isUpdating ? "Saving..." : editingJob ? "Update Job" : "Save Job"}
           </button>
-        </div>
+        </form>
       )}
 
       {/* ================= JOBS TABLE ================= */}
       <div className="admin-card">
-        <table className="admin-table">
-          <thead>
-            <tr>
-              <th>Title</th>
-              <th>Company</th>
-              <th>Location</th>
-              <th>Skill</th>
-              <th>Experience</th>
-              <th>Applicants</th>
-              <th>Actions</th>
-            </tr>
-          </thead>
-
-          <tbody>
-            {jobs.map((job) => (
-              <tr key={job.id}>
-                <td>{job.title}</td>
-                <td>{job.company}</td>
-                <td>{job.location}</td>
-                <td>{job.skill}</td>
-                <td>{job.experience}</td>
-                <td>{job.applicants.length}</td>
-
-                <td className="flex gap-2">
-                  {/* EDIT */}
-                  <button
-                    className="admin-btn-secondary"
-                    onClick={() => handleEdit(job)}
-                  >
-                    <Edit size={16} />
-                  </button>
-
-                  {/* DELETE */}
-                  <button
-                    className="admin-btn-danger"
-                    onClick={() => handleDelete(job.id)}
-                  >
-                    <Trash2 size={16} />
-                  </button>
-
-                  {/* INFO */}
-                  <button
-                    className="admin-btn-secondary"
-                    onClick={() => {
-                      setSelectedJob(job);
-                      setShowApplicantsModal(true);
-                    }}
-                  >
-                    <Info size={16} />
-                  </button>
-                </td>
+        {isLoading ? (
+          <div className="text-white p-4">Loading jobs...</div>
+        ) : (
+          <table className="admin-table">
+            <thead>
+              <tr>
+                <th>Title</th>
+                <th>Company</th>
+                <th>Location</th>
+                <th>Skill</th>
+                <th>Experience</th>
+                <th>Applicants</th>
+                <th>Actions</th>
               </tr>
-            ))}
-          </tbody>
-        </table>
+            </thead>
+
+            <tbody>
+              {jobs.length > 0 ? (
+                jobs.map((job) => (
+                  <tr key={job.id || job._id}>
+                    <td>{job.title}</td>
+                    <td>{job.company}</td>
+                    <td>{job.location}</td>
+                    <td>{job.skill}</td>
+                    <td>{job.experience}</td>
+                    <td>{job.applicants?.length || 0}</td>
+
+                    <td className="flex gap-2">
+                      {/* EDIT */}
+                      <button
+                        className="admin-btn-secondary"
+                        onClick={() => handleEdit(job)}
+                      >
+                        <Edit size={16} />
+                      </button>
+
+                      {/* DELETE */}
+                      <button
+                        className="admin-btn-danger"
+                        onClick={() => handleDelete(job.id || job._id)}
+                      >
+                        <Trash2 size={16} />
+                      </button>
+
+                      {/* INFO */}
+                      <button
+                        className="admin-btn-secondary"
+                        onClick={() => {
+                          setSelectedJob(job);
+                          setShowApplicantsModal(true);
+                        }}
+                      >
+                        <Info size={16} />
+                      </button>
+                    </td>
+                  </tr>
+                ))
+              ) : (
+                <tr>
+                  <td colSpan="7" className="text-center text-gray-400 py-4">
+                    No jobs found
+                  </td>
+                </tr>
+              )}
+            </tbody>
+          </table>
+        )}
       </div>
 
       {/* ================= APPLICANTS MODAL ================= */}
@@ -212,7 +253,7 @@ export default function JobsPosting() {
 
             <div className="admin-modal-body">
               <p className="mb-4 text-sm text-gray-400">
-                Total Applications: {selectedJob.applicants.length}
+                Total Applications: {applications.length}
               </p>
 
               <table className="admin-table">
@@ -220,31 +261,48 @@ export default function JobsPosting() {
                   <tr>
                     <th>Name</th>
                     <th>Email</th>
-                    <th>Role Applied</th>
+                    <th>Phone</th>
+                    <th>Status</th>
                     <th>Resume</th>
                   </tr>
                 </thead>
                 <tbody>
-                  {selectedJob.applicants.map((applicant) => (
-                    <tr key={applicant.id}>
-                      <td>{applicant.name}</td>
-                      <td>{applicant.email}</td>
-                      <td>{applicant.role}</td>
-                      <td>
-                        <a
-                          href={applicant.resume}
-                          className="admin-btn-secondary"
-                          download
-                        >
-                          Download
-                        </a>
+                  {isLoadingApps ? (
+                    <tr>
+                      <td colSpan="5" className="text-center py-4 text-gray-400">
+                        Loading applications...
                       </td>
                     </tr>
-                  ))}
-
-                  {selectedJob.applicants.length === 0 && (
+                  ) : applications.length > 0 ? (
+                    applications.map((applicant) => (
+                      <tr key={applicant._id}>
+                        <td>{applicant.name}</td>
+                        <td>{applicant.email}</td>
+                        <td>{applicant.phone}</td>
+                        <td>
+                          <span className={`px-2 py-1 rounded text-xs ${
+                            applicant.status === 'pending' ? 'bg-yellow-500/20 text-yellow-400' :
+                            applicant.status === 'accepted' ? 'bg-green-500/20 text-green-400' :
+                            'bg-red-500/20 text-red-400'
+                          }`}>
+                            {applicant.status}
+                          </span>
+                        </td>
+                        <td>
+                          <a
+                            href={applicant.resume}
+                            className="admin-btn-secondary"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                          >
+                            View
+                          </a>
+                        </td>
+                      </tr>
+                    ))
+                  ) : (
                     <tr>
-                      <td colSpan="4" className="text-center text-gray-400">
+                      <td colSpan="5" className="text-center text-gray-400 py-4">
                         No applications yet.
                       </td>
                     </tr>
