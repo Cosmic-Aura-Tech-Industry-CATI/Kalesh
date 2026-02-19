@@ -1,0 +1,76 @@
+/* =====================================
+   Admin Management Page Specific Styles
+====================================== */
+
+/* 4rem padding only for this page */
+.admin-management-page {
+  padding: 4rem;
+}
+
+/* Role Badge */
+.admin-role-badge {
+  padding: 4px 10px;
+  border-radius: 6px;
+  font-size: 12px;
+  font-weight: 500;
+}
+
+.role-super-admin {
+  background: rgba(255, 0, 0, 0.15);
+  color: #ff4d4d;
+}
+
+.role-moderator {
+  background: rgba(0, 119, 255, 0.15);
+  color: #3399ff;
+}
+
+.role-support {
+  background: rgba(0, 200, 83, 0.15);
+  color: #00c853;
+}
+
+/* Status Badge */
+.admin-status-badge {
+  padding: 4px 10px;
+  border-radius: 6px;
+  font-size: 12px;
+  background: rgba(0, 200, 83, 0.15);
+  color: #00c853;
+}
+
+/* Password Field */
+.admin-password-wrapper {
+  position: relative;
+  width: 100%;
+}
+
+.admin-password-input {
+  padding-right: 40px;
+}
+
+.admin-password-toggle {
+  position: absolute;
+  right: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  cursor: pointer;
+  color: #aaa;
+  display: flex;
+  align-items: center;
+}
+
+.admin-password-toggle:hover {
+  color: #ff6a00;
+}
+
+/* Responsive */
+@media (max-width: 480px) {
+  .admin-management-page {
+    padding: 2rem;
+  }
+
+  .admin-password-input {
+    font-size: 14px;
+  }
+}
