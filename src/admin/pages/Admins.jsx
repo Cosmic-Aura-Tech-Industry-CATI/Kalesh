@@ -1,5 +1,7 @@
 import { useState } from "react";
 import { useForm } from "react-hook-form";
+import { Eye, EyeOff } from "lucide-react";
+
 import Table from "../components/Table";
 import Button from "../components/Button";
 import Modal from "../components/Modal";
@@ -10,13 +12,13 @@ import {
   useGetAllAdmins,
 } from "../../hooks/useAdmins";
 
-import "../style/admin.css";                 // ✅ Common Admin CSS
-import "../style/AdminManagement.css";      // ✅ Page Specific CSS
+import "../style/admin.css";               // ✅ Common CSS
+import "../style/AdminManagement.css";    // ✅ Page Specific CSS
 
 export default function AdminManagement() {
-  /* ===============================
+  /* ================================
      API Hooks
-  =============================== */
+  ================================= */
 
   const { data: adminResponse = {}, isLoading: isAdminLoading } =
     useGetAllAdmins();
@@ -24,19 +26,22 @@ export default function AdminManagement() {
   const { mutate: createAdminAccount, isPending: isCreatingAdmin } =
     useCreateAdmin();
 
-  const { mutate: removeAdminAccount } =
+  const { mutate: deleteAdminAccount } =
     useDeleteAdmin();
 
-  /* ===============================
+  /* ================================
      Local State
-  =============================== */
+  ================================= */
 
   const [isCreateModalOpen, setIsCreateModalOpen] =
     useState(false);
 
-  /* ===============================
-     Form Handling
-  =============================== */
+  const [isPasswordVisible, setIsPasswordVisible] =
+    useState(false);
+
+  /* ================================
+     Form Setup
+  ================================= */
 
   const {
     register,
@@ -45,12 +50,12 @@ export default function AdminManagement() {
     formState: { errors },
   } = useForm();
 
-  /* ===============================
+  /* ================================
      Utility Functions
-  =============================== */
+  ================================= */
 
-  const formatDateTime = (isoDateString) => {
-    const date = new Date(isoDateString);
+  const formatDateTime = (isoDate) => {
+    const date = new Date(isoDate);
 
     const year = date.getFullYear();
     const month = String(date.getMonth() + 1).padStart(2, "0");
@@ -62,16 +67,17 @@ export default function AdminManagement() {
     return `${year}-${month}-${day} ${hours}:${minutes}`;
   };
 
-  /* ===============================
+  /* ================================
      Event Handlers
-  =============================== */
+  ================================= */
 
   const handleDisableAdmin = (adminId) => {
-    removeAdminAccount(adminId);
+    deleteAdminAccount(adminId);
   };
 
   const openCreateAdminModal = () => {
     reset();
+    setIsPasswordVisible(false);
     setIsCreateModalOpen(true);
   };
 
@@ -83,9 +89,9 @@ export default function AdminManagement() {
     });
   };
 
-  /* ===============================
+  /* ================================
      Table Configuration
-  =============================== */
+  ================================= */
 
   const adminTableColumns = [
     { key: "name", label: "Admin Name" },
@@ -139,13 +145,12 @@ export default function AdminManagement() {
     },
   ];
 
-  /* ===============================
+  /* ================================
      Render
-  =============================== */
+  ================================= */
 
   return (
     <div className="admin-section admin-management-page">
-
       <div className="admin-section-header">
         <h1 className="admin-page-title">
           Admin & Role Management
@@ -172,7 +177,7 @@ export default function AdminManagement() {
       >
         <form onSubmit={handleSubmit(handleCreateAdminSubmit)}>
 
-          {/* Name */}
+          {/* Admin Name */}
           <div className="admin-form-group">
             <label className="admin-form-label">
               Admin Name
@@ -221,6 +226,48 @@ export default function AdminManagement() {
             )}
           </div>
 
+          {/* Password */}
+          <div className="admin-form-group">
+            <label className="admin-form-label">
+              Password
+            </label>
+
+            <div className="admin-password-wrapper">
+              <input
+                type={isPasswordVisible ? "text" : "password"}
+                {...register("password", {
+                  required: "Password is required",
+                  minLength: {
+                    value: 6,
+                    message:
+                      "Password must be at least 6 characters",
+                  },
+                })}
+                className="admin-form-input admin-password-input"
+                placeholder="Enter password"
+              />
+
+              <span
+                className="admin-password-toggle"
+                onClick={() =>
+                  setIsPasswordVisible(!isPasswordVisible)
+                }
+              >
+                {isPasswordVisible ? (
+                  <EyeOff size={18} />
+                ) : (
+                  <Eye size={18} />
+                )}
+              </span>
+            </div>
+
+            {errors.password && (
+              <span className="text-red-500 text-xs">
+                {errors.password.message}
+              </span>
+            )}
+          </div>
+
           {/* Role */}
           <div className="admin-form-group">
             <label className="admin-form-label">
@@ -233,14 +280,14 @@ export default function AdminManagement() {
               })}
               className="admin-form-select"
             >
-              <option value="Moderator">
-                Moderator
+              <option value="moderator">
+                moderator
               </option>
-              <option value="Support">
-                Support
+              <option value="support">
+                support
               </option>
-              <option value="Super Admin">
-                Super Admin
+              <option value="admin">
+                admin
               </option>
             </select>
           </div>
@@ -255,7 +302,6 @@ export default function AdminManagement() {
               ? "Adding..."
               : "Add Admin"}
           </Button>
-
         </form>
       </Modal>
     </div>
