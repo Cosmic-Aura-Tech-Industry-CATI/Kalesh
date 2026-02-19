@@ -21,10 +21,26 @@
   vertical-align: middle;
 }
 
+.jobs-posting-page .admin-table td {
+  max-width: 250px;
+  word-break: break-word;
+}
+
+.jobs-posting-page .admin-table td:nth-child(2) {
+  white-space: normal;
+}
+
+
+
 /* Card enhancement */
 .jobs-posting-page .admin-card {
   border-radius: 12px;
 }
+
+.jobs-posting-page .admin-card {
+  overflow-x: auto;
+}
+
 
 /* Responsive tweak */
 @media (max-width: 768px) {

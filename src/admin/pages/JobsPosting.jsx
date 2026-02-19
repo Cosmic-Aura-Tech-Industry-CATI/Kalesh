@@ -1,7 +1,12 @@
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { Plus, Trash2, Edit, Info } from "lucide-react";
-import { useCreateJob, useGetAllJobs, useDeleteJob, useUpdateJob } from "../../hooks/useJobs";
+import {
+  useCreateJob,
+  useGetAllJobs,
+  useDeleteJob,
+  useUpdateJob,
+} from "../../hooks/useJobs";
 import { useGetApplicationsByJobId } from "../../hooks/useApplication";
 import "../style/admin.css";
 import "../style/adminJobs.css";
@@ -27,13 +32,19 @@ export default function JobsPosting() {
   const [editingJob, setEditingJob] = useState(null);
   const [showApplicantsModal, setShowApplicantsModal] = useState(false);
 
-  const { data: applicationsData, isLoading: isLoadingApps } = useGetApplicationsByJobId(selectedJob?._id || selectedJob?.id);
+  // SAFELY GET JOB ID
+  const jobId = selectedJob?._id || selectedJob?.id;
+
+  const { data: applicationsData, isLoading: isLoadingApps } =
+    useGetApplicationsByJobId(jobId);
+
   const applications = applicationsData?.applications || [];
 
+  // ================= SUBMIT =================
   const onSubmit = (data) => {
     if (editingJob) {
       updateJob(
-        { ...data, id: editingJob.id || editingJob._id },
+        { ...data, id: editingJob._id || editingJob.id },
         {
           onSuccess: () => {
             setShowForm(false);
@@ -52,16 +63,18 @@ export default function JobsPosting() {
     }
   };
 
+  // ================= DELETE =================
   const handleDelete = (id) => {
     if (window.confirm("Are you sure you want to delete this job?")) {
       deleteJob(id);
     }
   };
 
+  // ================= EDIT =================
   const handleEdit = (job) => {
     setEditingJob(job);
     setValue("title", job.title);
-    setValue("company", job.company);
+    setValue("description", job.description);
     setValue("location", job.location);
     setValue("skill", job.skill);
     setValue("experience", job.experience);
@@ -90,67 +103,73 @@ export default function JobsPosting() {
       {/* ================= ADD / EDIT FORM ================= */}
       {showForm && (
         <form onSubmit={handleSubmit(onSubmit)} className="admin-card mb-6">
+
+          {/* Job Title */}
           <div className="admin-form-group">
-            <label className="admin-form-label">Title</label>
+            <label className="admin-form-label">Job Title</label>
             <input
               className="admin-form-input"
-              {...register("title", { required: "Title is required" })}
+              {...register("title", { required: "Job Title is required" })}
             />
             {errors.title && (
-              <span className="text-red-500 text-xs">{errors.title.message}</span>
+              <span className="text-red-500 text-xs">
+                {errors.title.message}
+              </span>
             )}
           </div>
 
+          {/* Job Description */}
           <div className="admin-form-group">
-            <label className="admin-form-label">Company</label>
-            <input
-              className="admin-form-input"
-              {...register("company", { required: "Company is required" })}
+            <label className="admin-form-label">Job Description</label>
+            <textarea
+              rows="4"
+              className="admin-form-textarea"
+              {...register("description", {
+                required: "Job Description is required",
+              })}
             />
-            {errors.company && (
-              <span className="text-red-500 text-xs">{errors.company.message}</span>
+            {errors.description && (
+              <span className="text-red-500 text-xs">
+                {errors.description.message}
+              </span>
             )}
           </div>
 
+          {/* Location */}
           <div className="admin-form-group">
             <label className="admin-form-label">Location</label>
             <input
               className="admin-form-input"
-              {...register("location", { required: "Location is required" })}
+              {...register("location", {
+                required: "Location is required",
+              })}
             />
-            {errors.location && (
-              <span className="text-red-500 text-xs">{errors.location.message}</span>
-            )}
           </div>
 
+          {/* Skill */}
           <div className="admin-form-group">
             <label className="admin-form-label">Skill</label>
             <input
               className="admin-form-input"
               {...register("skill", { required: "Skill is required" })}
             />
-            {errors.skill && (
-              <span className="text-red-500 text-xs">{errors.skill.message}</span>
-            )}
           </div>
 
+          {/* Experience */}
           <div className="admin-form-group">
             <label className="admin-form-label">Experience</label>
             <input
               className="admin-form-input"
-              {...register("experience", { required: "Experience is required" })}
+              {...register("experience", {
+                required: "Experience is required",
+              })}
             />
-            {errors.experience && (
-              <span className="text-red-500 text-xs">{errors.experience.message}</span>
-            )}
           </div>
 
+          {/* Job Type */}
           <div className="admin-form-group">
             <label className="admin-form-label">Job Type</label>
-            <select
-              className="admin-form-select"
-              {...register("type")}
-            >
+            <select className="admin-form-select" {...register("type")}>
               <option>Full-Time</option>
               <option>Part-Time</option>
               <option>Internship</option>
@@ -158,8 +177,16 @@ export default function JobsPosting() {
             </select>
           </div>
 
-          <button type="submit" className="admin-btn-primary mt-4" disabled={isCreating || isUpdating}>
-            {isCreating || isUpdating ? "Saving..." : editingJob ? "Update Job" : "Save Job"}
+          <button
+            type="submit"
+            className="admin-btn-primary mt-4"
+            disabled={isCreating || isUpdating}
+          >
+            {isCreating || isUpdating
+              ? "Saving..."
+              : editingJob
+              ? "Update Job"
+              : "Save Job"}
           </button>
         </form>
       )}
@@ -172,8 +199,8 @@ export default function JobsPosting() {
           <table className="admin-table">
             <thead>
               <tr>
-                <th>Title</th>
-                <th>Company</th>
+                <th>Job Title</th>
+                <th>Job Description</th>
                 <th>Location</th>
                 <th>Skill</th>
                 <th>Experience</th>
@@ -185,9 +212,9 @@ export default function JobsPosting() {
             <tbody>
               {jobs.length > 0 ? (
                 jobs.map((job) => (
-                  <tr key={job.id || job._id}>
+                  <tr key={job._id || job.id}>
                     <td>{job.title}</td>
-                    <td>{job.company}</td>
+                    <td>{job.description}</td>
                     <td>{job.location}</td>
                     <td>{job.skill}</td>
                     <td>{job.experience}</td>
@@ -196,6 +223,7 @@ export default function JobsPosting() {
                     <td className="flex gap-2">
                       {/* EDIT */}
                       <button
+                        type="button"
                         className="admin-btn-secondary"
                         onClick={() => handleEdit(job)}
                       >
@@ -204,14 +232,18 @@ export default function JobsPosting() {
 
                       {/* DELETE */}
                       <button
+                        type="button"
                         className="admin-btn-danger"
-                        onClick={() => handleDelete(job.id || job._id)}
+                        onClick={() =>
+                          handleDelete(job._id || job.id)
+                        }
                       >
                         <Trash2 size={16} />
                       </button>
 
                       {/* INFO */}
                       <button
+                        type="button"
                         className="admin-btn-secondary"
                         onClick={() => {
                           setSelectedJob(job);
@@ -244,6 +276,7 @@ export default function JobsPosting() {
                 Applicants for {selectedJob.title}
               </h2>
               <button
+                type="button"
                 className="admin-btn-secondary"
                 onClick={() => setShowApplicantsModal(false)}
               >
@@ -279,15 +312,7 @@ export default function JobsPosting() {
                         <td>{applicant.name}</td>
                         <td>{applicant.email}</td>
                         <td>{applicant.phone}</td>
-                        <td>
-                          <span className={`px-2 py-1 rounded text-xs ${
-                            applicant.status === 'pending' ? 'bg-yellow-500/20 text-yellow-400' :
-                            applicant.status === 'accepted' ? 'bg-green-500/20 text-green-400' :
-                            'bg-red-500/20 text-red-400'
-                          }`}>
-                            {applicant.status}
-                          </span>
-                        </td>
+                        <td>{applicant.status}</td>
                         <td>
                           <a
                             href={applicant.resume}
