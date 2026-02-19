@@ -19,9 +19,14 @@ export class JobService {
    * @returns {Promise<Object>}
    */
   static async createJob(payload) {
+    const data = { ...payload };
+    if (data.skill && typeof data.skill === "string") {
+      data.skill = data.skill.split(",").map((s) => s.trim()).filter(Boolean);
+    }
+
     const res = await axiosInstance.post(
       API_ENDPOINTS.JOBS.CREATE,
-      payload
+      data
     );
     return res.data;
   }
@@ -45,9 +50,14 @@ export class JobService {
    * @returns {Promise<Object>}
    */
   static async updateJob(payload) {
+    const data = { ...payload };
+    if (data.skill && typeof data.skill === "string") {
+      data.skill = data.skill.split(",").map((s) => s.trim()).filter(Boolean);
+    }
+
     const res = await axiosInstance.patch(
-      API_ENDPOINTS.JOBS.UPDATE_BY_ID(payload.id),
-      payload
+      API_ENDPOINTS.JOBS.UPDATE_BY_ID(data.id),
+      data
     );
     return res.data;
   }

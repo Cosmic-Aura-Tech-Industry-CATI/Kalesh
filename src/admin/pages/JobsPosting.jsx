@@ -42,6 +42,7 @@ export default function JobsPosting() {
 
   // ================= SUBMIT =================
   const onSubmit = (data) => {
+    console.log(data);
     if (editingJob) {
       updateJob(
         { ...data, id: editingJob._id || editingJob.id },
@@ -51,7 +52,7 @@ export default function JobsPosting() {
             reset();
             setEditingJob(null);
           },
-        }
+        },
       );
     } else {
       createJob(data, {
@@ -76,7 +77,10 @@ export default function JobsPosting() {
     setValue("title", job.title);
     setValue("description", job.description);
     setValue("location", job.location);
-    setValue("skill", job.skill);
+    setValue(
+      "skill",
+      Array.isArray(job.skill) ? job.skill.join(", ") : job.skill
+    );
     setValue("experience", job.experience);
     setValue("type", job.type);
     setShowForm(true);
@@ -103,7 +107,6 @@ export default function JobsPosting() {
       {/* ================= ADD / EDIT FORM ================= */}
       {showForm && (
         <form onSubmit={handleSubmit(onSubmit)} className="admin-card mb-6">
-
           {/* Job Title */}
           <div className="admin-form-group">
             <label className="admin-form-label">Job Title</label>
@@ -185,8 +188,8 @@ export default function JobsPosting() {
             {isCreating || isUpdating
               ? "Saving..."
               : editingJob
-              ? "Update Job"
-              : "Save Job"}
+                ? "Update Job"
+                : "Save Job"}
           </button>
         </form>
       )}
@@ -216,7 +219,11 @@ export default function JobsPosting() {
                     <td>{job.title}</td>
                     <td>{job.description}</td>
                     <td>{job.location}</td>
-                    <td>{job.skill}</td>
+                    <td>
+                      {Array.isArray(job.skill)
+                        ? job.skill.join(", ")
+                        : job.skill}
+                    </td>
                     <td>{job.experience}</td>
                     <td>{job.applicants?.length || 0}</td>
 
@@ -234,9 +241,7 @@ export default function JobsPosting() {
                       <button
                         type="button"
                         className="admin-btn-danger"
-                        onClick={() =>
-                          handleDelete(job._id || job.id)
-                        }
+                        onClick={() => handleDelete(job._id || job.id)}
                       >
                         <Trash2 size={16} />
                       </button>
@@ -302,7 +307,10 @@ export default function JobsPosting() {
                 <tbody>
                   {isLoadingApps ? (
                     <tr>
-                      <td colSpan="5" className="text-center py-4 text-gray-400">
+                      <td
+                        colSpan="5"
+                        className="text-center py-4 text-gray-400"
+                      >
                         Loading applications...
                       </td>
                     </tr>
@@ -327,7 +335,10 @@ export default function JobsPosting() {
                     ))
                   ) : (
                     <tr>
-                      <td colSpan="5" className="text-center text-gray-400 py-4">
+                      <td
+                        colSpan="5"
+                        className="text-center text-gray-400 py-4"
+                      >
                         No applications yet.
                       </td>
                     </tr>
