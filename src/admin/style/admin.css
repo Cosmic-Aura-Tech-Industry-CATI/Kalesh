@@ -297,3 +297,9 @@
 .admin-sidebar--collapsed .admin-sidebar-item {
   justify-content: center;
 }
+
+
+/*===== common padding for all pages =====*/
+.admin-section {
+  padding: 4rem;
+}
