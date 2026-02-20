@@ -11,6 +11,7 @@ export const API_ENDPOINTS = {
     GET_BY_ID: (id) => `/applications/${id}`, 
     ACCEPT: (id) => `/applications/accept/${id}`, 
     REJECT: (id) => `/applications/reject/${id}`, 
+    DOWNLOAD_APPLICATIONS: (jobId) => `/applications/job/${jobId}/download`,
   },
 
   PROMOTION: {

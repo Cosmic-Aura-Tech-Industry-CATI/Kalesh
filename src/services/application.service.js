@@ -84,4 +84,19 @@ export class ApplicationService {
     );
     return res.data;
   }
+
+  /**
+   * Download applications excel
+   * @param {string} jobId
+   * @returns {Promise<Blob>}
+   */
+  static async downloadApplications(jobId) {
+    const res = await axiosInstance.get(
+      API_ENDPOINTS.APPLICATION.DOWNLOAD_APPLICATIONS(jobId),
+      {
+        responseType: "blob",
+      }
+    );
+    return res.data;
+  }
 }

@@ -102,3 +102,26 @@ export const useRejectApplication = () => {
     },
   });
 };
+
+
+/**
+ * Download applications
+ */
+export const useDownloadApplications = () => {
+  return useMutation({
+    mutationFn: (jobId) => ApplicationService.downloadApplications(jobId),
+    onSuccess: (data, jobId) => {
+      console.log('Applications downloaded successfully');
+      const url = window.URL.createObjectURL(new Blob([data]));
+      const link = document.createElement("a");
+      link.href = url;
+      link.setAttribute("download", `applications_job_${jobId}.xlsx`);
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+    }    ,
+    onError: (err) => {
+      console.log(err);
+    },
+  });
+};

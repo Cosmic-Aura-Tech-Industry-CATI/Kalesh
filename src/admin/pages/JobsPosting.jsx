@@ -7,13 +7,14 @@ import {
   useDeleteJob,
   useUpdateJob,
 } from "../../hooks/useJobs";
-import { useGetApplicationsByJobId } from "../../hooks/useApplication";
-import {
-  useAcceptApplication,
-  useRejectApplication,
-} from "../../hooks/useApplication";
+// import { useGetApplicationsByJobId } from "../../hooks/useApplication";
+// import {
+//   useAcceptApplication,
+//   useRejectApplication,
+// } from "../../hooks/useApplication";
 import "../style/admin.css";
 import "../style/adminJobs.css";
+import ApplicationTable from "../components/ApplicationTable";
 
 export default function JobsPosting() {
   const { data: jobsData, isLoading } = useGetAllJobs();
@@ -21,9 +22,9 @@ export default function JobsPosting() {
   const { mutate: updateJob, isPending: isUpdating } = useUpdateJob();
   const { mutate: deleteJob } = useDeleteJob();
 
-  // 👇 YAHAN ADD KARO
-  const { mutate: acceptApplication } = useAcceptApplication();
-  const { mutate: rejectApplication } = useRejectApplication();
+  // // 👇 YAHAN ADD KARO
+  // const { mutate: acceptApplication } = useAcceptApplication();
+  // const { mutate: rejectApplication } = useRejectApplication();
 
   const jobs = jobsData?.data || [];
 
@@ -43,10 +44,10 @@ export default function JobsPosting() {
   // SAFELY GET JOB ID
   const jobId = selectedJob?._id || selectedJob?.id;
 
-  const { data: applicationsData, isLoading: isLoadingApps } =
-    useGetApplicationsByJobId(jobId);
+  // const { data: applicationsData, isLoading: isLoadingApps } =
+  //   useGetApplicationsByJobId(jobId);
 
-  const applications = applicationsData?.applications || [];
+  // const applications = applicationsData?.applications || [];
 
   // ================= SUBMIT =================
   const onSubmit = (data) => {
@@ -60,7 +61,7 @@ export default function JobsPosting() {
             reset();
             setEditingJob(null);
           },
-        },
+        }
       );
     } else {
       createJob(data, {
@@ -87,7 +88,7 @@ export default function JobsPosting() {
     setValue("location", job.location);
     setValue(
       "skill",
-      Array.isArray(job.skill) ? job.skill.join(", ") : job.skill,
+      Array.isArray(job.skill) ? job.skill.join(", ") : job.skill
     );
     setValue("experience", job.experience);
     setValue("type", job.type);
@@ -196,8 +197,8 @@ export default function JobsPosting() {
             {isCreating || isUpdating
               ? "Saving..."
               : editingJob
-                ? "Update Job"
-                : "Save Job"}
+              ? "Update Job"
+              : "Save Job"}
           </button>
         </form>
       )}
@@ -282,112 +283,117 @@ export default function JobsPosting() {
 
       {/* ================= APPLICANTS MODAL ================= */}
       {showApplicantsModal && selectedJob && (
-        <div className="admin-modal-overlay">
-          <div className="admin-modal-content !max-w-6xl w-full">
-            <div className="admin-modal-header">
-              <h2 className="admin-modal-title">
-                Applicants for {selectedJob.title}
-              </h2>
-              <button
-                type="button"
-                className="admin-btn-secondary"
-                onClick={() => setShowApplicantsModal(false)}
-              >
-                Close
-              </button>
-            </div>
+        <ApplicationTable
+          title={selectedJob.title}
+          onShowModal={setShowApplicantsModal}
+          jobId={jobId}
+        />
+        // <div className="admin-modal-overlay">
+        //   <div className="admin-modal-content !max-w-6xl w-full">
+        //     <div className="admin-modal-header">
+        //       <h2 className="admin-modal-title">
+        //         Applicants for {selectedJob.title}
+        //       </h2>
+        //       <button
+        //         type="button"
+        //         className="admin-btn-secondary"
+        //         onClick={() => setShowApplicantsModal(false)}
+        //       >
+        //         Close
+        //       </button>
+        //     </div>
 
-            <div className="admin-modal-body">
-              <p className="mb-4 text-sm text-gray-400">
-                Total Applications: {applications.length}
-              </p>
+        //     <div className="admin-modal-body">
+        //       <p className="mb-4 text-sm text-gray-400">
+        //         Total Applications: {applications.length}
+        //       </p>
 
-              <table className="admin-table">
-                <thead>
-                  <tr>
-                    <th>Name</th>
-                    <th>Email</th>
-                    <th>Phone</th>
-                    <th>Status</th>
-                    <th>Resume</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {isLoadingApps ? (
-                    <tr>
-                      <td
-                        colSpan="5"
-                        className="text-center py-4 text-gray-400"
-                      >
-                        Loading applications...
-                      </td>
-                    </tr>
-                  ) : applications.length > 0 ? (
-                    applications.map((applicant) => (
-                      <tr key={applicant._id}>
-                        <td>{applicant.name}</td>
-                        <td>{applicant.email}</td>
-                        <td>{applicant.phone}</td>
-                        <td>
-                          <span
-                            className={`px-2 py-1 rounded text-xs ${
-                              applicant.status === "accepted"
-                                ? "bg-green-500/20 text-green-400"
-                                : applicant.status === "rejected"
-                                  ? "bg-red-500/20 text-red-400"
-                                  : "bg-yellow-500/20 text-yellow-400"
-                            }`}
-                          >
-                            {applicant.status}
-                          </span>
-                        </td>
-                        <td>
-                          <div className="flex items-center gap-2 whitespace-nowrap">
-                            <a
-                              href={applicant.resume}
-                              className="admin-btn-secondary"
-                              target="_blank"
-                              rel="noopener noreferrer"
-                            >
-                              View
-                            </a>
+        //       <table className="admin-table">
+        //         <thead>
+        //           <tr>
+        //             <th>Name</th>
+        //             <th>Email</th>
+        //             <th>Phone</th>
+        //             <th>Status</th>
+        //             <th>Resume</th>
+        //           </tr>
+        //         </thead>
+        //         <tbody>
+        //           {isLoadingApps ? (
+        //             <tr>
+        //               <td
+        //                 colSpan="5"
+        //                 className="text-center py-4 text-gray-400"
+        //               >
+        //                 Loading applications...
+        //               </td>
+        //             </tr>
+        //           ) : applications.length > 0 ? (
+        //             applications.map((applicant) => (
+        //               <tr key={applicant._id}>
+        //                 <td>{applicant.name}</td>
+        //                 <td>{applicant.email}</td>
+        //                 <td>{applicant.phone}</td>
+        //                 <td>
+        //                   <span
+        //                     className={`px-2 py-1 rounded text-xs ${
+        //                       applicant.status === "accepted"
+        //                         ? "bg-green-500/20 text-green-400"
+        //                         : applicant.status === "rejected"
+        //                           ? "bg-red-500/20 text-red-400"
+        //                           : "bg-yellow-500/20 text-yellow-400"
+        //                     }`}
+        //                   >
+        //                     {applicant.status}
+        //                   </span>
+        //                 </td>
+        //                 <td>
+        //                   <div className="flex items-center gap-2 whitespace-nowrap">
+        //                     <a
+        //                       href={applicant.resume}
+        //                       className="admin-btn-secondary"
+        //                       target="_blank"
+        //                       rel="noopener noreferrer"
+        //                     >
+        //                       View
+        //                     </a>
 
-                            {/* ACCEPT */}
-                            <button
-                              type="button"
-                              className="admin-btn-primary"
-                              onClick={() => acceptApplication(applicant._id)}
-                            >
-                              Accept
-                            </button>
+        //                     {/* ACCEPT */}
+        //                     <button
+        //                       type="button"
+        //                       className="admin-btn-primary"
+        //                       onClick={() => acceptApplication(applicant._id)}
+        //                     >
+        //                       Accept
+        //                     </button>
 
-                            {/* REJECT */}
-                            <button
-                              type="button"
-                              className="admin-btn-danger"
-                              onClick={() => rejectApplication(applicant._id)}
-                            >
-                              Reject
-                            </button>
-                          </div>
-                        </td>
-                      </tr>
-                    ))
-                  ) : (
-                    <tr>
-                      <td
-                        colSpan="5"
-                        className="text-center text-gray-400 py-4"
-                      >
-                        No applications yet.
-                      </td>
-                    </tr>
-                  )}
-                </tbody>
-              </table>
-            </div>
-          </div>
-        </div>
+        //                     {/* REJECT */}
+        //                     <button
+        //                       type="button"
+        //                       className="admin-btn-danger"
+        //                       onClick={() => rejectApplication(applicant._id)}
+        //                     >
+        //                       Reject
+        //                     </button>
+        //                   </div>
+        //                 </td>
+        //               </tr>
+        //             ))
+        //           ) : (
+        //             <tr>
+        //               <td
+        //                 colSpan="5"
+        //                 className="text-center text-gray-400 py-4"
+        //               >
+        //                 No applications yet.
+        //               </td>
+        //             </tr>
+        //           )}
+        //         </tbody>
+        //       </table>
+        //     </div>
+        //   </div>
+        // </div>
       )}
     </div>
   );
