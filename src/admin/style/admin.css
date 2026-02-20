@@ -12,8 +12,8 @@
     @apply bg-[#0b0b0b] text-white;
   }
 
-  .admin-wrapper input, 
-  .admin-wrapper textarea, 
+  .admin-wrapper input,
+  .admin-wrapper textarea,
   .admin-wrapper select {
     @apply bg-[#1a1a1a] border border-[#d4af37]/30 text-white placeholder-gray-500 focus:border-[#ff6a00] focus:ring-1 focus:ring-[#ff6a00]/50;
   }
@@ -37,15 +37,15 @@
   .card-shadow {
     @apply shadow-lg shadow-black/50;
   }
-  
+
   .hover-lift {
     @apply hover:shadow-xl hover:shadow-[#ff6a00]/20 hover:translate-y-[-2px] transition-all duration-200;
   }
-  
+
   .gradient-text {
     @apply bg-gradient-to-r from-[#ff6a00] to-[#ffd700] bg-clip-text text-transparent;
   }
-  
+
   .glass-effect {
     @apply backdrop-blur-sm bg-white/5;
   }
@@ -75,8 +75,7 @@
   /* Admin Sidebar */
   .admin-sidebar {
     @apply fixed left-0 top-16 h-[calc(100vh-4rem)] w-64 bg-[#0b0b0b] border-r border-[#d4af37]/20 z-50 overflow-y-auto;
-}
-
+  }
 
   .admin-sidebar-menu {
     @apply space-y-2 p-4;
@@ -105,9 +104,10 @@
     background-clip: text;
     animation: gradientFlow 8s ease infinite;
   }
-  
+
   @keyframes gradientFlow {
-    0%, 100% {
+    0%,
+    100% {
       background-position: 0% 50%;
     }
     50% {
@@ -215,7 +215,7 @@
   }
 
   .admin-modal-content {
-    @apply bg-[#1a1a1a] border border-[#d4af37]/20 rounded-lg max-w-md w-full mx-4;
+    @apply bg-[#1a1a1a] border border-[#d4af37]/20 rounded-lg max-w-4xl w-full mx-4;
   }
 
   .admin-modal-header {
@@ -288,7 +288,6 @@
   width: 16rem;
 }
 
-
 /* Hide text when collapsed */
 .admin-sidebar--collapsed .sidebar-label {
   display: none;
@@ -298,7 +297,3 @@
 .admin-sidebar--collapsed .admin-sidebar-item {
   justify-content: center;
 }
-
-
-
-
