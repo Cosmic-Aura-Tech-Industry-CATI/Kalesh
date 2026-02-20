@@ -1,0 +1,45 @@
+/* =========================================
+   REPORTED POLLS PAGE (Isolated Styling)
+   ========================================= */
+
+.reported-polls-section {
+  width: 100%;
+  padding: 4rem;
+}
+
+.reported-polls-header {
+  align-items: center;
+}
+
+.reported-polls-count {
+  font-size: 0.85rem;
+  color: #9ca3af;
+}
+
+/* Options List */
+.reported-options-list {
+  font-size: 0.75rem;
+  line-height: 1.4;
+}
+
+.reported-option-item {
+  color: #9ca3af;
+}
+
+/* Reason Badge */
+.reported-reason-badge {
+  display: inline-block;
+  padding: 4px 10px;
+  background: rgba(239, 68, 68, 0.15);
+  color: #f87171;
+  border-radius: 6px;
+  font-size: 0.75rem;
+  font-weight: 500;
+}
+
+/* Actions Wrapper */
+.reported-actions-wrapper {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
