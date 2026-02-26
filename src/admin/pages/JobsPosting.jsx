@@ -83,7 +83,9 @@ export default function JobsPosting() {
   const handleEdit = (job) => {
     setEditingJob(job);
     setValue("title", job.title);
+    setValue("summary", job.summary);
     setValue("description", job.description);
+    setValue("category", job.category);
     setValue("location", job.location);
     setValue(
       "skill",
@@ -129,6 +131,23 @@ export default function JobsPosting() {
             )}
           </div>
 
+          {/* Job Summary */}
+          <div className="admin-form-group">
+            <label className="admin-form-label">Job Summary</label>
+            <textarea
+              rows="2"
+              className="admin-form-textarea"
+              {...register("summary", {
+                required: "Job Summary is required",
+              })}
+            />
+            {errors.summary && (
+              <span className="text-red-500 text-xs">
+                {errors.summary.message}
+              </span>
+            )}
+          </div>
+
           {/* Job Description */}
           <div className="admin-form-group">
             <label className="admin-form-label">Job Description</label>
@@ -142,6 +161,23 @@ export default function JobsPosting() {
             {errors.description && (
               <span className="text-red-500 text-xs">
                 {errors.description.message}
+              </span>
+            )}
+          </div>
+
+          {/* Category */}
+          <div className="admin-form-group">
+            <label className="admin-form-label">Category</label>
+            <input
+              className="admin-form-input"
+              placeholder="e.g. IT, Marketing, HR"
+              {...register("category", {
+                required: "Category is required",
+              })}
+            />
+            {errors.category && (
+              <span className="text-red-500 text-xs">
+                {errors.category.message}
               </span>
             )}
           </div>
