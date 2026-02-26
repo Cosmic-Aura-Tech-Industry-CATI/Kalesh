@@ -4,8 +4,12 @@ import "../styles/pages/careers.css";
 import SEO from "../components/SEO";
 import { useForm } from "react-hook-form";
 import { useCreateApplication } from "../hooks/usePublicService";
+import { useNavigate } from "react-router-dom";
 
 function Careers() {
+
+  const navigate = useNavigate();
+
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
@@ -206,7 +210,12 @@ function Careers() {
                     <strong>Location:</strong> {job.location}
                   </p>
 
-                  <button className="job-apply-btn">APPLY / SHORTLIST</button>
+                  <button
+                    className="job-apply-btn"
+                    onClick={() => navigate(`/careers/${job.id}`)}
+                  >
+                    APPLY NOW
+                  </button>
                 </div>
               ))}
             </div>
