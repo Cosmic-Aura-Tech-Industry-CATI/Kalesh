@@ -4,8 +4,12 @@ import "../styles/pages/careers.css";
 import SEO from "../components/SEO";
 import { useForm } from "react-hook-form";
 import { useCreateApplication } from "../hooks/usePublicService";
+import { useNavigate } from "react-router-dom";
 
 function Careers() {
+
+  const navigate = useNavigate();
+
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
@@ -29,6 +33,57 @@ function Careers() {
   const fileInputRef = useRef(null);
   const [selectedFileName, setSelectedFileName] = useState("");
   const [selectedFileSize, setSelectedFileSize] = useState("");
+
+  const jobCategories = ["All", "Engineering", "Product", "Marketing"];
+
+  const jobOpenings = [
+    {
+      id: 1,
+      title: "Frontend Developer",
+      department: "Engineering",
+      skills: "React, Tailwind",
+      experience: "1 – 3 Years",
+      location: "Remote",
+    },
+    {
+      id: 2,
+      title: "Backend Developer",
+      department: "Engineering",
+      skills: "Node.js, MongoDB",
+      experience: "2 – 4 Years",
+      location: "Noida",
+    },
+    {
+      id: 3,
+      title: "Product Designer",
+      department: "Product",
+      skills: "Figma, UX Research",
+      experience: "2 – 5 Years",
+      location: "Bangalore",
+    },
+    {
+      id: 4,
+      title: "Growth Marketer",
+      department: "Marketing",
+      skills: "SEO, Paid Ads",
+      experience: "1 – 4 Years",
+      location: "Remote",
+    },
+  ];
+
+  const [selectedCategory, setSelectedCategory] = useState("All");
+  const [searchKeyword, setSearchKeyword] = useState("");
+
+  const filteredJobs = jobOpenings.filter((job) => {
+    const matchCategory =
+      selectedCategory === "All" || job.department === selectedCategory;
+
+    const matchSearch =
+      job.title.toLowerCase().includes(searchKeyword.toLowerCase()) ||
+      job.skills.toLowerCase().includes(searchKeyword.toLowerCase());
+
+    return matchCategory && matchSearch;
+  });
 
   const handleFileChange = (e) => {
     const file = e.target.files[0];
@@ -107,6 +162,66 @@ function Careers() {
           </h1>
         </div>
 
+        {/* ========================= RECENT OPENINGS SECTION ========================= */}
+        <div className="container py-5">
+          <div className="recent-jobs-wrapper">
+            <div className="recent-jobs-header">
+              <h2 className="recent-jobs-title">Recent Openings</h2>
+
+              <input
+                type="text"
+                placeholder="Search by title or skills..."
+                className="recent-jobs-search"
+                value={searchKeyword}
+                onChange={(e) => setSearchKeyword(e.target.value)}
+              />
+            </div>
+
+            {/* Category Filter */}
+            <div className="job-category-tabs">
+              {jobCategories.map((category) => (
+                <button
+                  key={category}
+                  className={`job-category-btn ${
+                    selectedCategory === category ? "active" : ""
+                  }`}
+                  onClick={() => setSelectedCategory(category)}
+                >
+                  {category}
+                </button>
+              ))}
+            </div>
+
+            {/* Job Grid */}
+            <div className="jobs-grid">
+              {filteredJobs.map((job) => (
+                <div key={job.id} className="job-card">
+                  <span className="job-badge">{job.department}</span>
+
+                  <h4 className="job-title">{job.title}</h4>
+
+                  <p>
+                    <strong>Skills:</strong> {job.skills}
+                  </p>
+                  <p>
+                    <strong>Experience:</strong> {job.experience}
+                  </p>
+                  <p>
+                    <strong>Location:</strong> {job.location}
+                  </p>
+
+                  <button
+                    className="job-apply-btn"
+                    onClick={() => navigate(`/careers/${job.id}`)}
+                  >
+                    APPLY NOW
+                  </button>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+
         {/* CONTENT SECTION */}
         <div className="container py-5">
           <div className="row align-items-center">
@@ -130,7 +245,6 @@ function Careers() {
             </div>
           </div>
         </div>
-
         {/* CAREER QUOTE SECTION */}
         <div className="container py-5">
           <div className="career-quote-wrapper">
@@ -148,7 +262,6 @@ function Careers() {
             <span className="career-quote-mark bottom">"</span>
           </div>
         </div>
-
         {/* JOIN OUR TEAM FORM SECTION WITH GOLDEN-ORANGE THEME */}
         <div className="container py-5">
           <div className="career-form-wrapper text-center">
@@ -314,7 +427,6 @@ function Careers() {
             </p>
           </div>
         </div>
-
         {/* SOCIAL FOLLOW SECTION */}
         <div className="container-fluid social-follow-section">
           <div className="container">
@@ -358,7 +470,6 @@ function Careers() {
             </div>
           </div>
         </div>
-
         {/* Success Popup */}
         {showPopup && (
           <div className="popup-overlay" onClick={() => setShowPopup(false)}>

@@ -27,6 +27,8 @@ import AdminTopbar from "./admin/components/Topbar";
 import JobsPosting from "./admin/pages/JobsPosting";
 import AdminLayout from "./admin/layout/AdminLayout";
 
+import JobDetails from "./pages/JobDetails";
+
 // Lazy Public Pages
 const Home = lazy(() => import("./pages/Home"));
 const About = lazy(() => import("./pages/About"));
@@ -78,6 +80,7 @@ function MainRoutes() {
             <Route path="/privacy" element={<Privacy />} />
             <Route path="/promotions" element={<Promotions />} />
             <Route path="/careers" element={<Careers />} />
+            <Route path="/careers/:jobId" element={<JobDetails />} />
             <Route path="/contactus" element={<ContactUs />} />
             <Route path="/helpcenter" element={<HelpCenter />} />
             <Route path="/termsandconditions" element={<TermsAndConditions />} />
