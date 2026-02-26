@@ -4,10 +4,10 @@ import "../styles/pages/careers.css";
 import SEO from "../components/SEO";
 import { useForm } from "react-hook-form";
 import { useCreateApplication } from "../hooks/usePublicService";
+import { useGetAllJobs } from "../hooks/useJobs";
 import { useNavigate } from "react-router-dom";
 
 function Careers() {
-
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -34,41 +34,12 @@ function Careers() {
   const [selectedFileName, setSelectedFileName] = useState("");
   const [selectedFileSize, setSelectedFileSize] = useState("");
 
-  const jobCategories = ["All", "Engineering", "Product", "Marketing"];
+  const { data: jobsData, isLoading: isLoadingJobs } = useGetAllJobs();
+  const jobOpenings = jobsData?.data || [];
 
-  const jobOpenings = [
-    {
-      id: 1,
-      title: "Frontend Developer",
-      department: "Engineering",
-      skills: "React, Tailwind",
-      experience: "1 – 3 Years",
-      location: "Remote",
-    },
-    {
-      id: 2,
-      title: "Backend Developer",
-      department: "Engineering",
-      skills: "Node.js, MongoDB",
-      experience: "2 – 4 Years",
-      location: "Noida",
-    },
-    {
-      id: 3,
-      title: "Product Designer",
-      department: "Product",
-      skills: "Figma, UX Research",
-      experience: "2 – 5 Years",
-      location: "Bangalore",
-    },
-    {
-      id: 4,
-      title: "Growth Marketer",
-      department: "Marketing",
-      skills: "SEO, Paid Ads",
-      experience: "1 – 4 Years",
-      location: "Remote",
-    },
+  const jobCategories = [
+    "All",
+    ...new Set((jobOpenings || []).map((job) => job.category)),
   ];
 
   const [selectedCategory, setSelectedCategory] = useState("All");
@@ -76,11 +47,15 @@ function Careers() {
 
   const filteredJobs = jobOpenings.filter((job) => {
     const matchCategory =
-      selectedCategory === "All" || job.department === selectedCategory;
+      selectedCategory === "All" || job.category === selectedCategory;
+
+    const skillsString = Array.isArray(job.skill)
+      ? job.skill.join(", ")
+      : job.skill || "";
 
     const matchSearch =
       job.title.toLowerCase().includes(searchKeyword.toLowerCase()) ||
-      job.skills.toLowerCase().includes(searchKeyword.toLowerCase());
+      skillsString.toLowerCase().includes(searchKeyword.toLowerCase());
 
     return matchCategory && matchSearch;
   });
@@ -194,30 +169,39 @@ function Careers() {
 
             {/* Job Grid */}
             <div className="jobs-grid">
-              {filteredJobs.map((job) => (
-                <div key={job.id} className="job-card">
-                  <span className="job-badge">{job.department}</span>
+              {isLoadingJobs ? (
+                <p>Loading jobs...</p>
+              ) : filteredJobs.length > 0 ? (
+                filteredJobs.map((job) => (
+                  <div key={job._id} className="job-card">
+                    <span className="job-badge">{job.category}</span>
 
-                  <h4 className="job-title">{job.title}</h4>
+                    <h4 className="job-title">{job.title}</h4>
 
-                  <p>
-                    <strong>Skills:</strong> {job.skills}
-                  </p>
-                  <p>
-                    <strong>Experience:</strong> {job.experience}
-                  </p>
-                  <p>
-                    <strong>Location:</strong> {job.location}
-                  </p>
+                    <p>
+                      <strong>Skills:</strong>{" "}
+                      {Array.isArray(job.skill)
+                        ? job.skill.join(", ")
+                        : job.skill}
+                    </p>
+                    <p>
+                      <strong>Experience:</strong> {job.experience}
+                    </p>
+                    <p>
+                      <strong>Location:</strong> {job.location}
+                    </p>
 
-                  <button
-                    className="job-apply-btn"
-                    onClick={() => navigate(`/careers/${job.id}`)}
-                  >
-                    APPLY NOW
-                  </button>
-                </div>
-              ))}
+                    <button
+                      className="job-apply-btn"
+                      onClick={() => navigate(`/careers/${job._id}`)}
+                    >
+                      View Details
+                    </button>
+                  </div>
+                ))
+              ) : (
+                <p>No job openings at the moment. Please check back later.</p>
+              )}
             </div>
           </div>
         </div>

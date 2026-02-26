@@ -51,7 +51,6 @@ export default function JobsPosting() {
 
   // ================= SUBMIT =================
   const onSubmit = (data) => {
-    console.log(data);
     if (editingJob) {
       updateJob(
         { ...data, id: editingJob._id || editingJob.id },
