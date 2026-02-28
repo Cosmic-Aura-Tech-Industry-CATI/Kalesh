@@ -229,7 +229,7 @@ function FAQ() {
   }, [query, selected]);
 
   const toggleFaq = (index) => {
-    setExpandedFaq(expandedFaq === index ? null : index);
+    setExpandedFaq((prev) => (prev === index ? null : index));
   };
 
   const copyLinkToFaq = (index) => {
