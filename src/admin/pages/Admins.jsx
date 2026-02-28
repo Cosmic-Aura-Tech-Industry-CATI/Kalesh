@@ -1,17 +1,47 @@
 import { useState } from "react";
 import { useForm } from "react-hook-form";
+import { Eye, EyeOff } from "lucide-react";
+
 import Table from "../components/Table";
 import Button from "../components/Button";
 import Modal from "../components/Modal";
-import { mockAdmins } from "../data/mockData";
-import { useCreateAdmin, useDeleteAdmin, useGetAllAdmins } from "../../hooks/useAdmins";
-import "../style/admin.css";
 
-export default function Admins() {
-  const { data: admins = [], isLoading } = useGetAllAdmins();
-  const { mutate: createAdmin, isPending } = useCreateAdmin();
-  const { mutate: deleteAdmin } = useDeleteAdmin()
-  const [isModalOpen, setIsModalOpen] = useState(false);
+import {
+  useCreateAdmin,
+  useDeleteAdmin,
+  useGetAllAdmins,
+} from "../../hooks/useAdmins";
+
+import "../style/admin.css";               // ✅ Common CSS
+import "../style/AdminManagement.css";    // ✅ Page Specific CSS
+
+export default function AdminManagement() {
+  /* ================================
+     API Hooks
+  ================================= */
+
+  const { data: adminResponse = {}, isLoading: isAdminLoading } =
+    useGetAllAdmins();
+
+  const { mutate: createAdminAccount, isPending: isCreatingAdmin } =
+    useCreateAdmin();
+
+  const { mutate: deleteAdminAccount } =
+    useDeleteAdmin();
+
+  /* ================================
+     Local State
+  ================================= */
+
+  const [isCreateModalOpen, setIsCreateModalOpen] =
+    useState(false);
+
+  const [isPasswordVisible, setIsPasswordVisible] =
+    useState(false);
+
+  /* ================================
+     Form Setup
+  ================================= */
 
   const {
     register,
@@ -20,74 +50,94 @@ export default function Admins() {
     formState: { errors },
   } = useForm();
 
-  function formatDate(isoDate) {
+  /* ================================
+     Utility Functions
+  ================================= */
+
+  const formatDateTime = (isoDate) => {
     const date = new Date(isoDate);
-  
+
     const year = date.getFullYear();
     const month = String(date.getMonth() + 1).padStart(2, "0");
     const day = String(date.getDate()).padStart(2, "0");
-  
+
     const hours = String(date.getHours()).padStart(2, "0");
     const minutes = String(date.getMinutes()).padStart(2, "0");
-  
+
     return `${year}-${month}-${day} ${hours}:${minutes}`;
-  }
-
-  const handleDisable = (adminId) => {
-    deleteAdmin(adminId)
   };
 
-  const handleAddAdmin = () => {
+  /* ================================
+     Event Handlers
+  ================================= */
+
+  const handleDisableAdmin = (adminId) => {
+    deleteAdminAccount(adminId);
+  };
+
+  const openCreateAdminModal = () => {
     reset();
-    setIsModalOpen(true);
+    setIsPasswordVisible(false);
+    setIsCreateModalOpen(true);
   };
 
-  const onSubmit = (data) => {
-    createAdmin(data, {
+  const handleCreateAdminSubmit = (formData) => {
+    createAdminAccount(formData, {
       onSuccess: () => {
-        setIsModalOpen(false);
+        setIsCreateModalOpen(false);
       },
     });
   };
 
-  const columns = [
-    { key: "name", label: "Name" },
-    { key: "email", label: "Email" },
+  /* ================================
+     Table Configuration
+  ================================= */
+
+  const adminTableColumns = [
+    { key: "name", label: "Admin Name" },
+
+    { key: "email", label: "Email Address" },
+
     {
       key: "role",
-      label: "Role",
+      label: "Role Type",
       render: (role) => (
         <span
-          className={`px-2 py-1 rounded text-xs ${
-            role === "Super Admin"
-              ? "bg-red-500/20 text-red-400"
-              : role === "Moderator"
-              ? "bg-blue-500/20 text-blue-400"
-              : "bg-green-500/20 text-green-400"
-          }`}
+          className={`admin-role-badge role-${role
+            .toLowerCase()
+            .replace(" ", "-")}`}
         >
           {role}
         </span>
       ),
     },
+
     {
       key: "status",
-      label: "Status",
+      label: "Account Status",
       render: (status) => (
-        <span className="px-2 py-1 bg-green-500/20 text-green-400 rounded text-xs">
+        <span className="admin-status-badge">
           {status}
         </span>
       ),
     },
-    { key: "lastLogin", label: "Last Login", render: (date) => formatDate(date) },
+
+    {
+      key: "lastLogin",
+      label: "Last Login",
+      render: (date) => formatDateTime(date),
+    },
+
     {
       key: "actions",
       label: "Actions",
-      render: (_, row) => (
+      render: (_, rowData) => (
         <Button
           size="sm"
           variant="danger"
-          onClick={() => handleDisable(row._id)}
+          onClick={() =>
+            handleDisableAdmin(rowData._id)
+          }
         >
           Disable
         </Button>
@@ -95,83 +145,162 @@ export default function Admins() {
     },
   ];
 
+  /* ================================
+     Render
+  ================================= */
+
   return (
-    <div className="admin-section">
+    <div className="admin-section admin-management-page">
       <div className="admin-section-header">
-        <h1 className="admin-page-title">Admin & Role Management</h1>
-        <Button onClick={handleAddAdmin}>Add Admin</Button>
+        <h1 className="admin-page-title">
+          Admin & Role Management
+        </h1>
+
+        <Button onClick={openCreateAdminModal}>
+          Add Admin
+        </Button>
       </div>
 
-      {isLoading ? (
+      {isAdminLoading ? (
         <div>Loading...</div>
       ) : (
-        <Table columns={columns} data={admins.data} />
+        <Table
+          columns={adminTableColumns}
+          data={adminResponse?.data || []}
+        />
       )}
 
       <Modal
-        isOpen={isModalOpen}
-        onClose={() => setIsModalOpen(false)}
+        isOpen={isCreateModalOpen}
+        onClose={() => setIsCreateModalOpen(false)}
         title="Add New Admin"
       >
-        <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
-          <div>
-            <label className="block text-xs sm:text-sm font-medium text-gray-300 mb-2">
-              Name
+        <form onSubmit={handleSubmit(handleCreateAdminSubmit)}>
+
+          {/* Admin Name */}
+          <div className="admin-form-group">
+            <label className="admin-form-label">
+              Admin Name
             </label>
+
             <input
               type="text"
-              {...register("name", { required: "Name is required" })}
-              className="w-full px-3 sm:px-4 py-2 bg-[#1a1a2e] border border-gray-700 rounded-lg text-sm text-white focus:outline-none focus:border-orange-500"
-              placeholder="Enter name"
+              {...register("name", {
+                required: "Name is required",
+              })}
+              className="admin-form-input"
+              placeholder="Enter admin name"
             />
+
             {errors.name && (
               <span className="text-red-500 text-xs">
                 {errors.name.message}
               </span>
             )}
           </div>
-          <div>
-            <label className="block text-xs sm:text-sm font-medium text-gray-300 mb-2">
-              Email
+
+          {/* Email */}
+          <div className="admin-form-group">
+            <label className="admin-form-label">
+              Email Address
             </label>
+
             <input
               type="email"
               {...register("email", {
                 required: "Email is required",
                 pattern: {
-                  value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
+                  value:
+                    /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
                   message: "Invalid email address",
                 },
               })}
-              className="w-full px-3 sm:px-4 py-2 bg-[#1a1a2e] border border-gray-700 rounded-lg text-sm text-white focus:outline-none focus:border-orange-500"
-              placeholder="Enter email"
+              className="admin-form-input"
+              placeholder="Enter email address"
             />
+
             {errors.email && (
               <span className="text-red-500 text-xs">
                 {errors.email.message}
               </span>
             )}
           </div>
-          <div>
-            <label className="block text-xs sm:text-sm font-medium text-gray-300 mb-2">
-              Role
+
+          {/* Password */}
+          <div className="admin-form-group">
+            <label className="admin-form-label">
+              Password
             </label>
-            <select
-              {...register("role", { required: "Role is required" })}
-              className="w-full px-3 sm:px-4 py-2 bg-[#1a1a2e] border border-gray-700 rounded-lg text-sm text-white focus:outline-none focus:border-orange-500"
-            >
-              <option value="Moderator">Moderator</option>
-              <option value="Support">Support</option>
-              <option value="Super Admin">Super Admin</option>
-            </select>
-            {errors.role && (
+
+            <div className="admin-password-wrapper">
+              <input
+                type={isPasswordVisible ? "text" : "password"}
+                {...register("password", {
+                  required: "Password is required",
+                  minLength: {
+                    value: 6,
+                    message:
+                      "Password must be at least 6 characters",
+                  },
+                })}
+                className="admin-form-input admin-password-input"
+                placeholder="Enter password"
+              />
+
+              <span
+                className="admin-password-toggle"
+                onClick={() =>
+                  setIsPasswordVisible(!isPasswordVisible)
+                }
+              >
+                {isPasswordVisible ? (
+                  <EyeOff size={18} />
+                ) : (
+                  <Eye size={18} />
+                )}
+              </span>
+            </div>
+
+            {errors.password && (
               <span className="text-red-500 text-xs">
-                {errors.role.message}
+                {errors.password.message}
               </span>
             )}
           </div>
-          <Button type="submit" className="w-full" disabled={isPending}>
-            {isPending ? "Adding..." : "Add Admin"}
+
+          {/* Role */}
+          <div className="admin-form-group">
+            <label className="admin-form-label">
+              Role
+            </label>
+
+            <select
+              {...register("role", {
+                required: "Role is required",
+              })}
+              className="admin-form-select"
+            >
+              <option value="moderator">
+                moderator
+              </option>
+              <option value="support">
+                support
+              </option>
+              <option value="admin">
+                admin
+              </option>
+            </select>
+          </div>
+
+          {/* Submit */}
+          <Button
+            type="submit"
+            className="w-full"
+            disabled={isCreatingAdmin}
+          >
+            {isCreatingAdmin
+              ? "Adding..."
+              : "Add Admin"}
           </Button>
         </form>
       </Modal>

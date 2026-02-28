@@ -3,66 +3,88 @@ import Table from '../components/Table';
 import Button from '../components/Button';
 import { mockReportedPolls } from '../data/mockData';
 import '../style/admin.css';
+import '../style/reported-polls.css';
 
 export default function ReportedPolls() {
-  const [polls] = useState(mockReportedPolls);
+  const [reportedPolls] = useState(mockReportedPolls);
 
-  const handleApprove = (pollId) => {
+  const handleApprovePoll = (pollId) => {
     alert(`Poll ${pollId} approved`);
   };
 
-  const handleRemove = (pollId) => {
+  const handleRemovePoll = (pollId) => {
     alert(`Poll ${pollId} removed`);
   };
 
-  const handleWarn = (userId) => {
+  const handleWarnUser = (userId) => {
     alert(`Warning sent to user ${userId}`);
   };
 
-  const handleBan = (userId) => {
+  const handleBanUser = (userId) => {
     alert(`User ${userId} banned`);
   };
 
-  const columns = [
+  const reportedPollColumns = [
     { key: 'id', label: 'Poll ID' },
-    { key: 'question', label: 'Question' },
+    { key: 'question', label: 'Poll Question' },
     {
       key: 'options',
-      label: 'Options',
+      label: 'Poll Options',
       render: (options) => (
-        <div className="text-xs space-y-1">
-          {options.map((opt, i) => (
-            <div key={i} className="text-gray-400">• {opt}</div>
+        <div className="reported-options-list">
+          {options.map((option, index) => (
+            <div key={index} className="reported-option-item">
+              • {option}
+            </div>
           ))}
         </div>
       ),
     },
     {
       key: 'reason',
-      label: 'Reason',
+      label: 'Report Reason',
       render: (reason) => (
-        <span className="px-2 py-1 bg-red-500/20 text-red-400 rounded text-xs">
+        <span className="reported-reason-badge">
           {reason}
         </span>
       ),
     },
-    { key: 'totalReports', label: 'Reports' },
-    { key: 'createdAt', label: 'Created' },
+    { key: 'totalReports', label: 'Total Reports' },
+    { key: 'createdAt', label: 'Created On' },
     {
       key: 'actions',
-      label: 'Actions',
+      label: 'Moderation Actions',
       render: (_, row) => (
-        <div className="flex flex-wrap gap-2">
-          <Button size="sm" variant="success" onClick={() => handleApprove(row.id)}>
+        <div className="reported-actions-wrapper">
+          <Button
+            size="sm"
+            variant="success"
+            onClick={() => handleApprovePoll(row.id)}
+          >
             Approve
           </Button>
-          <Button size="sm" variant="danger" onClick={() => handleRemove(row.id)}>
+
+          <Button
+            size="sm"
+            variant="danger"
+            onClick={() => handleRemovePoll(row.id)}
+          >
             Remove
           </Button>
-          <Button size="sm" variant="warning" onClick={() => handleWarn(row.userId)}>
+
+          <Button
+            size="sm"
+            variant="warning"
+            onClick={() => handleWarnUser(row.userId)}
+          >
             Warn
           </Button>
-          <Button size="sm" variant="danger" onClick={() => handleBan(row.userId)}>
+
+          <Button
+            size="sm"
+            variant="danger"
+            onClick={() => handleBanUser(row.userId)}
+          >
             Ban
           </Button>
         </div>
@@ -71,15 +93,15 @@ export default function ReportedPolls() {
   ];
 
   return (
-    <div className="admin-section">
-      <div className="admin-section-header">
+    <div className="admin-section reported-polls-section">
+      <div className="admin-section-header reported-polls-header">
         <h1 className="admin-page-title">Reported Polls</h1>
-        <div className="text-xs sm:text-sm text-gray-400">
-          {polls.length} polls pending review
+        <div className="reported-polls-count">
+          {reportedPolls.length} polls pending review
         </div>
       </div>
 
-      <Table columns={columns} data={polls} />
+      <Table columns={reportedPollColumns} data={reportedPolls} />
     </div>
   );
 }

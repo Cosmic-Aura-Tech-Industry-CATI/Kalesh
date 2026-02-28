@@ -1,12 +1,26 @@
 import { useEffect, Suspense, lazy, useState } from "react";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { Routes, Route, useLocation, useNavigate, Outlet } from "react-router-dom";
+import {
+  Routes,
+  Route,
+  useLocation,
+  useNavigate,
+  Outlet,
+} from "react-router-dom";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 
 import ScrollbarTop from "./components/ScrollbarTop";
 import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
 import { AuthService } from "./services/auth.service";
+
+
+
+
+
+
+import ApplicationDetails from "./pages/ApplicationDetails";
+
 
 // Admin imports
 import AdminLogin from "./admin/pages/Login";
@@ -26,6 +40,8 @@ import AdminTopbar from "./admin/components/Topbar";
 
 import JobsPosting from "./admin/pages/JobsPosting";
 import AdminLayout from "./admin/layout/AdminLayout";
+
+import JobDetails from "./pages/JobDetails";
 
 // Lazy Public Pages
 const Home = lazy(() => import("./pages/Home"));
@@ -56,8 +72,6 @@ const queryClient = new QueryClient({
   },
 });
 
-
-
 // ================= MAIN ROUTES =================
 function MainRoutes() {
   const location = useLocation();
@@ -71,16 +85,19 @@ function MainRoutes() {
       <main style={{ flex: 1 }}>
         <Suspense fallback={<div>Loading...</div>}>
           <Routes>
-
             {/* PUBLIC ROUTES */}
             <Route path="/" element={<Home />} />
             <Route path="/about" element={<About />} />
             <Route path="/privacy" element={<Privacy />} />
             <Route path="/promotions" element={<Promotions />} />
             <Route path="/careers" element={<Careers />} />
+            <Route path="/careers/:jobId" element={<JobDetails />} />
             <Route path="/contactus" element={<ContactUs />} />
             <Route path="/helpcenter" element={<HelpCenter />} />
-            <Route path="/termsandconditions" element={<TermsAndConditions />} />
+            <Route
+              path="/termsandconditions"
+              element={<TermsAndConditions />}
+            />
             <Route path="/privacypolicy" element={<PrivacyPolicy />} />
             <Route path="/faq" element={<FAQ />} />
             <Route path="/blog" element={<Blog />} />
@@ -92,19 +109,27 @@ function MainRoutes() {
             <Route path="/blog/Post4" element={<Post4 />} />
             <Route path="/blog/Post5" element={<Post5 />} />
             <Route path="/blog/Viewpage" element={<Viewpage />} />
-            <Route path="/communityguidelines" element={<CommunityGuidelines />} />
+            <Route
+              path="/communityguidelines"
+              element={<CommunityGuidelines />}
+            />
             <Route path="/securityadvisory" element={<SecurityAdvisory />} />
+
+            <Route
+              path="/application/:token"
+              element={<ApplicationDetails />}
+            />
 
             {/* ADMIN LOGIN (No Layout) */}
             <Route path="/admin/login" element={<AdminLogin />} />
 
-              {/* ADMIN PROTECTED ROUTES */}
+            {/* ADMIN PROTECTED ROUTES */}
             <Route path="/admin" element={<AdminLayout />}>
               <Route path="dashboard" element={<AdminDashboard />} />
               <Route path="reported-polls" element={<AdminReportedPolls />} />
               <Route path="poll-moderation" element={<AdminPollModeration />} />
               <Route path="users" element={<AdminUsers />} />
-              
+
               {/* ✅ FIXED — NOW INSIDE ADMIN LAYOUT */}
               <Route path="/admin/jobs" element={<JobsPosting />} />
               <Route path="banned-users" element={<AdminBannedUsers />} />
@@ -114,7 +139,6 @@ function MainRoutes() {
               <Route path="logs" element={<AdminLogs />} />
               <Route path="settings" element={<AdminSettings />} />
             </Route>
-
           </Routes>
         </Suspense>
       </main>
@@ -124,14 +148,13 @@ function MainRoutes() {
   );
 }
 
-
 // ================= APP ROOT =================
 function App() {
   useEffect(() => {
     const setVh = () => {
       document.documentElement.style.setProperty(
         "--vh",
-        `${window.innerHeight * 0.01}px`
+        `${window.innerHeight * 0.01}px`,
       );
     };
 

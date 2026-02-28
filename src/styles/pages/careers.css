@@ -1537,3 +1537,110 @@
     font-size: 0.95rem;
   }
 }
+
+
+/* =========================
+   RECENT OPENINGS SECTION
+========================= */
+
+.recent-jobs-wrapper {
+  margin-top: 40px;
+}
+
+.recent-jobs-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 25px;
+  flex-wrap: wrap;
+}
+
+.recent-jobs-title {
+  font-size: 2.5rem;
+  font-weight: 800;
+  background: linear-gradient(90deg, #ff6a00, #ffd700);
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.recent-jobs-search {
+  padding: 12px 20px;
+  border-radius: 30px;
+  border: 1px solid #ff6a00;
+  background: #111;
+  color: #fff;
+  width: 260px;
+}
+
+.job-category-tabs {
+  margin-bottom: 30px;
+}
+
+.job-category-btn {
+  margin-right: 12px;
+  padding: 10px 22px;
+  border-radius: 25px;
+  border: 1px solid #ff6a00;
+  background: transparent;
+  color: #ff6a00;
+  font-weight: 600;
+  transition: 0.3s;
+}
+
+.job-category-btn.active,
+.job-category-btn:hover {
+  background: linear-gradient(45deg, #ff6a00, #ffd700);
+  color: #000;
+}
+
+.jobs-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 30px;
+}
+
+.job-card {
+  background: #141414;
+  padding: 25px;
+  border-radius: 18px;
+  border: 1px solid rgba(255, 106, 0, 0.3);
+  transition: 0.3s;
+}
+
+.job-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 0 30px rgba(255, 106, 0, 0.4);
+}
+
+.job-badge {
+  display: inline-block;
+  background: #ff6a00;
+  padding: 5px 12px;
+  font-size: 12px;
+  border-radius: 6px;
+  margin-bottom: 12px;
+  font-weight: 600;
+}
+
+.job-title {
+  font-size: 18px;
+  margin-bottom: 10px;
+  font-weight: 700;
+}
+
+.job-apply-btn {
+  margin-top: 15px;
+  width: 100%;
+  padding: 10px;
+  border-radius: 25px;
+  background: linear-gradient(45deg, #ff2a2a, #ff6a00);
+  border: none;
+  color: #fff;
+  font-weight: 700;
+  transition: 0.3s;
+}
+
+.job-apply-btn:hover {
+  box-shadow: 0 0 25px rgba(255, 106, 0, 0.7);
+}

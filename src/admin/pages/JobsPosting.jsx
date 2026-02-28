@@ -1,81 +1,98 @@
 import { useState } from "react";
+import { useForm } from "react-hook-form";
 import { Plus, Trash2, Edit, Info } from "lucide-react";
+import {
+  useCreateJob,
+  useGetAllJobs,
+  useDeleteJob,
+  useUpdateJob,
+} from "../../hooks/useJobs";
+// import { useGetApplicationsByJobId } from "../../hooks/useApplication";
+// import {
+//   useAcceptApplication,
+//   useRejectApplication,
+// } from "../../hooks/useApplication";
 import "../style/admin.css";
 import "../style/adminJobs.css";
+import ApplicationTable from "../components/ApplicationTable";
 
 export default function JobsPosting() {
-  const [jobs, setJobs] = useState([
-    {
-      id: 1,
-      title: "Frontend Developer",
-      company: "Kalesh",
-      location: "Remote",
-      skill: "React, Tailwind",
-      experience: "2+ Years",
-      type: "Full-Time",
-      status: "Active",
-      applicants: [
-        {
-          id: 1,
-          name: "Rahul Sharma",
-          email: "rahul@gmail.com",
-          role: "Frontend Developer",
-          resume: "#",
-        },
-        {
-          id: 2,
-          name: "Anita Verma",
-          email: "anita@gmail.com",
-          role: "Frontend Developer",
-          resume: "#",
-        },
-      ],
-    },
-  ]);
+  const { data: jobsData, isLoading } = useGetAllJobs();
+  const { mutate: createJob, isPending: isCreating } = useCreateJob();
+  const { mutate: updateJob, isPending: isUpdating } = useUpdateJob();
+  const { mutate: deleteJob } = useDeleteJob();
 
-  const [formData, setFormData] = useState({
-    title: "",
-    company: "",
-    location: "",
-    skill: "",
-    experience: "",
-    type: "Full-Time",
-  });
+  // // 👇 YAHAN ADD KARO
+  // const { mutate: acceptApplication } = useAcceptApplication();
+  // const { mutate: rejectApplication } = useRejectApplication();
+
+  const jobs = jobsData?.data || [];
+
+  const {
+    register,
+    handleSubmit,
+    reset,
+    setValue,
+    formState: { errors },
+  } = useForm();
 
   const [showForm, setShowForm] = useState(false);
   const [selectedJob, setSelectedJob] = useState(null);
+  const [editingJob, setEditingJob] = useState(null);
   const [showApplicantsModal, setShowApplicantsModal] = useState(false);
 
-  const handleAddJob = () => {
-    if (!formData.title || !formData.company) return;
+  // SAFELY GET JOB ID
+  const jobId = selectedJob?._id || selectedJob?.id;
 
-    const newJob = {
-      id: Date.now(),
-      ...formData,
-      status: "Active",
-      applicants: [],
-    };
+  // const { data: applicationsData, isLoading: isLoadingApps } =
+  //   useGetApplicationsByJobId(jobId);
 
-    setJobs([...jobs, newJob]);
+  // const applications = applicationsData?.applications || [];
 
-    setFormData({
-      title: "",
-      company: "",
-      location: "",
-      skill: "",
-      experience: "",
-      type: "Full-Time",
-    });
-
-    setShowForm(false);
+  // ================= SUBMIT =================
+  const onSubmit = (data) => {
+    if (editingJob) {
+      updateJob(
+        { ...data, id: editingJob._id || editingJob.id },
+        {
+          onSuccess: () => {
+            setShowForm(false);
+            reset();
+            setEditingJob(null);
+          },
+        }
+      );
+    } else {
+      createJob(data, {
+        onSuccess: () => {
+          setShowForm(false);
+          reset();
+        },
+      });
+    }
   };
 
+  // ================= DELETE =================
   const handleDelete = (id) => {
-    setJobs(jobs.filter((job) => job.id !== id));
+    if (window.confirm("Are you sure you want to delete this job?")) {
+      deleteJob(id);
+    }
   };
 
+  // ================= EDIT =================
   const handleEdit = (job) => {
-    setFormData(job);
+    setEditingJob(job);
+    setValue("title", job.title);
+    setValue("summary", job.summary);
+    setValue("description", job.description);
+    setValue("category", job.category);
+    setValue("location", job.location);
+    setValue(
+      "skill",
+      Array.isArray(job.skill) ? job.skill.join(", ") : job.skill
+    );
+    setValue("experience", job.experience);
+    setValue("type", job.type);
     setShowForm(true);
   };
 
@@ -86,7 +103,11 @@ export default function JobsPosting() {
 
         <button
           className="admin-btn-primary flex items-center gap-2"
-          onClick={() => setShowForm(!showForm)}
+          onClick={() => {
+            reset();
+            setEditingJob(null);
+            setShowForm(!showForm);
+          }}
         >
           <Plus size={18} />
           Add Job
@@ -95,33 +116,107 @@ export default function JobsPosting() {
 
       {/* ================= ADD / EDIT FORM ================= */}
       {showForm && (
-        <div className="admin-card mb-6">
-          {["title", "company", "location", "skill", "experience"].map(
-            (field) => (
-              <div key={field} className="admin-form-group">
-                <label className="admin-form-label">
-                  {field.charAt(0).toUpperCase() + field.slice(1)}
-                </label>
-                <input
-                  className="admin-form-input"
-                  value={formData[field]}
-                  onChange={(e) =>
-                    setFormData({ ...formData, [field]: e.target.value })
-                  }
-                />
-              </div>
-            ),
-          )}
+        <form onSubmit={handleSubmit(onSubmit)} className="admin-card mb-6">
+          {/* Job Title */}
+          <div className="admin-form-group">
+            <label className="admin-form-label">Job Title</label>
+            <input
+              className="admin-form-input"
+              {...register("title", { required: "Job Title is required" })}
+            />
+            {errors.title && (
+              <span className="text-red-500 text-xs">
+                {errors.title.message}
+              </span>
+            )}
+          </div>
 
+          {/* Job Summary */}
+          <div className="admin-form-group">
+            <label className="admin-form-label">Job Summary</label>
+            <textarea
+              rows="2"
+              className="admin-form-textarea"
+              {...register("summary", {
+                required: "Job Summary is required",
+              })}
+            />
+            {errors.summary && (
+              <span className="text-red-500 text-xs">
+                {errors.summary.message}
+              </span>
+            )}
+          </div>
+
+          {/* Job Description */}
+          <div className="admin-form-group">
+            <label className="admin-form-label">Job Description</label>
+            <textarea
+              rows="4"
+              className="admin-form-textarea"
+              {...register("description", {
+                required: "Job Description is required",
+              })}
+            />
+            {errors.description && (
+              <span className="text-red-500 text-xs">
+                {errors.description.message}
+              </span>
+            )}
+          </div>
+
+          {/* Category */}
+          <div className="admin-form-group">
+            <label className="admin-form-label">Category</label>
+            <input
+              className="admin-form-input"
+              placeholder="e.g. IT, Marketing, HR"
+              {...register("category", {
+                required: "Category is required",
+              })}
+            />
+            {errors.category && (
+              <span className="text-red-500 text-xs">
+                {errors.category.message}
+              </span>
+            )}
+          </div>
+
+          {/* Location */}
+          <div className="admin-form-group">
+            <label className="admin-form-label">Location</label>
+            <input
+              className="admin-form-input"
+              {...register("location", {
+                required: "Location is required",
+              })}
+            />
+          </div>
+
+          {/* Skill */}
+          <div className="admin-form-group">
+            <label className="admin-form-label">Skill</label>
+            <input
+              className="admin-form-input"
+              {...register("skill", { required: "Skill is required" })}
+            />
+          </div>
+
+          {/* Experience */}
+          <div className="admin-form-group">
+            <label className="admin-form-label">Experience</label>
+            <input
+              className="admin-form-input"
+              {...register("experience", {
+                required: "Experience is required",
+              })}
+            />
+          </div>
+
+          {/* Job Type */}
           <div className="admin-form-group">
             <label className="admin-form-label">Job Type</label>
-            <select
-              className="admin-form-select"
-              value={formData.type}
-              onChange={(e) =>
-                setFormData({ ...formData, type: e.target.value })
-              }
-            >
+            <select className="admin-form-select" {...register("type")}>
               <option>Full-Time</option>
               <option>Part-Time</option>
               <option>Internship</option>
@@ -129,131 +224,211 @@ export default function JobsPosting() {
             </select>
           </div>
 
-          <button className="admin-btn-primary mt-4" onClick={handleAddJob}>
-            Save Job
+          <button
+            type="submit"
+            className="admin-btn-primary mt-4"
+            disabled={isCreating || isUpdating}
+          >
+            {isCreating || isUpdating
+              ? "Saving..."
+              : editingJob
+              ? "Update Job"
+              : "Save Job"}
           </button>
-        </div>
+        </form>
       )}
 
       {/* ================= JOBS TABLE ================= */}
       <div className="admin-card">
-        <table className="admin-table">
-          <thead>
-            <tr>
-              <th>Title</th>
-              <th>Company</th>
-              <th>Location</th>
-              <th>Skill</th>
-              <th>Experience</th>
-              <th>Applicants</th>
-              <th>Actions</th>
-            </tr>
-          </thead>
-
-          <tbody>
-            {jobs.map((job) => (
-              <tr key={job.id}>
-                <td>{job.title}</td>
-                <td>{job.company}</td>
-                <td>{job.location}</td>
-                <td>{job.skill}</td>
-                <td>{job.experience}</td>
-                <td>{job.applicants.length}</td>
-
-                <td className="flex gap-2">
-                  {/* EDIT */}
-                  <button
-                    className="admin-btn-secondary"
-                    onClick={() => handleEdit(job)}
-                  >
-                    <Edit size={16} />
-                  </button>
-
-                  {/* DELETE */}
-                  <button
-                    className="admin-btn-danger"
-                    onClick={() => handleDelete(job.id)}
-                  >
-                    <Trash2 size={16} />
-                  </button>
-
-                  {/* INFO */}
-                  <button
-                    className="admin-btn-secondary"
-                    onClick={() => {
-                      setSelectedJob(job);
-                      setShowApplicantsModal(true);
-                    }}
-                  >
-                    <Info size={16} />
-                  </button>
-                </td>
+        {isLoading ? (
+          <div className="text-white p-4">Loading jobs...</div>
+        ) : (
+          <table className="admin-table">
+            <thead>
+              <tr>
+                <th>Job Title</th>
+                <th>Job Description</th>
+                <th>Location</th>
+                <th>Skill</th>
+                <th>Experience</th>
+                <th>Applicants</th>
+                <th>Actions</th>
               </tr>
-            ))}
-          </tbody>
-        </table>
+            </thead>
+
+            <tbody>
+              {jobs.length > 0 ? (
+                jobs.map((job) => (
+                  <tr key={job._id || job.id}>
+                    <td>{job.title}</td>
+                    <td>{job.description}</td>
+                    <td>{job.location}</td>
+                    <td>
+                      {Array.isArray(job.skill)
+                        ? job.skill.join(", ")
+                        : job.skill}
+                    </td>
+                    <td>{job.experience}</td>
+                    <td>{job.applicants?.length || 0}</td>
+
+                    <td className="flex gap-2">
+                      {/* EDIT */}
+                      <button
+                        type="button"
+                        className="admin-btn-secondary"
+                        onClick={() => handleEdit(job)}
+                      >
+                        <Edit size={16} />
+                      </button>
+
+                      {/* DELETE */}
+                      <button
+                        type="button"
+                        className="admin-btn-danger"
+                        onClick={() => handleDelete(job._id || job.id)}
+                      >
+                        <Trash2 size={16} />
+                      </button>
+
+                      {/* INFO */}
+                      <button
+                        type="button"
+                        className="admin-btn-secondary"
+                        onClick={() => {
+                          setSelectedJob(job);
+                          setShowApplicantsModal(true);
+                        }}
+                      >
+                        <Info size={16} />
+                      </button>
+                    </td>
+                  </tr>
+                ))
+              ) : (
+                <tr>
+                  <td colSpan="7" className="text-center text-gray-400 py-4">
+                    No jobs found
+                  </td>
+                </tr>
+              )}
+            </tbody>
+          </table>
+        )}
       </div>
 
       {/* ================= APPLICANTS MODAL ================= */}
       {showApplicantsModal && selectedJob && (
-        <div className="admin-modal-overlay">
-          <div className="admin-modal-content max-w-3xl">
-            <div className="admin-modal-header">
-              <h2 className="admin-modal-title">
-                Applicants for {selectedJob.title}
-              </h2>
-              <button
-                className="admin-btn-secondary"
-                onClick={() => setShowApplicantsModal(false)}
-              >
-                Close
-              </button>
-            </div>
+        <ApplicationTable
+          title={selectedJob.title}
+          onShowModal={setShowApplicantsModal}
+          jobId={jobId}
+        />
+        // <div className="admin-modal-overlay">
+        //   <div className="admin-modal-content !max-w-6xl w-full">
+        //     <div className="admin-modal-header">
+        //       <h2 className="admin-modal-title">
+        //         Applicants for {selectedJob.title}
+        //       </h2>
+        //       <button
+        //         type="button"
+        //         className="admin-btn-secondary"
+        //         onClick={() => setShowApplicantsModal(false)}
+        //       >
+        //         Close
+        //       </button>
+        //     </div>
 
-            <div className="admin-modal-body">
-              <p className="mb-4 text-sm text-gray-400">
-                Total Applications: {selectedJob.applicants.length}
-              </p>
+        //     <div className="admin-modal-body">
+        //       <p className="mb-4 text-sm text-gray-400">
+        //         Total Applications: {applications.length}
+        //       </p>
 
-              <table className="admin-table">
-                <thead>
-                  <tr>
-                    <th>Name</th>
-                    <th>Email</th>
-                    <th>Role Applied</th>
-                    <th>Resume</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {selectedJob.applicants.map((applicant) => (
-                    <tr key={applicant.id}>
-                      <td>{applicant.name}</td>
-                      <td>{applicant.email}</td>
-                      <td>{applicant.role}</td>
-                      <td>
-                        <a
-                          href={applicant.resume}
-                          className="admin-btn-secondary"
-                          download
-                        >
-                          Download
-                        </a>
-                      </td>
-                    </tr>
-                  ))}
+        //       <table className="admin-table">
+        //         <thead>
+        //           <tr>
+        //             <th>Name</th>
+        //             <th>Email</th>
+        //             <th>Phone</th>
+        //             <th>Status</th>
+        //             <th>Resume</th>
+        //           </tr>
+        //         </thead>
+        //         <tbody>
+        //           {isLoadingApps ? (
+        //             <tr>
+        //               <td
+        //                 colSpan="5"
+        //                 className="text-center py-4 text-gray-400"
+        //               >
+        //                 Loading applications...
+        //               </td>
+        //             </tr>
+        //           ) : applications.length > 0 ? (
+        //             applications.map((applicant) => (
+        //               <tr key={applicant._id}>
+        //                 <td>{applicant.name}</td>
+        //                 <td>{applicant.email}</td>
+        //                 <td>{applicant.phone}</td>
+        //                 <td>
+        //                   <span
+        //                     className={`px-2 py-1 rounded text-xs ${
+        //                       applicant.status === "accepted"
+        //                         ? "bg-green-500/20 text-green-400"
+        //                         : applicant.status === "rejected"
+        //                           ? "bg-red-500/20 text-red-400"
+        //                           : "bg-yellow-500/20 text-yellow-400"
+        //                     }`}
+        //                   >
+        //                     {applicant.status}
+        //                   </span>
+        //                 </td>
+        //                 <td>
+        //                   <div className="flex items-center gap-2 whitespace-nowrap">
+        //                     <a
+        //                       href={applicant.resume}
+        //                       className="admin-btn-secondary"
+        //                       target="_blank"
+        //                       rel="noopener noreferrer"
+        //                     >
+        //                       View
+        //                     </a>
 
-                  {selectedJob.applicants.length === 0 && (
-                    <tr>
-                      <td colSpan="4" className="text-center text-gray-400">
-                        No applications yet.
-                      </td>
-                    </tr>
-                  )}
-                </tbody>
-              </table>
-            </div>
-          </div>
-        </div>
+        //                     {/* ACCEPT */}
+        //                     <button
+        //                       type="button"
+        //                       className="admin-btn-primary"
+        //                       onClick={() => acceptApplication(applicant._id)}
+        //                     >
+        //                       Accept
+        //                     </button>
+
+        //                     {/* REJECT */}
+        //                     <button
+        //                       type="button"
+        //                       className="admin-btn-danger"
+        //                       onClick={() => rejectApplication(applicant._id)}
+        //                     >
+        //                       Reject
+        //                     </button>
+        //                   </div>
+        //                 </td>
+        //               </tr>
+        //             ))
+        //           ) : (
+        //             <tr>
+        //               <td
+        //                 colSpan="5"
+        //                 className="text-center text-gray-400 py-4"
+        //               >
+        //                 No applications yet.
+        //               </td>
+        //             </tr>
+        //           )}
+        //         </tbody>
+        //       </table>
+        //     </div>
+        //   </div>
+        // </div>
       )}
     </div>
   );

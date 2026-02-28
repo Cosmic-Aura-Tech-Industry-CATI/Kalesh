@@ -21,14 +21,49 @@
   vertical-align: middle;
 }
 
+.jobs-posting-page .admin-table td {
+  max-width: 250px;
+  word-break: break-word;
+}
+
+.jobs-posting-page .admin-table td:nth-child(2) {
+  white-space: normal;
+}
+
+
+
 /* Card enhancement */
 .jobs-posting-page .admin-card {
   border-radius: 12px;
 }
+
+.jobs-posting-page .admin-card {
+  overflow-x: auto;
+}
+
 
 /* Responsive tweak */
 @media (max-width: 768px) {
   .jobs-posting-page {
     padding-top: 3rem;
   }
+}
+
+
+/* Prevent wrapping in applicants table */
+
+.jobs-posting-page .admin-modal-body .admin-table td,
+.jobs-posting-page .admin-modal-body .admin-table th {
+  white-space: nowrap;
+}
+
+/* Optional: allow horizontal scroll if needed */
+.jobs-posting-page .admin-modal-content {
+  overflow-x: auto;
+}
+
+.jobs-posting-page .admin-modal-body .admin-table td {
+  max-width: 200px;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }

@@ -2,18 +2,38 @@ export const API_ENDPOINTS = {
   AUTH: {
     LOGIN: "/auth/login",
   },
+
   APPLICATION: {
-    CREATE: "/applications",
+    CREATE: "/applications", 
+    UPDATE_BY_TOKEN: (token) => `/applications/${token}`,
+    GET_BY_TOKEN: (token) => `/applications/token/${token}`,
+    GET_BY_JOB_ID: (jobId) => `/applications/job/${jobId}`, 
+    GET_BY_ID: (id) => `/applications/${id}`, 
+    ACCEPT: (id) => `/applications/accept/${id}`, 
+    REJECT: (id) => `/applications/reject/${id}`, 
+    DOWNLOAD_APPLICATIONS: (jobId) => `/applications/job/${jobId}/download`,
   },
+
   PROMOTION: {
     CREATE: "/promotions",
   },
+
   CONTACT: {
     CREATE: "/contact",
   },
+
   SUBSCRIBE: {
     CREATE: "/subscribe",
   },
+
+  JOBS: {
+    GET_ALL: "/jobs",
+    CREATE: "/jobs",
+    GET_BY_ID: (id) => `/jobs/${id}`,
+    UPDATE_BY_ID: (id) => `/jobs/${id}`,
+    DELETE_BY_ID: (id) => `/jobs/${id}`,
+  },
+
   ADMIN: {
     USER: {
       GET_ALL: "/admin-panel/users",
