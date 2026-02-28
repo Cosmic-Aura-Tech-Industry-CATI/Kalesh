@@ -13,7 +13,7 @@ export default function ApplicationDetails() {
   const { data, isLoading, refetch } = useGetApplicationByToken(token);
 
   const { mutate, isPending } = useUpdateApplication();
-
+  console.log(data);
   const handleResumeUpdate = (e) => {
     e.preventDefault();
 
@@ -29,17 +29,15 @@ export default function ApplicationDetails() {
       { token, payload: formData },
       {
         onSuccess: () => {
-          alert("Resume Updated Successfully ✅");
+          alert("Resume Updated Successfully");
           refetch();
         },
-      },
+      }
     );
   };
 
   if (isLoading) return <p className="text-center mt-10">Loading...</p>;
   if (!data) return <p className="text-center mt-10">Application Not Found</p>;
-
-  const application = data;
 
   return (
     <div className="application-wrapper">
@@ -47,32 +45,34 @@ export default function ApplicationDetails() {
 
       <div className="application-info">
         <p>
-          <strong>Name:</strong> {application.name}
+          <strong>Name:</strong> {data.application.name}
         </p>
         <p>
-          <strong>Email:</strong> {application.email}
+          <strong>Email:</strong> {data.application.email}
         </p>
         <p>
-          <strong>Phone:</strong> {application.phone}
+          <strong>Phone:</strong> {data.application.phone}
         </p>
 
         <p>
           <strong>Status:</strong>{" "}
           <span
             className={
-              application.status === "accepted"
+              data.application.status === "accepted"
                 ? "status-accepted"
+                : data.application.status === "rejected"
+                ? "status-rejected"
                 : "status-pending"
             }
           >
-            {application.status}
+            {data.application.status}
           </span>
         </p>
 
         <p>
           <strong>Current Resume:</strong>{" "}
           <a
-            href={application.resume}
+            href={data.application.resume}
             target="_blank"
             rel="noreferrer"
             className="resume-link"
