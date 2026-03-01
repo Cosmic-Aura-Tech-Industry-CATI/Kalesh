@@ -31,7 +31,8 @@ export default function Topbar({ setSidebarOpen }) {
           </button>
 
           <h1 className="admin-brand-title">
-            KALESH Admin
+            <span className="admin-brand-main">Kalesh</span>
+            <span className="admin-brand-badge">Admin</span>
           </h1>
         </div>
 

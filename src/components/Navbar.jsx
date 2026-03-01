@@ -9,6 +9,10 @@ function Navbar() {
   const navigate = useNavigate();
 
   const handleLinkClick = () => {
+    if (document.activeElement instanceof HTMLElement) {
+      document.activeElement.blur();
+    }
+
     if (menuRef.current) {
       const collapse = Collapse.getInstance(menuRef.current);
       collapse?.hide();

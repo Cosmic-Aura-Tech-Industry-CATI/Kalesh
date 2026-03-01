@@ -40,6 +40,7 @@ export default function JobsPosting() {
   const [selectedJob, setSelectedJob] = useState(null);
   const [editingJob, setEditingJob] = useState(null);
   const [showApplicantsModal, setShowApplicantsModal] = useState(false);
+  const [expandedDescriptions, setExpandedDescriptions] = useState({});
 
   // SAFELY GET JOB ID
   const jobId = selectedJob?._id || selectedJob?.id;
@@ -94,6 +95,13 @@ export default function JobsPosting() {
     setValue("experience", job.experience);
     setValue("type", job.type);
     setShowForm(true);
+  };
+
+  const toggleDescription = (jobKey) => {
+    setExpandedDescriptions((prev) => ({
+      ...prev,
+      [jobKey]: !prev[jobKey],
+    }));
   };
 
   return (
@@ -261,7 +269,27 @@ export default function JobsPosting() {
                 jobs.map((job) => (
                   <tr key={job._id || job.id}>
                     <td>{job.title}</td>
-                    <td>{job.description}</td>
+                    <td className="job-description-cell">
+                      <p
+                        className={`job-description-text ${
+                          expandedDescriptions[job._id || job.id] ? "expanded" : ""
+                        }`}
+                      >
+                        {job.description}
+                      </p>
+
+                      {job.description && job.description.length > 140 && (
+                        <button
+                          type="button"
+                          className="job-read-more-btn"
+                          onClick={() => toggleDescription(job._id || job.id)}
+                        >
+                          {expandedDescriptions[job._id || job.id]
+                            ? "Read less"
+                            : "Read more"}
+                        </button>
+                      )}
+                    </td>
                     <td>{job.location}</td>
                     <td>
                       {Array.isArray(job.skill)
