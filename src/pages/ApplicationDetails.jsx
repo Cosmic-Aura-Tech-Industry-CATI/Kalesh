@@ -10,10 +10,13 @@ export default function ApplicationDetails() {
   const { token } = useParams();
   const [resumeFile, setResumeFile] = useState(null);
 
-  const { data, isLoading, refetch } = useGetApplicationByToken(token);
+  const { data, isLoading, refetch } =
+    useGetApplicationByToken(token);
 
   const { mutate, isPending } = useUpdateApplication();
-  console.log(data);
+
+  const application = data?.application || data;
+
   const handleResumeUpdate = (e) => {
     e.preventDefault();
 
@@ -29,7 +32,7 @@ export default function ApplicationDetails() {
       { token, payload: formData },
       {
         onSuccess: () => {
-          alert("Resume Updated Successfully");
+          alert("Resume Updated Successfully ✅");
           refetch();
         },
       }
@@ -37,42 +40,45 @@ export default function ApplicationDetails() {
   };
 
   if (isLoading) return <p className="text-center mt-10">Loading...</p>;
-  if (!data) return <p className="text-center mt-10">Application Not Found</p>;
+  if (!application)
+    return <p className="text-center mt-10">Application Not Found</p>;
 
   return (
     <div className="application-wrapper">
-      <h2 className="application-title">Application Details</h2>
+      <h2 className="application-title">Application Status</h2>
 
       <div className="application-info">
-        <p>
-          <strong>Name:</strong> {data.application.name}
-        </p>
-        <p>
-          <strong>Email:</strong> {data.application.email}
-        </p>
-        <p>
-          <strong>Phone:</strong> {data.application.phone}
-        </p>
+
+        <p><strong>Name:</strong> {application.name}</p>
+        <p><strong>Email:</strong> {application.email}</p>
+        <p><strong>Phone:</strong> {application.phone}</p>
+
+        <p><strong>State:</strong> {application.state}</p>
+        <p><strong>Country:</strong> {application.country}</p>
+
+        <p><strong>Highest Degree:</strong> {application.highestDegree}</p>
+        <p><strong>Experience:</strong> {application.experience}</p>
+        <p><strong>Notice Period:</strong> {application.noticePeriod}</p>
 
         <p>
           <strong>Status:</strong>{" "}
           <span
             className={
-              data.application.status === "accepted"
+              application.status === "accepted"
                 ? "status-accepted"
-                : data.application.status === "rejected"
+                : application.status === "rejected"
                 ? "status-rejected"
                 : "status-pending"
             }
           >
-            {data.application.status}
+            {application.status}
           </span>
         </p>
 
         <p>
           <strong>Current Resume:</strong>{" "}
           <a
-            href={data.application.resume}
+            href={application.resume}
             target="_blank"
             rel="noreferrer"
             className="resume-link"
@@ -80,6 +86,7 @@ export default function ApplicationDetails() {
             View Resume
           </a>
         </p>
+
       </div>
 
       <hr className="application-divider" />
@@ -95,7 +102,11 @@ export default function ApplicationDetails() {
             className="resume-input"
           />
 
-          <button type="submit" disabled={isPending} className="resume-button">
+          <button
+            type="submit"
+            disabled={isPending}
+            className="resume-button"
+          >
             {isPending ? "Updating..." : "Update Resume"}
           </button>
         </form>

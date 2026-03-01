@@ -1,7 +1,7 @@
-/* ===== Application Details Page ===== */
+/* ===== Wrapper ===== */
 
 .application-wrapper {
-  max-width: 650px;
+  max-width: 750px;
   margin: 60px auto;
   padding: 40px;
   background: linear-gradient(145deg, #111111, #1a1a1a);
@@ -11,20 +11,30 @@
   color: #ffffff;
 }
 
+/* ===== Title ===== */
+
 .application-title {
   text-align: center;
-  font-size: 28px;
+  font-size: 30px;
   font-weight: 700;
-  margin-bottom: 30px;
+  margin-bottom: 35px;
   background: linear-gradient(90deg, #ff6a00, #ffd700);
-    background-clip: text;
+  background-clip: text;
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
 }
 
+/* ===== Info Grid ===== */
+
+.application-info {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px 30px;
+}
+
 .application-info p {
-  margin-bottom: 12px;
-  font-size: 15px;
+  margin: 0;
+  font-size: 14px;
   color: #cccccc;
 }
 
@@ -32,50 +42,71 @@
   color: #ffd700;
 }
 
-.status-accepted {
-  color: #4caf50;
+/* ===== Status Badges ===== */
+
+.status-accepted,
+.status-rejected,
+.status-pending {
+  padding: 4px 10px;
+  border-radius: 20px;
+  font-size: 13px;
   font-weight: 600;
+}
+
+.status-accepted {
+  background: rgba(76, 175, 80, 0.2);
+  color: #4caf50;
 }
 
 .status-pending {
+  background: rgba(255, 152, 0, 0.2);
   color: #ff9800;
-  font-weight: 600;
 }
 
 .status-rejected {
-  color: #f44336;
-  font-weight: 600;
+  background: rgba(255, 77, 77, 0.2);
+  color: #ff4d4d;
 }
 
+/* ===== Divider ===== */
+
 .application-divider {
-  margin: 30px 0;
+  margin: 35px 0;
   border: none;
   border-top: 1px solid rgba(212, 175, 55, 0.2);
 }
+
+/* ===== Resume Section ===== */
 
 .resume-section h3 {
   margin-bottom: 15px;
   color: #ffd700;
 }
 
+/* ===== File Input ===== */
+
 .resume-input {
   width: 100%;
-  padding: 10px;
+  padding: 12px;
   background: #1a1a1a;
   border: 1px solid rgba(212, 175, 55, 0.3);
   border-radius: 8px;
   color: #ffffff;
+  cursor: pointer;
 }
+
+/* ===== Button ===== */
 
 .resume-button {
   margin-top: 15px;
   background: linear-gradient(135deg, #ff2a2a, #ff6a00);
   border: none;
-  padding: 10px 20px;
+  padding: 12px 24px;
   color: white;
   border-radius: 8px;
   cursor: pointer;
   transition: 0.3s ease;
+  font-weight: 600;
 }
 
 .resume-button:hover {
@@ -83,11 +114,33 @@
   box-shadow: 0 0 20px rgba(255, 106, 0, 0.5);
 }
 
+.resume-button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  transform: none;
+  box-shadow: none;
+}
+
+/* ===== Resume Link ===== */
+
 .resume-link {
   color: #ff6a00;
   text-decoration: none;
+  font-weight: 500;
 }
 
 .resume-link:hover {
   text-decoration: underline;
+}
+
+/* ===== Mobile Responsive ===== */
+
+@media (max-width: 768px) {
+  .application-wrapper {
+    padding: 25px;
+  }
+
+  .application-info {
+    grid-template-columns: 1fr;
+  }
 }
