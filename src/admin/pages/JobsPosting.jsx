@@ -61,7 +61,7 @@ export default function JobsPosting() {
             reset();
             setEditingJob(null);
           },
-        }
+        },
       );
     } else {
       createJob(data, {
@@ -90,7 +90,7 @@ export default function JobsPosting() {
     setValue("location", job.location);
     setValue(
       "skill",
-      Array.isArray(job.skill) ? job.skill.join(", ") : job.skill
+      Array.isArray(job.skill) ? job.skill.join(", ") : job.skill,
     );
     setValue("experience", job.experience);
     setValue("type", job.type);
@@ -176,13 +176,25 @@ export default function JobsPosting() {
           {/* Category */}
           <div className="admin-form-group">
             <label className="admin-form-label">Category</label>
-            <input
-              className="admin-form-input"
-              placeholder="e.g. IT, Marketing, HR"
+
+            <select
+              className="admin-form-select"
               {...register("category", {
                 required: "Category is required",
               })}
-            />
+            >
+              <option value="">Select Category</option>
+              <option value="IT">IT</option>
+              <option value="Engineering">Engineering</option>
+              <option value="Design">Design</option>
+              <option value="Marketing">Marketing</option>
+              <option value="Sales">Sales</option>
+              <option value="HR">HR</option>
+              <option value="Finance">Finance</option>
+              <option value="Operations">Operations</option>
+              <option value="Customer Support">Customer Support</option>
+            </select>
+
             {errors.category && (
               <span className="text-red-500 text-xs">
                 {errors.category.message}
@@ -240,8 +252,8 @@ export default function JobsPosting() {
             {isCreating || isUpdating
               ? "Saving..."
               : editingJob
-              ? "Update Job"
-              : "Save Job"}
+                ? "Update Job"
+                : "Save Job"}
           </button>
         </form>
       )}
@@ -272,7 +284,9 @@ export default function JobsPosting() {
                     <td className="job-description-cell">
                       <p
                         className={`job-description-text ${
-                          expandedDescriptions[job._id || job.id] ? "expanded" : ""
+                          expandedDescriptions[job._id || job.id]
+                            ? "expanded"
+                            : ""
                         }`}
                       >
                         {job.description}
