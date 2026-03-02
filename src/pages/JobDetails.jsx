@@ -13,7 +13,6 @@ export default function JobDetails() {
   const { mutate: createApplication, isPending } = useCreateApplication();
 
   const job = jobData?.data;
-
   const [showApplicationForm, setShowApplicationForm] = useState(false);
 
   useEffect(() => {
@@ -29,7 +28,13 @@ export default function JobDetails() {
 
   const onSubmit = (data) => {
     const formData = new FormData();
+
     formData.append("name", data.name);
+    formData.append("state", data.state);
+    formData.append("country", data.country);
+    formData.append("highestDegree", data.highestDegree);
+    formData.append("experience", data.experience);
+    formData.append("noticePeriod", data.noticePeriod);
     formData.append("email", data.email);
     formData.append("phone", data.phone);
     formData.append("resume", data.resume[0]);
@@ -57,7 +62,6 @@ export default function JobDetails() {
 
   return (
     <div className="container job-details-page py-5">
-
       <h1 className="job-details-title">{job.title}</h1>
 
       <div className="job-meta">
@@ -100,48 +104,94 @@ export default function JobDetails() {
 
             <form onSubmit={handleSubmit(onSubmit)}>
 
-              <input
-                type="text"
-                placeholder="Full Name"
-                {...register("name", { required: "Name is required" })}
-              />
-              {errors.name && <p className="error">{errors.name.message}</p>}
+              <div className="form-group">
+                <label>Full Name</label>
+                <input {...register("name", { required: "Name is required" })} />
+                {errors.name && <p className="error">{errors.name.message}</p>}
+              </div>
 
-              <input
-                type="email"
-                placeholder="Email"
-                {...register("email", {
-                  required: "Email is required",
-                  pattern: {
-                    value: /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,})+$/,
-                    message: "Invalid email",
-                  },
-                })}
-              />
-              {errors.email && <p className="error">{errors.email.message}</p>}
+              <div className="form-group">
+                <label>State</label>
+                <input {...register("state", { required: "State is required" })} />
+                {errors.state && <p className="error">{errors.state.message}</p>}
+              </div>
 
-              <input
-                type="tel"
-                placeholder="Phone Number"
-                {...register("phone", { required: "Phone is required" })}
-              />
-              {errors.phone && <p className="error">{errors.phone.message}</p>}
+              <div className="form-group">
+                <label>Country</label>
+                <input
+                  defaultValue="India"
+                  {...register("country", { required: "Country is required" })}
+                />
+                {errors.country && <p className="error">{errors.country.message}</p>}
+              </div>
 
-              <input
-                type="file"
-                accept=".pdf,.doc,.docx"
-                {...register("resume", {
-                  required: "Resume is required",
-                })}
-              />
-              {errors.resume && <p className="error">{errors.resume.message}</p>}
+              <div className="form-group">
+                <label>Highest Degree</label>
+                <input
+                  {...register("highestDegree", { required: "Degree is required" })}
+                />
+                {errors.highestDegree && (
+                  <p className="error">{errors.highestDegree.message}</p>
+                )}
+              </div>
 
-              <button type="submit" disabled={isPending}>
+              <div className="form-group">
+                <label>Experience</label>
+                <select {...register("experience", { required: true })}>
+                  <option value="">Select</option>
+                  <option value="Fresher">Fresher</option>
+                  <option value="1-2 Years">1-2 Years</option>
+                  <option value="3-5 Years">3-5 Years</option>
+                  <option value="5+ Years">5+ Years</option>
+                </select>
+              </div>
+
+              <div className="form-group">
+                <label>Notice Period</label>
+                <select {...register("noticePeriod", { required: true })}>
+                  <option value="">Select</option>
+                  <option value="Immediate">Immediate</option>
+                  <option value="15 Days">15 Days</option>
+                  <option value="30 Days">30 Days</option>
+                  <option value="60 Days">60 Days</option>
+                </select>
+              </div>
+
+              <div className="form-group">
+                <label>Email</label>
+                <input
+                  type="email"
+                  {...register("email", { required: "Email is required" })}
+                />
+                {errors.email && <p className="error">{errors.email.message}</p>}
+              </div>
+
+              <div className="form-group">
+                <label>Phone Number</label>
+                <input
+                  type="tel"
+                  {...register("phone", { required: "Phone is required" })}
+                />
+                {errors.phone && <p className="error">{errors.phone.message}</p>}
+              </div>
+
+              <div className="form-group full-width">
+                <label>Upload Resume</label>
+                <input
+                  type="file"
+                  accept=".pdf,.doc,.docx"
+                  {...register("resume", { required: "Resume is required" })}
+                />
+                {errors.resume && <p className="error">{errors.resume.message}</p>}
+              </div>
+
+              <button type="submit" className="submit-btn full-width">
                 {isPending ? "Submitting..." : "Submit Application"}
               </button>
 
               <button
                 type="button"
+                className="cancel-btn full-width"
                 onClick={() => setShowApplicationForm(false)}
               >
                 Cancel
