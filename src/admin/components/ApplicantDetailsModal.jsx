@@ -3,6 +3,25 @@ import "../style/admin.css";
 export default function ApplicantDetailsModal({ applicant, onClose }) {
   if (!applicant) return null;
 
+  const handleResumeDownload = async (e, url, filename) => {
+    e.preventDefault();
+    try {
+      const response = await fetch(url);
+      const blob = await response.blob();
+      const blobUrl = window.URL.createObjectURL(blob);
+      const link = document.createElement("a");
+      link.href = blobUrl;
+      link.download = filename;
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+      window.URL.revokeObjectURL(blobUrl);
+    } catch (error) {
+      console.error("Download failed:", error);
+      window.open(url, "_blank");
+    }
+  };
+
   return (
     <div className="admin-modal-overlay">
       <div className="admin-modal-content !max-w-4xl w-full">
@@ -61,8 +80,14 @@ export default function ApplicantDetailsModal({ applicant, onClose }) {
             {/* Download Resume */}
             <a
               href={applicant.resume}
-              download
               className="admin-btn-primary"
+              onClick={(e) =>
+                handleResumeDownload(
+                  e,
+                  applicant.resume,
+                  `${(applicant.name || "applicant").replace(/\s+/g, "_")}_resume`
+                )
+              }
             >
               Download Resume
             </a>

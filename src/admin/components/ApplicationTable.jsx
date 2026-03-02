@@ -32,6 +32,25 @@ function ApplicationTable({ title, onShowModal, jobId }) {
     downloadApplications(jobId);
   };
 
+  const handleResumeDownload = async (e, url, filename) => {
+    e.preventDefault();
+    try {
+      const response = await fetch(url);
+      const blob = await response.blob();
+      const blobUrl = window.URL.createObjectURL(blob);
+      const link = document.createElement("a");
+      link.href = blobUrl;
+      link.download = filename;
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+      window.URL.revokeObjectURL(blobUrl);
+    } catch (error) {
+      console.error("Download failed:", error);
+      window.open(url, "_blank");
+    }
+  };
+
   return (
     <>
       {/* ================= MAIN APPLICANTS MODAL ================= */}
@@ -277,8 +296,14 @@ function ApplicationTable({ title, onShowModal, jobId }) {
                   {/* Download Resume → File Download */}
                   <a
                     href={selectedApplicant.resume}
-                    download
                     className="admin-btn-primary"
+                    onClick={(e) =>
+                      handleResumeDownload(
+                        e,
+                        selectedApplicant.resume,
+                        `${(selectedApplicant.name || "applicant").replace(/\s+/g, "_")}_resume`
+                      )
+                    }
                   >
                     Download Resume
                   </a>
