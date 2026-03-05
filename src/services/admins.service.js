@@ -7,9 +7,7 @@ export class AdminUserService {
    * @returns {Promise<Array<any>>} Resolves with an array of admin objects.
    */
   static async getAllAdmins() {
-    const res = await axiosInstance.get(
-      API_ENDPOINTS.ADMIN.USER.GET_ALL
-    );
+    const res = await axiosInstance.get(API_ENDPOINTS.ADMIN.USER.GET_ALL);
     return res.data;
   }
 
@@ -21,7 +19,7 @@ export class AdminUserService {
   static async createAdmin(payload) {
     const res = await axiosInstance.post(
       API_ENDPOINTS.ADMIN.USER.CREATE,
-      payload
+      payload,
     );
     return res.data;
   }
@@ -32,9 +30,7 @@ export class AdminUserService {
    * @returns {Promise<Object>} - Resolves with the admin user object.
    */
   static async getAdminById(id) {
-    const res = await axiosInstance.get(
-      API_ENDPOINTS.ADMIN.USER.GET_BY_ID(id)
-    );
+    const res = await axiosInstance.get(API_ENDPOINTS.ADMIN.USER.GET_BY_ID(id));
     return res.data;
   }
 
@@ -48,7 +44,7 @@ export class AdminUserService {
   static async updateAdmin(payload) {
     const res = await axiosInstance.put(
       API_ENDPOINTS.ADMIN.USER.UPDATE_BY_ID(payload.id),
-      payload
+      payload,
     );
     return res.data;
   }
@@ -60,8 +56,23 @@ export class AdminUserService {
    */
   static async deleteAdmin(id) {
     const res = await axiosInstance.delete(
-      API_ENDPOINTS.ADMIN.USER.DELETE_BY_ID(id)
+      API_ENDPOINTS.ADMIN.USER.DELETE_BY_ID(id),
     );
+    return res.data;
+  }
+
+  static async activateAdmin(id) {
+    const res = await axiosInstance.patch(`/admin/activate/${id}`);
+    return res.data;
+  }
+
+  static async disableAdmin(id) {
+    const res = await axiosInstance.patch(`/admin/disable/${id}`);
+    return res.data;
+  }
+
+  static async deleteAdmin(id) {
+    const res = await axiosInstance.delete(`/admin/delete/${id}`);
     return res.data;
   }
 }

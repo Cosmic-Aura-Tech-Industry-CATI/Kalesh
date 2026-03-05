@@ -91,7 +91,7 @@ export const useUpdateAdmin = () => {
  * When the mutation is successful, it shows a success toast and invalidates the query cache for the admin users.
  * When the mutation fails, it shows an error toast.
  */
-export const useDeleteAdmin = () => {
+/* export const useDeleteAdmin = () => {
   const queryClient = useQueryClient();
   return useMutation({
     mutationFn: (id) => AdminUserService.deleteAdmin(id),
@@ -102,6 +102,45 @@ export const useDeleteAdmin = () => {
     },
     onError: (err) => {
       console.log(err);
+    },
+  });
+}; */
+
+export const useActivateAdmin = () => {
+  const queryClient = useQueryClient();
+
+  return useMutation({
+    mutationFn: (adminId) =>
+      AdminUserService.activateAdmin(adminId),
+
+    onSuccess: () => {
+      queryClient.invalidateQueries(["admins"]);
+    },
+  });
+};
+
+export const useDisableAdmin = () => {
+  const queryClient = useQueryClient();
+
+  return useMutation({
+    mutationFn: (adminId) =>
+      AdminUserService.disableAdmin(adminId),
+
+    onSuccess: () => {
+      queryClient.invalidateQueries(["admins"]);
+    },
+  });
+};
+
+export const useDeleteAdmin = () => {
+  const queryClient = useQueryClient();
+
+  return useMutation({
+    mutationFn: (adminId) =>
+      AdminUserService.deleteAdmin(adminId),
+
+    onSuccess: () => {
+      queryClient.invalidateQueries(["admins"]);
     },
   });
 };
