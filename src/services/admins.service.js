@@ -19,7 +19,7 @@ export class AdminUserService {
   static async createAdmin(payload) {
     const res = await axiosInstance.post(
       API_ENDPOINTS.ADMIN.USER.CREATE,
-      payload,
+      payload
     );
     return res.data;
   }
@@ -44,7 +44,7 @@ export class AdminUserService {
   static async updateAdmin(payload) {
     const res = await axiosInstance.put(
       API_ENDPOINTS.ADMIN.USER.UPDATE_BY_ID(payload.id),
-      payload,
+      payload
     );
     return res.data;
   }
@@ -56,23 +56,32 @@ export class AdminUserService {
    */
   static async deleteAdmin(id) {
     const res = await axiosInstance.delete(
-      API_ENDPOINTS.ADMIN.USER.DELETE_BY_ID(id),
+      API_ENDPOINTS.ADMIN.USER.DELETE_BY_ID(id)
     );
     return res.data;
   }
 
+  /**
+   * Activates an admin user by its id.
+   * @param {string} id - The id of the admin user to be activated.
+   * @returns {Promise<Object>} - Resolves with the activated admin user object.
+   */
   static async activateAdmin(id) {
-    const res = await axiosInstance.patch(`/admin/activate/${id}`);
+    const res = await axiosInstance.patch(
+      API_ENDPOINTS.ADMIN.USER.ACTIVATE_BY_ID(id)
+    );
     return res.data;
   }
 
+  /**
+   * Disables an admin user by its id.
+   * @param {string} id - The id of the admin user to be disabled.
+   * @returns {Promise<Object>} - Resolves with the disabled admin user object.
+   */
   static async disableAdmin(id) {
-    const res = await axiosInstance.patch(`/admin/disable/${id}`);
-    return res.data;
-  }
-
-  static async deleteAdmin(id) {
-    const res = await axiosInstance.delete(`/admin/delete/${id}`);
+    const res = await axiosInstance.patch(
+      API_ENDPOINTS.ADMIN.USER.DIACTIVATE_BY_ID(id)
+    );
     return res.data;
   }
 }

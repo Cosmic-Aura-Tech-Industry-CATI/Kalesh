@@ -41,6 +41,8 @@ export const API_ENDPOINTS = {
       GET_BY_ID: (id) => `/admin-panel/users/${id}`,
       UPDATE_BY_ID: (id) => `/admin-panel/users/${id}`,
       DELETE_BY_ID: (id) => `/admin-panel/users/${id}`,
+      DIACTIVATE_BY_ID: (id) => `/admin-panel/users/${id}/deactivate`,
+      ACTIVATE_BY_ID: (id) => `/admin-panel/users/${id}/activate`,
     },
   },
 };

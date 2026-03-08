@@ -75,7 +75,7 @@ export default function AdminManagement() {
   ================================= */
 
   const handleDisableAdmin = (adminId) => {
-    deleteAdminAccount(adminId);
+    disableAdminAccount(adminId);
   };
 
   const handleActivateAdmin = (adminId) => {
