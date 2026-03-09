@@ -129,7 +129,6 @@ function Careers() {
       />
 
       <div className="container-fluid careers-page px-0">
-
         {/* TOP HEADING */}
         <div className="container text-center py-5">
           <h1 className="careers-title">
@@ -140,7 +139,6 @@ function Careers() {
         {/* RECENT OPENINGS */}
         <div className="container py-5">
           <div className="recent-jobs-wrapper">
-
             <div className="recent-jobs-header">
               <h2 className="recent-jobs-title">Recent Openings</h2>
 
@@ -173,7 +171,9 @@ function Careers() {
               ) : filteredJobs.length > 0 ? (
                 filteredJobs.map((job) => (
                   <div key={job._id} className="job-card">
-                    <span className="job-badge">{job.category}</span>
+                    <div className="job-badge-wrapper">
+                      <span className="job-badge">{job.category}</span>
+                    </div>
 
                     <h4 className="job-title">{job.title}</h4>
 
@@ -213,7 +213,6 @@ function Careers() {
         {/* Golden Form Section */}
         {/* Social Section */}
         {/* Success Popup */}
-
       </div>
     </>
   );
