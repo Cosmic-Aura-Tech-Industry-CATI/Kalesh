@@ -2,26 +2,28 @@ import axiosInstance from "../lib/axiosInstace";
 import { API_ENDPOINTS } from "../lib/apiEndpoints";
 
 export class AuthService {
-
   /**
    * Logs in a user to the application.
    */
   static async login(payload) {
+    const res = await axiosInstance.post(API_ENDPOINTS.AUTH.LOGIN, payload);
+    return res.data;
+  }
+
+  /**
+   * Verifies an OTP for the currently logged in user.
+   * @param {Object} payload - The payload containing the OTP to be verified.
+   * @returns {Promise<Object>} - Resolves with the response from the API.
+   */
+  static async verifyOtp(payload) {
     const res = await axiosInstance.post(
-      API_ENDPOINTS.AUTH.LOGIN,
+      API_ENDPOINTS.AUTH.VERIFY_OTP,
       payload
     );
 
-    console.log("LOGIN RESPONSE:", res.data);
-
     if (res.data?.token) {
-      // 🔐 Save Token
-      localStorage.setItem(
-        "thekalesh.com-admin-token",
-        res.data.token
-      );
+      localStorage.setItem("thekalesh.com-admin-token", res.data.token);
 
-      // 👤 Save Admin Details
       if (res.data?.user) {
         localStorage.setItem(
           "thekalesh.com-admin",
@@ -29,7 +31,6 @@ export class AuthService {
         );
       }
     }
-
     return res.data;
   }
 
@@ -68,5 +69,4 @@ export class AuthService {
   static isAuthenticated() {
     return !!localStorage.getItem("thekalesh.com-admin-token");
   }
-
 }

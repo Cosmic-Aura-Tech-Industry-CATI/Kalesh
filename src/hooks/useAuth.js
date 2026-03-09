@@ -13,17 +13,39 @@ import { useNavigate } from "react-router-dom";
  * @returns {UseMutationResult} - The result of the useMutation hook.
  */
 export const useLogin = () => {
+  return useMutation({
+    mutationFn: (payload) => AuthService.login(payload),
+    /**
+     * Called when the mutation fails.
+     * @param {Error} error - The error returned from the mutation function.
+     * Logs the error to the console.
+     */
+    onError: (error) => {
+      console.error("Login failed:", error);
+    },
+  });
+};
+
+/**
+ * useVerifyOtp hook
+ *
+ * A hook that wraps the useMutation hook from react-query.
+ * It is used to verify the OTP.
+ *
+ * @returns {UseMutationResult} - The result of the useMutation hook.
+ */
+export const useVerifyOtp = () => {
   const queryClient = useQueryClient();
   const navigate = useNavigate();
   return useMutation({
-    mutationFn: (payload) => AuthService.login(payload),
-/**
- * Called when the mutation is successful.
- * @param {Object} data - The data returned from the mutation function.
- * It should contain the token and user data.
- * Stores the token in local storage and sets the user data in the query client.
- * Navigates to the admin dashboard page.
- */
+    mutationFn: (payload) => AuthService.verifyOtp(payload),
+    /**
+     * Called when the mutation is successful.
+     * @param {Object} data - The data returned from the mutation function.
+     * It should contain the token and user data.
+     * Stores the token in local storage and sets the user data in the query client.
+     * Navigates to the admin dashboard page.
+     */
     onSuccess: (data) => {
       queryClient.setQueryData(["user"], data);
       navigate("/admin/dashboard");
@@ -32,9 +54,9 @@ export const useLogin = () => {
  * Called when the mutation fails.
  * @param {Error} error - The error returned from the mutation function.
  * Logs the error to the console.
- */
+ **/
     onError: (error) => {
-      console.error("Login failed:", error);
+      console.error("Verify OTP failed:", error);
     },
   });
 };
@@ -54,15 +76,15 @@ export const useLogout = () => {
   const navigate = useNavigate();
   return useMutation({
     mutationFn: AuthService.logout,
-/**
- * Called when the mutation is successful.
- * Removes the token from local storage, removes the user data from the query client,
- * and navigates to the login page, replacing the current page in the browser history.
- */
+    /**
+     * Called when the mutation is successful.
+     * Removes the token from local storage, removes the user data from the query client,
+     * and navigates to the login page, replacing the current page in the browser history.
+     */
     onSuccess: () => {
       queryClient.removeQueries({ queryKey: ["user"] });
       navigate("/admin/login", {
-        replace: true
+        replace: true,
       });
     },
 

@@ -1,6 +1,7 @@
 export const API_ENDPOINTS = {
   AUTH: {
     LOGIN: "/auth/login",
+    VERIFY_OTP: "/auth/verify-otp",
   },
 
   APPLICATION: {
