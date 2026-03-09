@@ -14,7 +14,6 @@ export const useGetAllAdmins = () => {
   });
 };
 
-
 /**
  * A hook that fetches a user by its id from the API.
  * @param {string} id - The id of the user to be fetched.
@@ -95,6 +94,60 @@ export const useDeleteAdmin = () => {
   const queryClient = useQueryClient();
   return useMutation({
     mutationFn: (id) => AdminUserService.deleteAdmin(id),
+    onSuccess: () => {
+      queryClient.invalidateQueries({
+        queryKey: ["admin-users"],
+      });
+    },
+    onError: (err) => {
+      console.log(err);
+    },
+  });
+};
+
+/**
+ * A hook that wraps the useMutation hook from react-query.
+ * It is used to activate an admin user.
+ * After a successful activation, it sets a success toast message and invalidates the cache for the admin users query.
+ * If the activation fails, it sets an error toast message.
+ *
+ * @returns {UseMutationResult} - The result of the useMutation hook.
+ * It contains the data returned from the mutation function, the status of the mutation,
+ * and functions to refresh the mutation and check if the data is loading.
+ */
+export const useActivateAdmin = () => {
+  const queryClient = useQueryClient();
+
+  return useMutation({
+    mutationFn: (adminId) => AdminUserService.activateAdmin(adminId),
+
+    onSuccess: () => {
+      queryClient.invalidateQueries({
+        queryKey: ["admin-users"],
+      });
+    },
+    onError: (err) => {
+      console.log(err);
+    },
+  });
+};
+
+/**
+ * A hook that wraps the useMutation hook from react-query.
+ * It is used to disable an admin user.
+ * After a successful disablement, it sets a success toast message and invalidates the cache for the admin users query.
+ * If the disablement fails, it sets an error toast message.
+ *
+ * @returns {UseMutationResult} - The result of the useMutation hook.
+ * It contains the data returned from the mutation function, the status of the mutation,
+ * and functions to refresh the mutation and check if the data is loading.
+ */
+export const useDisableAdmin = () => {
+  const queryClient = useQueryClient();
+
+  return useMutation({
+    mutationFn: (adminId) => AdminUserService.disableAdmin(adminId),
+
     onSuccess: () => {
       queryClient.invalidateQueries({
         queryKey: ["admin-users"],

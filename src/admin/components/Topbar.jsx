@@ -1,6 +1,6 @@
 import { Menu, Bell, User, LogOut } from "lucide-react";
 import { useNavigate } from "react-router-dom";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { AuthService } from "../../services/auth.service";
 
 import "../style/admin.css";
@@ -11,6 +11,15 @@ export default function Topbar({ setSidebarOpen }) {
 
   const [showNotifications, setShowNotifications] = useState(false);
   const [showAdminDetails, setShowAdminDetails] = useState(false);
+
+  const [admin, setAdmin] = useState(null);
+
+  // 🔹 Fetch logged admin info
+  useEffect(() => {
+    const data = AuthService.getCurrentUser();
+    console.log("ADMIN DATA:", data); // debug
+    setAdmin(data);
+  }, []);
 
   const handleLogout = () => {
     AuthService.logout();
@@ -70,15 +79,15 @@ export default function Topbar({ setSidebarOpen }) {
             >
               <User size={16} />
               <span className="admin-user-name">
-                Admin User
+                {admin?.name || "Admin"}
               </span>
             </button>
 
             {showAdminDetails && (
               <div className="admin-dropdown">
-                <p><strong>Name:</strong> Super Admin</p>
-                <p><strong>Email:</strong> admin@kalesh.com</p>
-                <p><strong>Role:</strong> Active Admin</p>
+                <p><strong>Name:</strong> {admin?.name || "N/A"}</p>
+                <p><strong>Email:</strong> {admin?.email || "N/A"}</p>
+                <p><strong>Role:</strong> {admin?.role || "N/A"}</p>
               </div>
             )}
           </div>

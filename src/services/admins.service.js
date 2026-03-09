@@ -7,9 +7,7 @@ export class AdminUserService {
    * @returns {Promise<Array<any>>} Resolves with an array of admin objects.
    */
   static async getAllAdmins() {
-    const res = await axiosInstance.get(
-      API_ENDPOINTS.ADMIN.USER.GET_ALL
-    );
+    const res = await axiosInstance.get(API_ENDPOINTS.ADMIN.USER.GET_ALL);
     return res.data;
   }
 
@@ -32,9 +30,7 @@ export class AdminUserService {
    * @returns {Promise<Object>} - Resolves with the admin user object.
    */
   static async getAdminById(id) {
-    const res = await axiosInstance.get(
-      API_ENDPOINTS.ADMIN.USER.GET_BY_ID(id)
-    );
+    const res = await axiosInstance.get(API_ENDPOINTS.ADMIN.USER.GET_BY_ID(id));
     return res.data;
   }
 
@@ -61,6 +57,30 @@ export class AdminUserService {
   static async deleteAdmin(id) {
     const res = await axiosInstance.delete(
       API_ENDPOINTS.ADMIN.USER.DELETE_BY_ID(id)
+    );
+    return res.data;
+  }
+
+  /**
+   * Activates an admin user by its id.
+   * @param {string} id - The id of the admin user to be activated.
+   * @returns {Promise<Object>} - Resolves with the activated admin user object.
+   */
+  static async activateAdmin(id) {
+    const res = await axiosInstance.patch(
+      API_ENDPOINTS.ADMIN.USER.ACTIVATE_BY_ID(id)
+    );
+    return res.data;
+  }
+
+  /**
+   * Disables an admin user by its id.
+   * @param {string} id - The id of the admin user to be disabled.
+   * @returns {Promise<Object>} - Resolves with the disabled admin user object.
+   */
+  static async disableAdmin(id) {
+    const res = await axiosInstance.patch(
+      API_ENDPOINTS.ADMIN.USER.DIACTIVATE_BY_ID(id)
     );
     return res.data;
   }

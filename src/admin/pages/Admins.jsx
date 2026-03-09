@@ -10,10 +10,12 @@ import {
   useCreateAdmin,
   useDeleteAdmin,
   useGetAllAdmins,
+  useDisableAdmin,
+  useActivateAdmin,
 } from "../../hooks/useAdmins";
 
-import "../style/admin.css";               // ✅ Common CSS
-import "../style/AdminManagement.css";    // ✅ Page Specific CSS
+import "../style/admin.css"; // ✅ Common CSS
+import "../style/AdminManagement.css"; // ✅ Page Specific CSS
 
 export default function AdminManagement() {
   /* ================================
@@ -26,18 +28,19 @@ export default function AdminManagement() {
   const { mutate: createAdminAccount, isPending: isCreatingAdmin } =
     useCreateAdmin();
 
-  const { mutate: deleteAdminAccount } =
-    useDeleteAdmin();
+  const { mutate: disableAdminAccount } = useDisableAdmin();
+
+  const { mutate: activateAdminAccount } = useActivateAdmin();
+
+  const { mutate: deleteAdminAccount } = useDeleteAdmin();
 
   /* ================================
      Local State
   ================================= */
 
-  const [isCreateModalOpen, setIsCreateModalOpen] =
-    useState(false);
+  const [isCreateModalOpen, setIsCreateModalOpen] = useState(false);
 
-  const [isPasswordVisible, setIsPasswordVisible] =
-    useState(false);
+  const [isPasswordVisible, setIsPasswordVisible] = useState(false);
 
   /* ================================
      Form Setup
@@ -72,7 +75,17 @@ export default function AdminManagement() {
   ================================= */
 
   const handleDisableAdmin = (adminId) => {
-    deleteAdminAccount(adminId);
+    disableAdminAccount(adminId);
+  };
+
+  const handleActivateAdmin = (adminId) => {
+    activateAdminAccount(adminId);
+  };
+
+  const handleDeleteAdmin = (adminId) => {
+    if (window.confirm("Are you sure you want to delete this admin?")) {
+      deleteAdminAccount(adminId);
+    }
   };
 
   const openCreateAdminModal = () => {
@@ -115,11 +128,7 @@ export default function AdminManagement() {
     {
       key: "status",
       label: "Account Status",
-      render: (status) => (
-        <span className="admin-status-badge">
-          {status}
-        </span>
-      ),
+      render: (status) => <span className="admin-status-badge">{status}</span>,
     },
 
     {
@@ -132,15 +141,34 @@ export default function AdminManagement() {
       key: "actions",
       label: "Actions",
       render: (_, rowData) => (
-        <Button
-          size="sm"
-          variant="danger"
-          onClick={() =>
-            handleDisableAdmin(rowData._id)
-          }
-        >
-          Disable
-        </Button>
+        <div style={{ display: "flex", gap: "8px" }}>
+          {/* Disable */}
+          <Button
+            size="sm"
+            variant="danger"
+            onClick={() => handleDisableAdmin(rowData._id)}
+          >
+            Disable
+          </Button>
+
+          {/* Activate */}
+          <Button
+            size="sm"
+            variant="primary"
+            onClick={() => handleActivateAdmin(rowData._id)}
+          >
+            Activate
+          </Button>
+
+          {/* Delete */}
+          <Button
+            size="sm"
+            variant="danger"
+            onClick={() => handleDeleteAdmin(rowData._id)}
+          >
+            Delete
+          </Button>
+        </div>
       ),
     },
   ];
@@ -152,22 +180,15 @@ export default function AdminManagement() {
   return (
     <div className="admin-section admin-management-page">
       <div className="admin-section-header">
-        <h1 className="admin-page-title">
-          Admin & Role Management
-        </h1>
+        <h1 className="admin-page-title">Admin & Role Management</h1>
 
-        <Button onClick={openCreateAdminModal}>
-          Add Admin
-        </Button>
+        <Button onClick={openCreateAdminModal}>Add Admin</Button>
       </div>
 
       {isAdminLoading ? (
         <div>Loading...</div>
       ) : (
-        <Table
-          columns={adminTableColumns}
-          data={adminResponse?.data || []}
-        />
+        <Table columns={adminTableColumns} data={adminResponse?.data || []} />
       )}
 
       <Modal
@@ -176,12 +197,9 @@ export default function AdminManagement() {
         title="Add New Admin"
       >
         <form onSubmit={handleSubmit(handleCreateAdminSubmit)}>
-
           {/* Admin Name */}
           <div className="admin-form-group">
-            <label className="admin-form-label">
-              Admin Name
-            </label>
+            <label className="admin-form-label">Admin Name</label>
 
             <input
               type="text"
@@ -201,17 +219,14 @@ export default function AdminManagement() {
 
           {/* Email */}
           <div className="admin-form-group">
-            <label className="admin-form-label">
-              Email Address
-            </label>
+            <label className="admin-form-label">Email Address</label>
 
             <input
               type="email"
               {...register("email", {
                 required: "Email is required",
                 pattern: {
-                  value:
-                    /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
+                  value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
                   message: "Invalid email address",
                 },
               })}
@@ -228,9 +243,7 @@ export default function AdminManagement() {
 
           {/* Password */}
           <div className="admin-form-group">
-            <label className="admin-form-label">
-              Password
-            </label>
+            <label className="admin-form-label">Password</label>
 
             <div className="admin-password-wrapper">
               <input
@@ -239,8 +252,7 @@ export default function AdminManagement() {
                   required: "Password is required",
                   minLength: {
                     value: 6,
-                    message:
-                      "Password must be at least 6 characters",
+                    message: "Password must be at least 6 characters",
                   },
                 })}
                 className="admin-form-input admin-password-input"
@@ -249,15 +261,9 @@ export default function AdminManagement() {
 
               <span
                 className="admin-password-toggle"
-                onClick={() =>
-                  setIsPasswordVisible(!isPasswordVisible)
-                }
+                onClick={() => setIsPasswordVisible(!isPasswordVisible)}
               >
-                {isPasswordVisible ? (
-                  <EyeOff size={18} />
-                ) : (
-                  <Eye size={18} />
-                )}
+                {isPasswordVisible ? <EyeOff size={18} /> : <Eye size={18} />}
               </span>
             </div>
 
@@ -270,9 +276,7 @@ export default function AdminManagement() {
 
           {/* Role */}
           <div className="admin-form-group">
-            <label className="admin-form-label">
-              Role
-            </label>
+            <label className="admin-form-label">Role</label>
 
             <select
               {...register("role", {
@@ -280,27 +284,15 @@ export default function AdminManagement() {
               })}
               className="admin-form-select"
             >
-              <option value="moderator">
-                moderator
-              </option>
-              <option value="support">
-                support
-              </option>
-              <option value="admin">
-                admin
-              </option>
+              <option value="moderator">moderator</option>
+              <option value="support">support</option>
+              <option value="admin">admin</option>
             </select>
           </div>
 
           {/* Submit */}
-          <Button
-            type="submit"
-            className="w-full"
-            disabled={isCreatingAdmin}
-          >
-            {isCreatingAdmin
-              ? "Adding..."
-              : "Add Admin"}
+          <Button type="submit" className="w-full" disabled={isCreatingAdmin}>
+            {isCreatingAdmin ? "Adding..." : "Add Admin"}
           </Button>
         </form>
       </Modal>
