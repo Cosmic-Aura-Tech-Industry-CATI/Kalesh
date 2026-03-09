@@ -10,7 +10,6 @@
   border-radius: 30px;
 }
 
-
 .career-form-title {
   font-size: clamp(2rem, 5vw, 3.5rem);
   font-weight: 800;
@@ -142,8 +141,6 @@
   }
 }
 
-
-
 /* =========================
    SOCIAL FOLLOW SECTION
 ========================= */
@@ -181,10 +178,18 @@
 }
 
 /* BRAND COLORS ON HOVER */
-.social-icons a:nth-child(1):hover { color: #eb6c6c; }      /* X */
-.social-icons a:nth-child(2):hover { color: #1877f2; }      /* Facebook */
-.social-icons a:nth-child(3):hover { color: #e1306c; }      /* Instagram */
-.social-icons a:nth-child(4):hover { color: #0a66c2; }      /* LinkedIn */
+.social-icons a:nth-child(1):hover {
+  color: #eb6c6c;
+} /* X */
+.social-icons a:nth-child(2):hover {
+  color: #1877f2;
+} /* Facebook */
+.social-icons a:nth-child(3):hover {
+  color: #e1306c;
+} /* Instagram */
+.social-icons a:nth-child(4):hover {
+  color: #0a66c2;
+} /* LinkedIn */
 
 /* MOBILE */
 @media (max-width: 768px) {
@@ -202,17 +207,17 @@
   }
 }
 
-
 /* Golden-Orange Form Styles */
 .golden-orange-form-container {
-  background: linear-gradient(145deg, 
+  background: linear-gradient(
+    145deg,
     rgba(25, 25, 25, 0.95),
     rgba(20, 20, 20, 0.98)
   );
   border-radius: 20px;
   padding: 3rem;
   position: relative;
-  box-shadow: 
+  box-shadow:
     0 15px 50px rgba(255, 106, 0, 0.15),
     0 5px 20px rgba(0, 0, 0, 0.4),
     inset 0 1px 0 rgba(255, 255, 255, 0.1);
@@ -223,7 +228,7 @@
 }
 
 .golden-orange-form-container::before {
-  content: '';
+  content: "";
   position: absolute;
   top: 0;
   left: 0;
@@ -246,11 +251,12 @@
   transform: translateX(-50%);
   height: 3px;
   width: 200px;
-  background: linear-gradient(90deg,
+  background: linear-gradient(
+    90deg,
     transparent,
-    #FFD700,
+    #ffd700,
     #ff6a00,
-    #FFD700,
+    #ffd700,
     transparent
   );
   border-radius: 3px;
@@ -279,7 +285,7 @@
 }
 
 .label-icon {
-  color: #FFD700;
+  color: #ffd700;
   font-size: 1rem;
 }
 
@@ -304,7 +310,7 @@
   font-size: 1rem;
   font-weight: 500;
   transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-  box-shadow: 
+  box-shadow:
     inset 0 2px 10px rgba(0, 0, 0, 0.2),
     0 4px 20px rgba(0, 0, 0, 0.1);
 }
@@ -312,7 +318,7 @@
 .golden-orange-input:focus {
   outline: none;
   border-color: #ff6a00;
-  box-shadow: 
+  box-shadow:
     0 0 0 4px rgba(255, 106, 0, 0.15),
     0 0 30px rgba(255, 106, 0, 0.2),
     inset 0 2px 10px rgba(0, 0, 0, 0.3);
@@ -332,7 +338,7 @@
 .golden-input-icon {
   position: absolute;
   left: 1.2rem;
-  color: #FFD700;
+  color: #ffd700;
   font-size: 1.2rem;
   text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
   transition: all 0.3s ease;
@@ -373,7 +379,7 @@
   );
   border-color: #ff6a00;
   transform: translateY(-3px);
-  box-shadow: 
+  box-shadow:
     0 10px 30px rgba(255, 106, 0, 0.2),
     0 5px 15px rgba(0, 0, 0, 0.2);
 }
@@ -384,11 +390,7 @@
   left: -2px;
   right: -2px;
   bottom: -2px;
-  background: linear-gradient(45deg,
-    #FFD700,
-    #ff6a00,
-    #FFD700
-  );
+  background: linear-gradient(45deg, #ffd700, #ff6a00, #ffd700);
   border-radius: 17px;
   z-index: -1;
   opacity: 0;
@@ -408,7 +410,7 @@
 
 .file-upload-icon {
   font-size: 2.5rem;
-  background: linear-gradient(45deg, #FFD700, #ff6a00);
+  background: linear-gradient(45deg, #ffd700, #ff6a00);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
@@ -420,7 +422,7 @@
   color: #fff;
   font-weight: 700;
   font-size: 1.1rem;
-  background: linear-gradient(45deg, #FFD700, #ff6a00);
+  background: linear-gradient(45deg, #ffd700, #ff6a00);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
@@ -439,11 +441,12 @@
 
 /* Submit Button */
 .golden-orange-submit-btn {
-  background: linear-gradient(45deg, 
+  background: linear-gradient(
+    45deg,
     #ff6a00 0%,
-    #FF8C00 25%,
-    #FFD700 50%,
-    #FF8C00 75%,
+    #ff8c00 25%,
+    #ffd700 50%,
+    #ff8c00 75%,
     #ff6a00 100%
   );
   background-size: 300% 300%;
@@ -464,14 +467,15 @@
   overflow: hidden;
   letter-spacing: 1.5px;
   text-transform: uppercase;
-  box-shadow: 
+  box-shadow:
     0 10px 30px rgba(255, 106, 0, 0.3),
     0 5px 15px rgba(0, 0, 0, 0.3);
   animation: gradientShift 3s ease infinite;
 }
 
 @keyframes gradientShift {
-  0%, 100% {
+  0%,
+  100% {
     background-position: 0% 50%;
   }
   50% {
@@ -496,7 +500,7 @@
 
 .golden-orange-submit-btn:hover {
   transform: translateY(-5px) scale(1.02);
-  box-shadow: 
+  box-shadow:
     0 15px 40px rgba(255, 106, 0, 0.4),
     0 10px 25px rgba(0, 0, 0, 0.4),
     0 0 50px rgba(255, 215, 0, 0.3);
@@ -527,7 +531,6 @@
   transform: translateX(8px);
 }
 
-
 /* Warning Text */
 .career-warning {
   color: #ff6a00;
@@ -557,22 +560,21 @@
     padding: 1.5rem;
     margin: 0 1rem;
   }
-  
+
   .golden-orange-submit-btn {
     width: 100%;
     padding: 1.2rem 2rem;
   }
-  
+
   .file-upload-label {
     padding: 1.5rem;
   }
-  
+
   .form-decoration-top,
   .form-decoration-bottom {
     width: 100px;
   }
 }
-
 
 /* =========================
    CAREERS PAGE THEME
@@ -584,7 +586,6 @@
 }
 
 /* TOP TITLE */
-
 
 .careers-title {
   font-size: clamp(2rem, 5vw, 3.5rem);
@@ -606,7 +607,6 @@
   animation: gradientFlow 8s ease infinite;
   letter-spacing: -0.5px;
 }
-
 
 /* LEFT CONTENT */
 
@@ -642,7 +642,7 @@
 /* IMAGE */
 .careers-image {
   max-width: 420px;
-  
+
   border-radius: 18px;
   box-shadow: 0 0 25px rgba(255, 106, 0, 0.6);
 }
@@ -665,8 +665,6 @@
     max-width: 280px;
   }
 }
-
-
 
 /* =========================
    CAREER QUOTE SECTION
@@ -758,20 +756,17 @@
   }
 }
 
-
-
-
-
 /* Golden-Orange Form Styles */
 .golden-orange-form-container {
-  background: linear-gradient(145deg, 
+  background: linear-gradient(
+    145deg,
     rgba(25, 25, 25, 0.95),
     rgba(20, 20, 20, 0.98)
   );
   border-radius: 20px;
   padding: 3rem;
   position: relative;
-  box-shadow: 
+  box-shadow:
     0 15px 50px rgba(255, 106, 0, 0.15),
     0 5px 20px rgba(0, 0, 0, 0.4),
     inset 0 1px 0 rgba(255, 255, 255, 0.1);
@@ -782,7 +777,7 @@
 }
 
 .golden-orange-form-container::before {
-  content: '';
+  content: "";
   position: absolute;
   top: 0;
   left: 0;
@@ -805,11 +800,12 @@
   transform: translateX(-50%);
   height: 3px;
   width: 200px;
-  background: linear-gradient(90deg,
+  background: linear-gradient(
+    90deg,
     transparent,
-    #FFD700,
+    #ffd700,
     #ff6a00,
-    #FFD700,
+    #ffd700,
     transparent
   );
   border-radius: 3px;
@@ -838,7 +834,7 @@
 }
 
 .label-icon {
-  color: #FFD700;
+  color: #ffd700;
   font-size: 1rem;
 }
 
@@ -863,7 +859,7 @@
   font-size: 1rem;
   font-weight: 500;
   transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-  box-shadow: 
+  box-shadow:
     inset 0 2px 10px rgba(0, 0, 0, 0.2),
     0 4px 20px rgba(0, 0, 0, 0.1);
 }
@@ -871,7 +867,7 @@
 .golden-orange-input:focus {
   outline: none;
   border-color: #ff6a00;
-  box-shadow: 
+  box-shadow:
     0 0 0 4px rgba(255, 106, 0, 0.15),
     0 0 30px rgba(255, 106, 0, 0.2),
     inset 0 2px 10px rgba(0, 0, 0, 0.3);
@@ -891,7 +887,7 @@
 .golden-input-icon {
   position: absolute;
   left: 1.2rem;
-  color: #FFD700;
+  color: #ffd700;
   font-size: 1.2rem;
   text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
   transition: all 0.3s ease;
@@ -932,7 +928,7 @@
   );
   border-color: #ff6a00;
   transform: translateY(-3px);
-  box-shadow: 
+  box-shadow:
     0 10px 30px rgba(255, 106, 0, 0.2),
     0 5px 15px rgba(0, 0, 0, 0.2);
 }
@@ -943,11 +939,7 @@
   left: -2px;
   right: -2px;
   bottom: -2px;
-  background: linear-gradient(45deg,
-    #FFD700,
-    #ff6a00,
-    #FFD700
-  );
+  background: linear-gradient(45deg, #ffd700, #ff6a00, #ffd700);
   border-radius: 17px;
   z-index: -1;
   opacity: 0;
@@ -967,7 +959,7 @@
 
 .file-upload-icon {
   font-size: 2.5rem;
-  background: linear-gradient(45deg, #FFD700, #ff6a00);
+  background: linear-gradient(45deg, #ffd700, #ff6a00);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
@@ -979,7 +971,7 @@
   color: #fff;
   font-weight: 700;
   font-size: 1.1rem;
-  background: linear-gradient(45deg, #FFD700, #ff6a00);
+  background: linear-gradient(45deg, #ffd700, #ff6a00);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
@@ -998,11 +990,12 @@
 
 /* Submit Button */
 .golden-orange-submit-btn {
-  background: linear-gradient(45deg, 
+  background: linear-gradient(
+    45deg,
     #ff6a00 0%,
-    #FF8C00 25%,
-    #FFD700 50%,
-    #FF8C00 75%,
+    #ff8c00 25%,
+    #ffd700 50%,
+    #ff8c00 75%,
     #ff6a00 100%
   );
   background-size: 300% 300%;
@@ -1023,14 +1016,15 @@
   overflow: hidden;
   letter-spacing: 1.5px;
   text-transform: uppercase;
-  box-shadow: 
+  box-shadow:
     0 10px 30px rgba(255, 106, 0, 0.3),
     0 5px 15px rgba(0, 0, 0, 0.3);
   animation: gradientShift 3s ease infinite;
 }
 
 @keyframes gradientShift {
-  0%, 100% {
+  0%,
+  100% {
     background-position: 0% 50%;
   }
   50% {
@@ -1055,7 +1049,7 @@
 
 .golden-orange-submit-btn:hover {
   transform: translateY(-5px) scale(1.02);
-  box-shadow: 
+  box-shadow:
     0 15px 40px rgba(255, 106, 0, 0.4),
     0 10px 25px rgba(0, 0, 0, 0.4),
     0 0 50px rgba(255, 215, 0, 0.3);
@@ -1086,7 +1080,6 @@
   transform: translateX(8px);
 }
 
-
 /* Warning Text */
 .career-warning {
   color: #ff6a00;
@@ -1116,22 +1109,21 @@
     padding: 1.5rem;
     margin: 0 1rem;
   }
-  
+
   .golden-orange-submit-btn {
     width: 100%;
     padding: 1.2rem 2rem;
   }
-  
+
   .file-upload-label {
     padding: 1.5rem;
   }
-  
+
   .form-decoration-top,
   .form-decoration-bottom {
     width: 100px;
   }
 }
-
 
 /* resume file changes  */
 
@@ -1142,7 +1134,11 @@
   gap: 12px;
   margin-top: 10px;
   padding: 12px 16px;
-  background: linear-gradient(135deg, rgba(255,215,0,0.1) 0%, rgba(255,140,0,0.1) 100%);
+  background: linear-gradient(
+    135deg,
+    rgba(255, 215, 0, 0.1) 0%,
+    rgba(255, 140, 0, 0.1) 100%
+  );
   border-radius: 8px;
   color: #b8860b;
   font-size: 14px;
@@ -1158,20 +1154,20 @@
 }
 
 .file-info i {
-  color: #4CAF50;
+  color: #4caf50;
   font-size: 16px;
 }
 
 .file-name {
   font-weight: 500;
-  color: #8B4513;
+  color: #8b4513;
   word-break: break-all;
 }
 
 .file-size {
   font-size: 12px;
   color: #b8860b;
-  background: rgba(255,215,0,0.3);
+  background: rgba(255, 215, 0, 0.3);
   padding: 2px 8px;
   border-radius: 12px;
 }
@@ -1199,7 +1195,7 @@
 .file-remove-btn:hover {
   background: #c82333;
   transform: translateY(-2px);
-  box-shadow: 0 4px 8px rgba(220,53,69,0.3);
+  box-shadow: 0 4px 8px rgba(220, 53, 69, 0.3);
 }
 
 .file-remove-btn:active {
@@ -1243,7 +1239,8 @@
 }
 
 .popup-content {
-  background: linear-gradient(145deg, 
+  background: linear-gradient(
+    145deg,
     rgba(25, 25, 25, 0.98),
     rgba(20, 20, 20, 0.99)
   );
@@ -1255,7 +1252,7 @@
   position: relative;
   border: 2px solid transparent;
   background-clip: padding-box;
-  box-shadow: 
+  box-shadow:
     0 30px 60px rgba(255, 106, 0, 0.3),
     0 10px 30px rgba(0, 0, 0, 0.5),
     inset 0 1px 0 rgba(255, 255, 255, 0.1);
@@ -1264,17 +1261,18 @@
 }
 
 .popup-content::before {
-  content: '';
+  content: "";
   position: absolute;
   top: -2px;
   left: -2px;
   right: -2px;
   bottom: -2px;
-  background: linear-gradient(45deg, 
+  background: linear-gradient(
+    45deg,
     #ff6a00,
-    #FFD700,
+    #ffd700,
     #ff6a00,
-    #FFD700,
+    #ffd700,
     #ff6a00
   );
   border-radius: 32px;
@@ -1284,7 +1282,8 @@
 }
 
 @keyframes borderGlow {
-  0%, 100% {
+  0%,
+  100% {
     background-position: 0% 50%;
   }
   50% {
@@ -1295,7 +1294,8 @@
 .popup-icon {
   width: 90px;
   height: 90px;
-  background: linear-gradient(135deg, 
+  background: linear-gradient(
+    135deg,
     rgba(255, 106, 0, 0.2),
     rgba(255, 215, 0, 0.2)
   );
@@ -1305,9 +1305,9 @@
   justify-content: center;
   margin: 0 auto 1.8rem;
   font-size: 3.5rem;
-  color: #FFD700;
+  color: #ffd700;
   border: 3px solid rgba(255, 106, 0, 0.3);
-  box-shadow: 
+  box-shadow:
     0 0 0 4px rgba(255, 106, 0, 0.1),
     0 15px 30px rgba(0, 0, 0, 0.3),
     inset 0 2px 4px rgba(255, 255, 255, 0.1);
@@ -1316,15 +1316,18 @@
 }
 
 @keyframes pulseIcon {
-  0%, 100% {
+  0%,
+  100% {
     transform: scale(1);
-    box-shadow: 0 0 0 4px rgba(255, 106, 0, 0.1),
-                0 15px 30px rgba(0, 0, 0, 0.3);
+    box-shadow:
+      0 0 0 4px rgba(255, 106, 0, 0.1),
+      0 15px 30px rgba(0, 0, 0, 0.3);
   }
   50% {
     transform: scale(1.05);
-    box-shadow: 0 0 0 8px rgba(255, 106, 0, 0.2),
-                0 20px 40px rgba(0, 0, 0, 0.4);
+    box-shadow:
+      0 0 0 8px rgba(255, 106, 0, 0.2),
+      0 20px 40px rgba(0, 0, 0, 0.4);
   }
 }
 
@@ -1358,11 +1361,12 @@
 }
 
 .popup-close-btn {
-  background: linear-gradient(45deg, 
+  background: linear-gradient(
+    45deg,
     #ff6a00 0%,
-    #FF8C00 25%,
-    #FFD700 50%,
-    #FF8C00 75%,
+    #ff8c00 25%,
+    #ffd700 50%,
+    #ff8c00 75%,
     #ff6a00 100%
   );
   background-size: 300% 300%;
@@ -1378,7 +1382,7 @@
   overflow: hidden;
   letter-spacing: 1px;
   text-transform: uppercase;
-  box-shadow: 
+  box-shadow:
     0 10px 25px rgba(255, 106, 0, 0.3),
     0 5px 10px rgba(0, 0, 0, 0.2);
   animation: gradientShift 3s ease infinite;
@@ -1389,7 +1393,7 @@
 
 .popup-close-btn:hover {
   transform: translateY(-3px) scale(1.02);
-  box-shadow: 
+  box-shadow:
     0 15px 35px rgba(255, 106, 0, 0.4),
     0 10px 20px rgba(0, 0, 0, 0.3),
     0 0 30px rgba(255, 215, 0, 0.2);
@@ -1400,7 +1404,7 @@
 }
 
 .popup-close-btn::before {
-  content: '';
+  content: "";
   position: absolute;
   top: -50%;
   left: -50%;
@@ -1421,17 +1425,18 @@
 
 /* Decorative elements */
 .popup-content::after {
-  content: '';
+  content: "";
   position: absolute;
   top: 10px;
   left: 10px;
   right: 10px;
   height: 3px;
-  background: linear-gradient(90deg,
+  background: linear-gradient(
+    90deg,
     transparent,
-    #FFD700,
+    #ffd700,
     #ff6a00,
-    #FFD700,
+    #ffd700,
     transparent
   );
   border-radius: 3px;
@@ -1460,7 +1465,8 @@
 }
 
 @keyframes gradientFlow {
-  0%, 100% {
+  0%,
+  100% {
     background-position: 0% 50%;
   }
   50% {
@@ -1469,7 +1475,8 @@
 }
 
 @keyframes gradientShift {
-  0%, 100% {
+  0%,
+  100% {
     background-position: 0% 50%;
   }
   50% {
@@ -1512,7 +1519,7 @@
   position: absolute;
   width: 4px;
   height: 4px;
-  background: #FFD700;
+  background: #ffd700;
   border-radius: 50%;
   opacity: 0.3;
 }
@@ -1537,7 +1544,6 @@
     font-size: 0.95rem;
   }
 }
-
 
 /* =========================
    RECENT OPENINGS SECTION
@@ -1707,8 +1713,9 @@
   }
 
   .job-card {
-    padding: 18px;
-    border-radius: 16px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
   }
 
   .job-title {
@@ -1744,11 +1751,21 @@
   }
 
   .job-badge {
-    width: auto;
-    border-radius: 6px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    padding: 4px 12px;
     font-size: 12px;
-    padding: 5px 12px;
-    display: inline-block;
+    font-weight: 600;
+
+    background: linear-gradient(135deg, #ff7a00, #ff4b00);
+    color: #fff;
+
+    border-radius: 6px;
+
+    width: auto;
+    max-width: max-content;
   }
 
   .job-title {
@@ -1758,4 +1775,24 @@
   .job-card p {
     font-size: 1.09rem;
   }
+}
+
+.job-card {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.job-card-content {
+  flex-grow: 1;
+}
+
+.job-card button {
+  margin-top: auto;
+}
+
+
+
+.job-badge-wrapper{
+  width:auto;
 }
