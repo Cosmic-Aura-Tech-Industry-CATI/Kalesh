@@ -2,7 +2,7 @@ import { useForm } from "react-hook-form";
 import { useState } from "react";
 import { LogIn } from "lucide-react";
 import Button from "../components/Button";
-import { useLogin } from "../../hooks/useAuth";
+import { useLogin, useVerifyOtp } from "../../hooks/useAuth";
 import "../style/admin.css";
 import "../style/login.css";
 
@@ -21,29 +21,18 @@ export default function Login() {
     mutate: login,
     isPending,
     error,
-  } = useLogin({
-    onSuccess: (data, variables) => {
-      setEmailForOtp(variables.email);
-      setShowOtp(true); // OTP modal open
-    },
-  });
+  } = useLogin();
+
+  const { mutate: verifyOtp, isPending: isVerifyingOtp } = useVerifyOtp();
 
   const onSubmit = (data) => {
+    login(data);
     setEmailForOtp(data.email);
     setShowOtp(true);
   };
 
   const handleVerifyOtp = async () => {
-    try {
-      await verifyOtp({
-        email: emailForOtp,
-        otp: otp,
-      });
-
-      window.location.href = "/admin";
-    } catch (err) {
-      alert("Invalid OTP");
-    }
+    verifyOtp({ email: emailForOtp, otp });
   };
 
   return (
@@ -126,8 +115,12 @@ export default function Login() {
                 className="otp-popup-input"
               />
 
-              <button onClick={handleVerifyOtp} className="otp-popup-button">
-                Verify OTP
+              <button
+                onClick={handleVerifyOtp}
+                className="otp-popup-button"
+                disabled={isVerifyingOtp}
+              >
+                {isVerifyingOtp ? "Verifying..." : "Verify OTP"}
               </button>
             </div>
           </div>
