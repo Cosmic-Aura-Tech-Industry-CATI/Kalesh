@@ -90,7 +90,6 @@ export default function Login() {
               size="lg"
               disabled={isPending}
             >
-              <LogIn size={18} />
               Sign In
             </Button>
           </form>
