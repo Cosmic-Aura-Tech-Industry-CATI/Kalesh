@@ -1,24 +1,54 @@
 import { useForm } from "react-hook-form";
+import { useState } from "react";
 import { LogIn } from "lucide-react";
 import Button from "../components/Button";
-import { useLogin } from "../../hooks/useAuth";
+import { useLogin, verifyOtp } from "../../hooks/useAuth";
 import "../style/admin.css";
 import "../style/login.css";
 
 export default function Login() {
+  const [showOtp, setShowOtp] = useState(false);
+  const [otp, setOtp] = useState("");
+  const [emailForOtp, setEmailForOtp] = useState("");
+
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm();
-  const { mutate: login, isPending, error } = useLogin();
 
-  const onSubmit = (data) => login(data);
+  const {
+    mutate: login,
+    isPending,
+    error,
+  } = useLogin({
+    onSuccess: (data, variables) => {
+      setEmailForOtp(variables.email);
+      setShowOtp(true); // OTP modal open
+    },
+  });
+
+  const onSubmit = (data) => {
+    login(data);
+  };
+
+  const handleVerifyOtp = async () => {
+    try {
+      await verifyOtp({
+        email: emailForOtp,
+        otp: otp,
+      });
+
+      window.location.href = "/admin";
+    } catch (err) {
+      alert("Invalid OTP");
+    }
+  };
 
   return (
     <div className="admin-login-page">
       <div className="admin-login-container">
-        {/* Logo Section */}
+        {/* HEADER */}
         <div className="admin-login-header">
           <div className="admin-login-logo-wrapper">
             <img
@@ -28,45 +58,30 @@ export default function Login() {
             />
           </div>
 
-          <div className="admin-login-title-wrapper">
-            <h1 className="admin-login-title">Kalesh Admin Panel</h1>
-          </div>
+          <h1 className="admin-login-title">Kalesh Admin Panel</h1>
 
           <p className="admin-login-subtitle">
             Sign in to access the admin panel
           </p>
         </div>
 
-        {/* Form Card */}
+        {/* LOGIN CARD */}
         <div className="admin-login-card">
           <form onSubmit={handleSubmit(onSubmit)} className="admin-login-form">
             {error && (
               <div className="text-red-500 text-sm text-center mb-4">
-                {error?.response?.data?.message ||
-                  "Login failed. Please check your credentials."}
+                {error?.response?.data?.message || "Login failed"}
               </div>
             )}
 
             <div className="admin-form-group">
-              <label className="admin-form-label">Email Address</label>
+              <label className="admin-form-label">Email</label>
 
               <input
                 type="email"
-                {...register("email", {
-                  required: "Email is required",
-                  pattern: {
-                    value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
-                    message: "Invalid email address",
-                  },
-                })}
+                {...register("email", { required: true })}
                 className="admin-form-input"
-                placeholder="admin@kalesh.com"
               />
-              {errors.email && (
-                <span className="text-red-500 text-xs mt-1">
-                  {errors.email.message}
-                </span>
-              )}
             </div>
 
             <div className="admin-form-group">
@@ -74,15 +89,9 @@ export default function Login() {
 
               <input
                 type="password"
-                {...register("password", { required: "Password is required" })}
+                {...register("password", { required: true })}
                 className="admin-form-input"
-                placeholder="Enter your password"
               />
-              {errors.password && (
-                <span className="text-red-500 text-xs mt-1">
-                  {errors.password.message}
-                </span>
-              )}
             </div>
 
             <Button
@@ -91,19 +100,37 @@ export default function Login() {
               size="lg"
               disabled={isPending}
             >
-              <div className="admin-login-button-content">
-                {isPending ? (
-                  <span>Signing in...</span>
-                ) : (
-                  <>
-                    <LogIn size={18} />
-                    <span>Sign In</span>
-                  </>
-                )}
-              </div>
+              <LogIn size={18} />
+              Sign In
             </Button>
           </form>
         </div>
+
+        {/* OTP POPUP */}
+        {showOtp && (
+          <div className="otp-popup-overlay">
+            <div className="otp-popup-card">
+              <h3 className="otp-popup-title">Enter Verification Code</h3>
+
+              <p className="otp-popup-subtitle">
+                We sent a 6 digit OTP to your email
+              </p>
+
+              <input
+                type="text"
+                maxLength="6"
+                value={otp}
+                onChange={(e) => setOtp(e.target.value)}
+                placeholder="------"
+                className="otp-popup-input"
+              />
+
+              <button onClick={handleVerifyOtp} className="otp-popup-button">
+                Verify OTP
+              </button>
+            </div>
+          </div>
+        )}
       </div>
     </div>
   );
