@@ -2,7 +2,7 @@ import { useForm } from "react-hook-form";
 import { useState } from "react";
 import { LogIn } from "lucide-react";
 import Button from "../components/Button";
-import { useLogin, verifyOtp } from "../../hooks/useAuth";
+import { useLogin } from "../../hooks/useAuth";
 import "../style/admin.css";
 import "../style/login.css";
 
@@ -29,7 +29,8 @@ export default function Login() {
   });
 
   const onSubmit = (data) => {
-    login(data);
+    setEmailForOtp(data.email);
+    setShowOtp(true);
   };
 
   const handleVerifyOtp = async () => {
