@@ -7,14 +7,17 @@ import {
   useDeleteJob,
   useUpdateJob,
 } from "../../hooks/useJobs";
-// import { useGetApplicationsByJobId } from "../../hooks/useApplication";
-// import {
-//   useAcceptApplication,
-//   useRejectApplication,
-// } from "../../hooks/useApplication";
+import { useGetApplicationsByJobId } from "../../hooks/useApplication";
 import "../style/admin.css";
 import "../style/adminJobs.css";
 import ApplicationTable from "../components/ApplicationTable";
+
+const JobApplicationCount = ({ jobId }) => {
+  const { data, isLoading } = useGetApplicationsByJobId(jobId);
+  if (isLoading) return <span className="text-gray-400 text-xs">...</span>;
+  const count = data?.results || data?.applications?.length || 0;
+  return <span>{count}</span>;
+};
 
 export default function JobsPosting() {
   const { data: jobsData, isLoading } = useGetAllJobs();
@@ -22,9 +25,6 @@ export default function JobsPosting() {
   const { mutate: updateJob, isPending: isUpdating } = useUpdateJob();
   const { mutate: deleteJob } = useDeleteJob();
 
-  // // 👇 YAHAN ADD KARO
-  // const { mutate: acceptApplication } = useAcceptApplication();
-  // const { mutate: rejectApplication } = useRejectApplication();
 
   const jobs = jobsData?.data || [];
 
@@ -311,7 +311,9 @@ export default function JobsPosting() {
                         : job.skill}
                     </td>
                     <td>{job.experience}</td>
-                    <td>{job.applicants?.length || 0}</td>
+                    <td>
+                      <JobApplicationCount jobId={job._id || job.id} />
+                    </td>
 
                     <td className="flex gap-2">
                       {/* EDIT */}

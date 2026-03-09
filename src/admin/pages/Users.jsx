@@ -1,11 +1,10 @@
-import { useState } from 'react';
 import Table from '../components/Table';
 import Button from '../components/Button';
-import { mockUsers } from '../data/mockData';
+import { useGetAllAppUsers } from '../../hooks/useAppUsers';
 import '../style/admin.css';
 
 export default function Users() {
-  const [users] = useState(mockUsers);
+  const { data: users = [] } = useGetAllAppUsers();
 
   const handleWarn = (userId) => {
     alert(`Warning sent to user ${userId}`);
@@ -77,7 +76,7 @@ export default function Users() {
         </div>
       </div>
 
-      <Table columns={columns} data={users} />
+      <Table columns={columns} data={users.data} />
     </div>
   );
 }
