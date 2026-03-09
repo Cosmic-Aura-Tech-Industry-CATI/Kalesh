@@ -44,5 +44,9 @@ export const API_ENDPOINTS = {
       DIACTIVATE_BY_ID: (id) => `/admin-panel/users/${id}/deactivate`,
       ACTIVATE_BY_ID: (id) => `/admin-panel/users/${id}/activate`,
     },
+    
+    APP_USER:{
+      GET_ALL: "/admin-panel/app-users",
+    }
   },
 };
