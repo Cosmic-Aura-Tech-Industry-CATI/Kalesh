@@ -4,7 +4,7 @@ import { useGetAllAppUsers } from '../../hooks/useAppUsers';
 import '../style/admin.css';
 
 export default function Users() {
-  const { data: users = [] } = useGetAllAppUsers();
+  const { data: users = [], isLoading  } = useGetAllAppUsers();
 
   const handleWarn = (userId) => {
     alert(`Warning sent to user ${userId}`);
@@ -17,6 +17,7 @@ export default function Users() {
   const handlePermaBan = (userId) => {
     alert(`User ${userId} permanently banned`);
   };
+
 
   const columns = [
     { key: 'name', label: 'Name' },
@@ -66,6 +67,19 @@ export default function Users() {
       ),
     },
   ];
+
+  if (isLoading) {
+    return (
+      <div className="admin-section">
+        <div className="admin-section-header">
+          <h1 className="admin-page-title">User Management</h1>
+          <div className="text-xs sm:text-sm text-gray-400">
+            Loading...
+          </div>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="admin-section">
