@@ -228,6 +228,8 @@
 
   .admin-modal-body {
     @apply px-6 py-4;
+    max-height: 60vh;
+    overflow-y: auto;
   }
 
   .admin-modal-footer {
@@ -297,7 +299,6 @@
 .admin-sidebar--collapsed .admin-sidebar-item {
   justify-content: center;
 }
-
 
 /*===== common padding for all pages =====*/
 .admin-section {
