@@ -44,13 +44,10 @@ export default function JobDetails() {
 
     createApplication(formData, {
       onSuccess: () => {
-        alert("Application submitted successfully!");
         reset();
         setShowApplicationForm(false);
       },
-      onError: (err) => {
-        alert(err.response?.data?.message || "Submission failed");
-      },
+      
     });
   };
 

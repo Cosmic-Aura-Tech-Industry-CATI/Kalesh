@@ -5,6 +5,7 @@ import {
   useGetApplicationByToken,
   useUpdateApplication,
 } from "../hooks/useApplication";
+import { toastWarning } from "../lib/toast";
 
 export default function ApplicationDetails() {
   const { token } = useParams();
@@ -21,7 +22,7 @@ export default function ApplicationDetails() {
     e.preventDefault();
 
     if (!resumeFile) {
-      alert("Please select resume file");
+      toastWarning("Please select resume file");
       return;
     }
 
@@ -32,7 +33,6 @@ export default function ApplicationDetails() {
       { token, payload: formData },
       {
         onSuccess: () => {
-          alert("Resume Updated Successfully ✅");
           refetch();
         },
       }

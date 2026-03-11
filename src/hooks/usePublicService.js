@@ -1,6 +1,6 @@
 import { useMutation } from "@tanstack/react-query";
 import { PublicService } from "../services/public.service";
-// import toast from "react-hot-toast";
+import { toastError, toastSuccess } from "../lib/toast";
 
 /**
  * Create Application Hook
@@ -8,15 +8,25 @@ import { PublicService } from "../services/public.service";
 export const useCreateApplication = () => {
   return useMutation({
     mutationFn: PublicService.createApplication,
+    /**
+     * Called when the application submission is successful.
+     * Displays a success toast message.
+     */
     onSuccess: () => {
-        console.log("Application submitted successfully");
-        // toast.success("Application submitted successfully");
+      toastSuccess("Application submitted successfully");
     },
+    /**
+     * Called when the application submission fails.
+     * Logs the error to the console and displays an error toast message.
+     * The toast message will be the error message from the server response, or a generic
+     * error message if no response is available.
+     * @param {Object} err - The error object returned from the API.
+     */
     onError: (err) => {
-        console.error("Error submitting application:", err);
-        // toast.error(
-        //   err?.response?.data?.message || "Failed to submit application"
-        // );
+      console.error("Error submitting application:", err);
+      toastError(
+        err?.response?.data?.message || "Failed to submit application"
+      );
     },
   });
 };
@@ -27,15 +37,23 @@ export const useCreateApplication = () => {
 export const useCreatePromotion = () => {
   return useMutation({
     mutationFn: PublicService.createPromotion,
+    /**
+     * Called when the promotion submission is successful.
+     * Displays a success toast message indicating that the promotion was submitted successfully.
+     */
     onSuccess: () => {
-        console.log("Promotion submitted successfully");
-        // toast.success("Promotion submitted successfully");
+      toastSuccess("Promotion submitted successfully");
     },
+    /**
+     * Called when the promotion submission fails.
+     * Logs the error to the console and displays an error toast message.
+     * The toast message will be the error message from the server response, or a generic
+     * error message if no response is available.
+     * @param {Object} err - The error object returned from the API.
+     */
     onError: (err) => {
-        console.error("Error submitting promotion:", err);
-    //   toast.error(
-    //     err?.response?.data?.message || "Failed to submit promotion"
-    //   );
+      console.error("Error submitting promotion:", err);
+      toastError(err?.response?.data?.message || "Failed to submit promotion");
     },
   });
 };
@@ -46,15 +64,23 @@ export const useCreatePromotion = () => {
 export const useCreateContact = () => {
   return useMutation({
     mutationFn: PublicService.createContact,
+    /**
+     * Called when the contact submission is successful.
+     * Displays a success toast message indicating that the message was sent successfully.
+     */
     onSuccess: () => {
-    //   toast.success("Message sent successfully");
-        console.log("Contact submitted successfully");
+      toastSuccess("Message sent successfully");
     },
+    /**
+     * Called when the contact submission fails.
+     * Logs the error to the console and displays an error toast message.
+     * The toast message will be the error message from the server response, or a generic
+     * error message if no response is available.
+     * @param {Object} err - The error object returned from the API.
+     */
     onError: (err) => {
-        console.error("Error submitting contact:", err);
-    //   toast.error(
-    //     err?.response?.data?.message || "Failed to send message"
-    //   );
+      console.error("Error submitting contact:", err);
+      toastError(err?.response?.data?.message || "Failed to send message");
     },
   });
 };
@@ -65,15 +91,23 @@ export const useCreateContact = () => {
 export const useSubscribe = () => {
   return useMutation({
     mutationFn: PublicService.createSubscribe,
+    /**
+     * Called when the subscription is successful.
+     * Displays a success toast message indicating that the user has been subscribed successfully.
+     */
     onSuccess: () => {
-    //   toast.success("Subscribed successfully");
-        console.log("Subscribed successfully");
+      toastSuccess("Subscribed successfully");
     },
+    /**
+     * Called when the subscription fails.
+     * Logs the error to the console and displays an error toast message.
+     * The toast message will be the error message from the server response, or a generic
+     * error message if no response is available.
+     * @param {Object} err - The error object returned from the API.
+     */
     onError: (err) => {
-        console.error("Error subscribing:", err);
-        //   toast.error(
-    //     err?.response?.data?.message || "Subscription failed"
-    //   );
+      console.error("Error subscribing:", err);
+      toastError(err?.response?.data?.message || "Failed to subscribe");
     },
   });
 };

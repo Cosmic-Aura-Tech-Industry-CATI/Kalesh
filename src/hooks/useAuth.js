@@ -1,6 +1,7 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { AuthService } from "../services/auth.service";
 import { useNavigate } from "react-router-dom";
+import { toastSuccess } from "../lib/toast";
 
 /**
  * useLogin hook
@@ -16,11 +17,21 @@ export const useLogin = () => {
   return useMutation({
     mutationFn: (payload) => AuthService.login(payload),
     /**
+     * Called when the mutation is successful.
+     * @param {Object} data - The data returned from the mutation function.
+     * It should contain the token and user data.
+     * Logs a success toast message.
+     * */
+    onSuccess: (data) => {
+      toastSuccess("Login successful");
+    },
+    /**
      * Called when the mutation fails.
      * @param {Error} error - The error returned from the mutation function.
      * Logs the error to the console.
      */
     onError: (error) => {
+      toastError(error.response?.data?.message || "Login failed");
       console.error("Login failed:", error);
     },
   });
@@ -49,13 +60,15 @@ export const useVerifyOtp = () => {
     onSuccess: (data) => {
       queryClient.setQueryData(["user"], data);
       navigate("/admin/dashboard");
+      toastSuccess("OTP verified successfully");
     },
-/**
- * Called when the mutation fails.
- * @param {Error} error - The error returned from the mutation function.
- * Logs the error to the console.
- **/
+    /**
+     * Called when the mutation fails.
+     * @param {Error} error - The error returned from the mutation function.
+     * Logs the error to the console.
+     **/
     onError: (error) => {
+      toastError(error.response?.data?.message || "OTP verification failed");
       console.error("Verify OTP failed:", error);
     },
   });
@@ -86,9 +99,11 @@ export const useLogout = () => {
       navigate("/admin/login", {
         replace: true,
       });
+      toastSuccess("Logout successful");
     },
 
     onError: (error) => {
+      toastError("Logout failed");
       console.error("Logout failed:", error);
     },
   });
