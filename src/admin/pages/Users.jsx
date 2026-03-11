@@ -20,7 +20,7 @@ export default function Users() {
 
 
   const columns = [
-    { key: 'name', label: 'Name' },
+    { key: 'anonymousName', label: 'Anonymous Name' },
     { key: 'username', label: 'Username' },
     { key: 'pollsCreated', label: 'Polls Created' },
     { key: 'reportsCount', label: 'Reports' },
