@@ -1,5 +1,6 @@
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { AdminUserService } from "../services/admins.service";
+import { toastError, toastSuccess } from "../lib/toast";
 
 /**
  * A hook that fetches all users from the API.
@@ -48,9 +49,11 @@ export const useCreateAdmin = () => {
       queryClient.invalidateQueries({
         queryKey: ["admin-users"],
       });
+      toastSuccess("Admin created successfully");
     },
     onError: (err) => {
-      console.log(err);
+      toastError(err?.response?.data?.message || "Failed to create admin");
+      console.error(err);
     },
   });
 };
@@ -73,10 +76,12 @@ export const useUpdateAdmin = () => {
       queryClient.invalidateQueries({
         queryKey: ["admin-users"],
       });
+      toastSuccess("Admin updated successfully");
     },
 
     onError: (err) => {
-      console.log(err);
+      toastError(err?.response?.data?.message || "Failed to update admin");
+      console.error(err);
     },
   });
 };
@@ -98,9 +103,11 @@ export const useDeleteAdmin = () => {
       queryClient.invalidateQueries({
         queryKey: ["admin-users"],
       });
+      toastSuccess("Admin deleted successfully");
     },
     onError: (err) => {
-      console.log(err);
+      toastError(err?.response?.data?.message || "Failed to delete admin");
+      console.error(err);
     },
   });
 };
@@ -125,9 +132,11 @@ export const useActivateAdmin = () => {
       queryClient.invalidateQueries({
         queryKey: ["admin-users"],
       });
+      toastSuccess("Admin activated successfully");
     },
     onError: (err) => {
-      console.log(err);
+      toastError(err?.response?.data?.message || "Failed to activate admin");
+      console.errro(err);
     },
   });
 };
@@ -152,9 +161,11 @@ export const useDisableAdmin = () => {
       queryClient.invalidateQueries({
         queryKey: ["admin-users"],
       });
+      toastSuccess("Admin disabled successfully");
     },
     onError: (err) => {
-      console.log(err);
+      toastError(err?.response?.data?.message || "Failed to disable admin");
+      console.error(err);
     },
   });
 };

@@ -12,15 +12,9 @@ import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import ScrollbarTop from "./components/ScrollbarTop";
 import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
-import { AuthService } from "./services/auth.service";
-
-
-
-
-
+import { Toaster } from "react-hot-toast";
 
 import ApplicationDetails from "./pages/ApplicationDetails";
-
 
 // Admin imports
 import AdminLogin from "./admin/pages/Login";
@@ -154,7 +148,7 @@ function App() {
     const setVh = () => {
       document.documentElement.style.setProperty(
         "--vh",
-        `${window.innerHeight * 0.01}px`,
+        `${window.innerHeight * 0.01}px`
       );
     };
 
@@ -170,7 +164,20 @@ function App() {
 
   return (
     <QueryClientProvider client={queryClient}>
-      {/* <ReactQueryDevtools initialIsOpen={false} />  */}
+      {import.meta.env.VITE_ENV === "development" && (
+        <ReactQueryDevtools initialIsOpen={false} />
+      )}
+      <Toaster
+        position="top-right"
+        toastOptions={{
+          style: {
+            background: "#0b0b0b",
+            color: "#fff",
+            border: "1px solid #1f1f1f",
+            padding: "14px 18px",
+          },
+        }}
+      />
       <div className="app-main">
         <MainRoutes />
       </div>
