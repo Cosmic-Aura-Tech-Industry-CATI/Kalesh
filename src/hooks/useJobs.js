@@ -12,6 +12,13 @@ export const useGetAllJobs = () => {
   });
 };
 
+export const useGetAdminJobs = () => {
+  return useQuery({
+    queryKey: ["admin-jobs"],
+    queryFn: JobService.getAdminJobs,
+  });
+}
+
 /**
  * Fetch job by id
  */

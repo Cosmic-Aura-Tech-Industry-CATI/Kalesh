@@ -3,9 +3,9 @@ import { useForm } from "react-hook-form";
 import { Plus, Trash2, Edit, Info } from "lucide-react";
 import {
   useCreateJob,
-  useGetAllJobs,
   useDeleteJob,
   useUpdateJob,
+  useGetAdminJobs,
 } from "../../hooks/useJobs";
 import { useGetApplicationsByJobId } from "../../hooks/useApplication";
 import "../style/admin.css";
@@ -20,7 +20,7 @@ const JobApplicationCount = ({ jobId }) => {
 };
 
 export default function JobsPosting() {
-  const { data: jobsData, isLoading } = useGetAllJobs();
+  const { data: jobsData, isLoading } = useGetAdminJobs();
   const { mutate: createJob, isPending: isCreating } = useCreateJob();
   const { mutate: updateJob, isPending: isUpdating } = useUpdateJob();
   const { mutate: deleteJob } = useDeleteJob();

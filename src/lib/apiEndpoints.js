@@ -5,13 +5,13 @@ export const API_ENDPOINTS = {
   },
 
   APPLICATION: {
-    CREATE: "/applications", 
+    CREATE: "/applications",
     UPDATE_BY_TOKEN: (token) => `/applications/${token}`,
     GET_BY_TOKEN: (token) => `/applications/token/${token}`,
-    GET_BY_JOB_ID: (jobId) => `/applications/job/${jobId}`, 
-    GET_BY_ID: (id) => `/applications/${id}`, 
-    ACCEPT: (id) => `/applications/accept/${id}`, 
-    REJECT: (id) => `/applications/reject/${id}`, 
+    GET_BY_JOB_ID: (jobId) => `/applications/job/${jobId}`,
+    GET_BY_ID: (id) => `/applications/${id}`,
+    ACCEPT: (id) => `/applications/accept/${id}`,
+    REJECT: (id) => `/applications/reject/${id}`,
     DOWNLOAD_APPLICATIONS: (jobId) => `/applications/job/${jobId}/download`,
   },
 
@@ -29,6 +29,7 @@ export const API_ENDPOINTS = {
 
   JOBS: {
     GET_ALL: "/jobs",
+    GET_ADMIN: "/jobs/admin",
     CREATE: "/jobs",
     GET_BY_ID: (id) => `/jobs/${id}`,
     UPDATE_BY_ID: (id) => `/jobs/${id}`,
@@ -45,9 +46,9 @@ export const API_ENDPOINTS = {
       DIACTIVATE_BY_ID: (id) => `/admin-panel/users/${id}/deactivate`,
       ACTIVATE_BY_ID: (id) => `/admin-panel/users/${id}/activate`,
     },
-    
-    APP_USER:{
+
+    APP_USER: {
       GET_ALL: "/admin-panel/app-users",
-    }
+    },
   },
 };
