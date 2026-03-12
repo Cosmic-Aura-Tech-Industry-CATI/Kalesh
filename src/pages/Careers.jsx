@@ -36,7 +36,7 @@ function Careers() {
   const [selectedFileSize, setSelectedFileSize] = useState("");
 
   const { data: jobsData, isLoading: isLoadingJobs } = useGetAllJobs();
-  const jobOpenings = jobsData?.data || [];
+  const jobOpenings = jobsData?.jobs || [];
 
   const jobCategories = [
     "All",
