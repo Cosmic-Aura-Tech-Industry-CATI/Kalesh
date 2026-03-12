@@ -13,6 +13,13 @@ export class JobService {
     return res.data;
   }
 
+  static async getAdminJobs() {
+    const res = await axiosInstance.get(
+      API_ENDPOINTS.JOBS.GET_ADMIN
+    );
+    return res.data;
+  }
+
   /**
    * Create a new job
    * @param {Object} payload
@@ -73,4 +80,5 @@ export class JobService {
     );
     return res.data;
   }
+
 }
