@@ -22,6 +22,7 @@ import AdminDashboard from "./admin/pages/Dashboard";
 import AdminReportedPolls from "./admin/pages/ReportedPolls";
 import AdminPollModeration from "./admin/pages/PollModeration";
 import AdminUsers from "./admin/pages/Users";
+import UserDetails from "./admin/pages/UserDetails";
 import AdminBannedUsers from "./admin/pages/BannedUsers";
 import AdminPremium from "./admin/pages/Premium";
 import AdminPayments from "./admin/pages/Payments";
@@ -123,6 +124,8 @@ function MainRoutes() {
               <Route path="reported-polls" element={<AdminReportedPolls />} />
               <Route path="poll-moderation" element={<AdminPollModeration />} />
               <Route path="users" element={<AdminUsers />} />
+              {/* User detail page */}
+              <Route path="/admin/user/:userId" element={<UserDetails />} />
 
               {/* ✅ FIXED — NOW INSIDE ADMIN LAYOUT */}
               <Route path="/admin/jobs" element={<JobsPosting />} />
@@ -148,7 +151,7 @@ function App() {
     const setVh = () => {
       document.documentElement.style.setProperty(
         "--vh",
-        `${window.innerHeight * 0.01}px`
+        `${window.innerHeight * 0.01}px`,
       );
     };
 
