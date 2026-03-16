@@ -1,0 +1,41 @@
+/* ===============================
+   User Details Page
+================================ */
+
+.user-details-wrapper {
+  max-width: 600px;
+  margin-top: 20px;
+}
+
+/* Card */
+.user-details-card {
+  background-color: #1a1a1a;
+  border: 1px solid rgba(212, 175, 55, 0.2);
+  border-radius: 10px;
+  padding: 20px;
+}
+
+/* Row */
+.user-details-item {
+  display: flex;
+  justify-content: space-between;
+  padding: 10px 0;
+  border-bottom: 1px solid rgba(212, 175, 55, 0.1);
+}
+
+.user-details-item:last-child {
+  border-bottom: none;
+}
+
+/* Label */
+.user-details-label {
+  color: #d4af37;
+  font-size: 14px;
+  font-weight: 600;
+}
+
+/* Value */
+.user-details-value {
+  color: #e5e5e5;
+  font-size: 14px;
+}
