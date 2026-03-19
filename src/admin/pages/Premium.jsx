@@ -13,9 +13,14 @@ import {
 import "../style/admin.css";
 
 export default function Premium() {
-
   const [isCreateModal, setIsCreateModal] = useState(false);
   const [editingPlanId, setEditingPlanId] = useState(null);
+
+  const [isGrantModalOpen, setIsGrantModalOpen] = useState(false);
+  const [grantData, setGrantData] = useState({
+    user: "",
+    plan: "",
+  });
 
   const {
     register,
@@ -26,14 +31,18 @@ export default function Premium() {
   } = useForm();
 
   const { data: plansData, isLoading: isPlansLoading } = useGetAllPlans();
-  const { data: userSubsData, isLoading: isUserSubsLoading } = useGetSubscribedUsers();
+  const { data: userSubsData, isLoading: isUserSubsLoading } =
+    useGetSubscribedUsers();
 
   const { mutate: createPlanMutate, isPending: isCreating } = useCreatePlan();
   const { mutate: updatePlanMutate, isPending: isUpdating } = useUpdatePlan();
   const { mutate: updatePriceMutate } = useUpdatePrice();
 
   const plans = plansData?.data?.plans || plansData?.plans || [];
-  const userSubs = userSubsData?.data?.userSubscriptions || userSubsData?.userSubscriptions || [];
+  const userSubs =
+    userSubsData?.data?.userSubscriptions ||
+    userSubsData?.userSubscriptions ||
+    [];
 
   // ==========================
   // SUBMIT (CREATE / UPDATE)
@@ -55,7 +64,7 @@ export default function Premium() {
             setEditingPlanId(null);
             reset();
           },
-        }
+        },
       );
     } else {
       createPlanMutate(payload, {
@@ -107,14 +116,28 @@ export default function Premium() {
   // ==========================
 
   const getUserCount = (planId) => {
-    return userSubs.filter(
-      (sub) => sub.subscriptionId?._id === planId
-    ).length;
+    return userSubs.filter((sub) => sub.subscriptionId?._id === planId).length;
   };
 
+  // ==========================
+  // GRANT PREMIUM
+  // ==========================
+
+  const handleGrantPremium = () => {
+    console.log("Grant Premium Data:", grantData);
+
+    // Future API
+    // grantPremiumMutate(grantData)
+
+    setIsGrantModalOpen(false);
+
+    setGrantData({
+      user: "",
+      plan: "",
+    });
+  };
 
   const planColumns = [
-
     { key: "title", label: "Plan Name" },
 
     { key: "durationInDays", label: "Duration" },
@@ -122,23 +145,27 @@ export default function Premium() {
     {
       key: "price",
       label: "Price",
-      render: (_, row) => `₹${row.currentPriceId?.finalPrice || 0}`
+      render: (_, row) => `₹${row.currentPriceId?.finalPrice || 0}`,
     },
 
     {
       key: "users",
       label: "Users",
-      render: (_, row) => getUserCount(row._id)
+      render: (_, row) => getUserCount(row._id),
     },
 
     {
       key: "status",
       label: "Status",
       render: (_, row) => (
-        <span className={row.isActive ? "admin-badge-success" : "admin-badge-danger"}>
+        <span
+          className={
+            row.isActive ? "admin-badge-success" : "admin-badge-danger"
+          }
+        >
           {row.isActive ? "Active" : "Inactive"}
         </span>
-      )
+      ),
     },
 
     {
@@ -146,7 +173,6 @@ export default function Premium() {
       label: "Actions",
       render: (_, row) => (
         <div className="flex gap-2">
-
           <Button size="sm" onClick={() => handleEdit(row)}>
             Edit
           </Button>
@@ -162,10 +188,9 @@ export default function Premium() {
           >
             {row.isActive ? "Deactivate" : "Activate"}
           </Button>
-
         </div>
-      )
-    }
+      ),
+    },
   ];
 
   // ==========================
@@ -173,68 +198,75 @@ export default function Premium() {
   // ==========================
 
   const userColumns = [
-
     {
       key: "email",
       label: "User",
-      render: (_, row) => row.userId?.email || "Unknown"
+      render: (_, row) => row.userId?.email || "Unknown",
     },
 
     {
       key: "plan",
       label: "Plan",
-      render: (_, row) => row.subscriptionId?.title || "N/A"
+      render: (_, row) => row.subscriptionId?.title || "N/A",
     },
 
     {
       key: "price",
       label: "Price",
-      render: (_, row) => `₹${row.priceId?.finalPrice || 0}`
+      render: (_, row) => `₹${row.priceId?.finalPrice || 0}`,
     },
 
     {
       key: "status",
       label: "Status",
       render: (_, row) => (
-        <span className={row.status === "active" ? "admin-badge-success" : "admin-badge-warning"}>
+        <span
+          className={
+            row.status === "active"
+              ? "admin-badge-success"
+              : "admin-badge-warning"
+          }
+        >
           {row.status}
         </span>
-      )
+      ),
     },
 
     {
       key: "startDate",
       label: "Start",
-      render: (_, row) => new Date(row.startDate).toLocaleDateString()
+      render: (_, row) => new Date(row.startDate).toLocaleDateString(),
     },
 
     {
       key: "endDate",
       label: "End",
-      render: (_, row) => new Date(row.endDate).toLocaleDateString()
-    }
-
+      render: (_, row) => new Date(row.endDate).toLocaleDateString(),
+    },
   ];
 
   return (
     <div className="admin-section">
-
       <div className="admin-section-header">
         <h1 className="admin-page-title">Premium Plans</h1>
-        <Button onClick={() => {
-          setEditingPlanId(null);
-          reset();
-          setIsCreateModal(true);
-        }}>
+        <Button
+          onClick={() => {
+            setEditingPlanId(null);
+            reset();
+            setIsCreateModal(true);
+          }}
+        >
           Create Plan
         </Button>
       </div>
 
       <Table columns={planColumns} data={isPlansLoading ? [] : plans} />
 
-      <h2 className="admin-page-title mt-10">
-        User Subscriptions
-      </h2>
+      <div className="admin-section-header mt-10">
+        <h2 className="admin-page-title">User Subscriptions</h2>
+
+        <Button onClick={() => setIsGrantModalOpen(true)}>Grant Premium</Button>
+      </div>
 
       <Table columns={userColumns} data={isUserSubsLoading ? [] : userSubs} />
 
@@ -256,16 +288,26 @@ export default function Premium() {
               className="admin-form-input"
               {...register("title", { required: "Title is required" })}
             />
-            {errors.title && <span className="text-red-500 text-xs">{errors.title.message}</span>}
+            {errors.title && (
+              <span className="text-red-500 text-xs">
+                {errors.title.message}
+              </span>
+            )}
           </div>
 
           <div>
             <textarea
               placeholder="Description"
               className="admin-form-textarea"
-              {...register("description", { required: "Description is required" })}
+              {...register("description", {
+                required: "Description is required",
+              })}
             />
-            {errors.description && <span className="text-red-500 text-xs">{errors.description.message}</span>}
+            {errors.description && (
+              <span className="text-red-500 text-xs">
+                {errors.description.message}
+              </span>
+            )}
           </div>
 
           <div>
@@ -273,9 +315,15 @@ export default function Premium() {
               type="number"
               placeholder="Duration (days)"
               className="admin-form-input"
-              {...register("durationInDays", { required: "Duration is required" })}
+              {...register("durationInDays", {
+                required: "Duration is required",
+              })}
             />
-            {errors.durationInDays && <span className="text-red-500 text-xs">{errors.durationInDays.message}</span>}
+            {errors.durationInDays && (
+              <span className="text-red-500 text-xs">
+                {errors.durationInDays.message}
+              </span>
+            )}
           </div>
 
           <div>
@@ -284,16 +332,74 @@ export default function Premium() {
               className="admin-form-input"
               {...register("features", { required: "Features are required" })}
             />
-            {errors.features && <span className="text-red-500 text-xs">{errors.features.message}</span>}
+            {errors.features && (
+              <span className="text-red-500 text-xs">
+                {errors.features.message}
+              </span>
+            )}
           </div>
 
-          <Button type="submit" className="w-full" disabled={isCreating || isUpdating}>
-            {isCreating || isUpdating ? "Saving..." : editingPlanId ? "Update Plan" : "Create Plan"}
+          <Button
+            type="submit"
+            className="w-full"
+            disabled={isCreating || isUpdating}
+          >
+            {isCreating || isUpdating
+              ? "Saving..."
+              : editingPlanId
+                ? "Update Plan"
+                : "Create Plan"}
           </Button>
         </form>
-
       </Modal>
 
+      {/* GRANT PREMIUM MODAL */}
+
+      <Modal
+        isOpen={isGrantModalOpen}
+        onClose={() => setIsGrantModalOpen(false)}
+        title="Grant Premium"
+      >
+        <div className="space-y-4">
+          <input
+            type="text"
+            placeholder="User Name / Email"
+            className="admin-form-input"
+            value={grantData.user}
+            onChange={(e) =>
+              setGrantData({ ...grantData, user: e.target.value })
+            }
+          />
+
+          <select
+            className="admin-form-select"
+            value={grantData.plan}
+            onChange={(e) =>
+              setGrantData({ ...grantData, plan: e.target.value })
+            }
+          >
+            <option value="">Select Plan</option>
+            <option value="monthly">Monthly</option>
+            <option value="yearly">Yearly</option>
+          </select>
+
+          <div className="flex gap-3 justify-end pt-2">
+            { /*<Button
+              variant="secondary"
+              onClick={() => setIsGrantModalOpen(false)}
+            >
+              Close
+            </Button> */ }
+
+            <Button
+              onClick={handleGrantPremium}
+              disabled={!grantData.user || !grantData.plan}
+            >
+              Grant
+            </Button>
+          </div>
+        </div>
+      </Modal>
     </div>
   );
 }
