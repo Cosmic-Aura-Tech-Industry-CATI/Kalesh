@@ -16,7 +16,7 @@ export default function Users() {
 
   const filteredUsers =
     users?.data?.filter((user) =>
-      user.username?.toLowerCase().includes(search.toLowerCase())
+      user.username?.toLowerCase().includes(search.toLowerCase()),
     ) || [];
 
   const handleWarn = (userId) => {
@@ -32,12 +32,8 @@ export default function Users() {
     window.location.href = `/admin/user/${userId}`;
   };
 
-  const handleTempBan = (userId) => {
-    alert(`User ${userId} temporarily banned`);
-  };
-
-  const handlePermaBan = (userId) => {
-    alert(`User ${userId} permanently banned`);
+  const handleBan = (userId) => {
+    alert(`User ${userId} banned`);
   };
 
   const grantPremium = () => {
@@ -59,8 +55,8 @@ export default function Users() {
             status === "Active"
               ? "bg-green-500/20 text-green-400"
               : status === "Warned"
-              ? "bg-yellow-500/20 text-yellow-400"
-              : "bg-red-500/20 text-red-400"
+                ? "bg-yellow-500/20 text-yellow-400"
+                : "bg-red-500/20 text-red-400"
           }`}
         >
           {status}
@@ -89,21 +85,25 @@ export default function Users() {
       render: (_, row) => (
         <div className="flex flex-wrap gap-2">
           {isAdmin && (
-            <Button size="sm" variant="primary" onClick={() => handleView(row.id)}>
+            <Button
+              size="sm"
+              variant="primary"
+              onClick={() => handleView(row.id)}
+            >
               View
             </Button>
           )}
 
-          <Button size="sm" variant="warning" onClick={() => handleWarn(row.id)}>
+          <Button
+            size="sm"
+            variant="warning"
+            onClick={() => handleWarn(row.id)}
+          >
             Warn
           </Button>
 
-          <Button size="sm" variant="danger" onClick={() => handleTempBan(row.id)}>
-            Temp Ban
-          </Button>
-
-          <Button size="sm" variant="danger" onClick={() => handlePermaBan(row.id)}>
-            Perma Ban
+          <Button size="sm" variant="danger" onClick={() => handleBan(row.id)}>
+            Ban
           </Button>
         </div>
       ),
@@ -116,15 +116,12 @@ export default function Users() {
 
   return (
     <div className="admin-section">
-
       {/* HEADER */}
       <div className="admin-section-header">
-
         <h1 className="admin-page-title">User Management</h1>
 
         {/* SEARCH BAR */}
         <div className="relative w-72">
-
           <input
             type="text"
             placeholder="Search username..."
@@ -138,7 +135,6 @@ export default function Users() {
           {/* SEARCH RESULT DROPDOWN */}
           {search && (
             <div className="absolute w-full bg-[#1a1a1a] border border-[#d4af37]/20 mt-1 rounded-lg z-50 max-h-48 overflow-y-auto">
-
               {filteredUsers.map((user) => (
                 <div
                   key={user.id}
@@ -162,15 +158,12 @@ export default function Users() {
       {/* PREMIUM MODAL */}
       {selectedUser && (
         <div className="admin-modal-overlay">
-
           <div className="admin-modal-content">
-
             <div className="admin-modal-header">
               <h2 className="admin-modal-title">Grant Premium</h2>
             </div>
 
             <div className="admin-modal-body">
-
               <div className="admin-form-group">
                 <label className="admin-form-label">User ID</label>
                 <input
@@ -191,13 +184,10 @@ export default function Users() {
                   <option value="monthly">Monthly</option>
                   <option value="yearly">Yearly</option>
                 </select>
-
               </div>
-
             </div>
 
             <div className="admin-modal-footer">
-
               <button
                 className="admin-btn-secondary"
                 onClick={() => setSelectedUser(null)}
@@ -205,20 +195,13 @@ export default function Users() {
                 Close
               </button>
 
-              <button
-                className="admin-btn-primary"
-                onClick={grantPremium}
-              >
+              <button className="admin-btn-primary" onClick={grantPremium}>
                 Grant Premium
               </button>
-
             </div>
-
           </div>
-
         </div>
       )}
-
     </div>
   );
 }
