@@ -112,9 +112,6 @@ export default function Premium() {
     ).length;
   };
 
-  // ==========================
-  // PLAN TABLE
-  // ==========================
 
   const planColumns = [
 
