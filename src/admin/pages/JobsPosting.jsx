@@ -25,7 +25,6 @@ export default function JobsPosting() {
   const { mutate: updateJob, isPending: isUpdating } = useUpdateJob();
   const { mutate: deleteJob } = useDeleteJob();
 
-
   const jobs = jobsData?.data || [];
 
   const {
@@ -93,6 +92,7 @@ export default function JobsPosting() {
       Array.isArray(job.skill) ? job.skill.join(", ") : job.skill,
     );
     setValue("experience", job.experience);
+    setValue("duration", job.duration);
     setValue("type", job.type);
     setShowForm(true);
   };
@@ -102,6 +102,15 @@ export default function JobsPosting() {
       ...prev,
       [jobKey]: !prev[jobKey],
     }));
+  };
+
+  const getDaysLeft = (expiryDate) => {
+    if (!expiryDate) return "-";
+
+    const diff = new Date(expiryDate) - new Date();
+    const days = Math.ceil(diff / (1000 * 60 * 60 * 24));
+
+    return days > 0 ? `${days} days left` : "Expired";
   };
 
   return (
@@ -233,6 +242,31 @@ export default function JobsPosting() {
             />
           </div>
 
+          {/* Job Duration */}
+          <div className="admin-form-group">
+            <label className="admin-form-label">Job Duration (Days)</label>
+
+            <select
+              className="admin-form-select"
+              {...register("duration", {
+                required: "Job Duration is required",
+              })}
+            >
+              <option value="">Select Duration</option>
+              <option value="7">7 Days</option>
+              <option value="15">15 Days</option>
+              <option value="30">30 Days</option>
+              <option value="45">45 Days</option>
+              <option value="60">60 Days</option>
+            </select>
+
+            {errors.duration && (
+              <span className="text-red-500 text-xs">
+                {errors.duration.message}
+              </span>
+            )}
+          </div>
+
           {/* Job Type */}
           <div className="admin-form-group">
             <label className="admin-form-label">Job Type</label>
@@ -244,17 +278,31 @@ export default function JobsPosting() {
             </select>
           </div>
 
-          <button
-            type="submit"
-            className="admin-btn-primary mt-4"
-            disabled={isCreating || isUpdating}
-          >
-            {isCreating || isUpdating
-              ? "Saving..."
-              : editingJob
-                ? "Update Job"
-                : "Save Job"}
-          </button>
+          <div className="flex gap-3 mt-4">
+            <button
+              type="submit"
+              className="admin-btn-primary"
+              disabled={isCreating || isUpdating}
+            >
+              {isCreating || isUpdating
+                ? "Saving..."
+                : editingJob
+                  ? "Update Job"
+                  : "Save Job"}
+            </button>
+
+            <button
+              type="button"
+              className="admin-btn-secondary"
+              onClick={() => {
+                setShowForm(false);
+                setEditingJob(null);
+                reset();
+              }}
+            >
+              Close
+            </button>
+          </div>
         </form>
       )}
 
@@ -271,6 +319,7 @@ export default function JobsPosting() {
                 <th>Location</th>
                 <th>Skill</th>
                 <th>Experience</th>
+                <th>Expiry</th>
                 <th>Applicants</th>
                 <th>Actions</th>
               </tr>
@@ -310,7 +359,11 @@ export default function JobsPosting() {
                         ? job.skill.join(", ")
                         : job.skill}
                     </td>
+
                     <td>{job.experience}</td>
+
+                    <td>{getDaysLeft(job.expiryDate)}</td>
+
                     <td>
                       <JobApplicationCount jobId={job._id || job.id} />
                     </td>
@@ -350,7 +403,7 @@ export default function JobsPosting() {
                 ))
               ) : (
                 <tr>
-                  <td colSpan="7" className="text-center text-gray-400 py-4">
+                  <td colSpan="8" className="text-center text-gray-400 py-4">
                     No jobs found
                   </td>
                 </tr>
