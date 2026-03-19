@@ -1,103 +1,403 @@
-import { useState } from 'react';
-import Table from '../components/Table';
-import Button from '../components/Button';
-import Modal from '../components/Modal';
-import { mockPremiumUsers } from '../data/mockData';
-import '../style/admin.css';
+import { useState } from "react";
+import { useForm } from "react-hook-form";
+import Table from "../components/Table";
+import Button from "../components/Button";
+import Modal from "../components/Modal";
+import {
+  useGetAllPlans,
+  useCreatePlan,
+  useUpdatePlan,
+  useUpdatePrice,
+  useGetSubscribedUsers,
+} from "../../hooks/useSubscription";
+import "../style/admin.css";
 
 export default function Premium() {
-  const [users] = useState(mockPremiumUsers);
-  const [isModalOpen, setIsModalOpen] = useState(false);
-  const [selectedUser, setSelectedUser] = useState('');
+  const [isCreateModal, setIsCreateModal] = useState(false);
+  const [editingPlanId, setEditingPlanId] = useState(null);
 
-  const handleGrant = () => {
-    setIsModalOpen(true);
+  const [isGrantModalOpen, setIsGrantModalOpen] = useState(false);
+  const [grantData, setGrantData] = useState({
+    user: "",
+    plan: "",
+  });
+
+  const {
+    register,
+    handleSubmit,
+    reset,
+    setValue,
+    formState: { errors },
+  } = useForm();
+
+  const { data: plansData, isLoading: isPlansLoading } = useGetAllPlans();
+  const { data: userSubsData, isLoading: isUserSubsLoading } =
+    useGetSubscribedUsers();
+
+  const { mutate: createPlanMutate, isPending: isCreating } = useCreatePlan();
+  const { mutate: updatePlanMutate, isPending: isUpdating } = useUpdatePlan();
+  const { mutate: updatePriceMutate } = useUpdatePrice();
+
+  const plans = plansData?.data?.plans || plansData?.plans || [];
+  const userSubs =
+    userSubsData?.data?.userSubscriptions ||
+    userSubsData?.userSubscriptions ||
+    [];
+
+  // ==========================
+  // SUBMIT (CREATE / UPDATE)
+  // ==========================
+
+  const onSubmit = (data) => {
+    const payload = {
+      ...data,
+      features: data.features.split(",").map((f) => f.trim()),
+      durationInDays: Number(data.durationInDays),
+    };
+
+    if (editingPlanId) {
+      updatePlanMutate(
+        { id: editingPlanId, payload },
+        {
+          onSuccess: () => {
+            setIsCreateModal(false);
+            setEditingPlanId(null);
+            reset();
+          },
+        },
+      );
+    } else {
+      createPlanMutate(payload, {
+        onSuccess: () => {
+          setIsCreateModal(false);
+          reset();
+        },
+      });
+    }
   };
 
-  const handleRevoke = (userId) => {
-    alert(`Premium revoked for user ${userId}`);
+  // ==========================
+  // UPDATE PRICE
+  // ==========================
+
+  const updatePrice = (planId) => {
+    const newPrice = prompt("Enter new price");
+    if (newPrice) {
+      updatePriceMutate({ id: planId, payload: { price: Number(newPrice) } });
+    }
   };
 
-  const handleGrantSubmit = () => {
-    alert(`Premium granted to user ${selectedUser}`);
-    setIsModalOpen(false);
-    setSelectedUser('');
+  // ==========================
+  // ACTIVATE / DEACTIVATE
+  // ==========================
+
+  const togglePlan = (plan) => {
+    updatePlanMutate({
+      id: plan._id,
+      payload: { isActive: !plan.isActive },
+    });
   };
 
-  const columns = [
-    { key: 'id', label: 'User ID' },
-    { key: 'username', label: 'Username' },
+  // ==========================
+  // EDIT PLAN
+  // ==========================
+
+  const handleEdit = (plan) => {
+    setEditingPlanId(plan._id);
+    setValue("title", plan.title);
+    setValue("description", plan.description);
+    setValue("durationInDays", plan.durationInDays);
+    setValue("features", plan.features ? plan.features.join(", ") : "");
+    setIsCreateModal(true);
+  };
+
+  // ==========================
+  // COUNT USERS PER PLAN
+  // ==========================
+
+  const getUserCount = (planId) => {
+    return userSubs.filter((sub) => sub.subscriptionId?._id === planId).length;
+  };
+
+  // ==========================
+  // GRANT PREMIUM
+  // ==========================
+
+  const handleGrantPremium = () => {
+    console.log("Grant Premium Data:", grantData);
+
+    // Future API
+    // grantPremiumMutate(grantData)
+
+    setIsGrantModalOpen(false);
+
+    setGrantData({
+      user: "",
+      plan: "",
+    });
+  };
+
+  const planColumns = [
+    { key: "title", label: "Plan Name" },
+
+    { key: "durationInDays", label: "Duration" },
+
     {
-      key: 'plan',
-      label: 'Plan',
-      render: (plan) => (
-        <span className="px-2 py-1 bg-orange-500/20 text-orange-400 rounded text-xs">
-          {plan}
-        </span>
-      ),
+      key: "price",
+      label: "Price",
+      render: (_, row) => `₹${row.currentPriceId?.finalPrice || 0}`,
     },
-    { key: 'startDate', label: 'Start Date' },
-    { key: 'expiryDate', label: 'Expiry Date' },
+
     {
-      key: 'status',
-      label: 'Status',
-      render: (status) => (
-        <span className="px-2 py-1 bg-green-500/20 text-green-400 rounded text-xs">
-          {status}
-        </span>
-      ),
+      key: "users",
+      label: "Users",
+      render: (_, row) => getUserCount(row._id),
     },
+
     {
-      key: 'amount',
-      label: 'Amount',
-      render: (amount) => `₹${amount}`,
-    },
-    {
-      key: 'actions',
-      label: 'Actions',
+      key: "status",
+      label: "Status",
       render: (_, row) => (
-        <Button size="sm" variant="danger" onClick={() => handleRevoke(row.id)}>
-          Revoke
-        </Button>
+        <span
+          className={
+            row.isActive ? "admin-badge-success" : "admin-badge-danger"
+          }
+        >
+          {row.isActive ? "Active" : "Inactive"}
+        </span>
       ),
+    },
+
+    {
+      key: "actions",
+      label: "Actions",
+      render: (_, row) => (
+        <div className="flex gap-2">
+          <Button size="sm" onClick={() => handleEdit(row)}>
+            Edit
+          </Button>
+
+          <Button size="sm" onClick={() => updatePrice(row._id)}>
+            Price
+          </Button>
+
+          <Button
+            size="sm"
+            variant={row.isActive ? "danger" : "primary"}
+            onClick={() => togglePlan(row)}
+          >
+            {row.isActive ? "Deactivate" : "Activate"}
+          </Button>
+        </div>
+      ),
+    },
+  ];
+
+  // ==========================
+  // USER SUBS TABLE
+  // ==========================
+
+  const userColumns = [
+    {
+      key: "email",
+      label: "User",
+      render: (_, row) => row.userId?.email || "Unknown",
+    },
+
+    {
+      key: "plan",
+      label: "Plan",
+      render: (_, row) => row.subscriptionId?.title || "N/A",
+    },
+
+    {
+      key: "price",
+      label: "Price",
+      render: (_, row) => `₹${row.priceId?.finalPrice || 0}`,
+    },
+
+    {
+      key: "status",
+      label: "Status",
+      render: (_, row) => (
+        <span
+          className={
+            row.status === "active"
+              ? "admin-badge-success"
+              : "admin-badge-warning"
+          }
+        >
+          {row.status}
+        </span>
+      ),
+    },
+
+    {
+      key: "startDate",
+      label: "Start",
+      render: (_, row) => new Date(row.startDate).toLocaleDateString(),
+    },
+
+    {
+      key: "endDate",
+      label: "End",
+      render: (_, row) => new Date(row.endDate).toLocaleDateString(),
     },
   ];
 
   return (
     <div className="admin-section">
       <div className="admin-section-header">
-        <h1 className="admin-page-title">Premium Management</h1>
-        <Button onClick={handleGrant}>Grant Premium</Button>
+        <h1 className="admin-page-title">Premium Plans</h1>
+        <Button
+          onClick={() => {
+            setEditingPlanId(null);
+            reset();
+            setIsCreateModal(true);
+          }}
+        >
+          Create Plan
+        </Button>
       </div>
 
-      <Table columns={columns} data={users} />
+      <Table columns={planColumns} data={isPlansLoading ? [] : plans} />
 
-      <Modal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} title="Grant Premium">
-        <div className="space-y-4">
+      <div className="admin-section-header mt-10">
+        <h2 className="admin-page-title">User Subscriptions</h2>
+
+        <Button onClick={() => setIsGrantModalOpen(true)}>Grant Premium</Button>
+      </div>
+
+      <Table columns={userColumns} data={isUserSubsLoading ? [] : userSubs} />
+
+      {/* CREATE PLAN MODAL */}
+
+      <Modal
+        isOpen={isCreateModal}
+        onClose={() => {
+          setIsCreateModal(false);
+          setEditingPlanId(null);
+          reset();
+        }}
+        title={editingPlanId ? "Edit Plan" : "Create Plan"}
+      >
+        <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
           <div>
-            <label className="block text-xs sm:text-sm font-medium text-gray-300 mb-2">
-              User ID
-            </label>
             <input
-              type="text"
-              value={selectedUser}
-              onChange={(e) => setSelectedUser(e.target.value)}
-              className="w-full px-3 sm:px-4 py-2 bg-[#1a1a2e] border border-gray-700 rounded-lg text-sm text-white focus:outline-none focus:border-orange-500"
-              placeholder="Enter user ID"
+              placeholder="Plan Title"
+              className="admin-form-input"
+              {...register("title", { required: "Title is required" })}
             />
+            {errors.title && (
+              <span className="text-red-500 text-xs">
+                {errors.title.message}
+              </span>
+            )}
           </div>
+
           <div>
-            <label className="block text-xs sm:text-sm font-medium text-gray-300 mb-2">
-              Plan Type
-            </label>
-            <select className="w-full px-3 sm:px-4 py-2 bg-[#1a1a2e] border border-gray-700 rounded-lg text-sm text-white focus:outline-none focus:border-orange-500">
-              <option>Monthly</option>
-              <option>Yearly</option>
-            </select>
+            <textarea
+              placeholder="Description"
+              className="admin-form-textarea"
+              {...register("description", {
+                required: "Description is required",
+              })}
+            />
+            {errors.description && (
+              <span className="text-red-500 text-xs">
+                {errors.description.message}
+              </span>
+            )}
           </div>
-          <Button onClick={handleGrantSubmit} className="w-full">
-            Grant Premium
+
+          <div>
+            <input
+              type="number"
+              placeholder="Duration (days)"
+              className="admin-form-input"
+              {...register("durationInDays", {
+                required: "Duration is required",
+              })}
+            />
+            {errors.durationInDays && (
+              <span className="text-red-500 text-xs">
+                {errors.durationInDays.message}
+              </span>
+            )}
+          </div>
+
+          <div>
+            <input
+              placeholder="Features (comma separated)"
+              className="admin-form-input"
+              {...register("features", { required: "Features are required" })}
+            />
+            {errors.features && (
+              <span className="text-red-500 text-xs">
+                {errors.features.message}
+              </span>
+            )}
+          </div>
+
+          <Button
+            type="submit"
+            className="w-full"
+            disabled={isCreating || isUpdating}
+          >
+            {isCreating || isUpdating
+              ? "Saving..."
+              : editingPlanId
+                ? "Update Plan"
+                : "Create Plan"}
           </Button>
+        </form>
+      </Modal>
+
+      {/* GRANT PREMIUM MODAL */}
+
+      <Modal
+        isOpen={isGrantModalOpen}
+        onClose={() => setIsGrantModalOpen(false)}
+        title="Grant Premium"
+      >
+        <div className="space-y-4">
+          <input
+            type="text"
+            placeholder="User Name / Email"
+            className="admin-form-input"
+            value={grantData.user}
+            onChange={(e) =>
+              setGrantData({ ...grantData, user: e.target.value })
+            }
+          />
+
+          <select
+            className="admin-form-select"
+            value={grantData.plan}
+            onChange={(e) =>
+              setGrantData({ ...grantData, plan: e.target.value })
+            }
+          >
+            <option value="">Select Plan</option>
+            <option value="monthly">Monthly</option>
+            <option value="yearly">Yearly</option>
+          </select>
+
+          <div className="flex gap-3 justify-end pt-2">
+            { /*<Button
+              variant="secondary"
+              onClick={() => setIsGrantModalOpen(false)}
+            >
+              Close
+            </Button> */ }
+
+            <Button
+              onClick={handleGrantPremium}
+              disabled={!grantData.user || !grantData.plan}
+            >
+              Grant
+            </Button>
+          </div>
         </div>
       </Modal>
     </div>

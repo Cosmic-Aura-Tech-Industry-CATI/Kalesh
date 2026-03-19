@@ -169,3 +169,17 @@ export const useDisableAdmin = () => {
     },
   });
 };
+
+/**
+ * A hook that wraps the useQuery hook from react-query.
+ * It is used to fetch the current admin user from the API.
+ * It returns the result of the useQuery hook.
+ * It contains the data returned from the query function, the status of the query,
+ * and functions to refresh the query and check if the data is loading.
+ */
+export const useMe = () => {
+  return useQuery({
+    queryKey: ["me"],
+    queryFn: AdminUserService.getMe,
+  });
+}

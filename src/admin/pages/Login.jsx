@@ -32,7 +32,7 @@ export default function Login() {
   };
 
   const handleVerifyOtp = async () => {
-    verifyOtp({ email: emailForOtp, otp });
+    verifyOtp({ email: emailForOtp, otp, otpType: "login"});
   };
 
   return (
