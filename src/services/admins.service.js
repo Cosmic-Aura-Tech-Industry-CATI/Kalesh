@@ -49,6 +49,18 @@ export class AdminUserService {
     return res.data;
   }
 
+  
+  /**
+   * Retrieves the current logged in admin user from the API.
+   * @returns {Promise<Object>} - Resolves with the current logged in admin user object.
+   */
+  static async getMe() {
+    const res = await axiosInstance.get(
+      API_ENDPOINTS.ADMIN.ME.GET_PROFILE,
+    );
+    return res.data;
+  }
+
   /**
    * Deletes an admin user by its id from the API.
    * @param {string} id - The id of the admin user to be deleted.

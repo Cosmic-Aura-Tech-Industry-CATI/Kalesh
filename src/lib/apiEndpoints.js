@@ -47,8 +47,21 @@ export const API_ENDPOINTS = {
       ACTIVATE_BY_ID: (id) => `/admin-panel/users/${id}/activate`,
     },
 
+    ME: {
+      GET_PROFILE: "/admin-panel/me",
+    },
+
+    SUBSCRIPTION: {
+      GET_ALL: "/admin-panel/subscriptions",
+      CREATE: "/admin-panel/subscriptions",
+      UPDATE_PRICE_BY_ID: (id) => `/admin-panel/subscriptions/${id}/price`,
+      UPDATE_BY_ID: (id) => `/admin-panel/subscriptions/${id}`,
+      GET_USERS: "/admin-panel/subscriptions/users"
+    },
+
     APP_USER: {
       GET_ALL: "/admin-panel/app-users",
+      GET_BY_ID: (id) => `/admin-panel/app-users/${id}`,
     },
   },
 };

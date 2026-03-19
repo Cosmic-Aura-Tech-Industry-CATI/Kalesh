@@ -17,7 +17,6 @@ export default function Topbar({ setSidebarOpen }) {
   // 🔹 Fetch logged admin info
   useEffect(() => {
     const data = AuthService.getCurrentUser();
-    console.log("ADMIN DATA:", data); // debug
     setAdmin(data);
   }, []);
 

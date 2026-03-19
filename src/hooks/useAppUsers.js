@@ -14,3 +14,18 @@ export const useGetAllAppUsers = () => {
     queryFn: AppUsersService.getAllAppUsers,
   });
 };
+
+/**
+ * A hook that fetches an application user by its id from the API.
+ * It returns the result of the useQuery hook.
+ * It contains the data returned from the query function, the status of the query,
+ * and functions to refresh the query and check if the data is loading.
+ * The query will only run if the id exists.
+ */
+export const useGetAppUserById = (id) => {
+  return useQuery({
+    queryKey: ["app-users", id],
+    queryFn: () => AppUsersService.getAppUserById(id),
+    enabled: !!id,
+  });
+}
