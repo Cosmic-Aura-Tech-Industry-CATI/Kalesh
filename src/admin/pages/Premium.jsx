@@ -1,115 +1,105 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
+import { useForm } from "react-hook-form";
 import Table from "../components/Table";
 import Button from "../components/Button";
 import Modal from "../components/Modal";
+import {
+  useGetAllPlans,
+  useCreatePlan,
+  useUpdatePlan,
+  useUpdatePrice,
+  useGetSubscribedUsers,
+} from "../../hooks/useSubscription";
 import "../style/admin.css";
 
 export default function Premium() {
 
-  const [plans, setPlans] = useState([]);
-  const [userSubs, setUserSubs] = useState([]);
-
   const [isCreateModal, setIsCreateModal] = useState(false);
-  const [selectedPlan, setSelectedPlan] = useState(null);
+  const [editingPlanId, setEditingPlanId] = useState(null);
 
-  const [formData, setFormData] = useState({
-    title: "",
-    description: "",
-    durationInDays: "",
-    features: ""
-  });
+  const {
+    register,
+    handleSubmit,
+    reset,
+    setValue,
+    formState: { errors },
+  } = useForm();
 
-  // ==========================
-  // GET ALL PLANS
-  // ==========================
+  const { data: plansData, isLoading: isPlansLoading } = useGetAllPlans();
+  const { data: userSubsData, isLoading: isUserSubsLoading } = useGetSubscribedUsers();
 
-  const fetchPlans = async () => {
-    const res = await fetch("/api/plans");
-    const data = await res.json();
-    setPlans(data.data.plans || []);
-  };
+  const { mutate: createPlanMutate, isPending: isCreating } = useCreatePlan();
+  const { mutate: updatePlanMutate, isPending: isUpdating } = useUpdatePlan();
+  const { mutate: updatePriceMutate } = useUpdatePrice();
 
-  // ==========================
-  // GET USER SUBSCRIPTIONS
-  // ==========================
-
-  const fetchUserSubs = async () => {
-    const res = await fetch("/api/plans/users");
-    const data = await res.json();
-    setUserSubs(data.data.userSubscriptions || []);
-  };
-
-  useEffect(() => {
-    fetchPlans();
-    fetchUserSubs();
-  }, []);
+  const plans = plansData?.data?.plans || plansData?.plans || [];
+  const userSubs = userSubsData?.data?.userSubscriptions || userSubsData?.userSubscriptions || [];
 
   // ==========================
-  // CREATE PLAN
+  // SUBMIT (CREATE / UPDATE)
   // ==========================
 
-  const createPlan = async () => {
+  const onSubmit = (data) => {
+    const payload = {
+      ...data,
+      features: data.features.split(",").map((f) => f.trim()),
+      durationInDays: Number(data.durationInDays),
+    };
 
-    await fetch("/api/plans", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        ...formData,
-        features: formData.features.split(",")
-      })
-    });
-
-    setIsCreateModal(false);
-    fetchPlans();
-  };
-
-  // ==========================
-  // UPDATE PLAN
-  // ==========================
-
-  const updatePlan = async (planId) => {
-
-    await fetch(`/api/plans/${planId}`, {
-      method: "PUT",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(formData)
-    });
-
-    fetchPlans();
+    if (editingPlanId) {
+      updatePlanMutate(
+        { id: editingPlanId, payload },
+        {
+          onSuccess: () => {
+            setIsCreateModal(false);
+            setEditingPlanId(null);
+            reset();
+          },
+        }
+      );
+    } else {
+      createPlanMutate(payload, {
+        onSuccess: () => {
+          setIsCreateModal(false);
+          reset();
+        },
+      });
+    }
   };
 
   // ==========================
   // UPDATE PRICE
   // ==========================
 
-  const updatePrice = async (planId) => {
-
+  const updatePrice = (planId) => {
     const newPrice = prompt("Enter new price");
-
-    await fetch(`/api/plans/${planId}/price`, {
-      method: "PATCH",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ price: newPrice })
-    });
-
-    fetchPlans();
+    if (newPrice) {
+      updatePriceMutate({ id: planId, payload: { price: Number(newPrice) } });
+    }
   };
 
   // ==========================
   // ACTIVATE / DEACTIVATE
   // ==========================
 
-  const togglePlan = async (plan) => {
-
-    await fetch(`/api/plans/${plan._id}`, {
-      method: "PUT",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        isActive: !plan.isActive
-      })
+  const togglePlan = (plan) => {
+    updatePlanMutate({
+      id: plan._id,
+      payload: { isActive: !plan.isActive },
     });
+  };
 
-    fetchPlans();
+  // ==========================
+  // EDIT PLAN
+  // ==========================
+
+  const handleEdit = (plan) => {
+    setEditingPlanId(plan._id);
+    setValue("title", plan.title);
+    setValue("description", plan.description);
+    setValue("durationInDays", plan.durationInDays);
+    setValue("features", plan.features ? plan.features.join(", ") : "");
+    setIsCreateModal(true);
   };
 
   // ==========================
@@ -118,13 +108,10 @@ export default function Premium() {
 
   const getUserCount = (planId) => {
     return userSubs.filter(
-      (sub) => sub.subscriptionId._id === planId
+      (sub) => sub.subscriptionId?._id === planId
     ).length;
   };
 
-  // ==========================
-  // PLAN TABLE
-  // ==========================
 
   const planColumns = [
 
@@ -160,7 +147,7 @@ export default function Premium() {
       render: (_, row) => (
         <div className="flex gap-2">
 
-          <Button size="sm" onClick={() => updatePlan(row._id)}>
+          <Button size="sm" onClick={() => handleEdit(row)}>
             Edit
           </Button>
 
@@ -190,19 +177,19 @@ export default function Premium() {
     {
       key: "email",
       label: "User",
-      render: (_, row) => row.userId.email
+      render: (_, row) => row.userId?.email || "Unknown"
     },
 
     {
       key: "plan",
       label: "Plan",
-      render: (_, row) => row.subscriptionId.title
+      render: (_, row) => row.subscriptionId?.title || "N/A"
     },
 
     {
       key: "price",
       label: "Price",
-      render: (_, row) => `₹${row.priceId.finalPrice}`
+      render: (_, row) => `₹${row.priceId?.finalPrice || 0}`
     },
 
     {
@@ -234,66 +221,76 @@ export default function Premium() {
 
       <div className="admin-section-header">
         <h1 className="admin-page-title">Premium Plans</h1>
-        <Button onClick={() => setIsCreateModal(true)}>
+        <Button onClick={() => {
+          setEditingPlanId(null);
+          reset();
+          setIsCreateModal(true);
+        }}>
           Create Plan
         </Button>
       </div>
 
-      <Table columns={planColumns} data={plans} />
+      <Table columns={planColumns} data={isPlansLoading ? [] : plans} />
 
       <h2 className="admin-page-title mt-10">
         User Subscriptions
       </h2>
 
-      <Table columns={userColumns} data={userSubs} />
+      <Table columns={userColumns} data={isUserSubsLoading ? [] : userSubs} />
 
       {/* CREATE PLAN MODAL */}
 
       <Modal
         isOpen={isCreateModal}
-        onClose={() => setIsCreateModal(false)}
-        title="Create Plan"
+        onClose={() => {
+          setIsCreateModal(false);
+          setEditingPlanId(null);
+          reset();
+        }}
+        title={editingPlanId ? "Edit Plan" : "Create Plan"}
       >
+        <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
+          <div>
+            <input
+              placeholder="Plan Title"
+              className="admin-form-input"
+              {...register("title", { required: "Title is required" })}
+            />
+            {errors.title && <span className="text-red-500 text-xs">{errors.title.message}</span>}
+          </div>
 
-        <div className="space-y-4">
+          <div>
+            <textarea
+              placeholder="Description"
+              className="admin-form-textarea"
+              {...register("description", { required: "Description is required" })}
+            />
+            {errors.description && <span className="text-red-500 text-xs">{errors.description.message}</span>}
+          </div>
 
-          <input
-            placeholder="Plan Title"
-            className="admin-form-input"
-            onChange={(e) =>
-              setFormData({ ...formData, title: e.target.value })
-            }
-          />
+          <div>
+            <input
+              type="number"
+              placeholder="Duration (days)"
+              className="admin-form-input"
+              {...register("durationInDays", { required: "Duration is required" })}
+            />
+            {errors.durationInDays && <span className="text-red-500 text-xs">{errors.durationInDays.message}</span>}
+          </div>
 
-          <textarea
-            placeholder="Description"
-            className="admin-form-textarea"
-            onChange={(e) =>
-              setFormData({ ...formData, description: e.target.value })
-            }
-          />
+          <div>
+            <input
+              placeholder="Features (comma separated)"
+              className="admin-form-input"
+              {...register("features", { required: "Features are required" })}
+            />
+            {errors.features && <span className="text-red-500 text-xs">{errors.features.message}</span>}
+          </div>
 
-          <input
-            placeholder="Duration (days)"
-            className="admin-form-input"
-            onChange={(e) =>
-              setFormData({ ...formData, durationInDays: e.target.value })
-            }
-          />
-
-          <input
-            placeholder="Features (comma separated)"
-            className="admin-form-input"
-            onChange={(e) =>
-              setFormData({ ...formData, features: e.target.value })
-            }
-          />
-
-          <Button className="w-full" onClick={createPlan}>
-            Create Plan
+          <Button type="submit" className="w-full" disabled={isCreating || isUpdating}>
+            {isCreating || isUpdating ? "Saving..." : editingPlanId ? "Update Plan" : "Create Plan"}
           </Button>
-
-        </div>
+        </form>
 
       </Modal>
 
