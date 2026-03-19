@@ -27,12 +27,8 @@ export default function Users() {
     navigate(`/admin/user/${userId}`);
   };
 
-  const handleTempBan = (userId) => {
-    alert(`User ${userId} temporarily banned`);
-  };
-
-  const handlePermaBan = (userId) => {
-    alert(`User ${userId} permanently banned`);
+  const handleBan = (userId) => {
+    alert(`User ${userId} banned`);
   };
 
   if (isLoading || isAdminLoading) {
@@ -107,23 +103,9 @@ export default function Users() {
             Warn
           </Button>
 
-          <Button
-            size="sm"
-            variant="danger"
-            onClick={() => handleTempBan(row.id)}
-          >
-            Temp Ban
+          <Button size="sm" variant="danger" onClick={() => handleBan(row._id)}>
+            Ban
           </Button>
-
-          {isAdmin && (
-            <Button
-              size="sm"
-              variant="danger"
-              onClick={() => handlePermaBan(row.id)}
-            >
-              Perma Ban
-            </Button>
-          )}
         </div>
       ),
     },
