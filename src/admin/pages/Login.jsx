@@ -1,15 +1,30 @@
 import { useForm } from "react-hook-form";
 import { useState } from "react";
-import { LogIn } from "lucide-react";
+import { LogIn, Eye, EyeOff } from "lucide-react";
 import Button from "../components/Button";
 import { useLogin, useVerifyOtp } from "../../hooks/useAuth";
 import "../style/admin.css";
 import "../style/login.css";
 
 export default function Login() {
+  // --- Existing Login States ---
   const [showOtp, setShowOtp] = useState(false);
   const [otp, setOtp] = useState("");
   const [emailForOtp, setEmailForOtp] = useState("");
+
+  // --- Forgot Password States ---
+  const [showForgotPassword, setShowForgotPassword] = useState(false);
+  const [fpStep, setFpStep] = useState(1); // 1: Email, 2: OTP, 3: New Password
+  const [fpEmail, setFpEmail] = useState("");
+  const [fpOtp, setFpOtp] = useState("");
+  const [fpNewPassword, setFpNewPassword] = useState("");
+  const [fpConfirmPassword, setFpConfirmPassword] = useState("");
+  const [fpError, setFpError] = useState("");
+
+  // --- Password Visibility States ---
+  const [showPassword, setShowPassword] = useState(false); // For main login
+  const [showNewPassword, setShowNewPassword] = useState(false); // For FP step 3
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false); // For FP step 3
 
   const {
     register,
@@ -25,6 +40,7 @@ export default function Login() {
 
   const { mutate: verifyOtp, isPending: isVerifyingOtp } = useVerifyOtp();
 
+  // --- Main Login Handlers ---
   const onSubmit = (data) => {
     login(data);
     setEmailForOtp(data.email);
@@ -32,7 +48,62 @@ export default function Login() {
   };
 
   const handleVerifyOtp = async () => {
-    verifyOtp({ email: emailForOtp, otp, otpType: "login"});
+    verifyOtp({ email: emailForOtp, otp, otpType: "login" });
+  };
+
+  // --- Forgot Password Handlers ---
+  const handleSendFpOtp = () => {
+    if (!fpEmail) return setFpError("Please enter your email");
+    setFpError("");
+    // TODO: Yahan Send OTP API call add karein (e.g., sendFpOtpMutation)
+    
+    // API success hone par:
+    setFpStep(2);
+  };
+
+  const handleVerifyFpOtp = () => {
+    if (!fpOtp || fpOtp.length < 6) return setFpError("Please enter a valid 6-digit OTP");
+    setFpError("");
+    // TODO: Yahan Verify OTP API call add karein
+    
+    // API success hone par:
+    setFpStep(3);
+  };
+
+  const handleResetPassword = () => {
+    if (fpNewPassword !== fpConfirmPassword) {
+      return setFpError("Passwords do not match!");
+    }
+    if (fpNewPassword.length < 6) {
+      return setFpError("Password must be at least 6 characters");
+    }
+    setFpError("");
+    
+    // TODO: Yahan Reset Password API call add karein
+    
+    // API success hone par states reset karein:
+    alert("Password reset successfully!");
+    setShowForgotPassword(false);
+    setFpStep(1);
+    setFpEmail("");
+    setFpOtp("");
+    setFpNewPassword("");
+    setFpConfirmPassword("");
+  };
+
+  // --- Common Style for Eye Icon Buttons ---
+  const eyeButtonStyle = {
+    position: 'absolute',
+    right: '12px',
+    top: '50%',
+    transform: 'translateY(-50%)',
+    background: 'none',
+    border: 'none',
+    color: '#ff6b00', // Admin panel theme color
+    cursor: 'pointer',
+    display: 'flex',
+    alignItems: 'center',
+    padding: '0'
   };
 
   return (
@@ -66,7 +137,6 @@ export default function Login() {
 
             <div className="admin-form-group">
               <label className="admin-form-label">Email</label>
-
               <input
                 type="email"
                 {...register("email", { required: true })}
@@ -75,13 +145,34 @@ export default function Login() {
             </div>
 
             <div className="admin-form-group">
-              <label className="admin-form-label">Password</label>
-
-              <input
-                type="password"
-                {...register("password", { required: true })}
-                className="admin-form-input"
-              />
+              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '8px' }}>
+                 <label className="admin-form-label" style={{ marginBottom: 0 }}>Password</label>
+                 {/* Forgot Password Link */}
+                 <button 
+                   type="button" 
+                   onClick={() => setShowForgotPassword(true)}
+                   style={{ background: 'none', border: 'none', color: '#ff6b00', cursor: 'pointer', fontSize: '14px', padding: 0 }}
+                 >
+                   Forgot Password?
+                 </button>
+              </div>
+              
+              {/* Main Login Password Input with Toggle */}
+              <div style={{ position: 'relative' }}>
+                <input
+                  type={showPassword ? "text" : "password"}
+                  {...register("password", { required: true })}
+                  className="admin-form-input"
+                  style={{ paddingRight: '40px', margin: 0 }} 
+                />
+                <button
+                  type="button"
+                  onClick={() => setShowPassword(!showPassword)}
+                  style={eyeButtonStyle}
+                >
+                  {showPassword ? <EyeOff size={20} /> : <Eye size={20} />}
+                </button>
+              </div>
             </div>
 
             <Button
@@ -89,22 +180,21 @@ export default function Login() {
               className="admin-login-button"
               size="lg"
               disabled={isPending}
+              style={{ marginTop: '24px' }}
             >
               Sign In
             </Button>
           </form>
         </div>
 
-        {/* OTP POPUP */}
+        {/* --- MAIN LOGIN OTP POPUP --- */}
         {showOtp && (
           <div className="otp-popup-overlay">
             <div className="otp-popup-card">
               <h3 className="otp-popup-title">Enter Verification Code</h3>
-
               <p className="otp-popup-subtitle">
                 We sent a 6 digit OTP to your email
               </p>
-
               <input
                 type="text"
                 maxLength="6"
@@ -113,7 +203,6 @@ export default function Login() {
                 placeholder="------"
                 className="otp-popup-input"
               />
-
               <button
                 onClick={handleVerifyOtp}
                 className="otp-popup-button"
@@ -124,6 +213,121 @@ export default function Login() {
             </div>
           </div>
         )}
+
+        {/* --- FORGOT PASSWORD MULTI-STEP POPUP --- */}
+        {showForgotPassword && (
+          <div className="otp-popup-overlay">
+            <div className="otp-popup-card" style={{ position: 'relative' }}>
+              {/* Close Modal Button */}
+              <button 
+                onClick={() => {
+                  setShowForgotPassword(false);
+                  setFpStep(1);
+                  setFpError("");
+                }}
+                style={{ position: 'absolute', top: '15px', right: '15px', background: 'none', border: 'none', color: '#fff', cursor: 'pointer', fontSize: '18px' }}
+              >
+                ✕
+              </button>
+
+              <h3 className="otp-popup-title">Reset Password</h3>
+
+              {fpError && (
+                <p style={{ color: 'red', fontSize: '12px', textAlign: 'center', marginBottom: '10px' }}>
+                  {fpError}
+                </p>
+              )}
+
+              {/* STEP 1: Enter Email */}
+              {fpStep === 1 && (
+                <>
+                  <p className="otp-popup-subtitle">Enter your registered email address</p>
+                  <input
+                    type="email"
+                    value={fpEmail}
+                    onChange={(e) => setFpEmail(e.target.value)}
+                    placeholder="admin@kalesh.com"
+                    className="admin-form-input"
+                    style={{ marginBottom: '15px' }}
+                  />
+                  <button onClick={handleSendFpOtp} className="otp-popup-button">
+                    Send OTP
+                  </button>
+                </>
+              )}
+
+              {/* STEP 2: Verify OTP */}
+              {fpStep === 2 && (
+                <>
+                  <p className="otp-popup-subtitle">Enter the 6-digit OTP sent to {fpEmail}</p>
+                  <input
+                    type="text"
+                    maxLength="6"
+                    value={fpOtp}
+                    onChange={(e) => setFpOtp(e.target.value)}
+                    placeholder="------"
+                    className="otp-popup-input"
+                    style={{ marginBottom: '15px' }}
+                  />
+                  <button onClick={handleVerifyFpOtp} className="otp-popup-button">
+                    Verify OTP
+                  </button>
+                </>
+              )}
+
+              {/* STEP 3: Set New Password */}
+              {fpStep === 3 && (
+                <>
+                  <p className="otp-popup-subtitle">Create a new password</p>
+                  
+                  {/* New Password Field with Toggle */}
+                  <div style={{ position: 'relative', marginBottom: '10px' }}>
+                    <input
+                      type={showNewPassword ? "text" : "password"}
+                      value={fpNewPassword}
+                      onChange={(e) => setFpNewPassword(e.target.value)}
+                      placeholder="New Password"
+                      className="admin-form-input"
+                      style={{ paddingRight: '40px', margin: 0 }}
+                    />
+                    <button
+                      type="button"
+                      onClick={() => setShowNewPassword(!showNewPassword)}
+                      style={eyeButtonStyle}
+                    >
+                      {showNewPassword ? <EyeOff size={20} /> : <Eye size={20} />}
+                    </button>
+                  </div>
+
+                  {/* Confirm Password Field with Toggle */}
+                  <div style={{ position: 'relative', marginBottom: '15px' }}>
+                    <input
+                      type={showConfirmPassword ? "text" : "password"}
+                      value={fpConfirmPassword}
+                      onChange={(e) => setFpConfirmPassword(e.target.value)}
+                      placeholder="Confirm Password"
+                      className="admin-form-input"
+                      style={{ paddingRight: '40px', margin: 0 }}
+                    />
+                    <button
+                      type="button"
+                      onClick={() => setShowConfirmPassword(!showConfirmPassword)}
+                      style={eyeButtonStyle}
+                    >
+                      {showConfirmPassword ? <EyeOff size={20} /> : <Eye size={20} />}
+                    </button>
+                  </div>
+
+                  <button onClick={handleResetPassword} className="otp-popup-button">
+                    Create New Password
+                  </button>
+                </>
+              )}
+
+            </div>
+          </div>
+        )}
+
       </div>
     </div>
   );
