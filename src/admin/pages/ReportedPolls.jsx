@@ -3,77 +3,111 @@ import Button from "../components/Button";
 import Table from "../components/Table";
 import "../style/admin.css";
 import "../style/reportedpolls.css";
+import { useGetAllReports, useTakeAction } from "../../hooks/useReports";
 
 export default function ReportedPolls() {
   const [activeTab, setActiveTab] = useState(0);
   const [showInfoModal, setShowInfoModal] = useState(null);
   const [showReportsTable, setShowReportsTable] = useState(null);
 
+  const { mutate: takeAction } = useTakeAction();
+
   const tables = ["polls", "comments", "profiles"];
+  const backendTypes = ["poll", "comment", "user"]; // Maps to activeTab for backend filtering
+
+  const activeType = backendTypes[activeTab];
+  const { data: reportsData, isLoading } = useGetAllReports(activeType);
 
   const handleNext = () => {
     setActiveTab((prev) => (prev + 1) % 3); // circular
   };
 
-  /* ================= MOCK DATA ================= */
+  const handleAction = (id, action) => {
+    takeAction({ id, payload: { action } });
+  };
 
-  const pollsData = [
-    {
-      id: "P001",
-      question: "Worst fashion sense?",
-      username: "user123",
-      totalReports: 45,
-      options: ["A", "B", "C"],
-      image: "https://via.placeholder.com/300",
-      reports: [
-        {
-          reporter: "john",
-          message: "Offensive",
-          createdAt: "2024-01-01",
-        },
-      ],
-    },
-  ];
+  const formatData = () => {
+    if (!reportsData?.data) return [];
+    return reportsData.data.map((group) => {
+      const first = group.reports?.[0] || {};
+      return {
+        _id: group._id, // grouped by targetUserId
+        totalReports: group.reportCount,
+        reports: group.reports,
 
-  const commentsData = [
-    {
-      id: "C001",
-      comment: "This is bad",
-      username: "user456",
-      totalReports: 12,
-      reports: [],
-    },
-  ];
+        // Display fields
+        username: first.targetUserId?.username || "Unknown User",
+        question: first.targetPollId?.text || "Unknown Poll",
+        comment: first.targetCommentId?.text || "Unknown Comment",
 
-  const profilesData = [
-    {
-      id: "U001",
-      username: "toxic_user",
-      anonymousName: "DarkSoul",
-      profilePhoto: "https://via.placeholder.com/100",
-      coverImage: "https://via.placeholder.com/400x150",
-      totalReports: 30,
-      reports: [],
-    },
-  ];
+        // Original objects for info modal
+        targetUser: first.targetUserId,
+        targetPoll: first.targetPollId,
+        targetComment: first.targetCommentId,
+      };
+    });
+  };
+
+  const tableData = formatData();
 
   /* ================= COMMON REPORT TABLE ================= */
 
-  const reportDetailsColumns = [
-    { key: "reporter", label: "Reporter Username" },
-    { key: "message", label: "Message" },
-    { key: "createdAt", label: "Created On" },
+  const getReportDetailsColumns = (tabIndex) => [
+    {
+      key: "reporterId",
+      label: "Reporter Username",
+      render: (reporterId) => reporterId?.username || "Unknown",
+    },
+    { key: "reason", label: "Reason" },
+    {
+      key: "createdAt",
+      label: "Created On",
+      render: (date) => (date ? new Date(date).toLocaleDateString() : "N/A"),
+    },
     {
       key: "actions",
       label: "Action",
-      render: () => (
-        <div className="reported-actions-wrapper">
-          <Button size="sm" variant="success">
-            Approve
+      render: (_, row) => (
+        <div
+          className="reported-actions-wrapper"
+          style={{ display: "flex", gap: "8px", flexWrap: "wrap" }}
+        >
+          <Button
+            size="sm"
+            variant="success"
+            onClick={() => handleAction(row._id || row.id, "approve")}
+          >
+            Approve (Dismiss)
           </Button>
-          <Button size="sm" variant="danger">
-            Remove
-          </Button>
+
+          {tabIndex === 0 || tabIndex === 1 ? (
+            <Button
+              size="sm"
+              variant="danger"
+              onClick={() => handleAction(row._id || row.id, "remove")}
+            >
+              Remove Content
+            </Button>
+          ) : null}
+
+          {tabIndex === 2 ? (
+            <>
+              <Button
+                size="sm"
+                variant="warning"
+                onClick={() => handleAction(row._id || row.id, "warn")}
+              >
+                Warn User
+              </Button>
+              <Button
+                size="sm"
+                variant="danger"
+                onClick={() => handleAction(row._id || row.id, "ban")}
+              >
+                Ban User
+              </Button>
+            </>
+          ) : null}
         </div>
       ),
     },
@@ -126,15 +160,6 @@ export default function ReportedPolls() {
         </Button>
       ),
     },
-    {
-      /* {
-      key: "info",
-      label: "Info",
-      render: (_, row) => (
-        <button className="info-btn">i</button>
-      ),
-    }, */
-    },
   ];
 
   /* ================= PROFILES TABLE ================= */
@@ -180,15 +205,21 @@ export default function ReportedPolls() {
         </button>
       </div>
 
-      {/* TABLE SWITCH */}
-      {activeTab === 0 && <Table columns={pollsColumns} data={pollsData} />}
+      {isLoading && <p style={{ padding: "20px" }}>Loading reports...</p>}
 
-      {activeTab === 1 && (
-        <Table columns={commentsColumns} data={commentsData} />
-      )}
+      {!isLoading && (
+        <>
+          {/* TABLE SWITCH */}
+          {activeTab === 0 && <Table columns={pollsColumns} data={tableData} />}
 
-      {activeTab === 2 && (
-        <Table columns={profilesColumns} data={profilesData} />
+          {activeTab === 1 && (
+            <Table columns={commentsColumns} data={tableData} />
+          )}
+
+          {activeTab === 2 && (
+            <Table columns={profilesColumns} data={tableData} />
+          )}
+        </>
       )}
 
       {/* ================= INFO MODAL ================= */}
@@ -203,64 +234,72 @@ export default function ReportedPolls() {
 
             <div className="admin-modal-body">
               {/* ===== POLL DETAILS ===== */}
-              {showInfoModal.question && (
+              {activeTab === 0 && showInfoModal.targetPoll && (
                 <>
                   <p>
-                    <b>Question:</b> {showInfoModal.question}
+                    <b>Question:</b> {showInfoModal.targetPoll.text}
                   </p>
 
                   <p>
                     <b>Options:</b>
                   </p>
                   <ul>
-                    {showInfoModal.options?.map((opt, i) => (
-                      <li key={i}>{opt}</li>
+                    {showInfoModal.targetPoll.options?.map((opt) => (
+                      <li key={opt._id}>
+                        {opt.text} (Votes: {opt.votes})
+                      </li>
                     ))}
                   </ul>
 
-                  <img
-                    src={showInfoModal.image}
-                    alt=""
-                    style={{ width: "100%", marginTop: "10px" }}
-                  />
+                  {showInfoModal.targetPoll.photo && (
+                    <img
+                      src={showInfoModal.targetPoll.photo}
+                      alt="Poll Media"
+                      style={{ width: "100%", marginTop: "10px" }}
+                    />
+                  )}
                 </>
               )}
 
               {/* ===== PROFILE DETAILS ===== */}
 
-              {showInfoModal.username && showInfoModal.anonymousName && (
+              {activeTab === 2 && showInfoModal.targetUser && (
                 <>
                   <p>
-                    <b>Username:</b> {showInfoModal.username}
+                    <b>Username:</b> {showInfoModal.targetUser.username}
                   </p>
                   <p>
-                    <b>Anonymous Name:</b> {showInfoModal.anonymousName}
+                    <b>Anonymous Name:</b>{" "}
+                    {showInfoModal.targetUser.annonimusName}
                   </p>
 
                   <p>
                     <b>Cover Image:</b>
                   </p>
-                  <img
-                    src={showInfoModal.coverImage}
-                    alt=""
-                    style={{ width: "100%", marginBottom: "10px" }}
-                  />
+                  {showInfoModal.targetUser.coverPicture && (
+                    <img
+                      src={showInfoModal.targetUser.coverPicture}
+                      alt="Cover"
+                      style={{ width: "100%", marginBottom: "10px" }}
+                    />
+                  )}
 
                   <p>
                     <b>Profile Photo:</b>
                   </p>
-                  <img
-                    src={showInfoModal.profilePhoto}
-                    alt=""
-                    style={{ width: "100px", borderRadius: "50%" }}
-                  />
+                  {showInfoModal.targetUser.profilePicture && (
+                    <img
+                      src={showInfoModal.targetUser.profilePicture}
+                      alt="Profile"
+                      style={{ width: "100px", borderRadius: "50%" }}
+                    />
+                  )}
                 </>
               )}
             </div>
           </div>
         </div>
       )}
-      
 
       {/* ================= REPORT TABLE MODAL ================= */}
 
@@ -274,7 +313,7 @@ export default function ReportedPolls() {
 
             <div className="admin-modal-body">
               <Table
-                columns={reportDetailsColumns}
+                columns={getReportDetailsColumns(activeTab)}
                 data={showReportsTable.reports || []}
               />
             </div>
