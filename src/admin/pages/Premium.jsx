@@ -9,6 +9,8 @@ import {
   useUpdatePlan,
   useUpdatePrice,
   useGetSubscribedUsers,
+  useGrantPlan,
+  useRevokePlan,
 } from "../../hooks/useSubscription";
 import "../style/admin.css";
 
@@ -38,6 +40,9 @@ export default function Premium() {
   const { mutate: updatePlanMutate, isPending: isUpdating } = useUpdatePlan();
   const { mutate: updatePriceMutate } = useUpdatePrice();
 
+  const { mutate: grantPlanMutate, isPending: isGranting } = useGrantPlan();
+  const { mutate: revokePlanMutate } = useRevokePlan();
+
   const plans = plansData?.data?.plans || plansData?.plans || [];
   const userSubs =
     userSubsData?.data?.userSubscriptions ||
@@ -64,7 +69,7 @@ export default function Premium() {
             setEditingPlanId(null);
             reset();
           },
-        },
+        }
       );
     } else {
       createPlanMutate(payload, {
@@ -124,16 +129,21 @@ export default function Premium() {
   // ==========================
 
   const handleGrantPremium = () => {
-    console.log("Grant Premium Data:", grantData);
+    const selectedPlan = plans.find((p) => p._id === grantData.plan);
+    const priceId =
+      selectedPlan?.currentPriceId?._id || selectedPlan?.currentPriceId;
 
-    // Future API
-    // grantPremiumMutate(grantData)
+    const payload = {
+      username: grantData.user,
+      subscriptionId: grantData.plan,
+      priceId: priceId,
+    };
 
-    setIsGrantModalOpen(false);
-
-    setGrantData({
-      user: "",
-      plan: "",
+    grantPlanMutate(payload, {
+      onSuccess: () => {
+        setIsGrantModalOpen(false);
+        setGrantData({ user: "", plan: "" });
+      },
     });
   };
 
@@ -199,9 +209,9 @@ export default function Premium() {
 
   const userColumns = [
     {
-      key: "email",
+      key: "username",
       label: "User",
-      render: (_, row) => row.userId?.email || "Unknown",
+      render: (_, row) => row.userId?.username || "Unknown",
     },
 
     {
@@ -242,6 +252,27 @@ export default function Premium() {
       key: "endDate",
       label: "End",
       render: (_, row) => new Date(row.endDate).toLocaleDateString(),
+    },
+    {
+      key: "actions",
+      label: "Actions",
+      render: (_, row) => (
+        <div className="flex gap-2">
+          <Button
+            size="sm"
+            variant="danger"
+            onClick={() => {
+              if (
+                window.confirm("Are you sure you want to revoke this plan?")
+              ) {
+                revokePlanMutate(row._id);
+              }
+            }}
+          >
+            Revoke
+          </Button>
+        </div>
+      ),
     },
   ];
 
@@ -347,8 +378,8 @@ export default function Premium() {
             {isCreating || isUpdating
               ? "Saving..."
               : editingPlanId
-                ? "Update Plan"
-                : "Create Plan"}
+              ? "Update Plan"
+              : "Create Plan"}
           </Button>
         </form>
       </Modal>
@@ -379,23 +410,26 @@ export default function Premium() {
             }
           >
             <option value="">Select Plan</option>
-            <option value="monthly">Monthly</option>
-            <option value="yearly">Yearly</option>
+            {plans.map((plan) => (
+              <option key={plan._id} value={plan._id}>
+                {plan.title}
+              </option>
+            ))}
           </select>
 
           <div className="flex gap-3 justify-end pt-2">
-            { /*<Button
+            {/*<Button
               variant="secondary"
               onClick={() => setIsGrantModalOpen(false)}
             >
               Close
-            </Button> */ }
+            </Button> */}
 
             <Button
               onClick={handleGrantPremium}
-              disabled={!grantData.user || !grantData.plan}
+              disabled={!grantData.user || !grantData.plan || isGranting}
             >
-              Grant
+              {isGranting ? "Granting..." : "Grant"}
             </Button>
           </div>
         </div>

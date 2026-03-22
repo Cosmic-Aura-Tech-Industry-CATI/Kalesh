@@ -22,4 +22,55 @@ export class AppUsersService {
     );
     return res.data;
   }
+
+  /**
+   * Fetches all banned app users from the API.
+   * @returns {Promise<Object>} Resolves with the banned app users data.
+   */
+  static async getBannedUsers() {
+    const res = await axiosInstance.get(
+      API_ENDPOINTS.ADMIN.APP_USER.GET_BANNED_USERS
+    );
+    return res.data;
+  }
+
+  /**
+   * Bans an app user by their id.
+   * @param {string} id - The id of the app user to ban.
+   * @param {Object} [payload] - Optional payload containing the reason for the ban.
+   * @returns {Promise<Object>} Resolves with the response data.
+   */
+  static async banUser(id, payload) {
+    const res = await axiosInstance.patch(
+      API_ENDPOINTS.ADMIN.APP_USER.BAN_USER(id),
+      payload
+    );
+    return res.data;
+  }
+
+  /**
+   * Unbans an app user by their id.
+   * @param {string} id - The id of the app user to unban.
+   * @returns {Promise<Object>} Resolves with the response data.
+   */
+  static async unbanUser(id) {
+    const res = await axiosInstance.patch(
+      API_ENDPOINTS.ADMIN.APP_USER.UNBAN_USER(id)
+    );
+    return res.data;
+  }
+
+  /**
+   * Warns an app user by their id.
+   * @param {string} id - The id of the app user to warn.
+   * @param {Object} payload - The payload containing the warning message/reason.
+   * @returns {Promise<Object>} Resolves with the response data.
+   */
+  static async warnUser(id, payload) {
+    const res = await axiosInstance.patch(
+      API_ENDPOINTS.ADMIN.APP_USER.WARN_USER(id),
+      payload
+    );
+    return res.data;
+  }
 }

@@ -1,39 +1,42 @@
-import { useState } from 'react';
-import Table from '../components/Table';
-import Button from '../components/Button';
-import { mockBannedUsers } from '../data/mockData';
-import '../style/admin.css';
+import Table from "../components/Table";
+import Button from "../components/Button";
+import { useGetBannedUsers, useUnbanUser } from "../../hooks/useAppUsers";
+import "../style/admin.css";
 
 export default function BannedUsers() {
-  const [users] = useState(mockBannedUsers);
+  const { data: usersResponse, isLoading } = useGetBannedUsers();
+  const { mutate: unbanUserMutate } = useUnbanUser();
+
+  const users =
+    usersResponse?.data?.bannedUsers || usersResponse?.bannedUsers || [];
+
+  console.log(users);
 
   const handleUnban = (userId) => {
-    alert(`User ${userId} unbanned`);
+    if (window.confirm("Are you sure you want to unban this user?")) {
+      unbanUserMutate(userId);
+    }
   };
 
   const columns = [
-    { key: 'id', label: 'User ID' },
-    { key: 'username', label: 'Username' },
+    { key: "username", label: "Username" },
+    { key: "email", label: "Email" },
+    { key: "phone", label: "Phone", render: (phone) => phone || "N/A" },
+    { key: "warningCount", label: "Warnings" },
     {
-      key: 'banType',
-      label: 'Ban Type',
-      render: (type) => (
-        <span className={`px-2 py-1 rounded text-xs ${
-          type === 'Permanent' ? 'bg-red-500/20 text-red-400' : 'bg-yellow-500/20 text-yellow-400'
-        }`}>
-          {type}
-        </span>
-      ),
+      key: "updatedAt",
+      label: "Banned On",
+      render: (date) => new Date(date).toLocaleDateString(),
     },
-    { key: 'reason', label: 'Reason' },
-    { key: 'bannedAt', label: 'Banned On' },
-    { key: 'expiryDate', label: 'Expires' },
-    { key: 'bannedBy', label: 'Banned By' },
     {
-      key: 'actions',
-      label: 'Actions',
+      key: "actions",
+      label: "Actions",
       render: (_, row) => (
-        <Button size="sm" variant="success" onClick={() => handleUnban(row.id)}>
+        <Button
+          size="sm"
+          variant="success"
+          onClick={() => handleUnban(row._id || row.id)}
+        >
           Unban
         </Button>
       ),
@@ -45,11 +48,11 @@ export default function BannedUsers() {
       <div className="admin-section-header">
         <h1 className="admin-page-title">Banned Users</h1>
         <div className="text-xs sm:text-sm text-gray-400">
-          {users.length} banned users
+          {isLoading ? "Loading..." : `${users.length} banned users`}
         </div>
       </div>
 
-      <Table columns={columns} data={users} />
+      <Table columns={columns} data={isLoading ? [] : users} />
     </div>
   );
 }

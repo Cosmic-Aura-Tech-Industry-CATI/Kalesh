@@ -2,10 +2,10 @@ import axiosInstance from "../lib/axiosInstace";
 import { API_ENDPOINTS } from "../lib/apiEndpoints";
 
 export class SubscriptionService {
-/**
- * Fetches all subscriptions from the API.
- * @returns {Promise<Array<any>>} Resolves with an array of subscription objects.
- */
+  /**
+   * Fetches all subscriptions from the API.
+   * @returns {Promise<Array<any>>} Resolves with an array of subscription objects.
+   */
   static async getAllPlans() {
     const res = await axiosInstance.get(
       API_ENDPOINTS.ADMIN.SUBSCRIPTION.GET_ALL
@@ -61,6 +61,31 @@ export class SubscriptionService {
   static async getSubscribedUsers() {
     const res = await axiosInstance.get(
       API_ENDPOINTS.ADMIN.SUBSCRIPTION.GET_USERS
+    );
+    return res.data;
+  }
+
+  /**
+   * Grants a subscription plan to a user.
+   * @param {Object} payload - The grant plan data (e.g., userId, planId).
+   * @returns {Promise<Object>} - Resolves with the granted subscription response.
+   */
+  static async grantPlan(payload) {
+    const res = await axiosInstance.post(
+      API_ENDPOINTS.ADMIN.SUBSCRIPTION.GRANT_PLAN,
+      payload
+    );
+    return res.data;
+  }
+
+  /**
+   * Revokes a subscription plan from a user by its id.
+   * @param {string} id - The id of the subscription/user to revoke the plan for.
+   * @returns {Promise<Object>} - Resolves with the revoked subscription response.
+   */
+  static async revokePlan(id) {
+    const res = await axiosInstance.patch(
+      API_ENDPOINTS.ADMIN.SUBSCRIPTION.REVOKE_PLAN_BY_ID(id)
     );
     return res.data;
   }

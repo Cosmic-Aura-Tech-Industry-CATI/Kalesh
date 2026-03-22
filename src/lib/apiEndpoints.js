@@ -36,6 +36,10 @@ export const API_ENDPOINTS = {
     DELETE_BY_ID: (id) => `/jobs/${id}`,
   },
 
+  LOGS: {
+    GET_LOGS: "/logs",
+  },
+
   ADMIN: {
     USER: {
       GET_ALL: "/admin-panel/users",
@@ -51,17 +55,29 @@ export const API_ENDPOINTS = {
       GET_PROFILE: "/admin-panel/me",
     },
 
+    REPORTS: {
+      GET_ALL: "/admin-panel/reports",
+      GET_BY_ID: (id) => `/admin-panel/reports/${id}`,
+      TAKE_ACTION: (id) => `/admin-panel/reports/${id}/action`,
+    },
+
     SUBSCRIPTION: {
       GET_ALL: "/admin-panel/subscriptions",
       CREATE: "/admin-panel/subscriptions",
       UPDATE_PRICE_BY_ID: (id) => `/admin-panel/subscriptions/${id}/price`,
       UPDATE_BY_ID: (id) => `/admin-panel/subscriptions/${id}`,
-      GET_USERS: "/admin-panel/subscriptions/users"
+      GET_USERS: "/admin-panel/subscriptions/users",
+      GRANT_PLAN: `/admin-panel/subscriptions/grant`,
+      REVOKE_PLAN_BY_ID: (id) => `/admin-panel/subscriptions/${id}/revoke`,
     },
 
     APP_USER: {
       GET_ALL: "/admin-panel/app-users",
       GET_BY_ID: (id) => `/admin-panel/app-users/${id}`,
+      GET_BANNED_USERS: "/admin-panel/app-users/banned",
+      BAN_USER: (id) => `/admin-panel/app-users/${id}/ban`,
+      UNBAN_USER: (id) => `/admin-panel/app-users/${id}/unban`,
+      WARN_USER: (id) => `/admin-panel/app-users/${id}/warn`,
     },
   },
 };

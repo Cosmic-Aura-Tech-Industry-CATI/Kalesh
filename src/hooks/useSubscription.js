@@ -44,7 +44,8 @@ export const useUpdatePlan = () => {
   const queryClient = useQueryClient();
 
   return useMutation({
-    mutationFn: ({ id, payload }) => SubscriptionService.updatePlan(id, payload),
+    mutationFn: ({ id, payload }) =>
+      SubscriptionService.updatePlan(id, payload),
     onSuccess: () => {
       queryClient.invalidateQueries({
         queryKey: ["subscription-plans"],
@@ -66,7 +67,8 @@ export const useUpdatePrice = () => {
   const queryClient = useQueryClient();
 
   return useMutation({
-    mutationFn: ({ id, payload }) => SubscriptionService.updatePrice(id, payload),
+    mutationFn: ({ id, payload }) =>
+      SubscriptionService.updatePrice(id, payload),
     onSuccess: () => {
       queryClient.invalidateQueries({
         queryKey: ["subscription-plans"],
@@ -88,5 +90,51 @@ export const useGetSubscribedUsers = () => {
   return useQuery({
     queryKey: ["subscribed-users"],
     queryFn: SubscriptionService.getSubscribedUsers,
+  });
+};
+
+/**
+ * A hook that grants a subscription plan to a user.
+ * Invalidates the "subscribed-users" cache and shows a toast on success.
+ * @returns {UseMutationResult} - The result of the useMutation hook.
+ */
+export const useGrantPlan = () => {
+  const queryClient = useQueryClient();
+
+  return useMutation({
+    mutationFn: (payload) => SubscriptionService.grantPlan(payload),
+    onSuccess: () => {
+      queryClient.invalidateQueries({
+        queryKey: ["subscribed-users"],
+      });
+      toastSuccess("Plan granted successfully");
+    },
+    onError: (err) => {
+      toastError(err?.response?.data?.message || "Failed to grant plan");
+      console.error(err);
+    },
+  });
+};
+
+/**
+ * A hook that revokes a subscription plan from a user by their ID.
+ * Invalidates the "subscribed-users" cache and shows a toast on success.
+ * @returns {UseMutationResult} - The result of the useMutation hook.
+ */
+export const useRevokePlan = () => {
+  const queryClient = useQueryClient();
+
+  return useMutation({
+    mutationFn: (id) => SubscriptionService.revokePlan(id),
+    onSuccess: () => {
+      queryClient.invalidateQueries({
+        queryKey: ["subscribed-users"],
+      });
+      toastSuccess("Plan revoked successfully");
+    },
+    onError: (err) => {
+      toastError(err?.response?.data?.message || "Failed to revoke plan");
+      console.error(err);
+    },
   });
 };
