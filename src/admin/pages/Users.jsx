@@ -2,7 +2,11 @@ import { useNavigate } from "react-router-dom";
 
 import Table from "../components/Table";
 import Button from "../components/Button";
-import { useGetAllAppUsers } from "../../hooks/useAppUsers";
+import {
+  useGetAllAppUsers,
+  useBanUser,
+  useWarnUser,
+} from "../../hooks/useAppUsers";
 import { useMe } from "../../hooks/useAdmins";
 import "../style/admin.css";
 
@@ -10,12 +14,18 @@ export default function Users() {
   const navigate = useNavigate();
   const { data: users = [], isLoading } = useGetAllAppUsers();
 
+  const { mutate: warnUser } = useWarnUser();
+  const { mutate: banUser } = useBanUser();
+
   const { data: adminResponse, isLoading: isAdminLoading } = useMe();
   const adminData = adminResponse?.data || adminResponse;
   const isAdmin = adminData?.role === "admin";
 
   const handleWarn = (userId) => {
-    alert(`Warning sent to user ${userId}`);
+    const reason = window.prompt("Enter warning reason:");
+    if (reason) {
+      warnUser({ id: userId, payload: { reason } });
+    }
   };
 
   const handleView = (userId) => {
@@ -28,7 +38,10 @@ export default function Users() {
   };
 
   const handleBan = (userId) => {
-    alert(`User ${userId} banned`);
+    const reason = window.prompt("Enter ban reason:");
+    if (reason) {
+      banUser({ id: userId, payload: { reason } });
+    }
   };
 
   if (isLoading || isAdminLoading) {
@@ -56,8 +69,8 @@ export default function Users() {
             status === "Active"
               ? "bg-green-500/20 text-green-400"
               : status === "Warned"
-                ? "bg-yellow-500/20 text-yellow-400"
-                : "bg-red-500/20 text-red-400"
+              ? "bg-yellow-500/20 text-yellow-400"
+              : "bg-red-500/20 text-red-400"
           }`}
         >
           {status}
@@ -98,12 +111,16 @@ export default function Users() {
           <Button
             size="sm"
             variant="warning"
-            onClick={() => handleWarn(row.id)}
+            onClick={() => handleWarn(row._id || row.id)}
           >
             Warn
           </Button>
 
-          <Button size="sm" variant="danger" onClick={() => handleBan(row._id)}>
+          <Button
+            size="sm"
+            variant="danger"
+            onClick={() => handleBan(row._id || row.id)}
+          >
             Ban
           </Button>
         </div>
