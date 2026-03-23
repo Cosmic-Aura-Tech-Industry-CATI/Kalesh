@@ -35,6 +35,45 @@ export class AuthService {
   }
 
   /**
+   * Requests a password reset link or OTP.
+   * @param {Object} payload - The payload containing the user's email.
+   * @returns {Promise<Object>} - Resolves with the response from the API.
+   */
+  static async forgetPassword(payload) {
+    const res = await axiosInstance.post(
+      API_ENDPOINTS.AUTH.FORGET_PASSWORD,
+      payload
+    );
+    return res.data;
+  }
+
+  /**
+   * Resets the user's password.
+   * @param {Object} payload - The payload containing the new password and reset token/OTP.
+   * @returns {Promise<Object>} - Resolves with the response from the API.
+   */
+  static async resetPassword(payload) {
+    const res = await axiosInstance.post(
+      API_ENDPOINTS.AUTH.RESET_PASSWORD,
+      payload
+    );
+    return res.data;
+  }
+
+  /**
+   * Changes the current user's password.
+   * @param {Object} payload - The payload containing the old and new passwords.
+   * @returns {Promise<Object>} - Resolves with the response from the API.
+   */
+  static async changePassword(payload) {
+    const res = await axiosInstance.patch(
+      API_ENDPOINTS.AUTH.CHANGE_PASSWORD,
+      payload
+    );
+    return res.data;
+  }
+
+  /**
    * Logs out the currently logged in user
    */
   static async logout() {

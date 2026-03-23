@@ -11,6 +11,8 @@ import { useGetApplicationsByJobId } from "../../hooks/useApplication";
 import "../style/admin.css";
 import "../style/adminJobs.css";
 import ApplicationTable from "../components/ApplicationTable";
+import { useToggleJobStatus } from "../../hooks/useJobs";
+import { Power } from "lucide-react";
 
 const JobApplicationCount = ({ jobId }) => {
   const { data, isLoading } = useGetApplicationsByJobId(jobId);
@@ -24,6 +26,7 @@ export default function JobsPosting() {
   const { mutate: createJob, isPending: isCreating } = useCreateJob();
   const { mutate: updateJob, isPending: isUpdating } = useUpdateJob();
   const { mutate: deleteJob } = useDeleteJob();
+  const { mutate: toggleJobStatus } = useToggleJobStatus();
 
   const jobs = jobsData?.data || [];
 
@@ -51,9 +54,21 @@ export default function JobsPosting() {
 
   // ================= SUBMIT =================
   const onSubmit = (data) => {
+    const payload = {
+      ...data,
+      skill:
+        typeof data.skill === "string"
+          ? data.skill
+              .split(",")
+              .map((s) => s.trim())
+              .filter(Boolean)
+          : data.skill,
+      applicationDuration: Number(data.applicationDuration),
+    };
+
     if (editingJob) {
       updateJob(
-        { ...data, id: editingJob._id || editingJob.id },
+        { ...payload, id: editingJob._id || editingJob.id },
         {
           onSuccess: () => {
             setShowForm(false);
@@ -63,7 +78,7 @@ export default function JobsPosting() {
         },
       );
     } else {
-      createJob(data, {
+      createJob(payload, {
         onSuccess: () => {
           setShowForm(false);
           reset();
@@ -92,9 +107,16 @@ export default function JobsPosting() {
       Array.isArray(job.skill) ? job.skill.join(", ") : job.skill,
     );
     setValue("experience", job.experience);
-    setValue("duration", job.duration);
+    setValue("applicationDuration", job.applicationDuration);
     setValue("type", job.type);
     setShowForm(true);
+  };
+
+  const handleToggleStatus = (job) => {
+    toggleJobStatus({
+      id: job._id || job.id,
+      isActive: job.isActive,
+    });
   };
 
   const toggleDescription = (jobKey) => {
@@ -248,7 +270,7 @@ export default function JobsPosting() {
 
             <select
               className="admin-form-select"
-              {...register("duration", {
+              {...register("applicationDuration", {
                 required: "Job Duration is required",
               })}
             >
@@ -260,9 +282,9 @@ export default function JobsPosting() {
               <option value="60">60 Days</option>
             </select>
 
-            {errors.duration && (
+            {errors.applicationDuration && (
               <span className="text-red-500 text-xs">
-                {errors.duration.message}
+                {errors.applicationDuration.message}
               </span>
             )}
           </div>
@@ -320,6 +342,7 @@ export default function JobsPosting() {
                 <th>Skill</th>
                 <th>Experience</th>
                 <th>Expiry</th>
+                <th className="w-[120px] text-center">Status</th>
                 <th>Applicants</th>
                 <th>Actions</th>
               </tr>
@@ -364,46 +387,77 @@ export default function JobsPosting() {
 
                     <td>{getDaysLeft(job.expiryDate)}</td>
 
+                    {/* ✅ STATUS COLUMN */}
+                    <td className="text-center">
+                      {job.isActive ? (
+                        <span className="inline-block px-4 py-1.5 text-sm font-semibold rounded-full bg-green-500/20 text-green-400 border border-green-400 whitespace-nowrap">
+                          Active
+                        </span>
+                      ) : (
+                        <span className="inline-block px-4 py-1.5 text-sm font-semibold rounded-full bg-red-500/20 text-red-400 border border-red-400 whitespace-nowrap">
+                          Inactive
+                        </span>
+                      )}
+                    </td>
+
                     <td>
                       <JobApplicationCount jobId={job._id || job.id} />
                     </td>
 
-                    <td className="flex gap-2">
-                      {/* EDIT */}
-                      <button
-                        type="button"
-                        className="admin-btn-secondary"
-                        onClick={() => handleEdit(job)}
-                      >
-                        <Edit size={16} />
-                      </button>
+                    <td>
+                      <div className="flex items-center justify-center gap-2 h-full">
+                        {/* EDIT */}
+                        <button
+                          type="button"
+                          className="admin-btn-secondary"
+                          onClick={() => handleEdit(job)}
+                        >
+                          <Edit size={16} />
+                        </button>
 
-                      {/* DELETE */}
-                      <button
-                        type="button"
-                        className="admin-btn-danger"
-                        onClick={() => handleDelete(job._id || job.id)}
-                      >
-                        <Trash2 size={16} />
-                      </button>
+                        {/* DELETE */}
+                        <button
+                          type="button"
+                          className="admin-btn-danger"
+                          onClick={() => handleDelete(job._id || job.id)}
+                        >
+                          <Trash2 size={16} />
+                        </button>
 
-                      {/* INFO */}
-                      <button
-                        type="button"
-                        className="admin-btn-secondary"
-                        onClick={() => {
-                          setSelectedJob(job);
-                          setShowApplicantsModal(true);
-                        }}
-                      >
-                        <Info size={16} />
-                      </button>
+                        {/* INFO */}
+                        <button
+                          type="button"
+                          className="admin-btn-secondary"
+                          onClick={() => {
+                            setSelectedJob(job);
+                            setShowApplicantsModal(true);
+                          }}
+                        >
+                          <Info size={16} />
+                        </button>
+
+                        {/* TOGGLE ACTIVE */}
+                        <button
+                          type="button"
+                          className={`px-3 py-2 rounded-lg border transition-all duration-300 transform hover:scale-110 ${
+                            job.isActive
+                              ? "bg-green-500/20 text-green-400 border-green-400 hover:bg-green-500 hover:text-white hover:shadow-[0_0_20px_rgba(34,197,94,1)]"
+                              : "bg-gray-700 text-gray-300 border-gray-500 hover:bg-gray-600 hover:text-white"
+                          }`}
+                          onClick={() => handleToggleStatus(job)}
+                        >
+                          <Power
+                            className="transition-transform duration-300 group-hover:rotate-180"
+                            size={16}
+                          />
+                        </button>
+                      </div>
                     </td>
                   </tr>
                 ))
               ) : (
                 <tr>
-                  <td colSpan="8" className="text-center text-gray-400 py-4">
+                  <td colSpan="9" className="text-center text-gray-400 py-4">
                     No jobs found
                   </td>
                 </tr>

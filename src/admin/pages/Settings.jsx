@@ -2,6 +2,8 @@ import { useState } from "react";
 import Button from "../components/Button";
 import { mockSettings } from "../data/mockData";
 import "../style/admin.css";
+import { toastError, toastSuccess, toastWarning } from "../../lib/toast";
+import { useChangePassword } from "../../hooks/useAuth";
 
 export default function Settings() {
   const [reportCategories, setReportCategories] = useState(
@@ -12,40 +14,41 @@ export default function Settings() {
     mockSettings.maintenanceMode,
   );
 
-  const [email, setEmail] = useState("");
   const [oldPassword, setOldPassword] = useState("");
-  const [verified, setVerified] = useState(false);
   const [newPassword, setNewPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
 
-  const handleVerify = () => {
-    if (!email || !oldPassword) {
-      alert("Please enter email and old password");
-      return;
-    }
+  const [showPasswordForm, setShowPasswordForm] = useState(false);
 
-    // API verification yaha lagega
-    setVerified(true);
-  };
+  const { mutate: changePassword, isPending: isChangingPassword } = useChangePassword();
 
   const handleChangePassword = () => {
-    if (newPassword !== confirmPassword) {
-      alert("New passwords do not match");
+    if (!oldPassword || !newPassword || !confirmPassword) {
+      toastWarning("All fields are required");
       return;
     }
 
-    // API call here
-    alert("Your password is successfully updated");
+    if (newPassword !== confirmPassword) {
+      toastError("New passwords do not match");
+      return;
+    }
 
-    setEmail("");
-    setOldPassword("");
-    setNewPassword("");
-    setConfirmPassword("");
-    setVerified(false);
+    changePassword(
+      { oldPassword, newPassword },
+      {
+        onSuccess: () => {
+          // reset fields
+          setOldPassword("");
+          setNewPassword("");
+          setConfirmPassword("");
+          setShowPasswordForm(false);
+        },
+      }
+    );
   };
 
   const handleSave = () => {
-    alert("Settings saved successfully");
+    toastSuccess("Settings saved successfully");
   };
 
   return (
@@ -98,40 +101,32 @@ export default function Settings() {
         </div>
 
         <div className="admin-card">
-          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">
-            Change Admin Password
-          </h2>
+          <div className="flex items-center justify-between">
+            <h2 className="text-lg sm:text-xl font-semibold text-white">
+              Change Admin Password
+            </h2>
 
-          {/* Email */}
-          <div className="mb-4">
-            <label className="admin-form-label">Admin Email</label>
-            <input
-              type="email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              className="admin-form-input"
-              placeholder="Enter your admin email"
-            />
+            <Button onClick={() => setShowPasswordForm(!showPasswordForm)}>
+              {showPasswordForm ? "Close" : "Change Password"}
+            </Button>
           </div>
 
-          {/* Old Password */}
-          <div className="mb-4">
-            <label className="admin-form-label">Old Password</label>
-            <input
-              type="password"
-              value={oldPassword}
-              onChange={(e) => setOldPassword(e.target.value)}
-              className="admin-form-input"
-              placeholder="Enter old password"
-            />
-          </div>
+          {showPasswordForm && (
+            <div className="mt-4">
+              {/* Old Password */}
+              <div className="mb-4">
+                <label className="admin-form-label">Old Password</label>
+                <input
+                  type="password"
+                  value={oldPassword}
+                  onChange={(e) => setOldPassword(e.target.value)}
+                  className="admin-form-input"
+                  placeholder="Enter old password"
+                />
+              </div>
 
-          {!verified && <Button onClick={handleVerify}>Verify</Button>}
-
-          {/* After verification */}
-          {verified && (
-            <>
-              <div className="mt-4">
+              {/* New Password */}
+              <div className="mb-4">
                 <label className="admin-form-label">New Password</label>
                 <input
                   type="password"
@@ -142,8 +137,9 @@ export default function Settings() {
                 />
               </div>
 
-              <div className="mt-4">
-                <label className="admin-form-label">Confirm New Password</label>
+              {/* Confirm Password */}
+              <div className="mb-4">
+                <label className="admin-form-label">Confirm Password</label>
                 <input
                   type="password"
                   value={confirmPassword}
@@ -153,10 +149,10 @@ export default function Settings() {
                 />
               </div>
 
-              <div className="mt-4">
-                <Button onClick={handleChangePassword}>Change Password</Button>
-              </div>
-            </>
+              <Button onClick={handleChangePassword} disabled={isChangingPassword}>
+                {isChangingPassword ? "Submitting..." : "Submit"}
+              </Button>
+            </div>
           )}
         </div>
 
