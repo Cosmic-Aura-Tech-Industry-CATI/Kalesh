@@ -131,3 +131,14 @@ export const useDeleteJob = () => {
     },
   });
 };
+
+export const useToggleJobStatus = () => {
+  return useMutation({
+    mutationFn: ({ id, isActive }) =>
+      api.patch(`/api/v1/jobs/${id}/status`, { isActive }),
+
+    onSuccess: () => {
+      queryClient.invalidateQueries(["admin-jobs"]);
+    },
+  });
+};
