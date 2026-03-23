@@ -12,36 +12,45 @@ export default function Settings() {
     mockSettings.maintenanceMode,
   );
 
-  const [email, setEmail] = useState("");
   const [oldPassword, setOldPassword] = useState("");
-  const [verified, setVerified] = useState(false);
   const [newPassword, setNewPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
 
-  const handleVerify = () => {
-    if (!email || !oldPassword) {
-      alert("Please enter email and old password");
+  const [showPasswordForm, setShowPasswordForm] = useState(false);
+
+  const handleChangePassword = async () => {
+    if (!oldPassword || !newPassword || !confirmPassword) {
+      alert("All fields are required");
       return;
     }
 
-    // API verification yaha lagega
-    setVerified(true);
-  };
-
-  const handleChangePassword = () => {
     if (newPassword !== confirmPassword) {
       alert("New passwords do not match");
       return;
     }
 
-    // API call here
-    alert("Your password is successfully updated");
+    try {
+      // 🔥 Backend API call
+      await fetch("/api/v1/admin/change-password", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          oldPassword,
+          newPassword,
+        }),
+      });
 
-    setEmail("");
-    setOldPassword("");
-    setNewPassword("");
-    setConfirmPassword("");
-    setVerified(false);
+      alert("Your password is successfully updated");
+
+      // reset fields
+      setOldPassword("");
+      setNewPassword("");
+      setConfirmPassword("");
+    } catch (error) {
+      alert("Something went wrong");
+    }
   };
 
   const handleSave = () => {
@@ -98,40 +107,32 @@ export default function Settings() {
         </div>
 
         <div className="admin-card">
-          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">
-            Change Admin Password
-          </h2>
+          <div className="flex items-center justify-between">
+            <h2 className="text-lg sm:text-xl font-semibold text-white">
+              Change Admin Password
+            </h2>
 
-          {/* Email */}
-          <div className="mb-4">
-            <label className="admin-form-label">Admin Email</label>
-            <input
-              type="email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              className="admin-form-input"
-              placeholder="Enter your admin email"
-            />
+            <Button onClick={() => setShowPasswordForm(!showPasswordForm)}>
+              {showPasswordForm ? "Close" : "Change Password"}
+            </Button>
           </div>
 
-          {/* Old Password */}
-          <div className="mb-4">
-            <label className="admin-form-label">Old Password</label>
-            <input
-              type="password"
-              value={oldPassword}
-              onChange={(e) => setOldPassword(e.target.value)}
-              className="admin-form-input"
-              placeholder="Enter old password"
-            />
-          </div>
+          {showPasswordForm && (
+            <div className="mt-4">
+              {/* Old Password */}
+              <div className="mb-4">
+                <label className="admin-form-label">Old Password</label>
+                <input
+                  type="password"
+                  value={oldPassword}
+                  onChange={(e) => setOldPassword(e.target.value)}
+                  className="admin-form-input"
+                  placeholder="Enter old password"
+                />
+              </div>
 
-          {!verified && <Button onClick={handleVerify}>Verify</Button>}
-
-          {/* After verification */}
-          {verified && (
-            <>
-              <div className="mt-4">
+              {/* New Password */}
+              <div className="mb-4">
                 <label className="admin-form-label">New Password</label>
                 <input
                   type="password"
@@ -142,8 +143,9 @@ export default function Settings() {
                 />
               </div>
 
-              <div className="mt-4">
-                <label className="admin-form-label">Confirm New Password</label>
+              {/* Confirm Password */}
+              <div className="mb-4">
+                <label className="admin-form-label">Confirm Password</label>
                 <input
                   type="password"
                   value={confirmPassword}
@@ -153,10 +155,8 @@ export default function Settings() {
                 />
               </div>
 
-              <div className="mt-4">
-                <Button onClick={handleChangePassword}>Change Password</Button>
-              </div>
-            </>
+              <Button onClick={handleChangePassword}>Submit</Button>
+            </div>
           )}
         </div>
 
