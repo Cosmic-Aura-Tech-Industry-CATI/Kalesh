@@ -129,6 +129,7 @@ export default function JobsPosting() {
     return days > 0 ? `${days} days left` : "Expired";
   };
 
+  
   return (
     <div className="jobs-posting-page admin-section">
       <div className="admin-section-header">
