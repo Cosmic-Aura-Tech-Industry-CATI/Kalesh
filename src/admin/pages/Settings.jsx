@@ -2,6 +2,8 @@ import { useState } from "react";
 import Button from "../components/Button";
 import { mockSettings } from "../data/mockData";
 import "../style/admin.css";
+import { toastError, toastSuccess, toastWarning } from "../../lib/toast";
+import { useChangePassword } from "../../hooks/useAuth";
 
 export default function Settings() {
   const [reportCategories, setReportCategories] = useState(
@@ -18,43 +20,35 @@ export default function Settings() {
 
   const [showPasswordForm, setShowPasswordForm] = useState(false);
 
-  const handleChangePassword = async () => {
+  const { mutate: changePassword, isPending: isChangingPassword } = useChangePassword();
+
+  const handleChangePassword = () => {
     if (!oldPassword || !newPassword || !confirmPassword) {
-      alert("All fields are required");
+      toastWarning("All fields are required");
       return;
     }
 
     if (newPassword !== confirmPassword) {
-      alert("New passwords do not match");
+      toastError("New passwords do not match");
       return;
     }
 
-    try {
-      // 🔥 Backend API call
-      await fetch("/api/v1/admin/change-password", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
+    changePassword(
+      { oldPassword, newPassword },
+      {
+        onSuccess: () => {
+          // reset fields
+          setOldPassword("");
+          setNewPassword("");
+          setConfirmPassword("");
+          setShowPasswordForm(false);
         },
-        body: JSON.stringify({
-          oldPassword,
-          newPassword,
-        }),
-      });
-
-      alert("Your password is successfully updated");
-
-      // reset fields
-      setOldPassword("");
-      setNewPassword("");
-      setConfirmPassword("");
-    } catch (error) {
-      alert("Something went wrong");
-    }
+      }
+    );
   };
 
   const handleSave = () => {
-    alert("Settings saved successfully");
+    toastSuccess("Settings saved successfully");
   };
 
   return (
@@ -155,7 +149,9 @@ export default function Settings() {
                 />
               </div>
 
-              <Button onClick={handleChangePassword}>Submit</Button>
+              <Button onClick={handleChangePassword} disabled={isChangingPassword}>
+                {isChangingPassword ? "Submitting..." : "Submit"}
+              </Button>
             </div>
           )}
         </div>

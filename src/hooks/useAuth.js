@@ -1,7 +1,7 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { AuthService } from "../services/auth.service";
 import { useNavigate } from "react-router-dom";
-import { toastSuccess } from "../lib/toast";
+import { toastSuccess, toastError } from "../lib/toast";
 
 /**
  * useLogin hook
@@ -38,6 +38,69 @@ export const useLogin = () => {
 };
 
 /**
+ * useForgetPassword hook
+ *
+ * A hook that wraps the useMutation hook from react-query.
+ * It is used to request a password reset link or OTP.
+ *
+ * @returns {UseMutationResult} - The result of the useMutation hook.
+ */
+export const useForgetPassword = () => {
+  return useMutation({
+    mutationFn: (payload) => AuthService.forgetPassword(payload),
+    onSuccess: () => {
+      toastSuccess("Password reset instructions sent successfully");
+    },
+    onError: (error) => {
+      toastError(error.response?.data?.message || "Failed to send reset instructions");
+      console.error("Forget password failed:", error);
+    },
+  });
+};
+
+/**
+ * useResetPassword hook
+ *
+ * A hook that wraps the useMutation hook from react-query.
+ * It is used to reset the user's password using a token or OTP.
+ *
+ * @returns {UseMutationResult} - The result of the useMutation hook.
+ */
+export const useResetPassword = () => {
+  return useMutation({
+    mutationFn: (payload) => AuthService.resetPassword(payload),
+    onSuccess: () => {
+      toastSuccess("Password reset successfully");
+    },
+    onError: (error) => {
+      toastError(error.response?.data?.message || "Failed to reset password");
+      console.error("Reset password failed:", error);
+    },
+  });
+};
+
+/**
+ * useChangePassword hook
+ *
+ * A hook that wraps the useMutation hook from react-query.
+ * It is used to change the currently logged-in user's password.
+ *
+ * @returns {UseMutationResult} - The result of the useMutation hook.
+ */
+export const useChangePassword = () => {
+  return useMutation({
+    mutationFn: (payload) => AuthService.changePassword(payload),
+    onSuccess: () => {
+      toastSuccess("Password changed successfully");
+    },
+    onError: (error) => {
+      toastError(error.response?.data?.message || "Failed to change password");
+      console.error("Change password failed:", error);
+    },
+  });
+};
+
+/**
  * useVerifyOtp hook
  *
  * A hook that wraps the useMutation hook from react-query.
@@ -59,7 +122,6 @@ export const useVerifyOtp = () => {
      */
     onSuccess: (data) => {
       queryClient.setQueryData(["user"], data);
-      navigate("/admin/dashboard");
       toastSuccess("OTP verified successfully");
     },
     /**

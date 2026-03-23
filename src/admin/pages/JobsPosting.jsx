@@ -51,9 +51,15 @@ export default function JobsPosting() {
 
   // ================= SUBMIT =================
   const onSubmit = (data) => {
+    const payload = {
+      ...data,
+      skill: typeof data.skill === "string" ? data.skill.split(",").map((s) => s.trim()).filter(Boolean) : data.skill,
+      applicationDuration: Number(data.applicationDuration),
+    };
+
     if (editingJob) {
       updateJob(
-        { ...data, id: editingJob._id || editingJob.id },
+        { ...payload, id: editingJob._id || editingJob.id },
         {
           onSuccess: () => {
             setShowForm(false);
@@ -63,7 +69,7 @@ export default function JobsPosting() {
         },
       );
     } else {
-      createJob(data, {
+      createJob(payload, {
         onSuccess: () => {
           setShowForm(false);
           reset();
@@ -92,7 +98,7 @@ export default function JobsPosting() {
       Array.isArray(job.skill) ? job.skill.join(", ") : job.skill,
     );
     setValue("experience", job.experience);
-    setValue("duration", job.duration);
+    setValue("applicationDuration", job.applicationDuration);
     setValue("type", job.type);
     setShowForm(true);
   };
@@ -248,7 +254,7 @@ export default function JobsPosting() {
 
             <select
               className="admin-form-select"
-              {...register("duration", {
+              {...register("applicationDuration", {
                 required: "Job Duration is required",
               })}
             >
@@ -260,9 +266,9 @@ export default function JobsPosting() {
               <option value="60">60 Days</option>
             </select>
 
-            {errors.duration && (
+            {errors.applicationDuration && (
               <span className="text-red-500 text-xs">
-                {errors.duration.message}
+                {errors.applicationDuration.message}
               </span>
             )}
           </div>

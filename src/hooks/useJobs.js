@@ -45,7 +45,7 @@ export const useCreateJob = () => {
      */
     onSuccess: () => {
       queryClient.invalidateQueries({
-        queryKey: ["jobs"],
+        queryKey: ["admin-jobs"],
       });
       toastSuccess("Job created successfully");
     },
@@ -79,7 +79,7 @@ export const useUpdateJob = () => {
      */
     onSuccess: () => {
       queryClient.invalidateQueries({
-        queryKey: ["jobs"],
+        queryKey: ["admin-jobs"],
       });
       toastSuccess("Job updated successfully");
     },
