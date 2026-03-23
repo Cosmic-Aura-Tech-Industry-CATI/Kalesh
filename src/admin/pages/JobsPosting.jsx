@@ -56,7 +56,13 @@ export default function JobsPosting() {
   const onSubmit = (data) => {
     const payload = {
       ...data,
-      skill: typeof data.skill === "string" ? data.skill.split(",").map((s) => s.trim()).filter(Boolean) : data.skill,
+      skill:
+        typeof data.skill === "string"
+          ? data.skill
+              .split(",")
+              .map((s) => s.trim())
+              .filter(Boolean)
+          : data.skill,
       applicationDuration: Number(data.applicationDuration),
     };
 
@@ -129,7 +135,6 @@ export default function JobsPosting() {
     return days > 0 ? `${days} days left` : "Expired";
   };
 
-  
   return (
     <div className="jobs-posting-page admin-section">
       <div className="admin-section-header">
@@ -399,52 +404,54 @@ export default function JobsPosting() {
                       <JobApplicationCount jobId={job._id || job.id} />
                     </td>
 
-                    <td className="flex gap-2">
-                      {/* EDIT */}
-                      <button
-                        type="button"
-                        className="admin-btn-secondary"
-                        onClick={() => handleEdit(job)}
-                      >
-                        <Edit size={16} />
-                      </button>
+                    <td>
+                      <div className="flex items-center justify-center gap-2 h-full">
+                        {/* EDIT */}
+                        <button
+                          type="button"
+                          className="admin-btn-secondary"
+                          onClick={() => handleEdit(job)}
+                        >
+                          <Edit size={16} />
+                        </button>
 
-                      {/* DELETE */}
-                      <button
-                        type="button"
-                        className="admin-btn-danger"
-                        onClick={() => handleDelete(job._id || job.id)}
-                      >
-                        <Trash2 size={16} />
-                      </button>
+                        {/* DELETE */}
+                        <button
+                          type="button"
+                          className="admin-btn-danger"
+                          onClick={() => handleDelete(job._id || job.id)}
+                        >
+                          <Trash2 size={16} />
+                        </button>
 
-                      {/* INFO */}
-                      <button
-                        type="button"
-                        className="admin-btn-secondary"
-                        onClick={() => {
-                          setSelectedJob(job);
-                          setShowApplicantsModal(true);
-                        }}
-                      >
-                        <Info size={16} />
-                      </button>
+                        {/* INFO */}
+                        <button
+                          type="button"
+                          className="admin-btn-secondary"
+                          onClick={() => {
+                            setSelectedJob(job);
+                            setShowApplicantsModal(true);
+                          }}
+                        >
+                          <Info size={16} />
+                        </button>
 
-                      {/* TOGGLE ACTIVE */}
-                      <button
-                        type="button"
-                        className={`px-3 py-2 rounded-lg border transition-all duration-300 transform hover:scale-110 ${
-                          job.isActive
-                            ? "bg-green-500/20 text-green-400 border-green-400 hover:bg-green-500 hover:text-white hover:shadow-[0_0_20px_rgba(34,197,94,1)]"
-                            : "bg-gray-700 text-gray-300 border-gray-500 hover:bg-gray-600 hover:text-white"
-                        }`}
-                        onClick={() => handleToggleStatus(job)}
-                      >
-                        <Power
-                          className="transition-transform duration-300 group-hover:rotate-180"
-                          size={16}
-                        />
-                      </button>
+                        {/* TOGGLE ACTIVE */}
+                        <button
+                          type="button"
+                          className={`px-3 py-2 rounded-lg border transition-all duration-300 transform hover:scale-110 ${
+                            job.isActive
+                              ? "bg-green-500/20 text-green-400 border-green-400 hover:bg-green-500 hover:text-white hover:shadow-[0_0_20px_rgba(34,197,94,1)]"
+                              : "bg-gray-700 text-gray-300 border-gray-500 hover:bg-gray-600 hover:text-white"
+                          }`}
+                          onClick={() => handleToggleStatus(job)}
+                        >
+                          <Power
+                            className="transition-transform duration-300 group-hover:rotate-180"
+                            size={16}
+                          />
+                        </button>
+                      </div>
                     </td>
                   </tr>
                 ))
