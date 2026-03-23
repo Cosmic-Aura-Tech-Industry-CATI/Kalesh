@@ -75,10 +75,23 @@ export class JobService {
    * @returns {Promise<Object>}
    */
   static async deleteJob(id) {
-    const res = await axiosInstance.delete(
+    const res = await axiosInstance.patch(
       API_ENDPOINTS.JOBS.DELETE_BY_ID(id)
     );
     return res.data;
   }
 
+  /**
+   * Toggle job status (activate/deactivate)
+   * @param {string} id
+   * @param {boolean} isActive
+   * @returns {Promise<Object>}
+   */
+  static async toggleJobStatus(id, isActive) {
+    const res = await axiosInstance.patch(
+      API_ENDPOINTS.JOBS.TOGGLE_STATUS_BY_ID(id),
+      { isActive }
+    );
+    return res.data;
+  }
 }

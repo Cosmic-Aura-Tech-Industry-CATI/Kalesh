@@ -115,7 +115,7 @@ export default function JobsPosting() {
   const handleToggleStatus = (job) => {
     toggleJobStatus({
       id: job._id || job.id,
-      isActive: !job.isActive,
+      isActive: job.isActive,
     });
   };
 

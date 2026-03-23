@@ -112,9 +112,7 @@ export const useDeleteJob = () => {
      * Invalidates the cache for the jobs query and displays a success toast message.
      */
     onSuccess: () => {
-      queryClient.invalidateQueries({
-        queryKey: ["jobs"],
-      });
+      queryClient.invalidateQueries({ queryKey: ["admin-jobs"] });
       toastSuccess("Job deleted successfully");
     },
 
@@ -133,12 +131,27 @@ export const useDeleteJob = () => {
 };
 
 export const useToggleJobStatus = () => {
-  return useMutation({
-    mutationFn: ({ id, isActive }) =>
-      api.patch(`/api/v1/jobs/${id}/status`, { isActive }),
+  const queryClient = useQueryClient();
 
+  return useMutation({
+    mutationFn: ({ id, isActive }) => JobService.toggleJobStatus(id, isActive),
+
+    /**
+     * Called when the job status is toggled successfully.
+     * Invalidates the cache for the jobs queries and displays a success toast message.
+     */
     onSuccess: () => {
-      queryClient.invalidateQueries(["admin-jobs"]);
+      queryClient.invalidateQueries({ queryKey: ["admin-jobs"] });
+      queryClient.invalidateQueries({ queryKey: ["jobs"] });
+      toastSuccess("Job status toggled successfully");
+    },
+
+    /**
+     * Called when the job status toggle fails.
+     */
+    onError: (err) => {
+      toastError(err?.response?.data?.message || "Failed to toggle job status");
+      console.error(err);
     },
   });
 };

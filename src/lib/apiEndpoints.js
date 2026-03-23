@@ -36,7 +36,8 @@ export const API_ENDPOINTS = {
     CREATE: "/jobs",
     GET_BY_ID: (id) => `/jobs/${id}`,
     UPDATE_BY_ID: (id) => `/jobs/${id}`,
-    DELETE_BY_ID: (id) => `/jobs/${id}`,
+    DELETE_BY_ID: (id) => `/jobs/${id}/delete`,
+    TOGGLE_STATUS_BY_ID: (id) => `/jobs/${id}/toggle-activate`,
   },
 
   LOGS: {
