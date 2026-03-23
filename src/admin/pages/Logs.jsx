@@ -20,7 +20,6 @@ export default function Logs() {
   const pagination = data?.pagination;
 
   const columns = [
-    { key: "_id", label: "Log ID" },
     {
       key: "adminId",
       label: "Admin",
@@ -35,7 +34,11 @@ export default function Logs() {
         </span>
       ),
     },
-    { key: "target", label: "Target" },
+    {
+      key: "targetId",
+      label: "Target",
+      render: (targetId) => targetId?.title || targetId?.username || targetId?._id || "-",
+    },
     {
       key: "createdAt",
       label: "Date & Time",
