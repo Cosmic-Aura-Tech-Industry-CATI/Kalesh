@@ -77,7 +77,7 @@ function About() {
       name: "Swatantra Singh",
       role: "CTO",
       description:
-        "Swatantra Singh serves as the CTO of Kalesh, managing the company's financial strategy and sustainability. He oversees budgeting, revenue planning, unit economics, and investor financials, ensuring disciplined growth and strong profitability as Kalesh scales.",
+        "Swatantra Singh serves as the CTO of Kalesh, leading the company’s technology vision and infrastructure. He oversees platform architecture, product development, scalability, and system performance, ensuring robust technology and seamless user experience as Kalesh grows.",
       linkedin: "https://www.linkedin.com/in/swatantra-singh308/",
       image: swat,
     },
@@ -86,7 +86,7 @@ function About() {
       name: "Nishkarsh Mishra",
       role: "CFO",
       description:
-        "Nishkarsh Mishra is the CFO of Kalesh, responsible for overseeing day-to-day operations and execution. He manages product rollout, team coordination, and go-to-market execution, ensuring smooth operations and scalable growth across campuses and partnerships.",
+        "Nishkarsh Mishra serves as the CFO of Kalesh, overseeing financial strategy, budgeting, and resource allocation. He ensures efficient capital management, supports data-driven decision-making, and drives sustainable growth while aligning financial planning with the company’s expansion goals.",
       linkedin: "https://www.linkedin.com/in/0nishkarshm/",
       image: nish,
     },
@@ -305,13 +305,13 @@ function About() {
                       <div className="badge-glow"></div>
                     </div>
                     <div className="coming-soon-content">
-                      <h1>
-                        Get Ready for{" "}
-                        <span className="kalesh-gradient">Kalesh</span>
-                      </h1>
                       <p>
-                        India's first anonymous social media platform is
-                        launching on March 16, 2026
+                        <span className="highlight" style={{fontSize:"2.1rem"}}>Something Big is Coming</span> <br />
+                        <p style={{textAlign:"justify", marginTop:"20px"}}>
+                          Kalesh is redefining how people express, interact, and connect online.
+Anonymous. Instant. Unfiltered.
+Launching soon.
+                        </p>
                       </p>
                       <button
                         className="notify-btn"
@@ -322,11 +322,11 @@ function About() {
                       </button>
                     </div>
 
-                    {/* Countdown Timer */}
+                    {/*  
                     <div className="countdown-timer">
                       <div className="timer-glow"></div>
                       <div className="timer-grid">
-                        {/* Days */}
+                      
                         <div className="timer-item">
                           <span className="timer-value">
                             {formatNumber(timeLeft.days)}
@@ -334,10 +334,10 @@ function About() {
                           <span className="timer-label">Days</span>
                         </div>
 
-                        {/* Separator */}
+                       
                         <div className="timer-separator">:</div>
 
-                        {/* Hours */}
+                        
                         <div className="timer-item">
                           <span className="timer-value">
                             {formatNumber(timeLeft.hours)}
@@ -345,10 +345,10 @@ function About() {
                           <span className="timer-label">Hours</span>
                         </div>
 
-                        {/* Separator */}
+                       
                         <div className="timer-separator">:</div>
 
-                        {/* Minutes */}
+                        
                         <div className="timer-item">
                           <span className="timer-value">
                             {formatNumber(timeLeft.minutes)}
@@ -357,7 +357,7 @@ function About() {
                         </div>
                       </div>
 
-                      {/* Launch Date Info */}
+                      
                       <div className="launch-date-info">
                         <p className="launch-date">
                           Launch Date:{" "}
@@ -365,6 +365,7 @@ function About() {
                         </p>
                       </div>
                     </div>
+                    */}
                   </div>
                 </div>
               </div>
@@ -555,7 +556,7 @@ function About() {
                     <div className="member-role">
                       <span className="role-neon-badge">{member.role}</span>
                     </div>
-                    <p className="member-description">{member.description}</p>
+                    <p className="member-description" style={{textAlign:"justify"}}>{member.description}</p>
                   </div>
 
                   {/* LinkedIn Button */}
