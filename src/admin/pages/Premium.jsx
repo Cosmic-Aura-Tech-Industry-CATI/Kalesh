@@ -88,7 +88,7 @@ export default function Premium() {
   const updatePrice = (planId) => {
     const newPrice = prompt("Enter new price");
     if (newPrice) {
-      updatePriceMutate({ id: planId, payload: { price: Number(newPrice) } });
+      updatePriceMutate({ id: planId, payload: { amount: Number(newPrice) } });
     }
   };
 
