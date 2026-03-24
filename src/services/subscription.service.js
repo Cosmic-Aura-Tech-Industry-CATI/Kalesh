@@ -33,7 +33,7 @@ export class SubscriptionService {
    * @returns {Promise<Object>} - Resolves with the updated subscription object.
    */
   static async updatePlan(id, payload) {
-    const res = await axiosInstance.patch(
+    const res = await axiosInstance.put(
       API_ENDPOINTS.ADMIN.SUBSCRIPTION.UPDATE_BY_ID(id),
       payload
     );
