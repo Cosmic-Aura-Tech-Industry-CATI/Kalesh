@@ -61,10 +61,20 @@ export default function Premium() {
   // ==========================
 
   const onSubmit = (data) => {
+    let parsedLimits = {};
+
+    try {
+      parsedLimits = data.limits ? JSON.parse(data.limits) : {};
+    } catch (err) {
+      alert("Invalid JSON in limits field");
+      return;
+    }
+
     const payload = {
       ...data,
       features: data.features.split(",").map((f) => f.trim()),
       durationInDays: Number(data.durationInDays),
+      limits: parsedLimits,
     };
 
     if (editingPlanId) {
@@ -137,6 +147,7 @@ export default function Premium() {
     setValue("durationInDays", plan.durationInDays);
     setValue("features", plan.features ? plan.features.join(", ") : "");
     setIsCreateModal(true);
+    setValue("limits", plan.limits ? JSON.stringify(plan.limits, null, 2) : "");
   };
 
   // ==========================
@@ -393,6 +404,26 @@ export default function Premium() {
             )}
           </div>
 
+          <div>
+            <textarea
+              placeholder='Limits (JSON format) 
+          example:
+          {
+            "maxPollOptions": 6,
+            "dailyPolls": 15
+          }'
+              className="admin-form-textarea"
+              {...register("limits", {
+                required: "Limits are required",
+              })}
+            />
+            {errors.limits && (
+              <span className="text-red-500 text-xs">
+                {errors.limits.message}
+              </span>
+            )}
+          </div>
+
           <Button
             type="submit"
             className="w-full"
@@ -408,7 +439,7 @@ export default function Premium() {
       </Modal>
 
       {/* UPDATE PRICE MODAL */}
-      
+
       <Modal
         isOpen={isPriceModalOpen}
         onClose={() => setIsPriceModalOpen(false)}
