@@ -24,6 +24,13 @@ export default function Premium() {
     plan: "",
   });
 
+  const [isPriceModalOpen, setIsPriceModalOpen] = useState(false);
+  const [selectedPlanId, setSelectedPlanId] = useState(null);
+  const [priceData, setPriceData] = useState({
+    amount: "",
+    discount: "",
+  });
+
   const {
     register,
     handleSubmit,
@@ -69,7 +76,7 @@ export default function Premium() {
             setEditingPlanId(null);
             reset();
           },
-        }
+        },
       );
     } else {
       createPlanMutate(payload, {
@@ -86,10 +93,26 @@ export default function Premium() {
   // ==========================
 
   const updatePrice = (planId) => {
-    const newPrice = prompt("Enter new price");
-    if (newPrice) {
-      updatePriceMutate({ id: planId, payload: { amount: Number(newPrice) } });
-    }
+    setSelectedPlanId(planId);
+    setPriceData({ amount: "", discount: "" });
+    setIsPriceModalOpen(true);
+  };
+
+  const handleUpdatePrice = () => {
+    const payload = {
+      amount: Number(priceData.amount),
+      discount: Number(priceData.discount) || 0,
+    };
+
+    updatePriceMutate(
+      { id: selectedPlanId, payload },
+      {
+        onSuccess: () => {
+          setIsPriceModalOpen(false);
+          setPriceData({ amount: "", discount: "" });
+        },
+      },
+    );
   };
 
   // ==========================
@@ -102,7 +125,6 @@ export default function Premium() {
       payload: { isActive: !plan.isActive },
     });
   };
-  
 
   // ==========================
   // EDIT PLAN
@@ -379,10 +401,68 @@ export default function Premium() {
             {isCreating || isUpdating
               ? "Saving..."
               : editingPlanId
-              ? "Update Plan"
-              : "Create Plan"}
+                ? "Update Plan"
+                : "Create Plan"}
           </Button>
         </form>
+      </Modal>
+
+      {/* UPDATE PRICE MODAL */}
+      
+      <Modal
+        isOpen={isPriceModalOpen}
+        onClose={() => setIsPriceModalOpen(false)}
+        title="Update Price"
+      >
+        <div className="space-y-4">
+          {/* PRICE */}
+          <input
+            type="number"
+            placeholder="Enter Price"
+            className="admin-form-input"
+            value={priceData.amount}
+            onChange={(e) =>
+              setPriceData({ ...priceData, amount: e.target.value })
+            }
+          />
+
+          {/* DISCOUNT */}
+          <input
+            type="number"
+            placeholder="Discount (%)"
+            className="admin-form-input"
+            value={priceData.discount}
+            onChange={(e) =>
+              setPriceData({ ...priceData, discount: e.target.value })
+            }
+          />
+
+          {/* FINAL PRICE PREVIEW */}
+          {priceData.amount && (
+            <div className="text-sm text-gray-400">
+              Final Price: ₹
+              {Math.max(
+                0,
+                priceData.amount -
+                  (priceData.amount * (priceData.discount || 0)) / 100,
+              )}
+            </div>
+          )}
+
+          {/* ACTIONS */}
+          <div className="flex justify-end gap-3 pt-2">
+            <Button
+              variant="secondary"
+              onClick={() => setIsPriceModalOpen(false)}
+            >
+              Cancel
+            </Button>
+
+            <Button onClick={handleUpdatePrice} disabled={!priceData.amount}>
+              Update
+            </Button>
+          </div>
+        </div>
       </Modal>
 
       {/* GRANT PREMIUM MODAL */}
