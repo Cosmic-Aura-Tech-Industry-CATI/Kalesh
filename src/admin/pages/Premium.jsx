@@ -19,6 +19,24 @@ export default function Premium() {
   const [editingPlanId, setEditingPlanId] = useState(null);
 
   const [isGrantModalOpen, setIsGrantModalOpen] = useState(false);
+
+  const [limits, setLimits] = useState([{ key: "", value: "" }]);
+
+  const handleLimitChange = (index, field, value) => {
+    const updated = [...limits];
+    updated[index][field] = value;
+    setLimits(updated);
+  };
+
+  const addLimit = () => {
+    setLimits([...limits, { key: "", value: "" }]);
+  };
+
+  const removeLimit = (index) => {
+    const updated = limits.filter((_, i) => i !== index);
+    setLimits(updated);
+  };
+
   const [grantData, setGrantData] = useState({
     user: "",
     plan: "",
@@ -61,20 +79,20 @@ export default function Premium() {
   // ==========================
 
   const onSubmit = (data) => {
-    let parsedLimits = {};
+    // ✅ KEY-VALUE → OBJECT CONVERT
+    const limitsObject = {};
 
-    try {
-      parsedLimits = data.limits ? JSON.parse(data.limits) : {};
-    } catch (err) {
-      alert("Invalid JSON in limits field");
-      return;
-    }
+    limits.forEach((item) => {
+      if (item.key) {
+        limitsObject[item.key] = Number(item.value);
+      }
+    });
 
     const payload = {
       ...data,
       features: data.features.split(",").map((f) => f.trim()),
       durationInDays: Number(data.durationInDays),
-      limits: parsedLimits,
+      limits: limitsObject,
     };
 
     if (editingPlanId) {
@@ -85,6 +103,7 @@ export default function Premium() {
             setIsCreateModal(false);
             setEditingPlanId(null);
             reset();
+            setLimits([{ key: "", value: "" }]); // ✅ reset bhi
           },
         },
       );
@@ -93,6 +112,7 @@ export default function Premium() {
         onSuccess: () => {
           setIsCreateModal(false);
           reset();
+          setLimits([{ key: "", value: "" }]); // ✅ reset bhi
         },
       });
     }
@@ -147,7 +167,18 @@ export default function Premium() {
     setValue("durationInDays", plan.durationInDays);
     setValue("features", plan.features ? plan.features.join(", ") : "");
     setIsCreateModal(true);
-    setValue("limits", plan.limits ? JSON.stringify(plan.limits, null, 2) : "");
+
+    if (plan.limits) {
+      const formattedLimits = Object.entries(plan.limits).map(
+        ([key, value]) => ({
+          key,
+          value,
+        }),
+      );
+      setLimits(formattedLimits);
+    } else {
+      setLimits([{ key: "", value: "" }]);
+    }
   };
 
   // ==========================
@@ -343,6 +374,7 @@ export default function Premium() {
           setIsCreateModal(false);
           setEditingPlanId(null);
           reset();
+          setLimits([{ key: "", value: "" }]);
         }}
         title={editingPlanId ? "Edit Plan" : "Create Plan"}
       >
@@ -405,18 +437,55 @@ export default function Premium() {
           </div>
 
           <div>
-            <textarea
-              placeholder='Limits (JSON format) 
-          example:
-          {
-            "maxPollOptions": 6,
-            "dailyPolls": 15
-          }'
-              className="admin-form-textarea"
-              {...register("limits", {
-                required: "Limits are required",
-              })}
-            />
+            <label className="admin-form-label">Limits</label>
+
+            <div className="space-y-2">
+              {limits.map((item, index) => (
+                <div key={index} className="flex gap-2 items-center">
+                  {/* KEY */}
+                  <input
+                    placeholder="Limit Key"
+                    className="admin-form-input"
+                    value={item.key}
+                    onChange={(e) =>
+                      handleLimitChange(index, "key", e.target.value)
+                    }
+                  />
+
+                  {/* VALUE */}
+                  <input
+                    type="number"
+                    placeholder="Value"
+                    className="admin-form-input"
+                    value={item.value}
+                    onChange={(e) =>
+                      handleLimitChange(index, "value", e.target.value)
+                    }
+                  />
+
+                  {/* REMOVE */}
+                  <button
+                    type="button"
+                    onClick={() => removeLimit(index)}
+                    className="text-red-400"
+                  >
+                    ✕
+                  </button>
+                </div>
+              ))}
+            </div>
+
+            {/* ADD BUTTON */}
+            <button
+              type="button"
+              onClick={addLimit}
+              className="mt-2 text-sm text-[#ff6a00]"
+            >
+              + Add Limit
+            </button>
+          </div>
+
+          <div>
             {errors.limits && (
               <span className="text-red-500 text-xs">
                 {errors.limits.message}
@@ -474,8 +543,7 @@ export default function Premium() {
               Final Price: ₹
               {Math.max(
                 0,
-                priceData.amount -
-                  (priceData.amount * (priceData.discount || 0)) / 100,
+                priceData.amount - (priceData.discount || 0)
               )}
             </div>
           )}
