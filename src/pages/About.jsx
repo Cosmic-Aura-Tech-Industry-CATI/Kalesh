@@ -99,12 +99,12 @@ function About() {
       linkedin: "https://www.linkedin.com/in/sheelu-singh-bbb788307/",
       image: sheelu,
     },
-    {
+    { 
       id: 5,
       name: "Mridul Mishra",
-      role: "Backend Developer",
+      role: "Founding Engineer",
       description:
-        "Mridul Mishra is the Backend Developer at Kalesh, responsible for designing and maintaining server-side systems, databases, and APIs to ensure secure, scalable, and reliable app performance.",
+        "Mridul Mishra is the Founding Engineer of the Kalesh app, responsible for building scalable backend architecture and developing REST APIs with real-time features using WebSockets. He also implemented background jobs with BullMQ and Redis, optimized MongoDB queries, and handled CI/CD along with deployment.",
       linkedin: "https://www.linkedin.com/in/mridul-mishra-4717b828b/",
       image: mridul,
     },
