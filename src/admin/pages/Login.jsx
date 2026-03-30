@@ -1,5 +1,6 @@
 import { useForm } from "react-hook-form";
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { LogIn, Eye, EyeOff } from "lucide-react";
 import Button from "../components/Button";
 import {
@@ -45,13 +46,15 @@ export default function Login() {
   const { mutate: resetPasswordMutate, isPending: isResettingPassword } =
     useResetPassword();
 
+  const navigate = useNavigate();
+
   // --- Main Login Handlers ---
   const onSubmit = (data) => {
     login(data, {
       onSuccess: () => {
         setEmailForOtp(data.email);
         setShowOtp(true);
-      }
+      },
     });
   };
 
@@ -60,9 +63,10 @@ export default function Login() {
       { email: emailForOtp, otp, otpType: "login" },
       {
         onSuccess: () => {
+          setShowOtp(false); // ✅ popup close
           navigate("/admin/dashboard");
         },
-      }
+      },
     );
   };
 
@@ -76,7 +80,7 @@ export default function Login() {
         onSuccess: () => {
           setFpStep(2);
         },
-      }
+      },
     );
   };
 
@@ -99,7 +103,7 @@ export default function Login() {
     setFpError("");
 
     resetPasswordMutate(
-      { email: fpEmail,  password: fpNewPassword },
+      { email: fpEmail, password: fpNewPassword },
       {
         onSuccess: () => {
           setShowForgotPassword(false);
@@ -109,7 +113,7 @@ export default function Login() {
           setFpNewPassword("");
           setFpConfirmPassword("");
         },
-      }
+      },
     );
   };
 
