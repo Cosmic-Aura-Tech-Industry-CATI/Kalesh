@@ -15,6 +15,7 @@ import Footer from "./components/Footer";
 import { Toaster } from "react-hot-toast";
 
 import ApplicationDetails from "./pages/ApplicationDetails";
+import BlogDetail from "./pages/BlogDetail";
 
 // Admin imports
 import AdminLogin from "./admin/pages/Login";
@@ -37,6 +38,8 @@ import JobsPosting from "./admin/pages/JobsPosting";
 import AdminLayout from "./admin/layout/AdminLayout";
 
 import JobDetails from "./pages/JobDetails";
+
+import AdminBlog from "./admin/pages/AdminBlog";
 
 // Lazy Public Pages
 const Home = lazy(() => import("./pages/Home"));
@@ -96,6 +99,7 @@ function MainRoutes() {
             <Route path="/privacypolicy" element={<PrivacyPolicy />} />
             <Route path="/faq" element={<FAQ />} />
             <Route path="/blog" element={<Blog />} />
+            <Route path="/blog/:slug" element={<BlogDetail />} />
             <Route path="/blog/blog1" element={<Blogpage1 />} />
             <Route path="/blog/blogteam" element={<Blogteam />} />
             <Route path="/blog/Post1" element={<Post1 />} />
@@ -129,6 +133,7 @@ function MainRoutes() {
 
               {/* ✅ FIXED — NOW INSIDE ADMIN LAYOUT */}
               <Route path="/admin/jobs" element={<JobsPosting />} />
+              <Route path="/admin/blog" element={<AdminBlog />} />
               <Route path="banned-users" element={<AdminBannedUsers />} />
               <Route path="premium" element={<AdminPremium />} />
               <Route path="payments" element={<AdminPayments />} />
