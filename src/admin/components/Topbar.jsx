@@ -48,7 +48,7 @@ export default function Topbar({ setSidebarOpen }) {
         <div className="admin-topbar-right">
 
           {/* 🔔 Notification */}
-          <div className="admin-dropdown-wrapper">
+          {/* <div className="admin-dropdown-wrapper"> 
             <button
               className="admin-icon-btn"
               onClick={() => {
@@ -65,7 +65,7 @@ export default function Topbar({ setSidebarOpen }) {
                 <p>No new notifications</p>
               </div>
             )}
-          </div>
+          </div>/ */}
 
           {/* 👤 Admin User */}
           <div className="admin-dropdown-wrapper">
