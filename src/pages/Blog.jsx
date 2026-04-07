@@ -14,76 +14,37 @@ const Blog = () => {
     window.scrollTo(0, 0);
   }, []);
 
-  const [blogs, setBlogs] = useState([
-    {
-      id: 1,
-      title: "Introducing Kalesh",
-      date: "February 03, 2026",
-      category: "FEATURES",
-      excerpt:
-        "Social media was meant to give people a voice. Somewhere along the way, it became a stage.",
-      readTime: "3 min read",
-      image: "blog-image.webp",
-      featured: true,
-      color: "#25D366",
-    },
-    {
-      id: 2,
-      title: "Meet The Team Behind Kalesh",
-      date: "February 05, 2026",
-      category: "Team-Kalesh",
-      excerpt:
-        "A mission-driven team working together across strategy, tech, and execution to redefine social expression.",
-      readTime: "4 min read",
-      image: "blog-team.webp",
-      featured: true,
-      color: "#128C7E",
-    },
-    {
-      id: 3,
-      title: "What Is Anonymous Social Media and How Does It Work?",
-      date: "February 10, 2026",
-      category: "FEATURES",
-      excerpt:
-        "Explore anonymous expression, live polls, and judgment-free conversations—built for India.",
-      readTime: "2 min read",
-      image: "blog-post1.webp",
-      featured: false,
-      color: "#34B7F1",
-    },
-    {
-      id: 4,
-      title: "What Makes Live Polls So Powerful?",
-      date: "February 10, 2026",
-      category: "LIVE-POLLS",
-      excerpt:
-        "Real-time voting, instant results, and anonymous participation make live polls the fastest way to capture real opinions.",
-      readTime: "3 min read",
-      image: "blog-post2.webp",
-      featured: false,
-      color: "#075E54",
-    },
-    {
-      id: 5,
-      title: "Anonymous vs Public Comments: Which Is Safer?",
-      date: "February 10, 2026",
-      category: "SECURITY",
-      excerpt:
-        "Anonymous comments on Kalesh protect users and keep discussions opinion-driven.",
-      readTime: "5 min read",
-      image: "blog-post3.webp",
-      featured: false,
-      color: "#25D366",
-    },
-  ]);
+  const [blogs, setBlogs] = useState([]);
+
+  useEffect(() => {
+    axios
+      .get("/api/blogs")
+      .then((res) => {
+        console.log("API 👉", res.data);
+
+        if (Array.isArray(res.data)) {
+          setBlogs(res.data);
+        } else if (Array.isArray(res.data.blogs)) {
+          setBlogs(res.data.blogs);
+        } else {
+          setBlogs([]);
+        }
+      })
+      .catch((err) => console.log(err));
+  }, []);
 
   const handleSubscribe = (e) => {
     e.preventDefault();
     subscribe({ email: mailId });
   };
 
-  const featuredBlogs = blogs.filter((blog) => blog.featured);
-  const recentBlogs = blogs.filter((blog) => !blog.featured);
+  const featuredBlogs = Array.isArray(blogs)
+    ? blogs.filter((blog) => blog.featured)
+    : [];
+
+  const recentBlogs = Array.isArray(blogs)
+    ? blogs.filter((blog) => !blog.featured)
+    : [];
 
   return (
     <>
@@ -159,16 +120,9 @@ const Blog = () => {
                     <h3 className="blog-title">{blog.title}</h3>
                     <p className="blog-excerpt">{blog.excerpt}</p>
                     <>
-                      {blog.id === 1 && (
-                        <Link to="/blog/blog1" className="read-link">
-                          Read more →
-                        </Link>
-                      )}
-                      {blog.id === 2 && (
-                        <Link to="/blog/blogteam" className="read-link">
-                          Read more →
-                        </Link>
-                      )}
+                      <Link to={`/blog/${blog.slug}`} className="read-link">
+                        Read more →
+                      </Link>
                     </>
                   </div>
                 </div>
@@ -206,21 +160,9 @@ const Blog = () => {
                     </div>
                     <h3 className="blog-title">{blog.title}</h3>
                     <p className="blog-excerpt">{blog.excerpt}</p>
-                    {blog.id === 3 && (
-                      <Link to="/blog/Post1" className="read-link">
-                        Read more →
-                      </Link>
-                    )}
-                    {blog.id === 4 && (
-                      <Link to="/blog/Post2" className="read-link">
-                        Read more →
-                      </Link>
-                    )}
-                    {blog.id === 5 && (
-                      <Link to="/blog/Post3" className="read-link">
-                        Read more →
-                      </Link>
-                    )}
+                    <Link to={`/blog/${blog.slug}`} className="read-link">
+                      Read more →
+                    </Link>
                   </div>
                 </div>
               ))}
