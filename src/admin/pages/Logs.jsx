@@ -16,8 +16,18 @@ export default function Logs() {
     ...(endDate && { endDate }),
   });
 
+  console.log("LOGS API:", data);
+
   const logs = data?.data?.logs || [];
-  const pagination = data?.pagination;
+  const pagination = data?.pagination || {};
+
+  const totalLogs =
+    pagination?.totalLogs > 0
+      ? pagination.totalLogs
+      : data?.results || logs.length;
+
+  const totalPages =
+    pagination?.totalPages || (pagination?.hasNextPage ? page + 1 : page);
 
   const columns = [
     {
@@ -37,7 +47,8 @@ export default function Logs() {
     {
       key: "targetId",
       label: "Target",
-      render: (targetId) => targetId?.title || targetId?.username || targetId?._id || "-",
+      render: (targetId) =>
+        targetId?.title || targetId?.username || targetId?._id || "-",
     },
     {
       key: "createdAt",
@@ -61,21 +72,21 @@ export default function Logs() {
   return (
     <div className="admin-section">
       <div className="admin-section-header flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+        {/* 🔥 HEADER FIX */}
         <div>
           <h1 className="admin-page-title">Logs & Security</h1>
           <div className="text-xs sm:text-sm text-gray-400">
-            {pagination?.totalLogs || 0} activity logs{" "}
-            {data?.isFromCache && "(Cached)"}
+            {totalLogs} activity logs {data?.isFromCache && "(Cached)"}
           </div>
         </div>
 
+        {/* DATE FILTER */}
         <div className="flex items-center gap-2">
           <input
             type="date"
             className="admin-form-input px-3 py-1.5 text-sm w-auto"
             value={startDate}
             onChange={handleStartDateChange}
-            placeholder="Start Date"
           />
           <span className="text-gray-400">-</span>
           <input
@@ -83,7 +94,6 @@ export default function Logs() {
             className="admin-form-input px-3 py-1.5 text-sm w-auto"
             value={endDate}
             onChange={handleEndDateChange}
-            placeholder="End Date"
           />
         </div>
       </div>
@@ -99,24 +109,30 @@ export default function Logs() {
           <>
             <Table columns={columns} data={logs} />
 
-            {/* Pagination Controls */}
-            <div className="flex items-center justify-between mt-4 border-t border-gray-800 pt-4">
-              <button
-                className="admin-btn-secondary"
-                disabled={page === 1}
-                onClick={() => setPage((p) => Math.max(1, p - 1))}
-              >
-                Previous
-              </button>
-              <span className="text-sm text-gray-400">Page {page}</span>
-              <button
-                className="admin-btn-secondary"
-                disabled={!pagination?.hasNextPage}
-                onClick={() => setPage((p) => p + 1)}
-              >
-                Next
-              </button>
-            </div>
+            {/* 🔥 PAGINATION FIX */}
+            {(pagination?.hasNextPage || page > 1) && (
+              <div className="flex items-center justify-between mt-4 border-t border-gray-800 pt-4">
+                <button
+                  className="admin-btn-secondary"
+                  disabled={page === 1}
+                  onClick={() => setPage((p) => p - 1)}
+                >
+                  Previous
+                </button>
+
+                <span className="text-sm text-gray-400">
+                  Page {page} / {totalPages}
+                </span>
+
+                <button
+                  className="admin-btn-secondary"
+                  disabled={!pagination?.hasNextPage}
+                  onClick={() => setPage((p) => p + 1)}
+                >
+                  Next
+                </button>
+              </div>
+            )}
           </>
         )}
       </div>
