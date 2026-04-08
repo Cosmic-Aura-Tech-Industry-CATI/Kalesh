@@ -1,14 +1,15 @@
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { Helmet } from "react-helmet-async";
-import axios from "axios";
 
 import "./blog.css";
 import { useSubscribe } from "../hooks/usePublicService";
+import { useGetAllBlogs } from "../hooks/useBlogs";
 
 const Blog = () => {
   const [mailId, setMailId] = useState("");
   const { mutate: subscribe, isPending } = useSubscribe();
+  const { data: blogsResponse, isLoading } = useGetAllBlogs();
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -17,21 +18,11 @@ const Blog = () => {
   const [blogs, setBlogs] = useState([]);
 
   useEffect(() => {
-    axios
-      .get("/api/blogs")
-      .then((res) => {
-        console.log("API 👉", res.data);
-
-        if (Array.isArray(res.data)) {
-          setBlogs(res.data);
-        } else if (Array.isArray(res.data.blogs)) {
-          setBlogs(res.data.blogs);
-        } else {
-          setBlogs([]);
-        }
-      })
-      .catch((err) => console.log(err));
-  }, []);
+    if (blogsResponse) {
+      const fetchedBlogs = Array.isArray(blogsResponse) ? blogsResponse : (blogsResponse?.data?.blogs || blogsResponse?.data || blogsResponse?.blogs || []);
+      setBlogs(fetchedBlogs);
+    }
+  }, [blogsResponse]);
 
   const handleSubscribe = (e) => {
     e.preventDefault();
@@ -100,21 +91,22 @@ const Blog = () => {
         <section className="featured-section">
           <div className="container-fluid">
             <h2 className="section-heading">Featured</h2>
-            <div className="featured-grid">
-              {featuredBlogs.map((blog) => (
-                <div className="featured-card" key={blog.id}>
+            {isLoading ? <p>Loading featured blogs...</p> : (
+              <div className="featured-grid">
+                {featuredBlogs.map((blog) => (
+                <div className="featured-card" key={blog.id || blog._id}>
                   <div className="featured-image">
-                    <img src={blog.image} alt={blog.title} />
+                    <img src={blog.image || "/blog-image.webp"} alt={blog.title} />
                     <div
                       className="category-tag"
-                      style={{ backgroundColor: blog.color }}
+                      style={{ backgroundColor: blog.color || "#ff6a00" }}
                     >
                       {blog.category}
                     </div>
                   </div>
                   <div className="featured-content">
                     <div className="blog-meta">
-                      <span className="blog-date">{blog.date}</span>
+                      <span className="blog-date">{blog.date || new Date(blog.createdAt).toLocaleDateString()}</span>
                       <span className="blog-readtime">{blog.readTime}</span>
                     </div>
                     <h3 className="blog-title">{blog.title}</h3>
@@ -127,7 +119,8 @@ const Blog = () => {
                   </div>
                 </div>
               ))}
-            </div>
+              </div>
+            )}
           </div>
         </section>
 
@@ -141,21 +134,22 @@ const Blog = () => {
               </a>
             </div>
 
-            <div className="recent-grid">
-              {recentBlogs.map((blog) => (
-                <div className="recent-card" key={blog.id}>
+            {isLoading ? <p>Loading recent blogs...</p> : (
+              <div className="recent-grid">
+                {recentBlogs.map((blog) => (
+                <div className="recent-card" key={blog.id || blog._id}>
                   <div className="recent-image">
-                    <img src={blog.image} alt={blog.title} />
+                    <img src={blog.image || "/blog-image.webp"} alt={blog.title} />
                     <div
                       className="category-badge"
-                      style={{ backgroundColor: blog.color }}
+                      style={{ backgroundColor: blog.color || "#ff6a00" }}
                     >
                       {blog.category}
                     </div>
                   </div>
                   <div className="recent-content">
                     <div className="blog-meta">
-                      <span className="blog-date">{blog.date}</span>
+                      <span className="blog-date">{blog.date || new Date(blog.createdAt).toLocaleDateString()}</span>
                       <span className="blog-readtime">{blog.readTime}</span>
                     </div>
                     <h3 className="blog-title">{blog.title}</h3>
@@ -166,7 +160,8 @@ const Blog = () => {
                   </div>
                 </div>
               ))}
-            </div>
+              </div>
+            )}
           </div>
         </section>
       </div>
