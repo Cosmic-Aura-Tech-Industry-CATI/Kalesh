@@ -16,6 +16,26 @@ export default function AdminBlog() {
 
   const slugify = (text) => text.toLowerCase().replace(/\s+/g, "-");
 
+  const handleImageUpload = async (file) => {
+    const formData = new FormData();
+    formData.append("image", file);
+
+    try {
+      const res = await axios.post("/api/blogs/upload", formData, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      });
+
+      setForm((prev) => ({
+        ...prev,
+        image: res.data.url,
+      }));
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -83,10 +103,11 @@ export default function AdminBlog() {
 
             {/* IMAGE */}
             <div>
-              <label className="blog-label">Image URL</label>
+              <label className="blog-label">Upload Image</label>
               <input
+                type="file"
                 className="blog-input"
-                onChange={(e) => setForm({ ...form, image: e.target.value })}
+                onChange={(e) => handleImageUpload(e.target.files[0])}
               />
             </div>
           </div>
