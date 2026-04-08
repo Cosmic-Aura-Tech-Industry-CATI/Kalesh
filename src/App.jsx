@@ -16,6 +16,7 @@ import { Toaster } from "react-hot-toast";
 
 import ApplicationDetails from "./pages/ApplicationDetails";
 import BlogDetail from "./pages/BlogDetail";
+import UnauthorizedModal from "./components/UnauthorizedModal";
 
 // Admin imports
 import AdminLogin from "./admin/pages/Login";
@@ -186,6 +187,11 @@ function App() {
           },
         }}
       />
+
+      {/* ✅ YAH ADD KARO */}
+      <UnauthorizedModal />
+
+      
       <div className="app-main">
         <MainRoutes />
       </div>
