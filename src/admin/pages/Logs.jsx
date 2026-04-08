@@ -4,10 +4,17 @@ import { useGetLogs } from "../../hooks/useLogs";
 import "../style/admin.css";
 
 export default function Logs() {
+  const getTodayDate = () => {
+    const today = new Date();
+    return today.toISOString().split("T")[0];
+  };
+
   const [page, setPage] = useState(1);
   const [limit] = useState(10);
-  const [startDate, setStartDate] = useState("");
-  const [endDate, setEndDate] = useState("");
+
+  // ✅ DEFAULT CURRENT DATE
+  const [startDate, setStartDate] = useState(getTodayDate());
+  const [endDate, setEndDate] = useState(getTodayDate());
 
   const { data, isLoading, isError } = useGetLogs({
     page,
@@ -113,20 +120,20 @@ export default function Logs() {
             {(pagination?.hasNextPage || page > 1) && (
               <div className="flex items-center justify-between mt-4 border-t border-gray-800 pt-4">
                 <button
-                  className="admin-btn-secondary"
+                  className="admin-btn-secondary disabled:opacity-50 disabled:cursor-not-allowed"
                   disabled={page === 1}
                   onClick={() => setPage((p) => p - 1)}
                 >
                   Previous
                 </button>
 
-                <span className="text-sm text-gray-400">
+                {/* <span className="text-sm text-gray-400"> 
                   Page {page} / {totalPages}
-                </span>
+                </span> */}
 
                 <button
-                  className="admin-btn-secondary"
-                  disabled={!pagination?.hasNextPage}
+                  className="admin-btn-secondary disabled:opacity-50 disabled:cursor-not-allowed"
+                  disabled={page === totalPages || !pagination?.hasNextPage}
                   onClick={() => setPage((p) => p + 1)}
                 >
                   Next
