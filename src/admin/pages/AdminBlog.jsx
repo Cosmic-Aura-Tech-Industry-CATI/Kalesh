@@ -1,51 +1,49 @@
-import { useState } from "react";
-import axios from "axios";
+import { useForm } from "react-hook-form";
+import { useCreateBlog } from "../../hooks/useBlogs";
 import "../style/blog.css";
 
 export default function AdminBlog() {
-  const [form, setForm] = useState({
-    title: "",
-    category: "",
-    excerpt: "",
-    content: "",
-    readTime: "",
-    image: "",
-    featured: false,
-    color: "#ff6a00",
+  const {
+    register,
+    handleSubmit,
+    reset,
+    formState: { errors },
+  } = useForm({
+    defaultValues: {
+      title: "",
+      category: "",
+      excerpt: "",
+      content: "",
+      readTime: "",
+      image: "",
+      featured: false,
+      color: "#ff6a00",
+    },
   });
 
-  const slugify = (text) => text.toLowerCase().replace(/\s+/g, "-");
+  const { mutate: createBlog, isPending: isCreating } = useCreateBlog();
 
-  const handleImageUpload = async (file) => {
+  const onSubmit = (data) => {
     const formData = new FormData();
-    formData.append("image", file);
 
-    try {
-      const res = await axios.post("/api/blogs/upload", formData, {
-        headers: {
-          "Content-Type": "multipart/form-data",
-        },
-      });
+    formData.append("title", data.title);
+    formData.append("category", data.category);
+    formData.append("excerpt", data.excerpt);
+    formData.append("content", data.content);
+    formData.append("readTime", data.readTime);
+    formData.append("featured", data.featured);
+    formData.append("color", data.color);
+    formData.append("date", new Date().toDateString());
 
-      setForm((prev) => ({
-        ...prev,
-        image: res.data.url,
-      }));
-    } catch (err) {
-      console.log(err);
+    if (data.image && data.image.length > 0) {
+      formData.append("image", data.image[0]);
     }
-  };
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-
-    await axios.post("/api/blogs", {
-      ...form,
-      slug: slugify(form.title),
-      date: new Date().toDateString(),
+    createBlog(formData, {
+      onSuccess: () => {
+        reset();
+      },
     });
-
-    alert("Blog Created ✅");
   };
 
   return (
@@ -54,15 +52,20 @@ export default function AdminBlog() {
       <h2 className="blog-heading">Create Blog</h2>
 
       <div className="admin-card">
-        <form onSubmit={handleSubmit}>
+        <form onSubmit={handleSubmit(onSubmit)}>
           <div className="blog-form-grid">
             {/* TITLE */}
             <div>
               <label className="blog-label">Title</label>
               <input
                 className="blog-input"
-                onChange={(e) => setForm({ ...form, title: e.target.value })}
+                {...register("title", { required: "Title is required" })}
               />
+              {errors.title && (
+                <span className="text-red-500 text-xs block mt-1">
+                  {errors.title.message}
+                </span>
+              )}
             </div>
 
             {/* CATEGORY */}
@@ -70,8 +73,13 @@ export default function AdminBlog() {
               <label className="blog-label">Category</label>
               <input
                 className="blog-input"
-                onChange={(e) => setForm({ ...form, category: e.target.value })}
+                {...register("category", { required: "Category is required" })}
               />
+              {errors.category && (
+                <span className="text-red-500 text-xs block mt-1">
+                  {errors.category.message}
+                </span>
+              )}
             </div>
 
             {/* EXCERPT */}
@@ -79,8 +87,13 @@ export default function AdminBlog() {
               <label className="blog-label">Excerpt</label>
               <textarea
                 className="blog-textarea"
-                onChange={(e) => setForm({ ...form, excerpt: e.target.value })}
+                {...register("excerpt", { required: "Excerpt is required" })}
               />
+              {errors.excerpt && (
+                <span className="text-red-500 text-xs block mt-1">
+                  {errors.excerpt.message}
+                </span>
+              )}
             </div>
 
             {/* CONTENT */}
@@ -88,8 +101,13 @@ export default function AdminBlog() {
               <label className="blog-label">Full Content</label>
               <textarea
                 className="blog-textarea"
-                onChange={(e) => setForm({ ...form, content: e.target.value })}
+                {...register("content", { required: "Content is required" })}
               />
+              {errors.content && (
+                <span className="text-red-500 text-xs block mt-1">
+                  {errors.content.message}
+                </span>
+              )}
             </div>
 
             {/* READ TIME */}
@@ -97,8 +115,13 @@ export default function AdminBlog() {
               <label className="blog-label">Read Time</label>
               <input
                 className="blog-input"
-                onChange={(e) => setForm({ ...form, readTime: e.target.value })}
+                {...register("readTime", { required: "Read time is required" })}
               />
+              {errors.readTime && (
+                <span className="text-red-500 text-xs block mt-1">
+                  {errors.readTime.message}
+                </span>
+              )}
             </div>
 
             {/* IMAGE */}
@@ -107,22 +130,30 @@ export default function AdminBlog() {
               <input
                 type="file"
                 className="blog-input"
-                onChange={(e) => handleImageUpload(e.target.files[0])}
+                {...register("image", { required: "Image is required" })}
               />
+              {errors.image && (
+                <span className="text-red-500 text-xs block mt-1">
+                  {errors.image.message}
+                </span>
+              )}
             </div>
           </div>
 
           {/* FEATURED */}
           <div className="blog-checkbox">
-            <input
-              type="checkbox"
-              onChange={(e) => setForm({ ...form, featured: e.target.checked })}
-            />
+            <input type="checkbox" {...register("featured")} />
             <span>Featured Blog</span>
           </div>
 
           {/* BUTTON */}
-          <button className="blog-submit-btn">Post Blog</button>
+          <button
+            type="submit"
+            className="blog-submit-btn"
+            disabled={isCreating}
+          >
+            {isCreating ? "Posting..." : "Post Blog"}
+          </button>
         </form>
       </div>
     </div>
