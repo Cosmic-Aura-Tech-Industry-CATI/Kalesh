@@ -120,7 +120,7 @@ export default function Logs() {
             {(pagination?.hasNextPage || page > 1) && (
               <div className="flex items-center justify-between mt-4 border-t border-gray-800 pt-4">
                 <button
-                  className="admin-btn-secondary"
+                  className="admin-btn-secondary disabled:opacity-50 disabled:cursor-not-allowed"
                   disabled={page === 1}
                   onClick={() => setPage((p) => p - 1)}
                 >
@@ -132,8 +132,8 @@ export default function Logs() {
                 </span>
 
                 <button
-                  className="admin-btn-secondary"
-                  disabled={!pagination?.hasNextPage}
+                  className="admin-btn-secondary disabled:opacity-50 disabled:cursor-not-allowed"
+                  disabled={page === totalPages || !pagination?.hasNextPage}
                   onClick={() => setPage((p) => p + 1)}
                 >
                   Next
