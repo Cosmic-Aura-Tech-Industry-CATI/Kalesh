@@ -127,9 +127,9 @@ export default function Logs() {
                   Previous
                 </button>
 
-                <span className="text-sm text-gray-400">
+                {/* <span className="text-sm text-gray-400"> 
                   Page {page} / {totalPages}
-                </span>
+                </span> */}
 
                 <button
                   className="admin-btn-secondary disabled:opacity-50 disabled:cursor-not-allowed"
