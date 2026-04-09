@@ -95,3 +95,37 @@
   margin-bottom: 15px;
   color: #d4af37;
 }
+
+
+.blog-add-buttons {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  margin-bottom: 20px;
+}
+
+.blog-add-buttons button {
+  background: #1a1a1a;
+  border: 1px solid #ff6a00;
+  color: #ff6a00;
+  padding: 8px 12px;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.blog-block {
+  position: relative;
+  margin-bottom: 15px;
+}
+
+.delete-btn {
+  position: absolute;
+  right: 5px;
+  top: 5px;
+  background: red;
+  color: white;
+  border: none;
+  border-radius: 50%;
+  cursor: pointer;
+  padding: 2px 6px;
+}

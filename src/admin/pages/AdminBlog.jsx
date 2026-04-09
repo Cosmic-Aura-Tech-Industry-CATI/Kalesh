@@ -1,160 +1,176 @@
-import { useForm } from "react-hook-form";
+import { useState } from "react";
 import { useCreateBlog } from "../../hooks/useBlogs";
 import "../style/blog.css";
 
 export default function AdminBlog() {
-  const {
-    register,
-    handleSubmit,
-    reset,
-    formState: { errors },
-  } = useForm({
-    defaultValues: {
-      title: "",
-      category: "",
-      excerpt: "",
-      content: "",
-      readTime: "",
-      image: "",
-      featured: false,
-      color: "#ff6a00",
-    },
-  });
-
   const { mutate: createBlog, isPending: isCreating } = useCreateBlog();
 
-  const onSubmit = (data) => {
+  const [blocks, setBlocks] = useState([]);
+  const [readTime, setReadTime] = useState("");
+  const [featured, setFeatured] = useState(false);
+  const [image, setImage] = useState(null); // ✅ single image
+
+  // ➕ ADD BLOCK
+  const addBlock = (type) => {
+    setBlocks((prev) => [...prev, { id: Date.now(), type, value: "" }]);
+  };
+
+  // ✏️ UPDATE BLOCK
+  const updateBlock = (id, value) => {
+    setBlocks((prev) => prev.map((b) => (b.id === id ? { ...b, value } : b)));
+  };
+
+  // ❌ DELETE BLOCK
+  const deleteBlock = (id) => {
+    setBlocks((prev) => prev.filter((b) => b.id !== id));
+  };
+
+  // 🚀 SUBMIT
+  const handleSubmit = () => {
     const formData = new FormData();
 
-    formData.append("title", data.title);
-    formData.append("category", data.category);
-    formData.append("excerpt", data.excerpt);
-    formData.append("content", data.content);
-    formData.append("readTime", data.readTime);
-    formData.append("featured", data.featured);
-    formData.append("color", data.color);
-    formData.append("date", new Date().toDateString());
+    // ✅ header ko title bana do
+    const headerBlock = blocks.find((b) => b.type === "header");
 
-    if (data.image && data.image.length > 0) {
-      formData.append("image", data.image[0]);
+    formData.append("title", headerBlock?.value || "Untitled");
+
+    // ❌ header ko blocks me include nahi karna
+    const filteredBlocks = blocks.filter((b) => b.type !== "header");
+
+    formData.append("content", JSON.stringify(filteredBlocks));
+
+    if (image) {
+      formData.append("image", image);
     }
 
-    createBlog(formData, {
-      onSuccess: () => {
-        reset();
-      },
-    });
+    formData.append("readTime", readTime);
+    formData.append("featured", featured);
+    formData.append("date", new Date().toDateString());
+
+    createBlog(formData);
   };
 
   return (
     <div className="blog-form-container">
-      {/* 🔥 HEADING OUTSIDE CARD */}
       <h2 className="blog-heading">Create Blog</h2>
 
       <div className="admin-card">
-        <form onSubmit={handleSubmit(onSubmit)}>
-          <div className="blog-form-grid">
-            {/* TITLE */}
-            <div>
-              <label className="blog-label">Title</label>
-              <input
-                className="blog-input"
-                {...register("title", { required: "Title is required" })}
-              />
-              {errors.title && (
-                <span className="text-red-500 text-xs block mt-1">
-                  {errors.title.message}
-                </span>
-              )}
-            </div>
+        {/* ✅ SINGLE IMAGE UPLOAD */}
+        <div style={{ marginBottom: "20px" }}>
+          <label className="blog-label">Upload Image</label>
+          <input
+            type="file"
+            className="blog-input"
+            onChange={(e) => setImage(e.target.files[0])}
+          />
 
-            {/* CATEGORY */}
-            <div>
-              <label className="blog-label">Category</label>
-              <input
-                className="blog-input"
-                {...register("category", { required: "Category is required" })}
-              />
-              {errors.category && (
-                <span className="text-red-500 text-xs block mt-1">
-                  {errors.category.message}
-                </span>
-              )}
-            </div>
+          {/* 🔥 IMAGE PREVIEW */}
+          {image && (
+            <img
+              src={URL.createObjectURL(image)}
+              alt="preview"
+              style={{
+                width: "150px",
+                marginTop: "10px",
+                borderRadius: "8px",
+              }}
+            />
+          )}
+        </div>
 
-            {/* EXCERPT */}
-            <div className="full-width">
-              <label className="blog-label">Excerpt</label>
-              <textarea
-                className="blog-textarea"
-                {...register("excerpt", { required: "Excerpt is required" })}
-              />
-              {errors.excerpt && (
-                <span className="text-red-500 text-xs block mt-1">
-                  {errors.excerpt.message}
-                </span>
-              )}
-            </div>
-
-            {/* CONTENT */}
-            <div className="full-width">
-              <label className="blog-label">Full Content</label>
-              <textarea
-                className="blog-textarea"
-                {...register("content", { required: "Content is required" })}
-              />
-              {errors.content && (
-                <span className="text-red-500 text-xs block mt-1">
-                  {errors.content.message}
-                </span>
-              )}
-            </div>
-
-            {/* READ TIME */}
-            <div>
-              <label className="blog-label">Read Time</label>
-              <input
-                className="blog-input"
-                {...register("readTime", { required: "Read time is required" })}
-              />
-              {errors.readTime && (
-                <span className="text-red-500 text-xs block mt-1">
-                  {errors.readTime.message}
-                </span>
-              )}
-            </div>
-
-            {/* IMAGE */}
-            <div>
-              <label className="blog-label">Upload Image</label>
-              <input
-                type="file"
-                className="blog-input"
-                {...register("image", { required: "Image is required" })}
-              />
-              {errors.image && (
-                <span className="text-red-500 text-xs block mt-1">
-                  {errors.image.message}
-                </span>
-              )}
-            </div>
-          </div>
-
-          {/* FEATURED */}
-          <div className="blog-checkbox">
-            <input type="checkbox" {...register("featured")} />
-            <span>Featured Blog</span>
-          </div>
-
-          {/* BUTTON */}
-          <button
-            type="submit"
-            className="blog-submit-btn"
-            disabled={isCreating}
-          >
-            {isCreating ? "Posting..." : "Post Blog"}
+        {/* ➕ ADD BUTTONS */}
+        <div className="blog-add-buttons">
+          <button type="button" onClick={() => addBlock("header")}>
+            + Main Header
           </button>
-        </form>
+
+          <button type="button" onClick={() => addBlock("subheader")}>
+            + Sub Header
+          </button>
+
+          <button type="button" onClick={() => addBlock("description")}>
+            + Description
+          </button>
+
+          <button type="button" onClick={() => addBlock("bullets")}>
+            + Bullet Points
+          </button>
+        </div>
+
+        {/* 🧱 BLOCKS */}
+        {blocks.map((block) => (
+          <div key={block.id} className="blog-block">
+            {/* DELETE BTN */}
+            <button
+              type="button"
+              className="delete-btn"
+              onClick={() => deleteBlock(block.id)}
+            >
+              ✕
+            </button>
+
+            {block.type === "header" && (
+              <input
+                placeholder="Main Header"
+                className="blog-input"
+                onChange={(e) => updateBlock(block.id, e.target.value)}
+              />
+            )}
+
+            {block.type === "subheader" && (
+              <input
+                placeholder="Sub Header"
+                className="blog-input"
+                onChange={(e) => updateBlock(block.id, e.target.value)}
+              />
+            )}
+
+            {block.type === "description" && (
+              <textarea
+                placeholder="Description"
+                className="blog-textarea"
+                onChange={(e) => updateBlock(block.id, e.target.value)}
+              />
+            )}
+
+            {block.type === "bullets" && (
+              <textarea
+                placeholder="Bullet Points (comma separated)"
+                className="blog-textarea"
+                onChange={(e) => updateBlock(block.id, e.target.value)}
+              />
+            )}
+          </div>
+        ))}
+
+        {/* READ TIME */}
+        <div style={{ marginTop: "20px" }}>
+          <label className="blog-label">Read Time</label>
+          <input
+            className="blog-input"
+            value={readTime}
+            onChange={(e) => setReadTime(e.target.value)}
+          />
+        </div>
+
+        {/* FEATURED */}
+        <div className="blog-checkbox">
+          <input
+            type="checkbox"
+            checked={featured}
+            onChange={(e) => setFeatured(e.target.checked)}
+          />
+          <span>Featured Blog</span>
+        </div>
+
+        {/* SUBMIT */}
+        <button
+          className="blog-submit-btn"
+          onClick={handleSubmit}
+          disabled={isCreating}
+        >
+          {isCreating ? "Posting..." : "Post Blog"}
+        </button>
       </div>
     </div>
   );
