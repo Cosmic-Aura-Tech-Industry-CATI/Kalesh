@@ -217,3 +217,23 @@
   font-size: 0.85rem;
 }
 
+/* back to home btn */
+
+.admin-back-btn {
+  margin-left: 8px;
+  background: transparent;
+  border: 1px solid rgba(212, 175, 55, 0.3);
+  color: #d4af37;
+  padding: 6px 10px;
+  border-radius: 6px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  transition: all 0.2s ease;
+}
+
+.admin-back-btn:hover {
+  background: rgba(255, 106, 0, 0.1);
+  color: #ff6a00;
+  border-color: #ff6a00;
+}
