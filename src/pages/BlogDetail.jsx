@@ -1,37 +1,32 @@
 import { useParams } from "react-router-dom";
-import { useEffect, useState } from "react";
-import axios from "axios";
-import "../style/blog.css";
+import { useGetBlogBySlug } from "../hooks/useBlogs";
+import "../admin/style/blog.css";
 
 export default function BlogDetail() {
   const { slug } = useParams();
-  const [blog, setBlog] = useState(null);
+  const { data: blogResponse, isLoading, error } = useGetBlogBySlug(slug);
 
-  useEffect(() => {
-    axios.get(`/api/blogs/${slug}`).then((res) => {
-      
-      console.log("BLOG DATA 👉", res.data); // 👈 ADD HERE
-      console.log("CONTENT 👉", res.data.content); // 👈 ADD HERE
+  if (isLoading) return <p className="loading-text">Loading...</p>;
 
-      setBlog(res.data);
-    });
-  }, [slug]);
+  if (error || !blogResponse?.data?.blog) {
+    return <p className="error-text">Blog not found.</p>;
+  }
 
-  if (!blog) return <p>Loading...</p>;
+  const blog = blogResponse.data.blog;
 
   return (
     <div className="blog-detail-container">
       <h1 className="blog-title">{blog.title}</h1>
+      <p className="blog-author">By {blog.author} • {blog.readTime} min read</p>
 
-      <p className="blog-author">By {blog.author}</p>
+      {blog.image && (
+        <img
+          src={blog.image}
+          alt={blog.title}
+          className="blog-image"
+        />
+      )}
 
-      <img
-        src={`http://localhost:5000/uploads/${blog.image}`}
-        alt=""
-        className="blog-image"
-      />
-
-      {/* 🔥 THIS LINE FIXES EVERYTHING */}
       <div
         className="blog-content"
         dangerouslySetInnerHTML={{ __html: blog.content }}

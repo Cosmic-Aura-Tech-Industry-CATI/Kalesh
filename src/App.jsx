@@ -57,6 +57,7 @@ const FAQ = lazy(() => import("./pages/faq"));
 const Blog = lazy(() => import("./pages/Blog"));
 const Blogteam = lazy(() => import("./pages/Blogteam"));
 const Post1 = lazy(() => import("./pages/Post1"));
+const BlogDetail = lazy(() => import("./pages/BlogDetail"));
 const Post2 = lazy(() => import("./pages/Post2"));
 const Post3 = lazy(() => import("./pages/Post3"));
 const Post4 = lazy(() => import("./pages/Post4"));
@@ -106,7 +107,7 @@ function MainRoutes() {
             <Route path="/blog/Post3" element={<Post3 />} />
             <Route path="/blog/Post4" element={<Post4 />} />
             <Route path="/blog/Post5" element={<Post5 />} />
-            <Route path="/blog/:slug" element={<Blogpage1 />} />
+            <Route path="/blog/:slug" element={<BlogDetail />} />
             <Route
               path="/communityguidelines"
               element={<CommunityGuidelines />}
