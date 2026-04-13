@@ -1,101 +1,182 @@
-/* BLOG FORM WRAPPER */
+/* ================= BLOG FORM ================= */
+
 .blog-form-container {
   max-width: 900px;
-  margin: 40px auto;
+  margin: auto;
+  padding: 20px;
 }
 
-/* GRID LAYOUT */
-.blog-form-grid {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 20px;
+.blog-form-container h2 {
+  font-size: 28px;
+  margin-bottom: 20px;
+  font-weight: 700;
+  background: linear-gradient(135deg, #ff6a00, #ffd700);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
 }
 
-/* FULL WIDTH FIELDS */
-.full-width {
-  grid-column: span 2;
-}
+/* ================= INPUTS ================= */
 
-/* INPUTS */
 .blog-input,
 .blog-textarea {
   width: 100%;
+  margin-bottom: 16px;
   padding: 12px 14px;
+  border-radius: 10px;
+  border: 1px solid rgba(212, 175, 55, 0.3);
   background: #1a1a1a;
-  border: 1px solid rgba(212, 175, 55, 0.2);
-  border-radius: 8px;
-  color: white;
+  color: #fff;
   font-size: 14px;
-  transition: 0.2s;
+  outline: none;
+  transition: all 0.2s ease;
 }
 
 .blog-input:focus,
 .blog-textarea:focus {
   border-color: #ff6a00;
-  outline: none;
-  box-shadow: 0 0 10px rgba(255, 106, 0, 0.3);
+  box-shadow: 0 0 0 2px rgba(255, 106, 0, 0.2);
 }
 
-/* TEXTAREA */
+/* ================= TEXTAREA ================= */
+
 .blog-textarea {
-  min-height: 120px;
-  resize: none;
+  min-height: 180px;
+  resize: vertical;
 }
 
-/* LABEL */
-.blog-label {
-  font-size: 12px;
-  color: #d4af37;
-  margin-bottom: 6px;
-  display: block;
+/* ================= FILE INPUT ================= */
+
+input[type="file"] {
+  margin-bottom: 16px;
+  color: #ccc;
 }
 
-/* CHECKBOX */
-.blog-checkbox {
+/* ================= CHECKBOX ================= */
+
+.blog-form-container label {
   display: flex;
   align-items: center;
-  gap: 10px;
-  margin-top: 10px;
+  gap: 8px;
+  margin-bottom: 16px;
+  cursor: pointer;
 }
 
-/* BUTTON */
-.blog-submit-btn {
-  margin-top: 20px;
-  background: linear-gradient(135deg, #ff2a2a, #ff6a00);
-  border: none;
+/* ================= BUTTON ================= */
+
+.blog-submit-btn,
+.blog-form-container button {
+  width: 100%;
   padding: 12px;
-  border-radius: 8px;
-  color: white;
+  border-radius: 30px;
+  border: none;
   font-weight: 600;
-  width: 200px;
-  transition: 0.3s;
+  cursor: pointer;
+  background: linear-gradient(135deg, #ff2a2a, #ff6a00);
+  color: #fff;
+  transition: all 0.3s ease;
 }
 
-.blog-submit-btn:hover {
-  transform: scale(1.05);
+.blog-submit-btn:hover,
+.blog-form-container button:hover {
+  transform: scale(1.04);
   box-shadow: 0 0 20px rgba(255, 106, 0, 0.6);
 }
 
-
-.blog-heading {
-  font-size: 22px;
-  font-weight: 700;
-  margin-bottom: 20px;
-  color: #d4af37;
+.blog-submit-btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
 }
 
-.blog-form-container {
+/* ================= BLOG DETAIL ================= */
+
+.container {
   max-width: 900px;
-  margin: 40px auto;
+  margin: auto;
+  padding: 20px;
 }
 
-.blog-heading {
-  font-size: 24px;
+/* TITLE */
+.container h1 {
+  font-size: 34px;
+  margin-bottom: 10px;
   font-weight: 700;
-  margin-bottom: 15px;
-  color: #d4af37;
 }
 
+/* AUTHOR */
+.container p {
+  color: #aaa;
+  margin-bottom: 20px;
+}
+
+/* IMAGE */
+.container img {
+  border-radius: 12px;
+}
+
+/* ================= CONTENT STYLING ================= */
+
+.container h2 {
+  font-size: 26px;
+  margin-top: 25px;
+  margin-bottom: 10px;
+  color: #ffd700;
+}
+
+.container h3 {
+  font-size: 22px;
+  margin-top: 20px;
+  margin-bottom: 8px;
+  color: #ff6a00;
+}
+
+.container p {
+  line-height: 1.7;
+  margin-bottom: 12px;
+}
+
+/* LIST */
+.container ul {
+  margin-left: 20px;
+  margin-bottom: 15px;
+}
+
+.container ul li {
+  margin-bottom: 6px;
+}
+
+/* LINKS */
+.container a {
+  color: #ffd700;
+  text-decoration: underline;
+}
+
+.container a:hover {
+  color: #ff6a00;
+}
+
+/* CODE BLOCK (optional future) */
+.container pre {
+  background: #111;
+  padding: 12px;
+  border-radius: 8px;
+  overflow-x: auto;
+}
+
+/* ================= RESPONSIVE ================= */
+
+@media (max-width: 768px) {
+  .container h1 {
+    font-size: 26px;
+  }
+
+  .container h2 {
+    font-size: 22px;
+  }
+
+  .container h3 {
+    font-size: 18px;
+  }
+}
 
 .blog-add-buttons {
   display: flex;
@@ -106,26 +187,108 @@
 
 .blog-add-buttons button {
   background: #1a1a1a;
-  border: 1px solid #ff6a00;
-  color: #ff6a00;
-  padding: 8px 12px;
-  border-radius: 6px;
+  border: 1px solid #d4af37;
+  color: #d4af37;
+  padding: 8px 14px;
+  border-radius: 20px;
   cursor: pointer;
 }
 
 .blog-block {
   position: relative;
-  margin-bottom: 15px;
+  margin-bottom: 20px;
+  padding: 20px;
+  border-radius: 12px;
+  background: #121212;
+  border: 1px solid rgba(212, 175, 55, 0.2);
 }
 
+/* 🔥 TOP BAR FIX */
+.blog-block-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+/* TYPE LABEL */
+.blog-block-type {
+  font-size: 13px;
+  color: #ff6a00;
+  font-weight: 600;
+}
+
+/* DELETE BUTTON */
 .delete-btn {
-  position: absolute;
-  right: 5px;
-  top: 5px;
-  background: red;
-  color: white;
-  border: none;
-  border-radius: 50%;
+  margin-top: 10px;
+  padding: 6px 14px;
+  font-size: 13px;
+  border-radius: 20px;
+  border: 1px solid red;
+  background: transparent;
+  color: red;
   cursor: pointer;
-  padding: 2px 6px;
+  width: fit-content; /* 🔥 IMPORTANT */
+  align-self: flex-end;
+  display: block;
+}
+
+/* hover effect */
+.delete-btn:hover {
+  background: red;
+  color: #fff;
+}
+
+.blog-detail-container {
+  max-width: 900px;
+  margin: auto;
+  padding: 40px 20px;
+}
+
+.blog-title {
+  font-size: 36px;
+  font-weight: 700;
+  margin-bottom: 10px;
+}
+
+.blog-author {
+  color: #aaa;
+  margin-bottom: 20px;
+}
+
+.blog-image {
+  width: 100%;
+  border-radius: 12px;
+  margin-bottom: 30px;
+}
+
+/* 🔥 MAIN CONTENT STYLING */
+.blog-content h2 {
+  font-size: 28px;
+  margin-top: 30px;
+  margin-bottom: 10px;
+  border-left: 4px solid #ff6a00;
+  padding-left: 10px;
+}
+
+.blog-content h3 {
+  font-size: 22px;
+  margin-top: 20px;
+  margin-bottom: 8px;
+  color: #ff6a00;
+}
+
+.blog-content p {
+  line-height: 1.8;
+  margin-bottom: 14px;
+  color: #ccc;
+}
+
+.blog-content ul {
+  margin-left: 20px;
+  margin-bottom: 20px;
+}
+
+.blog-content li {
+  margin-bottom: 6px;
 }
