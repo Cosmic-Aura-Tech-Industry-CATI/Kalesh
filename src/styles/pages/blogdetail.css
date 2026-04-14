@@ -1,0 +1,60 @@
+.blog-detail-container {
+  max-width: 1100px;
+  margin: auto;
+  padding: 40px 20px;
+}
+
+/* HERO TITLE */
+.blog-title {
+  font-size: 48px;
+  font-weight: 800;
+  text-align: center;
+  background: linear-gradient(135deg, #ff6a00, #ffd700);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  margin-bottom: 20px;
+}
+
+/* META */
+.blog-meta {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  color: #aaa;
+  font-size: 14px;
+}
+
+/* IMAGE */
+.blog-image {
+  width: 100%;
+  border-radius: 16px;
+  margin: 30px 0;
+}
+
+/* CONTENT */
+.blog-content {
+  font-size: 18px;
+  line-height: 1.8;
+  color: #ddd;
+}
+
+.blog-content h2 {
+  font-size: 28px;
+  margin-top: 30px;
+  border-left: 4px solid #ff6a00;
+  padding-left: 10px;
+}
+
+.blog-content h3 {
+  font-size: 22px;
+  margin-top: 20px;
+  color: #ff6a00;
+}
+
+.blog-content p {
+  margin-bottom: 14px;
+}
+
+.blog-content ul {
+  margin-left: 20px;
+}

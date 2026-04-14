@@ -103,7 +103,16 @@ export default function AdminBlog() {
         />
 
         {/* IMAGE */}
-        <input type="file" onChange={(e) => setImage(e.target.files[0])} />
+        <div className="blog-image-upload">
+          <label className="upload-box">
+            <input
+              type="file"
+              onChange={(e) => setImage(e.target.files[0])}
+              hidden
+            />
+            <span>📷 Upload Blog Image</span>
+          </label>
+        </div>
 
         {/* ADD BUTTONS */}
         <div className="blog-add-buttons">
@@ -170,7 +179,7 @@ export default function AdminBlog() {
         />
 
         {/* FEATURED */}
-        <label>
+        <label className="blog-featured">
           <input
             type="checkbox"
             onChange={(e) => setFeatured(e.target.checked)}
@@ -179,7 +188,11 @@ export default function AdminBlog() {
         </label>
 
         {/* SUBMIT */}
-        <button onClick={handleSubmit} disabled={isPending}>
+        <button
+          className="blog-submit-btn"
+          onClick={handleSubmit}
+          disabled={isPending}
+        >
           {isPending ? "Posting..." : "Post Blog"}
         </button>
       </div>

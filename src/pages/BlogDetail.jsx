@@ -1,6 +1,6 @@
 import { useParams } from "react-router-dom";
 import { useGetBlogBySlug } from "../hooks/useBlogs";
-import "../admin/style/blog.css";
+import "../styles/pages/blogdetail.css";
 
 export default function BlogDetail() {
   const { slug } = useParams();

@@ -15,8 +15,7 @@
   -webkit-text-fill-color: transparent;
 }
 
-/* ================= INPUTS ================= */
-
+/* INPUTS */
 .blog-input,
 .blog-textarea {
   width: 100%;
@@ -26,158 +25,29 @@
   border: 1px solid rgba(212, 175, 55, 0.3);
   background: #1a1a1a;
   color: #fff;
-  font-size: 14px;
-  outline: none;
-  transition: all 0.2s ease;
 }
-
-.blog-input:focus,
-.blog-textarea:focus {
-  border-color: #ff6a00;
-  box-shadow: 0 0 0 2px rgba(255, 106, 0, 0.2);
-}
-
-/* ================= TEXTAREA ================= */
 
 .blog-textarea {
   min-height: 180px;
-  resize: vertical;
 }
 
-/* ================= FILE INPUT ================= */
-
-input[type="file"] {
-  margin-bottom: 16px;
-  color: #ccc;
-}
-
-/* ================= CHECKBOX ================= */
-
-.blog-form-container label {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  margin-bottom: 16px;
-  cursor: pointer;
-}
-
-/* ================= BUTTON ================= */
-
-.blog-submit-btn,
-.blog-form-container button {
+/* BUTTON */
+.blog-submit-btn {
   width: 100%;
   padding: 12px;
   border-radius: 30px;
   border: none;
-  font-weight: 600;
-  cursor: pointer;
   background: linear-gradient(135deg, #ff2a2a, #ff6a00);
   color: #fff;
-  transition: all 0.3s ease;
 }
 
-.blog-submit-btn:hover,
-.blog-form-container button:hover {
-  transform: scale(1.04);
+.blog-submit-btn:hover {
+  transform: scale(1.03);
   box-shadow: 0 0 20px rgba(255, 106, 0, 0.6);
+  cursor: pointer;
 }
 
-.blog-submit-btn:disabled {
-  opacity: 0.6;
-  cursor: not-allowed;
-}
-
-/* ================= BLOG DETAIL ================= */
-
-.container {
-  max-width: 900px;
-  margin: auto;
-  padding: 20px;
-}
-
-/* TITLE */
-.container h1 {
-  font-size: 34px;
-  margin-bottom: 10px;
-  font-weight: 700;
-}
-
-/* AUTHOR */
-.container p {
-  color: #aaa;
-  margin-bottom: 20px;
-}
-
-/* IMAGE */
-.container img {
-  border-radius: 12px;
-}
-
-/* ================= CONTENT STYLING ================= */
-
-.container h2 {
-  font-size: 26px;
-  margin-top: 25px;
-  margin-bottom: 10px;
-  color: #ffd700;
-}
-
-.container h3 {
-  font-size: 22px;
-  margin-top: 20px;
-  margin-bottom: 8px;
-  color: #ff6a00;
-}
-
-.container p {
-  line-height: 1.7;
-  margin-bottom: 12px;
-}
-
-/* LIST */
-.container ul {
-  margin-left: 20px;
-  margin-bottom: 15px;
-}
-
-.container ul li {
-  margin-bottom: 6px;
-}
-
-/* LINKS */
-.container a {
-  color: #ffd700;
-  text-decoration: underline;
-}
-
-.container a:hover {
-  color: #ff6a00;
-}
-
-/* CODE BLOCK (optional future) */
-.container pre {
-  background: #111;
-  padding: 12px;
-  border-radius: 8px;
-  overflow-x: auto;
-}
-
-/* ================= RESPONSIVE ================= */
-
-@media (max-width: 768px) {
-  .container h1 {
-    font-size: 26px;
-  }
-
-  .container h2 {
-    font-size: 22px;
-  }
-
-  .container h3 {
-    font-size: 18px;
-  }
-}
-
+/* ADD BLOCK BUTTONS */
 .blog-add-buttons {
   display: flex;
   gap: 10px;
@@ -191,11 +61,10 @@ input[type="file"] {
   color: #d4af37;
   padding: 8px 14px;
   border-radius: 20px;
-  cursor: pointer;
 }
 
+/* BLOCK */
 .blog-block {
-  position: relative;
   margin-bottom: 20px;
   padding: 20px;
   border-radius: 12px;
@@ -203,92 +72,64 @@ input[type="file"] {
   border: 1px solid rgba(212, 175, 55, 0.2);
 }
 
-/* 🔥 TOP BAR FIX */
+.blog-block-type {
+  display: block;
+  margin-bottom: 10px; /* 🔥 GAP */
+  font-size: 13px;
+  color: #d4af37;
+  letter-spacing: 1px;
+}
+
 .blog-block-header {
   display: flex;
   justify-content: space-between;
-  align-items: center;
-  margin-bottom: 10px;
 }
 
-/* TYPE LABEL */
-.blog-block-type {
-  font-size: 13px;
-  color: #ff6a00;
-  font-weight: 600;
-}
-
-/* DELETE BUTTON */
+/* DELETE */
 .delete-btn {
-  margin-top: 10px;
+  display: block;
+  margin: 12px auto 0; /* 🔥 center */
   padding: 6px 14px;
-  font-size: 13px;
   border-radius: 20px;
   border: 1px solid red;
-  background: transparent;
   color: red;
-  cursor: pointer;
-  width: fit-content; /* 🔥 IMPORTANT */
-  align-self: flex-end;
-  display: block;
 }
 
-/* hover effect */
 .delete-btn:hover {
   background: red;
   color: #fff;
 }
 
-.blog-detail-container {
-  max-width: 900px;
-  margin: auto;
-  padding: 40px 20px;
+/* IMAGE UPLOAD BOX */
+.blog-image-upload {
+  margin-bottom: 25px; /* 🔥 GAP FIX */
 }
 
-.blog-title {
-  font-size: 36px;
-  font-weight: 700;
-  margin-bottom: 10px;
-}
-
-.blog-author {
-  color: #aaa;
-  margin-bottom: 20px;
-}
-
-.blog-image {
-  width: 100%;
+.upload-box {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 140px;
+  border: 2px dashed #d4af37;
   border-radius: 12px;
-  margin-bottom: 30px;
+  cursor: pointer;
+  background: #121212;
+  color: #d4af37;
+  font-weight: 500;
+  transition: all 0.3s ease;
 }
 
-/* 🔥 MAIN CONTENT STYLING */
-.blog-content h2 {
-  font-size: 28px;
-  margin-top: 30px;
-  margin-bottom: 10px;
-  border-left: 4px solid #ff6a00;
-  padding-left: 10px;
-}
-
-.blog-content h3 {
-  font-size: 22px;
-  margin-top: 20px;
-  margin-bottom: 8px;
+.upload-box:hover {
+  background: rgba(212, 175, 55, 0.05);
+  border-color: #ff6a00;
   color: #ff6a00;
 }
 
-.blog-content p {
-  line-height: 1.8;
-  margin-bottom: 14px;
-  color: #ccc;
-}
 
-.blog-content ul {
-  margin-left: 20px;
-  margin-bottom: 20px;
-}
-
-.blog-content li {
-  margin-bottom: 6px;
+/* FEATURED */
+.blog-featured {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin: 15px 0 25px; /* 🔥 bottom gap */
 }
