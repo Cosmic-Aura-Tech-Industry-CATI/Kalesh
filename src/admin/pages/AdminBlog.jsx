@@ -11,6 +11,7 @@ export default function AdminBlog() {
   const [readTime, setReadTime] = useState("");
   const [featured, setFeatured] = useState(false);
   const [image, setImage] = useState(null);
+  const [imagePreview, setImagePreview] = useState(null);
 
   // ➕ ADD BLOCK
   const addBlock = (type) => {
@@ -103,14 +104,36 @@ export default function AdminBlog() {
         />
 
         {/* IMAGE */}
-        <input type="file" onChange={(e) => setImage(e.target.files[0])} />
+        <div className="blog-image-upload">
+          <label className="upload-box">
+            <input
+              type="file"
+              onChange={(e) => {
+                const file = e.target.files[0];
 
-        {/* ADD BUTTONS */}
-        <div className="blog-add-buttons">
-          <button onClick={() => addBlock("heading")}>+ Heading</button>
-          <button onClick={() => addBlock("subheading")}>+ Sub Heading</button>
-          <button onClick={() => addBlock("paragraph")}>+ Paragraph</button>
-          <button onClick={() => addBlock("bullets")}>+ Bullet Points</button>
+                if (!file) return;
+
+                // 🔥 MAX 2MB
+                if (file.size > 2 * 1024 * 1024) {
+                  alert("Image must be less than 2MB ❌");
+                  return;
+                }
+
+                setImage(file);
+                setImagePreview(URL.createObjectURL(file));
+              }}
+              hidden
+            />
+            <span>📷 Upload Blog Image</span>
+          </label>
+
+          {/* 👇 PREVIEW YAHI ADD KARNA HAI */}
+          {imagePreview && (
+            <div className="image-preview">
+              <img src={imagePreview} alt="Preview" />
+              <p>Image selected ✅</p>
+            </div>
+          )}
         </div>
 
         {/* BLOCKS */}
@@ -162,6 +185,14 @@ export default function AdminBlog() {
           </div>
         ))}
 
+        {/* ADD BUTTONS */}
+        <div className="blog-add-buttons sticky-buttons">
+          <button onClick={() => addBlock("heading")}>+ Heading</button>
+          <button onClick={() => addBlock("subheading")}>+ Sub Heading</button>
+          <button onClick={() => addBlock("paragraph")}>+ Paragraph</button>
+          <button onClick={() => addBlock("bullets")}>+ Bullet Points</button>
+        </div>
+
         {/* READ TIME */}
         <input
           placeholder="Read Time"
@@ -170,7 +201,7 @@ export default function AdminBlog() {
         />
 
         {/* FEATURED */}
-        <label>
+        <label className="blog-featured">
           <input
             type="checkbox"
             onChange={(e) => setFeatured(e.target.checked)}
@@ -179,7 +210,11 @@ export default function AdminBlog() {
         </label>
 
         {/* SUBMIT */}
-        <button onClick={handleSubmit} disabled={isPending}>
+        <button
+          className="blog-submit-btn"
+          onClick={handleSubmit}
+          disabled={isPending}
+        >
           {isPending ? "Posting..." : "Post Blog"}
         </button>
       </div>
