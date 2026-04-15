@@ -94,7 +94,7 @@
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   margin-bottom: 15px;
-  margin-top: -30px;
+  margin-top: -10px;
 }
 
 /* META */
@@ -117,6 +117,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
+  margin-top: 20px;
   gap: 12px;
 }
 
@@ -157,16 +158,31 @@
 
 /* CONTENT */
 .blog-content {
+  max-width: 900px;
+  margin: 60px auto;
   font-size: 18px;
-  line-height: 1.8;
-  color: #ddd;
+  line-height: 1.9;
+  color: #bfbfbf;
 }
 
+/* 🔥 HEADING STYLE */
 .blog-content h2 {
-  font-size: 28px;
-  margin-top: 30px;
-  border-left: 4px solid #ff6a00;
-  padding-left: 10px;
+  font-size: 34px;
+  font-weight: 700;
+  color: #ffffff;
+  margin-bottom: 10px;
+  position: relative;
+}
+
+/* 🔥 YELLOW UNDERLINE */
+.blog-content h2::after {
+  content: "";
+  display: block;
+  width: 60px;
+  height: 3px;
+  background: linear-gradient(90deg, #ff6a00, #ffd700);
+  margin-top: 8px;
+  border-radius: 2px;
 }
 
 .blog-content h3 {
@@ -175,10 +191,64 @@
   color: #ff6a00;
 }
 
+/* PARAGRAPH */
 .blog-content p {
-  margin-bottom: 14px;
+  margin-top: 15px;
+  margin-bottom: 15px;
+  color: #bfbfbf;
 }
 
+/* RESET DEFAULT BULLETS */
 .blog-content ul {
-  margin-left: 20px;
+  list-style: none;
+  padding-left: 0;
+}
+
+/* EACH ITEM */
+.blog-content li {
+  position: relative;
+  padding-left: 60px;
+  margin-bottom: 25px;
+}
+
+/* 🔥 NUMBER CIRCLE */
+.blog-content li::before {
+  content: counter(list-counter);
+  counter-increment: list-counter;
+
+  position: absolute;
+  left: 0;
+  top: 5px;
+
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+
+  background: linear-gradient(135deg, #ff6a00, #ff3c00);
+  color: white;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  font-weight: bold;
+}
+
+/* ENABLE COUNTER */
+.blog-content ul {
+  counter-reset: list-counter;
+}
+
+/* Agar list ke andar heading + text hai: */
+
+.blog-content li strong {
+  display: block;
+  font-size: 20px;
+  color: #fff;
+  margin-bottom: 5px;
+}
+
+.blog-content li p {
+  margin: 0;
+  color: #bbb;
 }
