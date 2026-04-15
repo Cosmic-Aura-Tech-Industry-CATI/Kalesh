@@ -55,8 +55,9 @@ export default function BlogDetail() {
           </div>
 
           {/* TEXT */}
+
           <div className="author-info">
-            <strong>Kalesh Team</strong>
+            <strong>{blog.author || "Kalesh Team"}</strong>
             <p>Official Kalesh Blog</p>
           </div>
         </div>
