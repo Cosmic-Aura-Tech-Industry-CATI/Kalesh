@@ -11,6 +11,7 @@ export default function AdminBlog() {
   const [readTime, setReadTime] = useState("");
   const [featured, setFeatured] = useState(false);
   const [image, setImage] = useState(null);
+  const [imagePreview, setImagePreview] = useState(null);
 
   // ➕ ADD BLOCK
   const addBlock = (type) => {
@@ -107,19 +108,26 @@ export default function AdminBlog() {
           <label className="upload-box">
             <input
               type="file"
-              onChange={(e) => setImage(e.target.files[0])}
+              onChange={(e) => {
+                const file = e.target.files[0];
+                setImage(file);
+
+                if (file) {
+                  setImagePreview(URL.createObjectURL(file)); // 🔥 preview
+                }
+              }}
               hidden
             />
             <span>📷 Upload Blog Image</span>
           </label>
-        </div>
 
-        {/* ADD BUTTONS */}
-        <div className="blog-add-buttons">
-          <button onClick={() => addBlock("heading")}>+ Heading</button>
-          <button onClick={() => addBlock("subheading")}>+ Sub Heading</button>
-          <button onClick={() => addBlock("paragraph")}>+ Paragraph</button>
-          <button onClick={() => addBlock("bullets")}>+ Bullet Points</button>
+          {/* 👇 PREVIEW YAHI ADD KARNA HAI */}
+          {imagePreview && (
+            <div className="image-preview">
+              <img src={imagePreview} alt="Preview" />
+              <p>Image selected ✅</p>
+            </div>
+          )}
         </div>
 
         {/* BLOCKS */}
@@ -170,6 +178,14 @@ export default function AdminBlog() {
             </button>
           </div>
         ))}
+
+        {/* ADD BUTTONS */}
+        <div className="blog-add-buttons sticky-buttons">
+          <button onClick={() => addBlock("heading")}>+ Heading</button>
+          <button onClick={() => addBlock("subheading")}>+ Sub Heading</button>
+          <button onClick={() => addBlock("paragraph")}>+ Paragraph</button>
+          <button onClick={() => addBlock("bullets")}>+ Bullet Points</button>
+        </div>
 
         {/* READ TIME */}
         <input

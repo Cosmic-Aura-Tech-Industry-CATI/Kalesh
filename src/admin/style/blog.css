@@ -63,6 +63,15 @@
   border-radius: 20px;
 }
 
+.sticky-buttons {
+  position: sticky;
+  bottom: 0;
+  background: #0b0b0b;
+  padding: 12px;
+  border-top: 1px solid rgba(212, 175, 55, 0.2);
+  z-index: 10;
+}
+
 /* BLOCK */
 .blog-block {
   margin-bottom: 20px;
@@ -123,6 +132,25 @@
   background: rgba(212, 175, 55, 0.05);
   border-color: #ff6a00;
   color: #ff6a00;
+}
+
+.image-preview {
+  margin-top: 12px;
+  text-align: center;
+}
+
+.image-preview img {
+  width: 100%;
+  max-height: 200px;
+  object-fit: cover;
+  border-radius: 10px;
+  border: 1px solid #d4af37;
+}
+
+.image-preview p {
+  margin-top: 6px;
+  font-size: 12px;
+  color: #4caf50;
 }
 
 
