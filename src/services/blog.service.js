@@ -25,11 +25,12 @@ export class BlogService {
    * const blogData = await BlogService.createBlog(payload);
    * console.log(blogData);
    */
-  static async createBlog(payload) {
-    const res = await axiosInstance.post(
-      API_ENDPOINTS.BLOGS.CREATE,
-      payload
-    );
+  static async createBlog(formData) {
+    const res = await axiosInstance.post(API_ENDPOINTS.BLOGS.CREATE, formData, {
+      headers: {
+        "Content-Type": "multipart/form-data",
+      },
+    });
     return res.data;
   }
 
@@ -39,9 +40,7 @@ export class BlogService {
    * @returns {Promise<Object>} - Resolves with the retrieved blog object.
    */
   static async getBlogBySlug(slug) {
-    const res = await axiosInstance.get(
-      API_ENDPOINTS.BLOGS.GET_BY_SLUG(slug)
-    );
+    const res = await axiosInstance.get(API_ENDPOINTS.BLOGS.GET_BY_SLUG(slug));
     return res.data;
   }
 
@@ -54,7 +53,7 @@ export class BlogService {
   static async updateBlog(slug, payload) {
     const res = await axiosInstance.patch(
       API_ENDPOINTS.BLOGS.UPDATE_BY_SLUG(slug),
-      payload
+      payload,
     );
     return res.data;
   }
@@ -66,7 +65,7 @@ export class BlogService {
    */
   static async deleteBlog(slug) {
     const res = await axiosInstance.delete(
-      API_ENDPOINTS.BLOGS.DELETE_BY_SLUG(slug)
+      API_ENDPOINTS.BLOGS.DELETE_BY_SLUG(slug),
     );
     return res.data;
   }

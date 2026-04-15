@@ -110,11 +110,17 @@ export default function AdminBlog() {
               type="file"
               onChange={(e) => {
                 const file = e.target.files[0];
-                setImage(file);
 
-                if (file) {
-                  setImagePreview(URL.createObjectURL(file)); // 🔥 preview
+                if (!file) return;
+
+                // 🔥 MAX 2MB
+                if (file.size > 2 * 1024 * 1024) {
+                  alert("Image must be less than 2MB ❌");
+                  return;
                 }
+
+                setImage(file);
+                setImagePreview(URL.createObjectURL(file));
               }}
               hidden
             />
