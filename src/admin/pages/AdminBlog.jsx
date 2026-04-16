@@ -76,12 +76,23 @@ export default function AdminBlog() {
     formData.append("title", title);
     formData.append("slug", generateSlug(title));
     formData.append("author", author);
-    formData.append("content", generateHTML()); // ✅ HTML
+    formData.append("content", generateHTML());
     formData.append("image", image);
     formData.append("readTime", readTime);
     formData.append("featured", featured);
 
-    createBlog(formData);
+    // ✅ YAHI ADD KARNA HAI
+    createBlog(formData, {
+      onSuccess: () => {
+        alert("Blog created ✅");
+
+        setTitle("");
+        setAuthor("");
+        setBlocks([]);
+        setImage(null);
+        setImagePreview(null);
+      },
+    });
   };
 
   return (

@@ -40,6 +40,8 @@ import AdminLayout from "./admin/layout/AdminLayout";
 import JobDetails from "./pages/JobDetails";
 
 import AdminBlog from "./admin/pages/AdminBlog";
+import AdminBlogPage from "./admin/pages/AdminBlogPage";
+import AdminEditBlog from "./admin/pages/AdminEditBlog";
 
 // Lazy Public Pages
 const Home = lazy(() => import("./pages/Home"));
@@ -134,6 +136,11 @@ function MainRoutes() {
               {/* ✅ FIXED — NOW INSIDE ADMIN LAYOUT */}
               <Route path="/admin/jobs" element={<JobsPosting />} />
               <Route path="/admin/blog" element={<AdminBlog />} />
+              <Route path="/admin/blogs" element={<AdminBlogPage />} />
+              <Route
+                path="/admin/blog/edit/:slug"
+                element={<AdminEditBlog />}
+              />
               <Route path="banned-users" element={<AdminBannedUsers />} />
               <Route path="premium" element={<AdminPremium />} />
               <Route path="payments" element={<AdminPayments />} />
@@ -190,7 +197,6 @@ function App() {
       {/* ✅ YAH ADD KARO */}
       <UnauthorizedModal />
 
-      
       <div className="app-main">
         <MainRoutes />
       </div>
