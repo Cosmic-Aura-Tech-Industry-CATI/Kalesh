@@ -26,28 +26,36 @@ export default function AdminEditBlog() {
 
     temp.childNodes.forEach((node) => {
       if (node.tagName === "H2") {
-        parsed.push({ id: Date.now(), type: "heading", value: node.innerText });
+        parsed.push({
+          id: crypto.randomUUID(),
+          type: "heading",
+          value: node.innerText,
+        });
       }
+
       if (node.tagName === "H3") {
         parsed.push({
-          id: Date.now(),
+          id: crypto.randomUUID(),
           type: "subheading",
           value: node.innerText,
         });
       }
+
       if (node.tagName === "P") {
         parsed.push({
-          id: Date.now(),
+          id: crypto.randomUUID(),
           type: "paragraph",
           value: node.innerText,
         });
       }
+
       if (node.tagName === "UL") {
         const items = Array.from(node.querySelectorAll("li")).map(
           (li) => li.innerText,
         );
+
         parsed.push({
-          id: Date.now(),
+          id: crypto.randomUUID(),
           type: "bullets",
           value: items.join(", "),
         });
