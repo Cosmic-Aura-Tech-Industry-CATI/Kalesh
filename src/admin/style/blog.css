@@ -1,0 +1,164 @@
+/* ================= BLOG FORM ================= */
+
+.blog-form-container {
+  max-width: 900px;
+  margin: auto;
+  padding: 20px;
+}
+
+.blog-form-container h2 {
+  font-size: 28px;
+  margin-bottom: 20px;
+  font-weight: 700;
+  background: linear-gradient(135deg, #ff6a00, #ffd700);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+/* INPUTS */
+.blog-input,
+.blog-textarea {
+  width: 100%;
+  margin-bottom: 16px;
+  padding: 12px 14px;
+  border-radius: 10px;
+  border: 1px solid rgba(212, 175, 55, 0.3);
+  background: #1a1a1a;
+  color: #fff;
+}
+
+.blog-textarea {
+  min-height: 180px;
+}
+
+/* BUTTON */
+.blog-submit-btn {
+  width: 100%;
+  padding: 12px;
+  border-radius: 30px;
+  border: none;
+  background: linear-gradient(135deg, #ff2a2a, #ff6a00);
+  color: #fff;
+}
+
+.blog-submit-btn:hover {
+  transform: scale(1.03);
+  box-shadow: 0 0 20px rgba(255, 106, 0, 0.6);
+  cursor: pointer;
+}
+
+/* ADD BLOCK BUTTONS */
+.blog-add-buttons {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  margin-bottom: 20px;
+}
+
+.blog-add-buttons button {
+  background: #1a1a1a;
+  border: 1px solid #d4af37;
+  color: #d4af37;
+  padding: 8px 14px;
+  border-radius: 20px;
+}
+
+.sticky-buttons {
+  position: sticky;
+  bottom: 0;
+  background: #0b0b0b;
+  padding: 12px;
+  border-top: 1px solid rgba(212, 175, 55, 0.2);
+  z-index: 10;
+}
+
+/* BLOCK */
+.blog-block {
+  margin-bottom: 20px;
+  padding: 20px;
+  border-radius: 12px;
+  background: #121212;
+  border: 1px solid rgba(212, 175, 55, 0.2);
+}
+
+.blog-block-type {
+  display: block;
+  margin-bottom: 10px; /* 🔥 GAP */
+  font-size: 13px;
+  color: #d4af37;
+  letter-spacing: 1px;
+}
+
+.blog-block-header {
+  display: flex;
+  justify-content: space-between;
+}
+
+/* DELETE */
+.delete-btn {
+  display: block;
+  margin: 12px auto 0; /* 🔥 center */
+  padding: 6px 14px;
+  border-radius: 20px;
+  border: 1px solid red;
+  color: red;
+}
+
+.delete-btn:hover {
+  background: red;
+  color: #fff;
+}
+
+/* IMAGE UPLOAD BOX */
+.blog-image-upload {
+  margin-bottom: 25px; /* 🔥 GAP FIX */
+}
+
+.upload-box {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 140px;
+  border: 2px dashed #d4af37;
+  border-radius: 12px;
+  cursor: pointer;
+  background: #121212;
+  color: #d4af37;
+  font-weight: 500;
+  transition: all 0.3s ease;
+}
+
+.upload-box:hover {
+  background: rgba(212, 175, 55, 0.05);
+  border-color: #ff6a00;
+  color: #ff6a00;
+}
+
+.image-preview {
+  margin-top: 12px;
+  text-align: center;
+}
+
+.image-preview img {
+  width: 100%;
+  max-height: 200px;
+  object-fit: cover;
+  border-radius: 10px;
+  border: 1px solid #d4af37;
+}
+
+.image-preview p {
+  margin-top: 6px;
+  font-size: 12px;
+  color: #4caf50;
+}
+
+
+/* FEATURED */
+.blog-featured {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin: 15px 0 25px; /* 🔥 bottom gap */
+}

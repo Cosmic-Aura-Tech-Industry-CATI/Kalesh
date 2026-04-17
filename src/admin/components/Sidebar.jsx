@@ -21,6 +21,7 @@ const menuItems = [
   { path: "/admin/users", icon: Users, label: "Users" },
   { path: "/admin/banned-users", icon: Ban, label: "Banned Users" },
   { path: "/admin/jobs", icon: Briefcase, label: "Jobs Posting" },
+  { path: "/admin/blogs", icon: FileText, label: "Blog" },
   { path: "/admin/admins", icon: UserCog, label: "Admins" },
   { path: "/admin/premium", icon: Crown, label: "Premium Users" },
   { path: "/admin/payments", icon: CreditCard, label: "Payments" },

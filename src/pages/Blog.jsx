@@ -1,89 +1,41 @@
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { Helmet } from "react-helmet-async";
-import axios from "axios";
 
 import "./blog.css";
 import { useSubscribe } from "../hooks/usePublicService";
+import { useGetAllBlogs } from "../hooks/useBlogs";
 
 const Blog = () => {
   const [mailId, setMailId] = useState("");
   const { mutate: subscribe, isPending } = useSubscribe();
+  const { data: blogsResponse, isLoading } = useGetAllBlogs();
 
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
 
-  const [blogs, setBlogs] = useState([
-    {
-      id: 1,
-      title: "Introducing Kalesh",
-      date: "February 03, 2026",
-      category: "FEATURES",
-      excerpt:
-        "Social media was meant to give people a voice. Somewhere along the way, it became a stage.",
-      readTime: "3 min read",
-      image: "blog-image.webp",
-      featured: true,
-      color: "#25D366",
-    },
-    {
-      id: 2,
-      title: "Meet The Team Behind Kalesh",
-      date: "February 05, 2026",
-      category: "Team-Kalesh",
-      excerpt:
-        "A mission-driven team working together across strategy, tech, and execution to redefine social expression.",
-      readTime: "4 min read",
-      image: "blog-team.webp",
-      featured: true,
-      color: "#128C7E",
-    },
-    {
-      id: 3,
-      title: "What Is Anonymous Social Media and How Does It Work?",
-      date: "February 10, 2026",
-      category: "FEATURES",
-      excerpt:
-        "Explore anonymous expression, live polls, and judgment-free conversations—built for India.",
-      readTime: "2 min read",
-      image: "blog-post1.webp",
-      featured: false,
-      color: "#34B7F1",
-    },
-    {
-      id: 4,
-      title: "What Makes Live Polls So Powerful?",
-      date: "February 10, 2026",
-      category: "LIVE-POLLS",
-      excerpt:
-        "Real-time voting, instant results, and anonymous participation make live polls the fastest way to capture real opinions.",
-      readTime: "3 min read",
-      image: "blog-post2.webp",
-      featured: false,
-      color: "#075E54",
-    },
-    {
-      id: 5,
-      title: "Anonymous vs Public Comments: Which Is Safer?",
-      date: "February 10, 2026",
-      category: "SECURITY",
-      excerpt:
-        "Anonymous comments on Kalesh protect users and keep discussions opinion-driven.",
-      readTime: "5 min read",
-      image: "blog-post3.webp",
-      featured: false,
-      color: "#25D366",
-    },
-  ]);
+  const [blogs, setBlogs] = useState([]);
+
+  useEffect(() => {
+    if (blogsResponse) {
+      const fetchedBlogs = Array.isArray(blogsResponse) ? blogsResponse : (blogsResponse?.data?.blogs || blogsResponse?.data || blogsResponse?.blogs || []);
+      setBlogs(fetchedBlogs);
+    }
+  }, [blogsResponse]);
 
   const handleSubscribe = (e) => {
     e.preventDefault();
     subscribe({ email: mailId });
   };
 
-  const featuredBlogs = blogs.filter((blog) => blog.featured);
-  const recentBlogs = blogs.filter((blog) => !blog.featured);
+  const featuredBlogs = Array.isArray(blogs)
+    ? blogs.filter((blog) => blog.featured)
+    : [];
+
+  const recentBlogs = Array.isArray(blogs)
+    ? blogs.filter((blog) => !blog.featured)
+    : [];
 
   return (
     <>
@@ -139,41 +91,36 @@ const Blog = () => {
         <section className="featured-section">
           <div className="container-fluid">
             <h2 className="section-heading">Featured</h2>
-            <div className="featured-grid">
-              {featuredBlogs.map((blog) => (
-                <div className="featured-card" key={blog.id}>
+            {isLoading ? <p>Loading featured blogs...</p> : (
+              <div className="featured-grid">
+                {featuredBlogs.map((blog) => (
+                <div className="featured-card" key={blog.id || blog._id}>
                   <div className="featured-image">
-                    <img src={blog.image} alt={blog.title} />
+                    <img src={blog.image || "/blog-image.webp"} alt={blog.title} />
                     <div
                       className="category-tag"
-                      style={{ backgroundColor: blog.color }}
+                      style={{ backgroundColor: blog.color || "#ff6a00" }}
                     >
                       {blog.category}
                     </div>
                   </div>
                   <div className="featured-content">
                     <div className="blog-meta">
-                      <span className="blog-date">{blog.date}</span>
+                      <span className="blog-date">{blog.date || new Date(blog.createdAt).toLocaleDateString()}</span>
                       <span className="blog-readtime">{blog.readTime}</span>
                     </div>
                     <h3 className="blog-title">{blog.title}</h3>
                     <p className="blog-excerpt">{blog.excerpt}</p>
                     <>
-                      {blog.id === 1 && (
-                        <Link to="/blog/blog1" className="read-link">
-                          Read more →
-                        </Link>
-                      )}
-                      {blog.id === 2 && (
-                        <Link to="/blog/blogteam" className="read-link">
-                          Read more →
-                        </Link>
-                      )}
+                      <Link to={`/blog/${blog.slug}`} className="read-link">
+                        Read more →
+                      </Link>
                     </>
                   </div>
                 </div>
               ))}
-            </div>
+              </div>
+            )}
           </div>
         </section>
 
@@ -187,44 +134,34 @@ const Blog = () => {
               </a>
             </div>
 
-            <div className="recent-grid">
-              {recentBlogs.map((blog) => (
-                <div className="recent-card" key={blog.id}>
+            {isLoading ? <p>Loading recent blogs...</p> : (
+              <div className="recent-grid">
+                {recentBlogs.map((blog) => (
+                <div className="recent-card" key={blog.id || blog._id}>
                   <div className="recent-image">
-                    <img src={blog.image} alt={blog.title} />
+                    <img src={blog.image || "/blog-image.webp"} alt={blog.title} />
                     <div
                       className="category-badge"
-                      style={{ backgroundColor: blog.color }}
+                      style={{ backgroundColor: blog.color || "#ff6a00" }}
                     >
                       {blog.category}
                     </div>
                   </div>
                   <div className="recent-content">
                     <div className="blog-meta">
-                      <span className="blog-date">{blog.date}</span>
+                      <span className="blog-date">{blog.date || new Date(blog.createdAt).toLocaleDateString()}</span>
                       <span className="blog-readtime">{blog.readTime}</span>
                     </div>
                     <h3 className="blog-title">{blog.title}</h3>
                     <p className="blog-excerpt">{blog.excerpt}</p>
-                    {blog.id === 3 && (
-                      <Link to="/blog/Post1" className="read-link">
-                        Read more →
-                      </Link>
-                    )}
-                    {blog.id === 4 && (
-                      <Link to="/blog/Post2" className="read-link">
-                        Read more →
-                      </Link>
-                    )}
-                    {blog.id === 5 && (
-                      <Link to="/blog/Post3" className="read-link">
-                        Read more →
-                      </Link>
-                    )}
+                    <Link to={`/blog/${blog.slug}`} className="read-link">
+                      Read more →
+                    </Link>
                   </div>
                 </div>
               ))}
-            </div>
+              </div>
+            )}
           </div>
         </section>
       </div>

@@ -2,6 +2,7 @@ import { useState, useEffect, useRef } from 'react';
 import { Link, useNavigate, useLocation } from 'react-router-dom';
 import { Helmet } from 'react-helmet-async';
 import './Viewpage.css';
+import { useGetAllBlogs } from '../hooks/useBlogs';
 
 const ViewBlog = () => {
   useEffect(() => {
@@ -11,78 +12,11 @@ const ViewBlog = () => {
   const navigate = useNavigate();
   const location = useLocation();
   
-  // Initial blog posts data
-  const initialPosts = [
-    {
-      id: 1,
-      title: "Say What You Really Think — Anonymously",
-      excerpt: "Kalesh is changing social media by putting opinions first and identities last. Learn how anonymous polls and chats actually work.",
-      date: "February 10, 2026",
-      readTime: "2 min read",
-      category: "ANONYMITY",
-      categoryColor: "linear-gradient(135deg, #ff6a00, #ffd700)",
-      icon: "fas fa-microphone-alt",
-      image: "/blog-post1.webp",
-      trending: true,
-      slug: "Post1"
-    },
-    {
-      id: 2,
-      title: "What Makes Live Polls So Powerful?",
-      excerpt: "Real-time voting, instant results, and anonymous participation make live polls the fastest way to capture real opinions.",
-      date: "February 10, 2026",
-      readTime: "3 min read",
-      category: "LIVE-POLLS",
-      categoryColor: "linear-gradient(135deg, #ff8c00, #ffd700)",
-      icon: "fas fa-photo-video",
-      image: "/blog-post2.webp",
-      trending: true,
-      slug: "Post2"
-    },
-    {
-      id: 3,
-      title: "Anonymous vs Public Comments: Which Is Safer?",
-      excerpt: "Public comments expose identity and invite judgment. Anonymous comments on Kalesh protect users, reduce harassment, and keep conversations focused on opinions—not people.",
-      date: "February 10, 2026",
-      readTime: "5 min read",
-      category: "SECURITY",
-      categoryColor: "linear-gradient(135deg, #ff2a2a, #ff6a00)",
-      icon: "fas fa-shield-alt",
-      image: "/blog-post3.webp",
-      trending: true,
-      slug: "Post3"
-    },
-    {
-      id: 4,
-      title: "How Anonymous Platforms Protect User Privacy",
-      excerpt: "Discover how anonymous platforms safeguard identities, reduce harassment, and create judgment-free spaces where opinions matter more than personal data.",
-      date: "February 10, 2026",
-      readTime: "3 min read",
-      category: "PRIVACY",
-      categoryColor: "linear-gradient(135deg, #ff6a00, #ffd700)",
-      icon: "fas fa-moon",
-      image: "/blog-post4.webp",
-      trending: false,
-      slug: "Post4"
-    },
-    {
-      id: 5,
-      title: "Top Benefits of Using Anonymous Opinion Platforms",
-      excerpt: "Anonymous opinion platforms enable honest expression, reduce social pressure, and provide real-time feedback—without exposing personal identity.",
-      date: "February 10, 2026",
-      readTime: "4 min read",
-      category: "BENEFITS",
-      categoryColor: "linear-gradient(135deg, #ff8c00, #ffd700)",
-      icon: "fas fa-users",
-      image: "/blog-post5.webp",
-      trending: false,
-      slug: "Post5"
-    },
-  ];
+  const { data: blogsResponse, isLoading } = useGetAllBlogs();
+  const fetchedPosts = Array.isArray(blogsResponse) ? blogsResponse : (blogsResponse?.data?.blogs || blogsResponse?.data || blogsResponse?.blogs || []);
 
   // State variables
-  const [posts] = useState(initialPosts);
-  const [filteredPosts, setFilteredPosts] = useState(initialPosts);
+  const [filteredPosts, setFilteredPosts] = useState([]);
   const [searchTerm, setSearchTerm] = useState('');
   const [currentPage, setCurrentPage] = useState(1);
   const [selectedCategory, setSelectedCategory] = useState('ALL');
@@ -91,22 +25,22 @@ const ViewBlog = () => {
   const searchInputRef = useRef(null);
 
   // Categories for filtering
-  const categories = [
-    { name: 'ALL', count: initialPosts.length, icon: 'fas fa-layer-group' },
-    { name: 'FEATURES', count: initialPosts.filter(post => post.category === 'FEATURES').length, icon: 'fas fa-star' },
-    { name: 'UPDATE', count: initialPosts.filter(post => post.category === 'UPDATE').length, icon: 'fas fa-sync-alt' },
-    { name: 'SECURITY', count: initialPosts.filter(post => post.category === 'SECURITY').length, icon: 'fas fa-shield-alt' }
-  ];
+  const uniqueCategories = ['ALL', ...new Set(fetchedPosts.map(post => post.category).filter(Boolean))];
+  const categories = uniqueCategories.map(cat => ({
+    name: cat,
+    count: cat === 'ALL' ? fetchedPosts.length : fetchedPosts.filter(post => post.category === cat).length,
+    icon: cat === 'ALL' ? 'fas fa-layer-group' : 'fas fa-tag'
+  }));
 
   // Handle search and filtering
   useEffect(() => {
-    let filtered = [...initialPosts];
+    let filtered = [...fetchedPosts];
     
     // Apply search filter
     if (searchTerm) {
       filtered = filtered.filter(post => 
-        post.title.toLowerCase().includes(searchTerm.toLowerCase()) || 
-        post.excerpt.toLowerCase().includes(searchTerm.toLowerCase())
+        post.title?.toLowerCase().includes(searchTerm.toLowerCase()) || 
+        post.excerpt?.toLowerCase().includes(searchTerm.toLowerCase())
       );
     }
     
@@ -117,14 +51,14 @@ const ViewBlog = () => {
     
     // Apply sorting
     if (sortBy === 'newest') {
-      filtered.sort((a, b) => new Date(b.date) - new Date(a.date));
+      filtered.sort((a, b) => new Date(b.date || b.createdAt) - new Date(a.date || a.createdAt));
     } else if (sortBy === 'oldest') {
-      filtered.sort((a, b) => new Date(a.date) - new Date(b.date));
+      filtered.sort((a, b) => new Date(a.date || a.createdAt) - new Date(b.date || b.createdAt));
     }
     
     setFilteredPosts(filtered);
     setCurrentPage(1);
-  }, [searchTerm, selectedCategory, sortBy]);
+  }, [searchTerm, selectedCategory, sortBy, fetchedPosts.length]);
 
   // Calculate pagination
   const indexOfLastPost = currentPage * postsPerPage;
@@ -312,8 +246,8 @@ const ViewBlog = () => {
       <section className="all-posts-section">
         <div className="container-fluid">
           <div className="all-posts-container grid-view">
-            {currentPosts.map((post) => (
-              <div className="post-card" key={post.id}>
+            {isLoading ? <p>Loading blogs...</p> : currentPosts.map((post) => (
+              <div className="post-card" key={post.id || post._id}>
                 <div className="post-card-inner">
                   {/* Trending Badge */}
                   {post.trending && (
@@ -325,12 +259,12 @@ const ViewBlog = () => {
                   {/* Post Image */}
                   <div className="post-image">
                     <div className="image-overlay"></div>
-                    <img src={post.image} alt={post.title} />
+                    <img src={post.image || "/blog-image.webp"} alt={post.title} />
                     <div className="post-category">
                       
                       <span 
                         className="category-name"
-                        style={{background: post.categoryColor}}
+                        style={{background: post.color || post.categoryColor || '#ff6a00'}}
                       >
                         {post.category}
                       </span>
@@ -342,7 +276,7 @@ const ViewBlog = () => {
                     <div className="post-header">
                       <div className="blog-meta">
                         <span className="blog-date">
-                          <i className="far fa-calendar"></i> {post.date}
+                          <i className="far fa-calendar"></i> {post.date || new Date(post.createdAt).toLocaleDateString()}
                         </span>
                         <span className="blog-readtime">
                           <i className="far fa-clock"></i> {post.readTime}
@@ -379,7 +313,7 @@ const ViewBlog = () => {
           </div>
           
           {/* No Results Message */}
-          {currentPosts.length === 0 && (
+          {!isLoading && currentPosts.length === 0 && (
             <div className="no-results">
               <div className="no-results-icon">
                 <i className="fas fa-search"></i>

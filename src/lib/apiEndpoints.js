@@ -30,6 +30,14 @@ export const API_ENDPOINTS = {
     CREATE: "/subscribe",
   },
 
+  BLOGS: {
+    GET_ALL: "/blogs",
+    CREATE: "/blogs",
+    GET_BY_SLUG: (slug) => `/blogs/${slug}`,
+    UPDATE_BY_SLUG: (slug) => `/blogs/${slug}`,
+    DELETE_BY_SLUG: (slug) => `/blogs/${slug}`,
+    
+  },
   JOBS: {
     GET_ALL: "/jobs",
     GET_ADMIN: "/jobs/admin",
@@ -82,6 +90,6 @@ export const API_ENDPOINTS = {
       BAN_USER: (id) => `/admin-panel/app-users/${id}/ban`,
       UNBAN_USER: (id) => `/admin-panel/app-users/${id}/unban`,
       WARN_USER: (id) => `/admin-panel/app-users/${id}/warn`,
-    },
+    }
   },
 };
