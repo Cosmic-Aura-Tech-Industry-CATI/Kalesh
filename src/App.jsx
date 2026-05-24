@@ -31,6 +31,8 @@ import AdminLayout from "./admin/layout/AdminLayout";
 import AdminBlog from "./admin/pages/AdminBlog";
 import AdminBlogPage from "./admin/pages/AdminBlogPage";
 import AdminEditBlog from "./admin/pages/AdminEditBlog";
+import AdminCreateContest from "./admin/pages/AdminCreateContest";
+import AdminContestList from "./admin/pages/AdminContestList";
 
 import JobDetails from "./pages/JobDetails";
 
@@ -109,6 +111,8 @@ function MainRoutes() {
               <Route path="blog" element={<AdminBlog />} />
               <Route path="blogs" element={<AdminBlogPage />} />
               <Route path="blog/edit/:slug" element={<AdminEditBlog />} />
+              <Route path="/admin/contest/create" element={<AdminCreateContest />} />
+              <Route path="/admin/contests" element={<AdminContestList />} />
 
               <Route path="banned-users" element={<AdminBannedUsers />} />
               <Route path="premium" element={<AdminPremium />} />
