@@ -12,11 +12,14 @@ import {
   Settings,
   Briefcase,
   UserCog,
+  Trophy,
 } from "lucide-react";
 import "../style/sidebar.css";
 
 const menuItems = [
   { path: "/admin/dashboard", icon: LayoutDashboard, label: "Dashboard" },
+  
+  { path: "/admin/contests", icon: Trophy, label: "Contests" },
   { path: "/admin/reported-polls", icon: AlertCircle, label: "Reports" },
   { path: "/admin/users", icon: Users, label: "Users" },
   { path: "/admin/banned-users", icon: Ban, label: "Banned Users" },
