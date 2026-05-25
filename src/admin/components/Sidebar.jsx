@@ -13,12 +13,13 @@ import {
   Briefcase,
   UserCog,
   Trophy,
+  Images,
 } from "lucide-react";
 import "../style/sidebar.css";
 
 const menuItems = [
   { path: "/admin/dashboard", icon: LayoutDashboard, label: "Dashboard" },
-  
+  { path: "/admin/highlights", icon: Images, label: "Highlights" },
   { path: "/admin/contests", icon: Trophy, label: "Contests" },
   { path: "/admin/reported-polls", icon: AlertCircle, label: "Reports" },
   { path: "/admin/users", icon: Users, label: "Users" },
