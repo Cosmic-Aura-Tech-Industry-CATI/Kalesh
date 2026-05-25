@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useForm } from "react-hook-form";
+import { useForm, Controller } from "react-hook-form";
 import { Plus, Trash2, Edit, Info } from "lucide-react";
 import {
   useCreateJob,
@@ -13,6 +13,8 @@ import "../style/adminJobs.css";
 import ApplicationTable from "../components/ApplicationTable";
 import { useToggleJobStatus } from "../../hooks/useJobs";
 import { Power } from "lucide-react";
+import ReactQuill from "react-quill";
+import "react-quill/dist/quill.snow.css";
 
 const JobApplicationCount = ({ jobId }) => {
   const { data, isLoading } = useGetApplicationsByJobId(jobId);
@@ -30,8 +32,18 @@ export default function JobsPosting() {
 
   const jobs = jobsData?.data || [];
 
+  const quillModules = {
+    toolbar: [
+      [{ header: [1, 2, false] }],
+      ["bold", "italic", "underline"],
+      [{ list: "ordered" }, { list: "bullet" }],
+      ["clean"],
+    ],
+  };
+
   const {
     register,
+    control,
     handleSubmit,
     reset,
     setValue,
@@ -56,19 +68,16 @@ export default function JobsPosting() {
   const onSubmit = (data) => {
     const payload = {
       ...data,
-      skill:
-        typeof data.skill === "string"
-          ? data.skill
-              .split(",")
-              .map((s) => s.trim())
-              .filter(Boolean)
-          : data.skill,
+      skill: data.skill,
       applicationDuration: Number(data.applicationDuration),
     };
 
     if (editingJob) {
       updateJob(
-        { ...payload, id: editingJob._id || editingJob.id },
+        {
+          ...payload,
+          id: editingJob._id || editingJob.id,
+        },
         {
           onSuccess: () => {
             setShowForm(false);
@@ -173,13 +182,23 @@ export default function JobsPosting() {
           {/* Job Summary */}
           <div className="admin-form-group">
             <label className="admin-form-label">Job Summary</label>
-            <textarea
-              rows="2"
-              className="admin-form-textarea"
-              {...register("summary", {
+
+            <Controller
+              name="summary"
+              control={control}
+              rules={{
                 required: "Job Summary is required",
-              })}
+              }}
+              render={({ field }) => (
+                <ReactQuill
+                  theme="snow"
+                  value={field.value || ""}
+                  onChange={field.onChange}
+                  modules={quillModules}
+                />
+              )}
             />
+
             {errors.summary && (
               <span className="text-red-500 text-xs">
                 {errors.summary.message}
@@ -190,13 +209,23 @@ export default function JobsPosting() {
           {/* Job Description */}
           <div className="admin-form-group">
             <label className="admin-form-label">Job Description</label>
-            <textarea
-              rows="4"
-              className="admin-form-textarea"
-              {...register("description", {
+
+            <Controller
+              name="description"
+              control={control}
+              rules={{
                 required: "Job Description is required",
-              })}
+              }}
+              render={({ field }) => (
+                <ReactQuill
+                  theme="snow"
+                  value={field.value || ""}
+                  onChange={field.onChange}
+                  modules={quillModules}
+                />
+              )}
             />
+
             {errors.description && (
               <span className="text-red-500 text-xs">
                 {errors.description.message}
@@ -247,10 +276,28 @@ export default function JobsPosting() {
           {/* Skill */}
           <div className="admin-form-group">
             <label className="admin-form-label">Skill</label>
-            <input
-              className="admin-form-input"
-              {...register("skill", { required: "Skill is required" })}
+
+            <Controller
+              name="skill"
+              control={control}
+              rules={{
+                required: "Skill is required",
+              }}
+              render={({ field }) => (
+                <ReactQuill
+                  theme="snow"
+                  value={field.value || ""}
+                  onChange={field.onChange}
+                  modules={quillModules}
+                />
+              )}
             />
+
+            {errors.skill && (
+              <span className="text-red-500 text-xs">
+                {errors.skill.message}
+              </span>
+            )}
           </div>
 
           {/* Experience */}

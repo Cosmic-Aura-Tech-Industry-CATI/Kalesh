@@ -155,3 +155,93 @@
   box-shadow: 0 0 10px rgba(255,106,0,0.7);
   transform: translateY(-1px);
 }
+
+
+/* =========================
+   REACT QUILL DARK THEME
+========================= */
+
+.ql-toolbar.ql-snow {
+  background: #111111;
+  border: 1px solid rgba(212, 175, 55, 0.3) !important;
+  border-radius: 12px 12px 0 0;
+}
+
+.ql-container.ql-snow {
+  background: #151515;
+  border: 1px solid rgba(212, 175, 55, 0.3) !important;
+  border-top: none !important;
+  border-radius: 0 0 12px 12px;
+  min-height: 140px;
+}
+
+.ql-editor {
+  color: white;
+  font-size: 15px;
+  line-height: 1.7;
+}
+
+.ql-editor.ql-blank::before {
+  color: #777;
+  font-style: normal;
+}
+
+/* Toolbar Icons */
+.ql-snow .ql-stroke {
+  stroke: #d4af37 !important;
+}
+
+.ql-snow .ql-fill {
+  fill: #d4af37 !important;
+}
+
+.ql-snow .ql-picker {
+  color: #d4af37 !important;
+}
+
+/* Hover */
+.ql-snow .ql-picker-label:hover,
+.ql-snow .ql-picker-item:hover,
+.ql-snow button:hover {
+  color: #ff6a00 !important;
+}
+
+.ql-snow button:hover .ql-stroke {
+  stroke: #ff6a00 !important;
+}
+
+/* Active buttons */
+.ql-snow .ql-active {
+  color: #ff6a00 !important;
+}
+
+.ql-snow .ql-active .ql-stroke {
+  stroke: #ff6a00 !important;
+}
+
+/* Dropdown */
+.ql-picker-options {
+  background: #1a1a1a !important;
+  border: 1px solid rgba(212, 175, 55, 0.2) !important;
+}
+
+.ql-picker-item {
+  color: white !important;
+}
+
+/* Spacing */
+.admin-form-group .ql-container {
+  margin-bottom: 8px;
+}
+
+
+.ql-toolbar.ql-snow,
+.ql-container.ql-snow {
+  transition: all 0.3s ease;
+}
+
+.ql-container.ql-snow:focus-within,
+.ql-toolbar.ql-snow:focus-within {
+  border-color: #ff6a00 !important;
+  box-shadow: 0 0 15px rgba(255, 106, 0, 0.25);
+}
