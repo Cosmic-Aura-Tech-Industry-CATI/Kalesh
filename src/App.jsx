@@ -35,6 +35,7 @@ import AdminCreateContest from "./admin/pages/AdminCreateContest";
 import AdminContestList from "./admin/pages/AdminContestList";
 
 import JobDetails from "./pages/JobDetails";
+import Highlights from "./admin/pages/Highlights";
 
 // LAZY PUBLIC PAGES
 const Home = lazy(() => import("./pages/Home"));
@@ -82,17 +83,26 @@ function MainRoutes() {
             <Route path="/careers/:jobId" element={<JobDetails />} />
             <Route path="/contactus" element={<ContactUs />} />
             <Route path="/helpcenter" element={<HelpCenter />} />
-            <Route path="/termsandconditions" element={<TermsAndConditions />} />
+            <Route
+              path="/termsandconditions"
+              element={<TermsAndConditions />}
+            />
             <Route path="/privacypolicy" element={<PrivacyPolicy />} />
             <Route path="/faq" element={<FAQ />} />
             <Route path="/blog" element={<Blog />} />
             <Route path="/blog/viewpage" element={<Viewpage />} />
             <Route path="/blog/blogteam" element={<Blogteam />} />
             <Route path="/blog/:slug" element={<BlogDetail />} />
-            <Route path="/communityguidelines" element={<CommunityGuidelines />} />
+            <Route
+              path="/communityguidelines"
+              element={<CommunityGuidelines />}
+            />
             <Route path="/securityadvisory" element={<SecurityAdvisory />} />
 
-            <Route path="/application/:token" element={<ApplicationDetails />} />
+            <Route
+              path="/application/:token"
+              element={<ApplicationDetails />}
+            />
 
             {/* ADMIN LOGIN */}
             <Route path="/admin/login" element={<AdminLogin />} />
@@ -106,12 +116,16 @@ function MainRoutes() {
               <Route path="user/:userId" element={<UserDetails />} />
 
               <Route path="jobs" element={<JobsPosting />} />
+              <Route path="/admin/highlights" element={<Highlights />} />
 
               {/* BLOG SYSTEM */}
               <Route path="blog" element={<AdminBlog />} />
               <Route path="blogs" element={<AdminBlogPage />} />
               <Route path="blog/edit/:slug" element={<AdminEditBlog />} />
-              <Route path="/admin/contest/create" element={<AdminCreateContest />} />
+              <Route
+                path="/admin/contest/create"
+                element={<AdminCreateContest />}
+              />
               <Route path="/admin/contests" element={<AdminContestList />} />
 
               <Route path="banned-users" element={<AdminBannedUsers />} />
@@ -136,7 +150,7 @@ function App() {
     const setVh = () => {
       document.documentElement.style.setProperty(
         "--vh",
-        `${window.innerHeight * 0.01}px`
+        `${window.innerHeight * 0.01}px`,
       );
     };
 

@@ -47,7 +47,6 @@ export default function JobDetails() {
         reset();
         setShowApplicationForm(false);
       },
-      
     });
   };
 
@@ -69,21 +68,32 @@ export default function JobDetails() {
 
       <div className="job-summary">
         <h3>Job Summary</h3>
-        <p>{job.summary}</p>
+
+        <div
+          dangerouslySetInnerHTML={{
+            __html: job.summary,
+          }}
+        />
       </div>
 
       <div className="job-description">
         <h3>Job Description</h3>
-        <p>{job.description}</p>
+
+        <div
+          dangerouslySetInnerHTML={{
+            __html: job.description,
+          }}
+        />
       </div>
 
       <div className="job-skills">
         <h3>Required Skills</h3>
-        <p>
-          {Array.isArray(job.skill)
-            ? job.skill.join(", ")
-            : job.skill}
-        </p>
+
+        <div
+          dangerouslySetInnerHTML={{
+            __html: job.skill,
+          }}
+        />
       </div>
 
       <button
@@ -100,17 +110,22 @@ export default function JobDetails() {
             <h3>Apply for {job.title}</h3>
 
             <form onSubmit={handleSubmit(onSubmit)}>
-
               <div className="form-group">
                 <label>Full Name</label>
-                <input {...register("name", { required: "Name is required" })} />
+                <input
+                  {...register("name", { required: "Name is required" })}
+                />
                 {errors.name && <p className="error">{errors.name.message}</p>}
               </div>
 
               <div className="form-group">
                 <label>State</label>
-                <input {...register("state", { required: "State is required" })} />
-                {errors.state && <p className="error">{errors.state.message}</p>}
+                <input
+                  {...register("state", { required: "State is required" })}
+                />
+                {errors.state && (
+                  <p className="error">{errors.state.message}</p>
+                )}
               </div>
 
               <div className="form-group">
@@ -119,13 +134,17 @@ export default function JobDetails() {
                   defaultValue="India"
                   {...register("country", { required: "Country is required" })}
                 />
-                {errors.country && <p className="error">{errors.country.message}</p>}
+                {errors.country && (
+                  <p className="error">{errors.country.message}</p>
+                )}
               </div>
 
               <div className="form-group">
                 <label>Highest Degree</label>
                 <input
-                  {...register("highestDegree", { required: "Degree is required" })}
+                  {...register("highestDegree", {
+                    required: "Degree is required",
+                  })}
                 />
                 {errors.highestDegree && (
                   <p className="error">{errors.highestDegree.message}</p>
@@ -160,7 +179,9 @@ export default function JobDetails() {
                   type="email"
                   {...register("email", { required: "Email is required" })}
                 />
-                {errors.email && <p className="error">{errors.email.message}</p>}
+                {errors.email && (
+                  <p className="error">{errors.email.message}</p>
+                )}
               </div>
 
               <div className="form-group">
@@ -169,7 +190,9 @@ export default function JobDetails() {
                   type="tel"
                   {...register("phone", { required: "Phone is required" })}
                 />
-                {errors.phone && <p className="error">{errors.phone.message}</p>}
+                {errors.phone && (
+                  <p className="error">{errors.phone.message}</p>
+                )}
               </div>
 
               <div className="form-group full-width">
@@ -179,7 +202,9 @@ export default function JobDetails() {
                   accept=".pdf,.doc,.docx"
                   {...register("resume", { required: "Resume is required" })}
                 />
-                {errors.resume && <p className="error">{errors.resume.message}</p>}
+                {errors.resume && (
+                  <p className="error">{errors.resume.message}</p>
+                )}
               </div>
 
               <button type="submit" className="submit-btn full-width">
@@ -193,7 +218,6 @@ export default function JobDetails() {
               >
                 Cancel
               </button>
-
             </form>
           </div>
         </div>

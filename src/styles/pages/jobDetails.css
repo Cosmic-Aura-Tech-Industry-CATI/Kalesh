@@ -173,3 +173,28 @@
     line-height: 1.61;
   }
 }
+
+.job-summary ul,
+.job-description ul,
+.job-skills ul {
+  padding-left: 22px;
+  margin-top: 10px;
+}
+
+.job-summary li,
+.job-description li,
+.job-skills li {
+  margin-bottom: 8px;
+}
+
+.job-summary strong,
+.job-description strong,
+.job-skills strong {
+  font-weight: 700;
+}
+
+.job-summary p,
+.job-description p,
+.job-skills p {
+  line-height: 1.8;
+}
