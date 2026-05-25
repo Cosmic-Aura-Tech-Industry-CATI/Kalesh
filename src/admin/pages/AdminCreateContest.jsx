@@ -1,7 +1,9 @@
 import { useState } from "react";
-import axios from "axios";
+import { useCreateContest } from "../../hooks/useContests";
 
 export default function AdminCreateContest() {
+  const { mutate: createContest, isPending } = useCreateContest();
+
   const [form, setForm] = useState({
     title: "",
     description: "",
@@ -12,7 +14,6 @@ export default function AdminCreateContest() {
   });
 
   const [thumbnailFile, setThumbnailFile] = useState(null);
-  const [loading, setLoading] = useState(false);
 
   // file change
   const handleFileChange = (e) => {
@@ -30,62 +31,41 @@ export default function AdminCreateContest() {
   };
 
   // submit
-  const handleSubmit = async (e) => {
+  const handleSubmit = (e) => {
     e.preventDefault();
 
-    try {
-      setLoading(true);
+    const formData = new FormData();
 
-      const formData = new FormData();
+    // append fields
+    formData.append("title", form.title);
+    formData.append("description", form.description);
+    formData.append("type", form.type);
+    formData.append(
+      "registrationDuration",
+      Number(form.registrationDuration || 0)
+    );
+    formData.append("registrationStartDate", form.registrationStartDate);
+    formData.append("maxParticipants", Number(form.maxParticipants || 0));
 
-      // append fields
-      formData.append("title", form.title);
-      formData.append("description", form.description);
-      formData.append("type", form.type);
-      formData.append(
-        "registrationDuration",
-        Number(form.registrationDuration || 0)
-      );
-      formData.append(
-        "registrationStartDate",
-        form.registrationStartDate
-      );
-      formData.append(
-        "maxParticipants",
-        Number(form.maxParticipants || 0)
-      );
-
-      // append image
-      if (thumbnailFile) {
-        formData.append("thumbnail", thumbnailFile);
-      }
-
-      await axios.post("https://api.thekalesh.com/api/admin/contest/create", formData, {
-        headers: {
-          "Content-Type": "multipart/form-data",
-        },
-        withCredentials: true,
-      });
-
-      alert("Contest Created Successfully");
-
-      // reset form
-      setForm({
-        title: "",
-        description: "",
-        type: "weekly",
-        registrationDuration: "",
-        registrationStartDate: "",
-        maxParticipants: "",
-      });
-
-      setThumbnailFile(null);
-    } catch (err) {
-      console.error(err);
-      alert("Failed to create contestadmin ");
-    } finally {
-      setLoading(false);
+    // append image
+    if (thumbnailFile) {
+      formData.append("thumbnail", thumbnailFile);
     }
+
+    createContest(formData, {
+      onSuccess: () => {
+        // reset form
+        setForm({
+          title: "",
+          description: "",
+          type: "weekly",
+          registrationDuration: "",
+          registrationStartDate: "",
+          maxParticipants: "",
+        });
+        setThumbnailFile(null);
+      },
+    });
   };
 
   return (
@@ -175,7 +155,7 @@ export default function AdminCreateContest() {
             Registration Start Date
           </label>
           <input
-            type="datetime-local"
+            type="date"
             name="registrationStartDate"
             value={form.registrationStartDate}
             onChange={handleChange}
@@ -196,8 +176,12 @@ export default function AdminCreateContest() {
         </div>
 
         {/* Submit */}
-        <button type="submit" className="admin-btn-primary">
-          {loading ? "Creating..." : "Create Contest"}
+        <button 
+          type="submit" 
+          className="admin-btn-primary"
+          disabled={isPending}
+        >
+          {isPending ? "Creating..." : "Create Contest"}
         </button>
       </form>
     </div>

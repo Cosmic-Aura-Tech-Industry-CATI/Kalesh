@@ -90,6 +90,14 @@ export const API_ENDPOINTS = {
       BAN_USER: (id) => `/admin-panel/app-users/${id}/ban`,
       UNBAN_USER: (id) => `/admin-panel/app-users/${id}/unban`,
       WARN_USER: (id) => `/admin-panel/app-users/${id}/warn`,
+    },
+    
+    CONTEST: {
+      GET_ALL: "/admin-panel/contests",
+      CREATE: "/admin-panel/contests",
+      GET_BY_ID: (id) => `/admin-panel/contests/${id}`,
+      UPDATE_BY_ID: (id) => `/admin-panel/contests/${id}`,
+      DELETE_BY_ID: (id) => `/admin-panel/contests/${id}`,
     }
   },
 };

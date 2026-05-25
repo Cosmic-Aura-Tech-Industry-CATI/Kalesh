@@ -2,11 +2,11 @@ import { useEffect, Suspense, lazy } from "react";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { Routes, Route, useLocation } from "react-router-dom";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
+import { Toaster } from "react-hot-toast";
 
 import ScrollbarTop from "./components/ScrollbarTop";
 import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
-import { Toaster } from "react-hot-toast";
 
 import ApplicationDetails from "./pages/ApplicationDetails";
 import UnauthorizedModal from "./components/UnauthorizedModal";
