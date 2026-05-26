@@ -98,6 +98,13 @@ export const API_ENDPOINTS = {
       GET_BY_ID: (id) => `/admin-panel/contests/${id}`,
       UPDATE_BY_ID: (id) => `/admin-panel/contests/${id}`,
       DELETE_BY_ID: (id) => `/admin-panel/contests/${id}`,
+    },
+    
+    HIGHLIGHTS: {
+      GET_ALL: "/admin-panel/highlights",
+      CREATE: "/admin-panel/highlights",
+      UPDATE_BY_ID: (id) => `/admin-panel/highlights/${id}`,
+      DELETE_BY_ID: (id) => `/admin-panel/highlights/${id}`, 
     }
   },
 };
