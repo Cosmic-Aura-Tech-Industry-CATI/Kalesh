@@ -3,6 +3,7 @@ import { Sparkles, ImagePlus, Trophy, Flame, Star, Plus } from "lucide-react";
 
 import HighlightModal from "../components/HighlightModal";
 import HighlightCard from "../components/HighlightCard";
+import { useGetAllHighlights, useCreateHighlight, useDeleteHighlight } from "../../hooks/useHighlight";
 import "../style/highlights.css";
 
 export default function Highlights() {
@@ -28,7 +29,11 @@ export default function Highlights() {
 
   const [openModal, setOpenModal] = useState(false);
 
-  const [highlights, setHighlights] = useState([]);
+  const { data: highlightsResponse } = useGetAllHighlights();
+  const { mutate: createHighlight } = useCreateHighlight();
+  const { mutate: deleteHighlightMutate } = useDeleteHighlight();
+
+  const highlights = highlightsResponse?.data || highlightsResponse || [];
 
   const [categoryModal, setCategoryModal] = useState(false);
 
@@ -64,17 +69,25 @@ export default function Highlights() {
   );
 
   const handleAddHighlight = (data) => {
-    setHighlights((prev) => [
-      {
-        id: Date.now(),
-        ...data,
-      },
-      ...prev,
-    ]);
+    const formData = new FormData();
+    formData.append("category", data.category);
+    formData.append("header", data.header);
+    formData.append("description", data.description);
+    if (data.link) formData.append("link", data.link);
+
+    // Because the backend expects a single file (media is a String in the model),
+    // we should only append the first file instead of looping and appending multiple.
+    if (data.files && data.files.length > 0) {
+      formData.append("media", data.files[0].file);
+    }
+
+    createHighlight(formData);
   };
 
   const deleteHighlight = (id) => {
-    setHighlights((prev) => prev.filter((item) => item.id !== id));
+    if (window.confirm("Are you sure you want to delete this highlight?")) {
+      deleteHighlightMutate(id);
+    }
   };
 
   return (
@@ -170,9 +183,9 @@ export default function Highlights() {
           {filteredHighlights.length > 0 ? (
             filteredHighlights.map((item) => (
               <HighlightCard
-                key={item.id}
+                key={item._id || item.id}
                 item={item}
-                deleteHighlight={deleteHighlight}
+                deleteHighlight={() => deleteHighlight(item._id || item.id)}
               />
             ))
           ) : (
