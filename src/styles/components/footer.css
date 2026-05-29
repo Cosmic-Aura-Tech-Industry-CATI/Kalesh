@@ -312,19 +312,20 @@
   color: #0a66c2;
 }
 
-/* ==================================================
-   TABLET
-================================================== */
 
-@media (max-width: 991px) {
-  .footer-bottom-top {
-    flex-direction: column;
-    text-align: center;
+
+/* =========================
+   TABLET FIX
+========================= */
+
+@media (min-width: 768px) and (max-width: 991px) {
+
+  .kalesh-footer .row {
+    row-gap: 40px;
   }
 
-  .footer-powered {
-    flex-direction: column;
-    gap: 8px;
+  .kalesh-footer .col-sm-6 {
+    text-align: center;
   }
 
   .footer-title {
@@ -334,6 +335,41 @@
   .footer-title::after {
     margin-left: auto;
     margin-right: auto;
+  }
+
+  .footer-list {
+    text-align: center;
+  }
+
+  .footer-brand-wrap {
+    align-items: center;
+  }
+}
+
+@media (max-width: 991px) {
+
+  .footer-list li {
+    margin-bottom: 14px;
+  }
+
+  .footer-title {
+    margin-bottom: 20px;
+  }
+
+  .footer-brand-wrap {
+    margin-bottom: 10px;
+  }
+}
+
+@media (max-width: 991px) {
+
+  .footer-bottom-top {
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .footer-powered {
+    order: 3;
   }
 }
 
