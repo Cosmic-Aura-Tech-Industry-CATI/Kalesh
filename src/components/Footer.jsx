@@ -1,7 +1,6 @@
 import { Link } from "react-router-dom";
 import "../styles/components/footer.css";
 
-
 function Footer() {
   return (
     <footer className="kalesh-footer">
@@ -26,7 +25,6 @@ function Footer() {
               />
               <button className="coming-soon-btn">Coming Soon</button>
             </div>
-            
           </div>
 
           {/* ===== COLUMN 2 : WHAT WE DO ===== */}
@@ -74,38 +72,53 @@ function Footer() {
               <li>
                 <Link to="/securityadvisory">Security Advisory</Link>
               </li>
+              <li>
+                <Link to="/termsandconditions">Terms & Conditions</Link>
+              </li>
             </ul>
           </div>
         </div>
       </div>
 
       {/* ===== BOTTOM BAR ===== */}
-      <div className="footer-bottom py-3">
+      <div className="footer-bottom">
         <div className="container">
-          <div className="row align-items-center gy-2">
-            {/* COPYRIGHT */}
-            <div className="col-12 col-md-4 text-center text-md-start">
-              © 2026 Kalesh
+          <div className="footer-bottom-top">
+            {/* Copyright */}
+            <div className="footer-copyright">
+              © 2026 Kalesh. All Rights Reserved.
             </div>
 
-            {/* TERMS */}
-            <div className="col-12 col-md-4 text-center">
-              <Link to="/termsandconditions">Terms &amp; Conditions</Link>
-            </div>
-
-            {/* SOCIAL ICONS */}
-            <div className="col-12 col-md-4 text-center text-md-end footer-socials">
-              <a href="https://x.com/KaleshThe76740" aria-label="X (Twitter)">
+            {/* Social Icons */}
+            <div className="footer-bottom-social">
+              <a href="https://x.com/KaleshThe76740">
                 <i className="fa-brands fa-x-twitter"></i>
               </a>
-              <a href="https://www.facebook.com/profile.php?id=61587629125145" aria-label="Facebook">
+
+              <a href="https://www.facebook.com/profile.php?id=61587629125145">
                 <i className="fa-brands fa-facebook-f"></i>
               </a>
-              <a href="https://www.instagram.com/thekalesh47?igsh=MTdqd3Y2aHBsOWFxMg==" aria-label="Instagram">
+
+              <a href="https://www.instagram.com/thekalesh47?igsh=MTdqd3Y2aHBsOWFxMg==">
                 <i className="fa-brands fa-instagram"></i>
               </a>
-              <a href="https://www.linkedin.com/company/kalesh47/" aria-label="LinkedIn">
+
+              <a href="https://www.linkedin.com/company/kalesh47/">
                 <i className="fa-brands fa-linkedin-in"></i>
+              </a>
+            </div>
+
+            {/* DIMISI Branding */}
+            <div className="footer-powered">
+              <span>Designed & Developed By</span>
+
+              <a
+                href="https://dimisi.tech"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="dimisi-brand"
+              >
+                <img src="public/images/dimisi-logo.png" alt="DIMISI" />
               </a>
             </div>
           </div>
