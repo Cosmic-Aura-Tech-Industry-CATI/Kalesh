@@ -1,7 +1,9 @@
 import { useEffect } from "react";
 import { Helmet } from "react-helmet-async";
+import { motion } from "framer-motion";
 import SEO from "../components/SEO";
 import "../styles/pages/home.css";
+import { FaUserSecret } from "react-icons/fa";
 
 function Home() {
   useEffect(() => {
@@ -30,11 +32,28 @@ function Home() {
       />
       {/* ================= HERO SECTION ================= */}
       <div className="home-hero container-fluid g-0">
+        <div className="hero-bg-glow"></div>
+
+        <div className="hero-particles">
+          {[...Array(20)].map((_, i) => (
+            <span key={i}></span>
+          ))}
+        </div>
         <div className="row align-items-center g-0">
           {/* Hero TEXT */}
 
           <div className="col-12 col-lg-6 order-2 order-lg-1  d-flex justify-content-center justify-content-lg-start">
-            <div className="hero-content w-100 text-center text-lg-start">
+            <motion.div
+              className="hero-content w-100 text-center text-lg-start"
+              initial={{ opacity: 0, x: -60 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.8 }}
+            >
+              <div className="hero-badge">
+                <FaUserSecret className="hero-badge-icon" />
+                India's First Anonymous Social Platform
+              </div>
+
               <h1 className="hero-title">
                 India&apos;s First Anonymous Social Media Platform
               </h1>
@@ -43,9 +62,11 @@ function Home() {
                 A platform where your opinion matters, not your identity.{" "}
               </p>
 
-              <div className="hero-buttons d-flex flex-column flex-sm-row 
+              <div
+                className="hero-buttons d-flex flex-column flex-sm-row 
               justify-content-center justify-content-lg-start 
-              align-items-center gap-4 mt-4 mt-md-5 w-100">
+              align-items-center gap-4 mt-4 mt-md-5 w-100"
+              >
                 <button className="btn-kalesh">
                   Download App (Coming Soon)
                 </button>
@@ -54,12 +75,17 @@ function Home() {
                   Join the Kalesh Community
                 </button>
               </div>
-            </div>
+            </motion.div>
           </div>
 
           {/* 🔥 HERO IMAGE – LCP FIX */}
           <div className="col-12 col-lg-6 order-1 order-lg-2">
-            <div className="hero-image align-items-center d-flex justify-content-center">
+            <motion.div
+              className="hero-image align-items-center d-flex justify-content-center"
+              initial={{ opacity: 0, scale: 0.8 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ duration: 1 }}
+            >
               <img
                 src="/images/logo-600.webp"
                 srcSet="
@@ -75,11 +101,27 @@ function Home() {
                 fetchpriority="high"
                 decoding="async"
               />
-            </div>
+            </motion.div>
           </div>
         </div>
       </div>
-      
+      {/* floating cards */}
+      <div className="hero-features container">
+        <div className="feature-card">
+          <i className="fa-solid fa-user-secret"></i>
+          <h4>Anonymous Profiles</h4>
+        </div>
+
+        <div className="feature-card">
+          <i className="fa-solid fa-square-poll-vertical"></i>
+          <h4>Real-Time Polls</h4>
+        </div>
+
+        <div className="feature-card">
+          <i className="fa-solid fa-comments"></i>
+          <h4>Private Chats</h4>
+        </div>
+      </div>
       {/* ================= INFO SECTION ================= */}
       <div className="kalesh-info-section">
         <div className="kalesh-info-content container-fluid g-0">
@@ -116,8 +158,6 @@ function Home() {
           </div>
         </div>
       </div>
-
-
       {/* ===== REAL-TIME POLL INFO DIV ===== */}
       <div className="container-fluid section-poll py-4 py-md-5">
         <div className="container">
