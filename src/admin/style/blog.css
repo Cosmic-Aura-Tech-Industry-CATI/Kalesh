@@ -154,11 +154,55 @@
   color: #4caf50;
 }
 
-
 /* FEATURED */
 .blog-featured {
   display: flex;
   align-items: center;
   gap: 8px;
   margin: 15px 0 25px; /* 🔥 bottom gap */
+}
+
+.blog-editor {
+  margin-bottom: 25px;
+}
+
+.blog-editor-label {
+  display: block;
+  margin-bottom: 10px;
+  color: #d4af37;
+  font-weight: 600;
+}
+
+.ql-toolbar {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background: #121212 !important;
+  border: 1px solid rgba(212, 175, 55, 0.3) !important;
+}
+
+.ql-container {
+  height: 500px !important;
+  background: #121212;
+  color: white;
+  border: 1px solid rgba(212, 175, 55, 0.3) !important;
+}
+
+.ql-editor {
+  height: 440px !important;
+  overflow-y: auto !important;
+  color: white;
+  font-size: 16px;
+}
+
+.ql-snow .ql-stroke {
+  stroke: #d4af37 !important;
+}
+
+.ql-snow .ql-fill {
+  fill: #d4af37 !important;
+}
+
+.ql-snow .ql-picker {
+  color: #d4af37 !important;
 }

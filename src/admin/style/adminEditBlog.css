@@ -99,22 +99,42 @@
 
 /* UPDATE BUTTON */
 .edit-blog-btn {
-  width: 100%;
-  margin-top: 24px;
-  padding: 14px;
-  border-radius: 999px;
+  width: auto !important;
+  min-width: 180px;
+  padding: 12px 28px;
   border: none;
-  font-size: 15px;
+  border-radius: 10px;
+  background: linear-gradient(135deg, #ff2a2a, #ff6a00);
+  color: white;
   font-weight: 600;
-  background: linear-gradient(135deg, #ff2d2d, #ff7b00);
-  color: #fff;
   cursor: pointer;
-  transition: 0.3s;
 }
 
 .edit-blog-btn:hover {
   transform: translateY(-2px);
   box-shadow: 0 0 20px rgba(255, 80, 0, 0.5);
+}
+
+.edit-blog-actions {
+  display: flex;
+  justify-content: center;
+  gap: 15px;
+  margin-top: 25px;
+}
+
+.edit-blog-close-btn {
+  min-width: 120px;
+  padding: 12px 24px;
+  border-radius: 10px;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  background: transparent;
+  color: white;
+  cursor: pointer;
+}
+
+.edit-blog-close-btn:hover {
+  background: #333;
+  border-color: #999;
 }
 
 /* IMAGE */
@@ -137,4 +157,37 @@
 .edit-blog-card::-webkit-scrollbar-thumb {
   background: #ff6a00;
   border-radius: 10px;
+}
+
+.ql-toolbar {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background: #121212 !important;
+}
+
+.ql-container {
+  height: 500px !important;
+  background: #121212;
+  color: white;
+  border: 1px solid rgba(212, 175, 55, 0.3) !important;
+}
+
+.ql-editor {
+  height: 440px !important;
+  overflow-y: auto !important;
+  color: white;
+  font-size: 16px;
+}
+
+.ql-snow .ql-stroke {
+  stroke: #d4af37 !important;
+}
+
+.ql-snow .ql-fill {
+  fill: #d4af37 !important;
+}
+
+.ql-snow .ql-picker {
+  color: #d4af37 !important;
 }
