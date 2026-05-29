@@ -1,78 +1,306 @@
+import { useState } from "react";
+
 import { useParams, useNavigate } from "react-router-dom";
+
 import { useGetBlogBySlug } from "../hooks/useBlogs";
+
 import "../styles/pages/blogdetail.css";
-import { ArrowLeft, Share2, Calendar, Clock, User } from "lucide-react";
+
+import {
+  ArrowLeft,
+  Share2,
+  Calendar,
+  Clock,
+  User,
+  Heart,
+} from "lucide-react";
 
 export default function BlogDetail() {
+
   const { slug } = useParams();
+
   const navigate = useNavigate();
-  const { data: blogResponse, isLoading, error } = useGetBlogBySlug(slug);
 
-  if (isLoading) return <p className="loading-text">Loading...</p>;
+  const {
+    data: blogResponse,
+    isLoading,
+    error,
+  } = useGetBlogBySlug(slug);
 
-  if (error || !blogResponse?.data?.blog) {
-    return <p className="error-text">Blog not found.</p>;
+  /* =========================
+     STATES
+  ========================= */
+
+  const [liked, setLiked] = useState(false);
+
+  const [showBurst, setShowBurst] =
+    useState(false);
+
+  const [showToast, setShowToast] =
+    useState(false);
+
+  /* =========================
+     LIKE FUNCTION
+  ========================= */
+
+  const handleLike = () => {
+
+    if (!liked) {
+
+      setLiked(true);
+
+      setShowBurst(true);
+
+      setShowToast(true);
+
+      setTimeout(() => {
+        setShowBurst(false);
+      }, 4500);
+
+      setTimeout(() => {
+        setShowToast(false);
+      }, 4000);
+
+    } else {
+
+      setLiked(false);
+
+    }
+  };
+
+  /* =========================
+     SHARE FUNCTION
+  ========================= */
+
+  const handleShare = async () => {
+
+    try {
+
+      await navigator.share({
+        title: "Kalesh Blog",
+        text: "Check out this blog!",
+        url: window.location.href,
+      });
+
+    } catch (err) {
+
+      console.log(err);
+
+    }
+  };
+
+  /* =========================
+     LOADING
+  ========================= */
+
+  if (isLoading) {
+    return (
+      <p className="loading-text">
+        Loading...
+      </p>
+    );
   }
+
+  /* =========================
+     ERROR
+  ========================= */
+
+  if (
+    error ||
+    !blogResponse?.data?.blog
+  ) {
+    return (
+      <p className="error-text">
+        Blog not found.
+      </p>
+    );
+  }
+
+  /* =========================
+     BLOG DATA
+  ========================= */
 
   const blog = blogResponse.data.blog;
 
   return (
+
     <div className="blog-detail-container">
-      {/* TOP BAR */}
+
+      {/* ================= TOP BAR ================= */}
+
       <div className="blog-topbar">
-        <button className="back-btn" onClick={() => navigate("/blog")}>
-          <ArrowLeft size={18} /> Back to Blog
+
+        <button
+          className="back-btn"
+          onClick={() => navigate("/blog")}
+        >
+          <ArrowLeft size={18} />
+          Back to Blog
         </button>
 
         <div className="blog-center">
-          <img src="/images/logo.png" alt="logo" className="blog-logo" />
+
+          <img
+            src="/images/logo.png"
+            alt="logo"
+            className="blog-logo"
+          />
+
           <span>Kalesh Blog</span>
+
         </div>
 
-        <button className="share-btn">
-          <Share2 size={18} /> Share
+        <button
+          className="share-btn"
+          onClick={handleShare}
+        >
+          <Share2 size={18} />
+          Share
         </button>
+
       </div>
 
-      {/* TITLE SECTION */}
+      {/* ================= HEADER ================= */}
+
       <div className="blog-header">
-        <h1 className="blog-title">{blog.title}</h1>
+
+        <h1 className="blog-title">
+          {blog.title}
+        </h1>
+
+        {/* META */}
 
         <div className="blog-meta">
+
           <span className="meta-item">
-            <Calendar size={16} /> {blog.createdAt?.slice(0, 10)}
+            <Calendar size={16} />
+
+            {blog.createdAt?.slice(0, 10)}
           </span>
 
           <span className="meta-item">
-            <Clock size={16} /> {blog.readTime} min read
+            <Clock size={16} />
+
+            {blog.readTime} min read
           </span>
+
         </div>
 
+        {/* AUTHOR */}
+
         <div className="blog-author">
-          {/* LEFT ICON */}
+
           <div className="author-icon">
             <User size={22} />
           </div>
 
-          {/* TEXT */}
-
           <div className="author-info">
-            <strong>{blog.author || "Kalesh Team"}</strong>
-            <p>Official Kalesh Blog</p>
+
+            <strong>
+              {blog.author ||
+                "Kalesh Team"}
+            </strong>
+
+            <p>
+              Official Kalesh Blog
+            </p>
+
           </div>
+
         </div>
+
       </div>
 
-      {/* IMAGE */}
+      {/* ================= IMAGE ================= */}
+
       {blog.image && (
-        <img src={blog.image} alt={blog.title} className="blog-image" />
+
+        <img
+          src={blog.image}
+          alt={blog.title}
+          className="blog-image"
+        />
+
       )}
 
-      {/* CONTENT */}
+      {/* ================= CONTENT ================= */}
+
       <div
         className="blog-content"
-        dangerouslySetInnerHTML={{ __html: blog.content }}
+        dangerouslySetInnerHTML={{
+          __html: blog.content,
+        }}
       />
+
+      {/* ================= FLOATING LIKE ================= */}
+
+      <div
+        className={`floating-like-btn ${
+          liked ? "liked" : ""
+        }`}
+        onClick={handleLike}
+        onDoubleClick={() =>
+          setLiked(false)
+        }
+      >
+
+        <Heart
+          size={30}
+          fill={
+            liked
+              ? "#ff3040"
+              : "transparent"
+          }
+        />
+
+      </div>
+
+      {/* ================= HEARTS ================= */}
+
+      {showBurst && (
+
+        <div className="heart-screen">
+
+          {[...Array(25)].map((_, i) => (
+
+            <span
+              key={i}
+              className="screen-heart"
+              style={{
+                left: `${
+                  Math.random() * 100
+                }%`,
+
+                top: `${
+                  Math.random() * 100
+                }%`,
+
+                animationDelay: `${
+                  Math.random() * 0.5
+                }s`,
+              }}
+            >
+              ❤️
+            </span>
+
+          ))}
+
+        </div>
+
+      )}
+
+      {/* ================= TOAST ================= */}
+
+      {showToast && (
+
+        <div className="love-toast">
+
+          This blog is blushing now 🫣
+
+        </div>
+
+      )}
+
     </div>
   );
 }

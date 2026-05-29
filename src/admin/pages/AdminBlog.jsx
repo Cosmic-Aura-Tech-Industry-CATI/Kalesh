@@ -1,5 +1,7 @@
 import { useState } from "react";
 import { useCreateBlog } from "../../hooks/useBlogs";
+import ReactQuill from "react-quill";
+import "react-quill/dist/quill.snow.css";
 import "../style/blog.css";
 
 export default function AdminBlog() {
@@ -7,15 +9,33 @@ export default function AdminBlog() {
 
   const [title, setTitle] = useState("");
   const [author, setAuthor] = useState("");
-  const [blocks, setBlocks] = useState([]);
+  const [content, setContent] = useState("");
   const [readTime, setReadTime] = useState("");
   const [featured, setFeatured] = useState(false);
   const [image, setImage] = useState(null);
   const [imagePreview, setImagePreview] = useState(null);
 
+  const quillModules = {
+    toolbar: [
+      [{ header: [1, 2, 3, false] }],
+      ["bold", "italic", "underline"],
+      [{ list: "ordered" }, { list: "bullet" }],
+      ["clean"],
+    ],
+  };
+
   // ➕ ADD BLOCK
   const addBlock = (type) => {
-    setBlocks((prev) => [...prev, { id: Date.now(), type, value: "" }]);
+    setBlocks((prev) => [
+      ...prev,
+      {
+        id: Date.now(),
+        type,
+        value: "",
+        level: "h2",
+        listType: "ul",
+      },
+    ]);
   };
 
   // ✏️ UPDATE
@@ -34,7 +54,7 @@ export default function AdminBlog() {
 
     blocks.forEach((block) => {
       if (block.type === "heading") {
-        html += `<h2>${block.value}</h2>`;
+        html += `<${block.level}>${block.value}</${block.level}>`;
       }
 
       if (block.type === "subheading") {
@@ -42,16 +62,19 @@ export default function AdminBlog() {
       }
 
       if (block.type === "paragraph") {
-        html += `<p>${block.value}</p>`;
+        html += `<p>${block.value.replace(/\n/g, "<br/>")}</p>`;
       }
 
-      if (block.type === "bullets") {
-        const items = block.value.split(",");
-        html += "<ul>";
+      if (block.type === "list") {
+        const items = block.value.split("\n").filter((item) => item.trim());
+
+        html += `<${block.listType}>`;
+
         items.forEach((item) => {
           html += `<li>${item.trim()}</li>`;
         });
-        html += "</ul>";
+
+        html += `</${block.listType}>`;
       }
     });
 
@@ -76,7 +99,7 @@ export default function AdminBlog() {
     formData.append("title", title);
     formData.append("slug", generateSlug(title));
     formData.append("author", author);
-    formData.append("content", generateHTML());
+    formData.append("content", content);
     formData.append("image", image);
     formData.append("readTime", readTime);
     formData.append("featured", featured);
@@ -88,7 +111,7 @@ export default function AdminBlog() {
 
         setTitle("");
         setAuthor("");
-        setBlocks([]);
+        setContent("");
         setImage(null);
         setImagePreview(null);
       },
@@ -147,61 +170,17 @@ export default function AdminBlog() {
           )}
         </div>
 
-        {/* BLOCKS */}
-        {blocks.map((block) => (
-          <div key={block.id} className="blog-block">
-            {/* TYPE LABEL */}
-            <span className="blog-block-type">{block.type.toUpperCase()}</span>
+        
 
-            {/* INPUTS */}
-            {block.type === "heading" && (
-              <input
-                placeholder="Heading (h2)"
-                className="blog-input"
-                onChange={(e) => updateBlock(block.id, e.target.value)}
-              />
-            )}
+        <div className="blog-editor">
+          <label className="blog-editor-label">Blog Content</label>
 
-            {block.type === "subheading" && (
-              <input
-                placeholder="Sub Heading (h3)"
-                className="blog-input"
-                onChange={(e) => updateBlock(block.id, e.target.value)}
-              />
-            )}
-
-            {block.type === "paragraph" && (
-              <textarea
-                placeholder="Paragraph"
-                className="blog-textarea"
-                onChange={(e) => updateBlock(block.id, e.target.value)}
-              />
-            )}
-
-            {block.type === "bullets" && (
-              <textarea
-                placeholder="Points (comma separated)"
-                className="blog-textarea"
-                onChange={(e) => updateBlock(block.id, e.target.value)}
-              />
-            )}
-
-            {/* 🔥 DELETE BUTTON (NOW BELOW INPUT) */}
-            <button
-              className="delete-btn"
-              onClick={() => deleteBlock(block.id)}
-            >
-              Delete
-            </button>
-          </div>
-        ))}
-
-        {/* ADD BUTTONS */}
-        <div className="blog-add-buttons sticky-buttons">
-          <button onClick={() => addBlock("heading")}>+ Heading</button>
-          <button onClick={() => addBlock("subheading")}>+ Sub Heading</button>
-          <button onClick={() => addBlock("paragraph")}>+ Paragraph</button>
-          <button onClick={() => addBlock("bullets")}>+ Bullet Points</button>
+          <ReactQuill
+            theme="snow"
+            value={content}
+            onChange={setContent}
+            modules={quillModules}
+          />
         </div>
 
         {/* READ TIME */}
