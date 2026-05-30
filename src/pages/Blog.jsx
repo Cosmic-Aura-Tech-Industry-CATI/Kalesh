@@ -4,13 +4,15 @@ import { Helmet } from "react-helmet-async";
 
 import "./blog.css";
 import { useSubscribe } from "../hooks/usePublicService";
-import { useGetAllBlogs } from "../hooks/useBlogs";
+import { useGetAllBlogs, useShareBlog } from "../hooks/useBlogs";
 import { Heart, Eye, Share2 } from "lucide-react";
+import { toastSuccess, toastError } from "../lib/toast";
 
 const Blog = () => {
   const [mailId, setMailId] = useState("");
   const { mutate: subscribe, isPending } = useSubscribe();
   const { data: blogsResponse, isLoading } = useGetAllBlogs();
+  const { mutateAsync: shareBlogAsync } = useShareBlog();
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -34,6 +36,33 @@ const Blog = () => {
   const handleSubscribe = (e) => {
     e.preventDefault();
     subscribe({ email: mailId });
+  };
+
+  const handleShare = async (e, blog) => {
+    e.preventDefault();
+    try {
+      const response = await shareBlogAsync(blog.slug);
+      const url = response?.shareUrl || `${window.location.origin}/blog/${blog.slug}`;
+      try {
+        // Try to copy as rich text (HTML link)
+        const html = `<a href="${url}">${url}</a>`;
+        const blob = new Blob([html], { type: "text/html" });
+        const textBlob = new Blob([url], { type: "text/plain" });
+        const item = new ClipboardItem({
+          "text/html": blob,
+          "text/plain": textBlob,
+        });
+        await navigator.clipboard.write([item]);
+      } catch (writeHtmlError) {
+        console.log("Could not copy rich text, falling back to plain text.", writeHtmlError);
+        // Fallback to plain text if rich text copy fails
+        await navigator.clipboard.writeText(url);
+      }
+      toastSuccess("Link copied to clipboard!");
+    } catch (err) {
+      console.log(err);
+      toastError("Failed to copy link");
+    }
   };
 
   const featuredBlogs = Array.isArray(blogs)
@@ -159,7 +188,7 @@ const Blog = () => {
                         <div className="blog-stats">
                           <div className="blog-stat-item">
                             <Heart size={16} />
-                            <span>{blog.likes || 0}</span>
+                            <span>{blog.likeCount || 0}</span>
                           </div>
 
                           <div className="blog-stat-item">
@@ -167,9 +196,14 @@ const Blog = () => {
                             <span>{blog.views || 0}</span>
                           </div>
 
-                          <div className="blog-stat-item">
+                          <div
+                            className="blog-stat-item"
+                            onClick={(e) => handleShare(e, blog)}
+                            style={{ cursor: "pointer" }}
+                            title="Share Blog"
+                          >
                             <Share2 size={16} />
-                            <span>{blog.shares || 0}</span>
+                            <span>{blog.shareCount || 0}</span>
                           </div>
                         </div>
                       </div>
@@ -251,7 +285,12 @@ const Blog = () => {
                             <span>{blog.views || 0}</span>
                           </div>
 
-                          <div className="blog-stat-item">
+                          <div
+                            className="blog-stat-item"
+                            onClick={(e) => handleShare(e, blog)}
+                            style={{ cursor: "pointer" }}
+                            title="Share Blog"
+                          >
                             <Share2 size={16} />
                             <span>{blog.shares || 0}</span>
                           </div>

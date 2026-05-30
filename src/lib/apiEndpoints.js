@@ -36,8 +36,9 @@ export const API_ENDPOINTS = {
     GET_BY_SLUG: (slug) => `/blogs/${slug}`,
     UPDATE_BY_SLUG: (slug) => `/blogs/${slug}`,
     DELETE_BY_SLUG: (slug) => `/blogs/${slug}`,
-    
+    SHARE_BY_SLUG: (slug) => `/blogs/${slug}/share`,
   },
+  
   JOBS: {
     GET_ALL: "/jobs",
     GET_ADMIN: "/jobs/admin",
@@ -105,6 +106,10 @@ export const API_ENDPOINTS = {
       CREATE: "/admin-panel/highlights",
       UPDATE_BY_ID: (id) => `/admin-panel/highlights/${id}`,
       DELETE_BY_ID: (id) => `/admin-panel/highlights/${id}`, 
+    },
+
+    DASHBOARD: {
+      GET_STATS: "/admin-panel/dashboard/stats",
     }
   },
 };

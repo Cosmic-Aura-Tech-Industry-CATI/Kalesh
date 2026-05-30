@@ -2,7 +2,8 @@ import { useState, useEffect, useRef } from 'react';
 import { Link, useNavigate, useLocation } from 'react-router-dom';
 import { Helmet } from 'react-helmet-async';
 import './Viewpage.css';
-import { useGetAllBlogs } from '../hooks/useBlogs';
+import { useGetAllBlogs, useShareBlog } from '../hooks/useBlogs';
+import { toastSuccess, toastError } from '../lib/toast';
 
 const ViewBlog = () => {
   useEffect(() => {
@@ -13,6 +14,7 @@ const ViewBlog = () => {
   const location = useLocation();
   
   const { data: blogsResponse, isLoading } = useGetAllBlogs();
+  const { mutateAsync: shareBlogAsync } = useShareBlog();
   const fetchedPosts = Array.isArray(blogsResponse) ? blogsResponse : (blogsResponse?.data?.blogs || blogsResponse?.data || blogsResponse?.blogs || []);
 
   // State variables
@@ -126,12 +128,28 @@ const ViewBlog = () => {
     return pageNumbers;
   };
 
-  // Handle share functionality
-  const handleShare = (post) => {
-    const url = `${window.location.origin}/blog/${post.slug}`;
-    navigator.clipboard.writeText(url).then(() => {
-      alert('Post link copied to clipboard!');
-    });
+  const handleShare = async (post) => {
+    try {
+      const response = await shareBlogAsync(post.slug);
+      const url = response?.shareUrl || `${window.location.origin}/blog/${post.slug}`;
+      try {
+        const html = `<a href="${url}">${url}</a>`;
+        const blob = new Blob([html], { type: "text/html" });
+        const textBlob = new Blob([url], { type: "text/plain" });
+        const item = new ClipboardItem({
+          "text/html": blob,
+          "text/plain": textBlob,
+        });
+        await navigator.clipboard.write([item]);
+      } catch (writeHtmlError) {
+        console.log("Could not copy rich text, falling back to plain text.", writeHtmlError);
+        await navigator.clipboard.writeText(url);
+      }
+      toastSuccess("Link copied to clipboard!");
+    } catch (err) {
+      console.error(err);
+      toastError("Failed to copy link");
+    }
   };
 
   return (
