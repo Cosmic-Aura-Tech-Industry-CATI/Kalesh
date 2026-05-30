@@ -2,7 +2,7 @@ import { useState } from "react";
 
 import { useParams, useNavigate } from "react-router-dom";
 
-import { useGetBlogBySlug } from "../hooks/useBlogs";
+import { useGetBlogBySlug, useShareBlog } from "../hooks/useBlogs";
 
 import "../styles/pages/blogdetail.css";
 
@@ -14,6 +14,7 @@ import {
   User,
   Heart,
 } from "lucide-react";
+import { toastSuccess, toastError } from "../lib/toast";
 
 export default function BlogDetail() {
 
@@ -26,6 +27,8 @@ export default function BlogDetail() {
     isLoading,
     error,
   } = useGetBlogBySlug(slug);
+
+  const { mutateAsync: shareBlogAsync } = useShareBlog();
 
   /* =========================
      STATES
@@ -75,17 +78,28 @@ export default function BlogDetail() {
   const handleShare = async () => {
 
     try {
-
-      await navigator.share({
-        title: "Kalesh Blog",
-        text: "Check out this blog!",
-        url: window.location.href,
-      });
+      const response = await shareBlogAsync(slug);
+      const url = response?.shareUrl || window.location.href;
+      try {
+        // Try to copy as rich text (HTML link)
+        const html = `<a href="${url}">${url}</a>`;
+        const blob = new Blob([html], { type: "text/html" });
+        const textBlob = new Blob([url], { type: "text/plain" });
+        const item = new ClipboardItem({
+          "text/html": blob,
+          "text/plain": textBlob,
+        });
+        await navigator.clipboard.write([item]);
+      } catch (writeHtmlError) {
+        console.log("Could not copy rich text, falling back to plain text.", writeHtmlError);
+        // Fallback to plain text if rich text copy fails
+        await navigator.clipboard.writeText(url);
+      }
+      toastSuccess("Link copied to clipboard!");
 
     } catch (err) {
-
       console.log(err);
-
+      toastError("Failed to copy link");
     }
   };
 

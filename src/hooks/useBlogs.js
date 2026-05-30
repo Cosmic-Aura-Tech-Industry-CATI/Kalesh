@@ -114,3 +114,63 @@ export const useDeleteBlog = () => {
     },
   });
 };
+
+export const useShareBlog = () => {
+  const queryClient = useQueryClient();
+  
+  return useMutation({
+    mutationFn: (slug) => BlogService.shareBlog(slug),
+    
+    onMutate: async (slug) => {
+      await queryClient.cancelQueries({ queryKey: ["blogs"] });
+      await queryClient.cancelQueries({ queryKey: ["blogs", slug] });
+
+      const previousBlogs = queryClient.getQueryData(["blogs"]);
+      const previousSingleBlog = queryClient.getQueryData(["blogs", slug]);
+
+      queryClient.setQueryData(["blogs"], (oldData) => {
+        if (!oldData) return oldData;
+        const isArray = Array.isArray(oldData);
+        const blogsArray = isArray ? oldData : (oldData?.data?.blogs || oldData?.data || oldData?.blogs || []);
+
+        const updatedBlogs = blogsArray.map((blog) => {
+          if (blog.slug === slug) {
+            return { ...blog, shares: (blog.shares || 0) + 1, shareCount: (blog.shareCount || 0) + 1 };
+          }
+          return blog;
+        });
+
+        if (isArray) return updatedBlogs;
+        return { ...oldData, data: updatedBlogs }; 
+      });
+
+      queryClient.setQueryData(["blogs", slug], (oldData) => {
+        if (!oldData) return oldData;
+        const oldBlog = oldData?.data?.blog || oldData?.blog || oldData;
+        
+        const updatedBlog = {
+          ...oldBlog,
+          shares: (oldBlog.shares || 0) + 1,
+          shareCount: (oldBlog.shareCount || 0) + 1
+        };
+
+        return {
+          ...oldData,
+          data: {
+            ...oldData.data,
+            blog: updatedBlog
+          }
+        };
+      });
+
+      return { previousBlogs, previousSingleBlog };
+    },
+    
+    onError: (err, slug, context) => {
+      queryClient.setQueryData(["blogs"], context.previousBlogs);
+      queryClient.setQueryData(["blogs", slug], context.previousSingleBlog);
+      toastError(err?.response?.data?.message || "Failed to share blog");
+      console.error(err);
+    }
+  });
+};

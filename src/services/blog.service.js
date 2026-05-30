@@ -53,7 +53,7 @@ export class BlogService {
   static async updateBlog(slug, payload) {
     const res = await axiosInstance.patch(
       API_ENDPOINTS.BLOGS.UPDATE_BY_SLUG(slug),
-      payload,
+      payload
     );
     return res.data;
   }
@@ -65,7 +65,19 @@ export class BlogService {
    */
   static async deleteBlog(slug) {
     const res = await axiosInstance.delete(
-      API_ENDPOINTS.BLOGS.DELETE_BY_SLUG(slug),
+      API_ENDPOINTS.BLOGS.DELETE_BY_SLUG(slug)
+    );
+    return res.data;
+  }
+
+  /**
+   * Shares a blog by its slug (e.g., increments the share count).
+   * @param {string} slug - The slug of the blog to be shared.
+   * @returns {Promise<Object>} - Resolves with the response data from the share action.
+   */
+  static async shareBlog(slug) {
+    const res = await axiosInstance.patch(
+      API_ENDPOINTS.BLOGS.SHARE_BY_SLUG(slug)
     );
     return res.data;
   }

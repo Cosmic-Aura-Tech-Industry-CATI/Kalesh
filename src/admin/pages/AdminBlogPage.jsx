@@ -124,7 +124,7 @@ export default function AdminBlogPage() {
                   <FaHeart className="stat-icon heart-icon" />
 
                   <span>
-                    {blog.likes || 0}
+                    {blog.likeCount || 0}
                   </span>
                 </div>
 
@@ -132,7 +132,7 @@ export default function AdminBlogPage() {
                   <FaShareAlt className="stat-icon" />
 
                   <span>
-                    {blog.shares || 0}
+                    {blog.shareCount || 0}
                   </span>
                 </div>
 
