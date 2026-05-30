@@ -123,41 +123,107 @@ function Home() {
         </div>
       </div>
       {/* ================= INFO SECTION ================= */}
-      <div className="kalesh-info-section">
-        <div className="kalesh-info-content container-fluid g-0">
-          <div className="info-image-row">
+      <motion.section
+        className="kalesh-info-section"
+        initial={{ opacity: 0, y: 80 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true, amount: 0.2 }}
+        transition={{ duration: 0.8 }}
+      >
+        <div className="community-particles">
+          <span className="orb orb-1"></span>
+          <span className="orb orb-2"></span>
+          <span className="orb orb-3"></span>
+          <span className="orb orb-4"></span>
+          <span className="orb orb-5"></span>
+        </div>
+
+        <div className="fireflies">
+          {[...Array(12)].map((_, i) => (
+            <span key={i}></span>
+          ))}
+        </div>
+
+        <div className="orbit-container">
+          {/* Pulse Rings */}
+          <div className="pulse-ring ring-1"></div>
+          <div className="pulse-ring ring-2"></div>
+          <div className="pulse-ring ring-3"></div>
+
+          {/* ADD HERE */}
+
+          <div className="orbit-path path-1"></div>
+          <div className="orbit-path path-2"></div>
+
+          <div className="anonymous-message-glow"></div>
+
+          {/* orbit */}
+
+          <div className="orbit">
             <img
-              src="/images/logoupper-1200.webp"
-              width="1200"
-              height="290"
-              className="info-full-image"
-              alt="Kalesh Top Banner"
-              loading="lazy"
-              decoding="async"
+              src="/images/avatars/avatar1.webp"
+              className="avatar-1"
+              alt=""
+            />
+
+            <img
+              src="/images/avatars/avatar2.webp"
+              className="avatar-2"
+              alt=""
+            />
+
+            <img
+              src="/images/avatars/avatar3.webp"
+              className="avatar-3"
+              alt=""
+            />
+
+            <img
+              src="/images/avatars/avatar4.webp"
+              className="avatar-4"
+              alt=""
+            />
+
+            <img
+              src="/images/avatars/avatar5.webp"
+              className="avatar-5"
+              alt=""
+            />
+
+            <img
+              src="/images/avatars/avatar6.webp"
+              className="avatar-6"
+              alt=""
+            />
+
+            <img
+              src="/images/avatars/avatar7.webp"
+              className="avatar-7"
+              alt=""
+            />
+
+            <img
+              src="/images/avatars/avatar8.webp"
+              className="avatar-8"
+              alt=""
             />
           </div>
 
-          <div className="info-content text-center g-0">
-            <h2 className="info-title mb-3 fs-3">No Profile Pressure</h2>
-            <h2 className="info-title mb-3 fs-3">No Judgment</h2>
-            <h2 className="info-title mb-3 mb-md-4 fs-3">
-              Just Honest Opinions
-            </h2>
-          </div>
+          {/* Center Card */}
+          <div className="anonymous-message">
+            <span className="message-badge">Anonymous Community</span>
 
-          <div className="info-image-row">
-            <img
-              src="/images/logolower-1200.webp"
-              width="1200"
-              height="290"
-              className="info-full-image"
-              alt="Kalesh Bottom Banner"
-              loading="lazy"
-              decoding="async"
-            />
+            <h2>No Profile Pressure</h2>
+            <h2>No Judgment</h2>
+            <h2>Just Honest Opinions</h2>
+
+            <p>
+              Share your real thoughts without revealing who you are. No
+              followers, no popularity contest, just authentic opinions.
+            </p>
           </div>
         </div>
-      </div>
+      </motion.section>
       {/* ===== REAL-TIME POLL INFO DIV ===== */}
       <div className="container-fluid section-poll py-4 py-md-5">
         <div className="container">
@@ -176,7 +242,9 @@ function Home() {
                 />
               </div>
             </div>
+
             {/* RIGHT CONTENT COLUMN */}
+
             <div className="col-12 col-lg-6">
               <div className="poll-content px-3 px-lg-5">
                 <h2 className="section-title">
