@@ -179,7 +179,7 @@ export default function BlogDetail() {
 
       {/* ================= HEADER ================= */}
 
-      <div className="blog-header">
+      <div className="blog-detail-header">
         <h1 className="blog-title">{blog.title}</h1>
 
         {/* META */}
