@@ -4,6 +4,11 @@ import { motion } from "framer-motion";
 import SEO from "../components/SEO";
 import "../styles/pages/home.css";
 import { FaUserSecret } from "react-icons/fa";
+import { FaFire, FaThumbsUp } from "react-icons/fa";
+
+import { HiTrendingUp } from "react-icons/hi";
+
+import { BsBarChartFill } from "react-icons/bs";
 
 function Home() {
   useEffect(() => {
@@ -231,15 +236,41 @@ function Home() {
             {/* LEFT IMAGE COLUMN */}
             <div className="col-12 col-lg-6">
               <div className="poll-image-container text-center">
-                <img
-                  src="/images/realtime_poll-800.webp"
-                  width="400"
-                  height="600"
-                  alt="Real-time Poll on kalesh"
-                  className="poll-image img-fluid"
-                  loading="lazy"
-                  decoding="async"
-                />
+                <div className="poll-image-wrapper">
+                  <div className="poll-wave wave-1"></div>
+                  <div className="poll-wave wave-2"></div>
+                  <div className="poll-wave wave-3"></div>
+
+                  <div className="vote-badge badge-1">
+                    <HiTrendingUp />
+                    <span>12K</span>
+                  </div>
+
+                  <div className="vote-badge badge-2">
+                    <FaFire />
+                    <span>HOT</span>
+                  </div>
+
+                  <div className="vote-badge badge-3">
+                    <BsBarChartFill />
+                    <span>89%</span>
+                  </div>
+
+                  <div className="vote-badge badge-4">
+                    <FaThumbsUp />
+                    <span>4.8K</span>
+                  </div>
+
+                  <img
+                    src="/images/realtime_poll-800.webp"
+                    width="400"
+                    height="600"
+                    alt="Real-time Poll on kalesh"
+                    className="poll-image img-fluid"
+                    loading="lazy"
+                    decoding="async"
+                  />
+                </div>
               </div>
             </div>
 
@@ -247,15 +278,40 @@ function Home() {
 
             <div className="col-12 col-lg-6">
               <div className="poll-content px-3 px-lg-5">
+                <div className="poll-live-chip">LIVE POLL SYSTEM</div>
                 <h2 className="section-title">
-                  Live poll broadcasting with instant voting and maximum user
-                  engagement
+                  Live poll broadcasting with
+                  <br />
+                  <span className="highlight-word">
+                    instant voting
+                  </span> and{" "}
+                  <span className="highlight-word">
+                    maximum user engagement
+                  </span>
                 </h2>
-                <p className="section-description mt-3 mt-md-4">
-                  Whether you're a new user or a well-established influencer, we
-                  deliver fair, equal, and real engagement for everyone on the
-                  platform
-                </p>
+                <div className="poll-desc-card">
+                  <p className="section-description">
+                    Whether you're a new user or a well-established influencer,
+                    we deliver fair, equal, and real engagement for everyone on
+                    the platform.
+                  </p>
+                </div>
+                {/* <div className="poll-metrics"> 
+                  <div>
+                    <h3>12K+</h3>
+                    <span>Votes</span>
+                  </div>
+
+                  <div>
+                    <h3>89%</h3>
+                    <span>Participation</span>
+                  </div>
+
+                  <div>
+                    <h3>24/7</h3>
+                    <span>Active</span>
+                  </div>
+                </div> */}
               </div>
             </div>
           </div>
