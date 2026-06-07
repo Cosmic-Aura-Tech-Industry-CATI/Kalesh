@@ -453,3 +453,66 @@
     text-align: left;
   }
 }
+
+/* =====================================
+   iPad Pro Footer = iPad Air Footer
+===================================== */
+
+@media (min-width: 1024px) and (max-width: 1180px) {
+
+  /* Top Footer */
+  .kalesh-footer .row {
+    row-gap: 35px !important;
+  }
+
+  .footer-brand-wrap {
+    align-items: center !important;
+    text-align: center !important;
+    margin-bottom: 20px !important;
+  }
+
+  .footer-title {
+    text-align: center !important;
+    margin-bottom: 15px !important;
+  }
+
+  .footer-title::after {
+    margin: 8px auto 0 !important;
+  }
+
+  .footer-list {
+    text-align: center !important;
+  }
+
+  .kalesh-footer .col-lg-3,
+  .kalesh-footer .col-md-3,
+  .kalesh-footer .col-sm-6 {
+    text-align: center !important;
+  }
+
+  /* Bottom Footer */
+  .footer-bottom {
+    margin-top: 25px !important;
+  }
+
+  .footer-bottom-top {
+    flex-direction: column !important;
+    align-items: center !important;
+    text-align: center !important;
+    gap: 15px !important;
+  }
+
+  .footer-copyright {
+    text-align: center !important;
+  }
+
+  .footer-powered {
+    justify-content: center !important;
+    text-align: center !important;
+  }
+
+  .footer-bottom-social {
+    justify-content: center !important;
+    margin-top: 10px !important;
+  }
+}
