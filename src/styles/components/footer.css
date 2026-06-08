@@ -445,10 +445,6 @@
 }
 
 @media (min-width: 992px) {
-  .footer-brand-wrap {
-    align-items: flex-start;
-  }
-
   .footer-list {
     text-align: left;
   }
@@ -459,7 +455,6 @@
 ===================================== */
 
 @media (min-width: 1024px) and (max-width: 1180px) {
-
   /* Top Footer */
   .kalesh-footer .row {
     row-gap: 35px !important;
