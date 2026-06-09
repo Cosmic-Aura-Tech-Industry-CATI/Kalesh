@@ -1,11 +1,16 @@
-import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
+import { useEffect, useState } from "react";
 import { ArrowLeft } from "lucide-react";
-import { useCreateContest } from "../../hooks/useContests";
+import { useGetContestById, useUpdateContest } from "../../hooks/useContests";
 
-export default function AdminCreateContest() {
-  const { mutate: createContest, isPending } = useCreateContest();
+export default function AdminEditContest() {
+  const { id } = useParams();
   const navigate = useNavigate();
+
+  const { data, isLoading } = useGetContestById(id);
+  const { mutate: updateContest, isPending } = useUpdateContest();
+
+  const contest = data?.data;
 
   const [form, setForm] = useState({
     title: "",
@@ -18,12 +23,20 @@ export default function AdminCreateContest() {
 
   const [thumbnailFile, setThumbnailFile] = useState(null);
 
-  // file change
-  const handleFileChange = (e) => {
-    setThumbnailFile(e.target.files[0]);
-  };
+  useEffect(() => {
+    if (contest) {
+      setForm({
+        title: contest.title || "",
+        description: contest.description || "",
+        type: contest.type || "weekly",
+        registrationDuration: contest.registrationDuration || "",
+        registrationStartDate:
+          contest.registrationStartDate?.split("T")[0] || "",
+        maxParticipants: contest.maxParticipants || "",
+      });
+    }
+  }, [contest]);
 
-  // input change
   const handleChange = (e) => {
     const { name, value } = e.target;
 
@@ -33,48 +46,38 @@ export default function AdminCreateContest() {
     });
   };
 
-  // submit
   const handleSubmit = (e) => {
     e.preventDefault();
 
     const formData = new FormData();
 
-    // append fields
-    formData.append("title", form.title);
-    formData.append("description", form.description);
-    formData.append("type", form.type);
-    formData.append(
-      "registrationDuration",
-      Number(form.registrationDuration || 0),
-    );
-    formData.append("registrationStartDate", form.registrationStartDate);
-    formData.append("maxParticipants", Number(form.maxParticipants || 0));
+    Object.entries(form).forEach(([key, value]) => {
+      formData.append(key, value);
+    });
 
-    // append image
     if (thumbnailFile) {
       formData.append("thumbnail", thumbnailFile);
     }
 
-    createContest(formData, {
-      onSuccess: () => {
-        // reset form
-        setForm({
-          title: "",
-          description: "",
-          type: "weekly",
-          registrationDuration: "",
-          registrationStartDate: "",
-          maxParticipants: "",
-        });
-        setThumbnailFile(null);
+    updateContest(
+      {
+        id,
+        playload: formData,
       },
-    });
+      {
+        onSuccess: () => {
+          navigate("/admin/contests");
+        },
+      },
+    );
   };
+
+  if (isLoading) return <p>Loading...</p>;
 
   return (
     <div className="admin-page-wrapper">
       <div className="flex items-center justify-between mb-6">
-        <h1 className="admin-page-title">Create Contest</h1>
+        <h1 className="admin-page-title">Edit Contest</h1>
 
         <button
           type="button"
@@ -82,7 +85,7 @@ export default function AdminCreateContest() {
           className="admin-btn-secondary flex items-center gap-2"
         >
           <ArrowLeft size={16} />
-          Back
+          Back to Contests
         </button>
       </div>
 
@@ -90,6 +93,7 @@ export default function AdminCreateContest() {
         {/* Title */}
         <div className="admin-form-group">
           <label className="admin-form-label">Title</label>
+
           <input
             name="title"
             value={form.title}
@@ -102,6 +106,7 @@ export default function AdminCreateContest() {
         {/* Description */}
         <div className="admin-form-group">
           <label className="admin-form-label">Description</label>
+
           <textarea
             name="description"
             value={form.description}
@@ -111,17 +116,34 @@ export default function AdminCreateContest() {
           />
         </div>
 
-        {/* Thumbnail Upload */}
+        {/* Current Thumbnail */}
+        {contest?.thumbnail && (
+          <div className="admin-form-group">
+            <label className="admin-form-label">Current Thumbnail</label>
+
+            <img
+              src={contest.thumbnail}
+              alt={contest.title}
+              style={{
+                width: "180px",
+                borderRadius: "8px",
+                marginBottom: "10px",
+              }}
+            />
+          </div>
+        )}
+
+        {/* Upload New Thumbnail */}
         <div className="admin-form-group">
-          <label className="admin-form-label">Thumbnail Upload</label>
+          <label className="admin-form-label">Change Thumbnail</label>
+
           <input
             type="file"
             accept="image/*"
-            onChange={handleFileChange}
+            onChange={(e) => setThumbnailFile(e.target.files[0])}
             className="admin-form-input"
           />
 
-          {/* Preview */}
           {thumbnailFile && (
             <img
               src={URL.createObjectURL(thumbnailFile)}
@@ -138,6 +160,7 @@ export default function AdminCreateContest() {
         {/* Type */}
         <div className="admin-form-group">
           <label className="admin-form-label">Type</label>
+
           <select
             name="type"
             value={form.type}
@@ -145,6 +168,7 @@ export default function AdminCreateContest() {
             className="admin-form-select"
           >
             <option value="weekly">Weekly</option>
+
             <option value="monthly">Monthly</option>
           </select>
         </div>
@@ -154,6 +178,7 @@ export default function AdminCreateContest() {
           <label className="admin-form-label">
             Registration Duration (days)
           </label>
+
           <input
             type="number"
             name="registrationDuration"
@@ -166,6 +191,7 @@ export default function AdminCreateContest() {
         {/* Registration Start Date */}
         <div className="admin-form-group">
           <label className="admin-form-label">Registration Start Date</label>
+
           <input
             type="date"
             name="registrationStartDate"
@@ -178,6 +204,7 @@ export default function AdminCreateContest() {
         {/* Max Participants */}
         <div className="admin-form-group">
           <label className="admin-form-label">Max Participants</label>
+
           <input
             type="number"
             name="maxParticipants"
@@ -193,7 +220,7 @@ export default function AdminCreateContest() {
           className="admin-btn-primary"
           disabled={isPending}
         >
-          {isPending ? "Creating..." : "Create Contest"}
+          {isPending ? "Updating..." : "Update Contest"}
         </button>
       </form>
     </div>

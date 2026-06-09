@@ -33,6 +33,8 @@ import AdminBlogPage from "./admin/pages/AdminBlogPage";
 import AdminEditBlog from "./admin/pages/AdminEditBlog";
 import AdminCreateContest from "./admin/pages/AdminCreateContest";
 import AdminContestList from "./admin/pages/AdminContestList";
+import AdminEditContest from "./admin/pages/AdminEditContest";
+import AdminContestDetails from "./admin/pages/AdminContestDetails";
 
 import JobDetails from "./pages/JobDetails";
 import Highlights from "./admin/pages/Highlights";
@@ -135,6 +137,10 @@ function MainRoutes() {
               <Route path="contest/create" element={<AdminCreateContest />} />
 
               <Route path="contests" element={<AdminContestList />} />
+
+              <Route path="contest/edit/:id" element={<AdminEditContest />} />
+
+              <Route path="contest/:id" element={<AdminContestDetails />} />
 
               <Route path="banned-users" element={<AdminBannedUsers />} />
 
