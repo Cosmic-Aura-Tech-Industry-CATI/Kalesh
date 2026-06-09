@@ -36,6 +36,7 @@ import AdminContestList from "./admin/pages/AdminContestList";
 
 import JobDetails from "./pages/JobDetails";
 import Highlights from "./admin/pages/Highlights";
+import Wallpapers from "./admin/pages/Wallpapers";
 
 // LAZY PUBLIC PAGES
 const Home = lazy(() => import("./pages/Home"));
@@ -110,29 +111,41 @@ function MainRoutes() {
             {/* ADMIN ROUTES */}
             <Route path="/admin" element={<AdminLayout />}>
               <Route path="dashboard" element={<AdminDashboard />} />
+
               <Route path="reported-polls" element={<AdminReportedPolls />} />
+
               <Route path="poll-moderation" element={<AdminPollModeration />} />
+
               <Route path="users" element={<AdminUsers />} />
+
               <Route path="user/:userId" element={<UserDetails />} />
 
               <Route path="jobs" element={<JobsPosting />} />
-              <Route path="/admin/highlights" element={<Highlights />} />
 
-              {/* BLOG SYSTEM */}
+              <Route path="highlights" element={<Highlights />} />
+
+              <Route path="wallpapers" element={<Wallpapers />} />
+
               <Route path="blog" element={<AdminBlog />} />
+
               <Route path="blogs" element={<AdminBlogPage />} />
+
               <Route path="blog/edit/:slug" element={<AdminEditBlog />} />
-              <Route
-                path="/admin/contest/create"
-                element={<AdminCreateContest />}
-              />
-              <Route path="/admin/contests" element={<AdminContestList />} />
+
+              <Route path="contest/create" element={<AdminCreateContest />} />
+
+              <Route path="contests" element={<AdminContestList />} />
 
               <Route path="banned-users" element={<AdminBannedUsers />} />
+
               <Route path="premium" element={<AdminPremium />} />
+
               <Route path="payments" element={<AdminPayments />} />
+
               <Route path="admins" element={<Admins />} />
+
               <Route path="logs" element={<AdminLogs />} />
+
               <Route path="settings" element={<AdminSettings />} />
             </Route>
           </Routes>
