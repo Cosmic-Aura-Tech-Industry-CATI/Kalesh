@@ -116,11 +116,9 @@
    HEADER SECTION
 ========================= */
 
-.blog-header {
+.blog-detail-header {
   text-align: center;
-
   max-width: 1000px;
-
   margin: 0 auto 50px;
 }
 
@@ -680,5 +678,158 @@
 
   .blog-content h3 {
     font-size: 24px;
+  }
+}
+
+/* =========================
+   COMMENTS SECTION
+========================= */
+
+.blog-comments-section {
+  max-width: 960px;
+  margin: 100px auto 0;
+}
+
+.comments-heading {
+  font-size: 2rem;
+  font-weight: 700;
+  margin-bottom: 30px;
+  color: #fff;
+}
+
+.comment-form {
+  padding: 30px;
+  border-radius: 24px;
+
+  background: rgba(255, 255, 255, 0.03);
+
+  border: 1px solid rgba(255, 255, 255, 0.08);
+
+  backdrop-filter: blur(12px);
+
+  margin-bottom: 40px;
+}
+
+.comment-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+}
+
+.comment-form input,
+.comment-form textarea {
+  width: 100%;
+  padding: 16px 18px;
+
+  background: rgba(255, 255, 255, 0.04);
+
+  border: 1px solid rgba(255, 255, 255, 0.08);
+
+  color: white;
+
+  border-radius: 14px;
+
+  outline: none;
+
+  margin-bottom: 16px;
+}
+
+.comment-form input:focus,
+.comment-form textarea:focus {
+  border-color: #ff6a00;
+  box-shadow: 0 0 20px rgba(255, 106, 0, 0.15);
+}
+
+.comment-form textarea {
+  resize: vertical;
+  min-height: 140px;
+}
+
+.comment-submit-btn {
+  border: none;
+
+  padding: 14px 28px;
+
+  border-radius: 30px;
+
+  background: linear-gradient(135deg, #ff6a00, #ff3c00);
+
+  color: white;
+
+  font-weight: 600;
+
+  cursor: pointer;
+
+  transition: 0.3s;
+}
+
+.comment-submit-btn:hover {
+  transform: translateY(-2px);
+}
+
+.comments-list {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.comment-card {
+  padding: 24px;
+
+  border-radius: 20px;
+
+  background: rgba(255, 255, 255, 0.03);
+
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.comment-header {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+
+  margin-bottom: 14px;
+}
+
+.comment-avatar {
+  width: 48px;
+  height: 48px;
+
+  border-radius: 50%;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  font-weight: 700;
+
+  background: linear-gradient(135deg, #ff6a00, #ffd700);
+
+  color: white;
+}
+
+.comment-header h4 {
+  margin: 0;
+  color: white;
+}
+
+.comment-header span {
+  font-size: 13px;
+  color: #999;
+}
+
+.comment-card p {
+  margin: 0;
+  color: #d0d0d0;
+  line-height: 1.8;
+}
+
+@media (max-width: 768px) {
+  .comment-row {
+    grid-template-columns: 1fr;
+  }
+
+  .comment-form {
+    padding: 20px;
   }
 }

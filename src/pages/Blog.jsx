@@ -5,7 +5,7 @@ import { Helmet } from "react-helmet-async";
 import "./blog.css";
 import { useSubscribe } from "../hooks/usePublicService";
 import { useGetAllBlogs, useShareBlog } from "../hooks/useBlogs";
-import { Heart, Eye, Share2 } from "lucide-react";
+import { Eye, Share2 } from "lucide-react";
 import { toastSuccess, toastError } from "../lib/toast";
 
 const Blog = () => {
@@ -186,10 +186,10 @@ const Blog = () => {
                         </Link>
 
                         <div className="blog-stats">
-                          <div className="blog-stat-item">
-                            <Heart size={16} />
-                            <span>{blog.likeCount || 0}</span>
-                          </div>
+                          {/* <div className="blog-stat-item"> */}
+                            {/* <Heart size={16} /> */}
+                            {/* <span>{blog.likeCount || 0}</span> */}
+                          {/* </div> */}
 
                           <div className="blog-stat-item">
                             <Eye size={16} />

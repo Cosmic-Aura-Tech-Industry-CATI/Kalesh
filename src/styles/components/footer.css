@@ -312,29 +312,27 @@
   color: #0a66c2;
 }
 
-
-
-/* =========================
-   TABLET FIX
-========================= */
+/* ===================================
+   TABLET (768px - 991px)
+=================================== */
 
 @media (min-width: 768px) and (max-width: 991px) {
-
   .kalesh-footer .row {
-    row-gap: 40px;
+    row-gap: 35px;
   }
 
+  .kalesh-footer .col-md-3,
   .kalesh-footer .col-sm-6 {
     text-align: center;
   }
 
   .footer-title {
     text-align: center;
+    margin-bottom: 15px;
   }
 
   .footer-title::after {
-    margin-left: auto;
-    margin-right: auto;
+    margin: 8px auto 0;
   }
 
   .footer-list {
@@ -342,26 +340,73 @@
   }
 
   .footer-brand-wrap {
-    align-items: center;
-  }
-}
-
-@media (max-width: 991px) {
-
-  .footer-list li {
-    margin-bottom: 14px;
-  }
-
-  .footer-title {
     margin-bottom: 20px;
   }
 
-  .footer-brand-wrap {
-    margin-bottom: 10px;
+  .footer-bottom-top {
+    flex-direction: column;
+    text-align: center;
+    gap: 15px;
+  }
+
+  .footer-bottom-social {
+    margin-top: 10px;
   }
 }
 
-@media (max-width: 991px) {
+/* ===================================
+   MOBILE (< 768px)
+=================================== */
+
+@media (max-width: 767px) {
+  .kalesh-footer .container-fluid {
+    padding-top: 2rem !important;
+    padding-bottom: 2rem !important;
+  }
+
+  .kalesh-footer .row {
+    row-gap: 28px;
+  }
+
+  .kalesh-footer .row > div {
+    text-align: center;
+    margin-bottom: 0;
+  }
+
+  .footer-brand-wrap {
+    margin-bottom: 15px;
+  }
+
+  .footer-brand-wrap img {
+    max-width: 140px;
+  }
+
+  .footer-title {
+    font-size: 18px;
+    margin-bottom: 12px;
+  }
+
+  .footer-title::after {
+    margin: 8px auto 0;
+  }
+
+  .footer-list li {
+    margin-bottom: 10px;
+  }
+
+  .footer-list a {
+    font-size: 14px;
+  }
+
+  .coming-soon-btn {
+    padding: 10px 22px;
+    font-size: 14px;
+  }
+
+  .footer-bottom {
+    margin-top: 20px;
+    text-align: center;
+  }
 
   .footer-bottom-top {
     flex-direction: column;
@@ -369,51 +414,21 @@
   }
 
   .footer-powered {
-    order: 3;
-  }
-}
-
-/* ==================================================
-   MOBILE
-================================================== */
-
-@media (max-width: 576px) {
-  .kalesh-footer .row > div {
-    text-align: center;
+    justify-content: center;
   }
 
-  .footer-brand-wrap img {
-    max-width: 140px;
-  }
-
-  .coming-soon-btn {
-    padding: 10px 24px;
-    font-size: 14px;
-  }
-
-  .footer-title {
-    font-size: 1rem;
-  }
-
-  .footer-list a {
-    font-size: 14px;
+  .footer-bottom-social {
+    justify-content: center;
+    margin-top: 15px;
+    gap: 12px;
   }
 
   .footer-copyright {
     font-size: 12px;
   }
 
-  .footer-powered {
-    font-size: 12px;
-  }
-
   .dimisi-brand img {
-    width: 80px;
-  }
-
-  .footer-bottom-social a {
-    width: 40px;
-    height: 40px;
+    width: 85px;
   }
 }
 
@@ -426,5 +441,73 @@
 
   .footer-title::after {
     margin-left: 0;
+  }
+}
+
+@media (min-width: 992px) {
+  .footer-list {
+    text-align: left;
+  }
+}
+
+/* =====================================
+   iPad Pro Footer = iPad Air Footer
+===================================== */
+
+@media (min-width: 1024px) and (max-width: 1180px) {
+  /* Top Footer */
+  .kalesh-footer .row {
+    row-gap: 35px !important;
+  }
+
+  .footer-brand-wrap {
+    align-items: center !important;
+    text-align: center !important;
+    margin-bottom: 20px !important;
+  }
+
+  .footer-title {
+    text-align: center !important;
+    margin-bottom: 15px !important;
+  }
+
+  .footer-title::after {
+    margin: 8px auto 0 !important;
+  }
+
+  .footer-list {
+    text-align: center !important;
+  }
+
+  .kalesh-footer .col-lg-3,
+  .kalesh-footer .col-md-3,
+  .kalesh-footer .col-sm-6 {
+    text-align: center !important;
+  }
+
+  /* Bottom Footer */
+  .footer-bottom {
+    margin-top: 25px !important;
+  }
+
+  .footer-bottom-top {
+    flex-direction: column !important;
+    align-items: center !important;
+    text-align: center !important;
+    gap: 15px !important;
+  }
+
+  .footer-copyright {
+    text-align: center !important;
+  }
+
+  .footer-powered {
+    justify-content: center !important;
+    text-align: center !important;
+  }
+
+  .footer-bottom-social {
+    justify-content: center !important;
+    margin-top: 10px !important;
   }
 }

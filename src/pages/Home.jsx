@@ -3,7 +3,19 @@ import { Helmet } from "react-helmet-async";
 import { motion } from "framer-motion";
 import SEO from "../components/SEO";
 import "../styles/pages/home.css";
-import { FaUserSecret } from "react-icons/fa";
+import { FaUserSecret, FaShieldAlt, FaLock, FaComments } from "react-icons/fa";
+import {
+  FaFire,
+  FaThumbsUp,
+  FaPlusCircle,
+  FaPoll,
+  FaBolt,
+  FaChartPie,
+} from "react-icons/fa";
+
+import { HiTrendingUp } from "react-icons/hi";
+
+import { BsBarChartFill } from "react-icons/bs";
 
 function Home() {
   useEffect(() => {
@@ -123,71 +135,171 @@ function Home() {
         </div>
       </div>
       {/* ================= INFO SECTION ================= */}
-      <div className="kalesh-info-section">
-        <div className="kalesh-info-content container-fluid g-0">
-          <div className="info-image-row">
+      <motion.section
+        className="kalesh-info-section"
+        initial={{ opacity: 0, y: 80 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true, amount: 0.2 }}
+        transition={{ duration: 0.8 }}
+      >
+        <div className="community-particles">
+          <span className="orb orb-1"></span>
+          <span className="orb orb-2"></span>
+          <span className="orb orb-3"></span>
+          <span className="orb orb-4"></span>
+          <span className="orb orb-5"></span>
+        </div>
+
+        <div className="fireflies">
+          {[...Array(12)].map((_, i) => (
+            <span key={i}></span>
+          ))}
+        </div>
+
+        <div className="orbit-container">
+          {/* Pulse Rings */}
+          <div className="pulse-ring ring-1"></div>
+          <div className="pulse-ring ring-2"></div>
+          <div className="pulse-ring ring-3"></div>
+
+          {/* ADD HERE */}
+
+          <div className="orbit-path path-1"></div>
+          <div className="orbit-path path-2"></div>
+
+          <div className="anonymous-message-glow"></div>
+
+          {/* orbit */}
+
+          <div className="orbit">
             <img
-              src="/images/logoupper-1200.webp"
-              width="1200"
-              height="290"
-              className="info-full-image"
-              alt="Kalesh Top Banner"
-              loading="lazy"
-              decoding="async"
+              src="/images/avatars/avatar1.webp"
+              className="avatar-1"
+              alt=""
+            />
+
+            <img
+              src="/images/avatars/avatar2.webp"
+              className="avatar-2"
+              alt=""
+            />
+
+            <img
+              src="/images/avatars/avatar3.webp"
+              className="avatar-3"
+              alt=""
+            />
+
+            <img
+              src="/images/avatars/avatar4.webp"
+              className="avatar-4"
+              alt=""
+            />
+
+            <img
+              src="/images/avatars/avatar5.webp"
+              className="avatar-5"
+              alt=""
+            />
+
+            <img
+              src="/images/avatars/avatar6.webp"
+              className="avatar-6"
+              alt=""
+            />
+
+            <img
+              src="/images/avatars/avatar7.webp"
+              className="avatar-7"
+              alt=""
+            />
+
+            <img
+              src="/images/avatars/avatar8.webp"
+              className="avatar-8"
+              alt=""
             />
           </div>
 
-          <div className="info-content text-center g-0">
-            <h2 className="info-title mb-3 fs-3">No Profile Pressure</h2>
-            <h2 className="info-title mb-3 fs-3">No Judgment</h2>
-            <h2 className="info-title mb-3 mb-md-4 fs-3">
-              Just Honest Opinions
-            </h2>
-          </div>
+          {/* Center Card */}
+          <div className="anonymous-message">
+            <span className="message-badge">Anonymous Community</span>
 
-          <div className="info-image-row">
-            <img
-              src="/images/logolower-1200.webp"
-              width="1200"
-              height="290"
-              className="info-full-image"
-              alt="Kalesh Bottom Banner"
-              loading="lazy"
-              decoding="async"
-            />
+            <h2>No Profile Pressure</h2>
+            <h2>No Judgment</h2>
+            <h2>Just Honest Opinions</h2>
+
+            <p>
+              Share your real thoughts without revealing who you are. No
+              followers, no popularity contest, just authentic opinions.
+            </p>
           </div>
         </div>
-      </div>
+      </motion.section>
       {/* ===== REAL-TIME POLL INFO DIV ===== */}
       <div className="container-fluid section-poll py-4 py-md-5">
         <div className="container">
-          <div className="row align-items-center mt-5 mb-5">
+          <div className="row align-items-center feature-row">
             {/* LEFT IMAGE COLUMN */}
-            <div className="col-12 col-lg-6">
+            <div className="col-12 col-lg-6 mb-5 mb-lg-0">
               <div className="poll-image-container text-center">
-                <img
-                  src="/images/realtime_poll-800.webp"
-                  width="400"
-                  height="600"
-                  alt="Real-time Poll on kalesh"
-                  className="poll-image img-fluid"
-                  loading="lazy"
-                  decoding="async"
-                />
+                <div className="poll-image-wrapper">
+                  <div className="poll-wave wave-1"></div>
+                  <div className="poll-wave wave-2"></div>
+                  <div className="poll-wave wave-3"></div>
+
+                  <div className="vote-badge badge-1">
+                    <HiTrendingUp />
+                    <span>12K</span>
+                  </div>
+
+                  <div className="vote-badge badge-2">
+                    <FaFire />
+                    <span>HOT</span>
+                  </div>
+
+                  <div className="vote-badge badge-3">
+                    <BsBarChartFill />
+                    <span>89%</span>
+                  </div>
+
+                  <div className="vote-badge badge-4">
+                    <FaThumbsUp />
+                    <span>4.8K</span>
+                  </div>
+
+                  <img
+                    src="/images/realtime_poll-800.webp"
+                    width="400"
+                    height="600"
+                    alt="Real-time Poll on kalesh"
+                    className="poll-image img-fluid"
+                    loading="lazy"
+                    decoding="async"
+                  />
+                </div>
               </div>
             </div>
+
             {/* RIGHT CONTENT COLUMN */}
-            <div className="col-12 col-lg-6">
+
+            <div className="col-12 col-lg-6 mb-5 mb-lg-0">
               <div className="poll-content px-3 px-lg-5">
-                <h2 className="section-title">
-                  Live poll broadcasting with instant voting and maximum user
-                  engagement
+                <div className="poll-live-chip">LIVE POLL SYSTEM</div>
+                <h2 className="poll-title">
+                  Live Polls.
+                  <br />
+                  Real Votes.
+                  <br />
+                  <span>Instant Results.</span>
                 </h2>
-                <p className="section-description mt-3 mt-md-4">
-                  Whether you're a new user or a well-established influencer, we
-                  deliver fair, equal, and real engagement for everyone on the
-                  platform
-                </p>
+                <div className="poll-desc-card">
+                  <p className="section-description">
+                    Launch live polls, collect authentic opinions from anonymous
+                    users, and watch results update instantly as people vote in
+                    real time.
+                  </p>
+                </div>
               </div>
             </div>
           </div>
@@ -196,34 +308,70 @@ function Home() {
       {/* ===== CREATE POLLS INFO DIV ===== */}
       <div className="container-fluid section-create-poll py-4 py-md-5">
         <div className="container">
-          <div className="row align-items-center mt-5 mb-5">
-            {/* LEFT CONTENT COLUMN */}
+          <div className="row align-items-center feature-row">
             <div className="col-12 col-lg-6 order-2 order-lg-1">
+              {/* LEFT CONTENT COLUMN */}
               <div className="profile-content px-3 px-lg-5">
-                <h2 className="section-title">
-                  An anonymous platform that provides complete profile
-                  anonymity.
+                <div className="anonymous-badge">
+                  <span></span>
+                  COMPLETE ANONYMITY
+                </div>
+
+                <h2 className="anonymous-title">
+                  Your Voice.
+                  <br />
+                  Your Thoughts.
+                  <br />
+                  <span>Never Your Identity.</span>
                 </h2>
-                <p className="section-description mt-3 mt-md-4">
-                  India's first anonymous social media platform that allows
-                  users to create a fully anonymous profile for safe, private,
-                  and judgment-free online interaction.
-                </p>
+
+                <div className="poll-desc-card">
+                  <p className="anonymous-desc">
+                    Speak freely, share opinions, and connect with people
+                    without revealing your real name, face, or personal details.
+                    Kalesh protects your identity while amplifying your voice.
+                  </p>
+                </div>
               </div>
             </div>
 
             {/* RIGHT IMAGE COLUMN */}
             <div className="col-12 col-lg-6 order-1 order-lg-2">
               <div className="profile-image-container text-center">
+                <div className="identity-rings">
+                  <span></span>
+                  <span></span>
+                  <span></span>
+                </div>
+
                 <img
                   src="/images/anonymous_profile-800.webp"
                   width="400"
                   height="800"
                   alt="kalesh_anonymous_Social_Profile"
                   className="profile-image img-fluid"
-                  loading="lazy"
-                  decoding="async"
                 />
+
+                {/* Floating Icons */}
+                <div className="privacy-chip chip-1">
+                  <FaShieldAlt />
+                  <span>No Real Name</span>
+                </div>
+
+                <div className="privacy-chip chip-2">
+                  <FaLock />
+                  <span>Hidden Identity</span>
+                </div>
+
+                <div className="privacy-chip chip-3">
+                  <FaUserSecret />
+                  <span>Anonymous Username</span>
+                </div>
+
+                <div className="privacy-chip chip-4">
+                  <FaComments />
+                  <span>Zero Judgement</span>
+                </div>
               </div>
             </div>
           </div>
@@ -232,10 +380,18 @@ function Home() {
       {/* ===== ANONYMOUS CHAT INFO DIV ===== */}
       <div className="container-fluid section-chat py-4 py-md-5">
         <div className="container">
-          <div className="row align-items-center mt-5 mb-5">
+          <div className="row align-items-center feature-row gx-5">
             {/* LEFT IMAGE COLUMN */}
-            <div className="col-12 col-lg-6">
+            <div className="col-12 col-lg-6 mb-5 mb-lg-0">
               <div className="chat-image-container text-center">
+                <div className="chat-glow"></div>
+
+                <div className="chat-rings">
+                  <span></span>
+                  <span></span>
+                  <span></span>
+                </div>
+
                 <img
                   src="/images/anonymous_chat-800.webp"
                   width="400"
@@ -245,20 +401,48 @@ function Home() {
                   loading="lazy"
                   decoding="async"
                 />
+
+                <div className="floating-chat-icon icon-lock">
+                  <FaLock />
+                </div>
+
+                <div className="floating-chat-icon icon-shield">
+                  <FaShieldAlt />
+                </div>
+
+                <div className="floating-chat-icon icon-secret">
+                  <FaUserSecret />
+                </div>
+
+                <div className="floating-chat-icon icon-chat">
+                  <FaComments />
+                </div>
               </div>
             </div>
 
             {/* RIGHT CONTENT COLUMN */}
-            <div className="col-12 col-lg-6">
+            <div className="col-12 col-lg-6 mb-5 mb-lg-0">
               <div className="chat-content px-3 px-lg-5">
-                <h2 className="section-title">
-                  We chat securely and anonymously
+                <div className="chat-badge">
+                  <span></span>
+                  PRIVATE MATCHING
+                </div>
+
+                <h2 className="chat-title">
+                  Connect.
+                  <br />
+                  Chat.
+                  <br />
+                  <span>Stay Anonymous.</span>
                 </h2>
-                <p className="section-description mt-3 mt-md-4">
-                  When your vibe matches with a stranger, you connect through
-                  one-on-one private chats that are secure, anonymous, and
-                  judgment-free.
-                </p>
+
+                <div className="poll-desc-card">
+                  <p className="chat-desc">
+                    Match with people who share your interests, thoughts, and
+                    vibes. Every conversation stays private, secure, and
+                    completely anonymous.
+                  </p>
+                </div>
               </div>
             </div>
           </div>
@@ -267,23 +451,39 @@ function Home() {
       {/* ===== CREATE POLLS INFO DIV ===== */}
       <div className="container-fluid section-create py-4 py-md-5">
         <div className="container">
-          <div className="row align-items-center mt-5 mb-5">
+          <div className="row align-items-center feature-row">
             {/* LEFT CONTENT COLUMN */}
             <div className="col-12 col-lg-6 order-2 order-lg-1">
               <div className="create-content px-3 px-lg-5">
-                <h2 className="section-title ">
-                  Create polls freely, your way
+                <div className="create-badge">
+                  <span></span>
+                  POLL CREATOR TOOLS
+                </div>
+                <h2 className="create-title">
+                  Ask Anything.
+                  <br />
+                  Get Real Opinions.
+                  <br />
+                  <span>Instantly.</span>
                 </h2>
-                <p className="section-description mt-3 mt-md-4">
-                  With real-time voting, instant reach, and high user
-                  engagement.
-                </p>
+
+                <div className="poll-desc-card">
+                  <p className="create-desc">
+                    Launch polls in seconds, collect honest opinions from
+                    anonymous users, and watch results update in real time.
+                  </p>
+                </div>
               </div>
             </div>
 
             {/* RIGHT IMAGE COLUMN */}
             <div className="col-12 col-lg-6 order-1 order-lg-2">
               <div className="create-image-container text-center">
+                <div className="create-rings">
+                  <span></span>
+                  <span></span>
+                  <span></span>
+                </div>
                 <img
                   src="/images/create_poll-800.webp"
                   width="400"
@@ -293,6 +493,21 @@ function Home() {
                   loading="lazy"
                   decoding="async"
                 />
+                <div className="creator-icon icon-create-1">
+                  <FaPlusCircle />
+                </div>
+
+                <div className="creator-icon icon-create-2">
+                  <FaPoll />
+                </div>
+
+                <div className="creator-icon icon-create-3">
+                  <FaBolt />
+                </div>
+
+                <div className="creator-icon icon-create-4">
+                  <FaChartPie />
+                </div>
               </div>
             </div>
           </div>
