@@ -62,7 +62,7 @@ export default function AdminEditContest() {
     updateContest(
       {
         id,
-        playload: formData,
+        payload: formData,
       },
       {
         onSuccess: () => {

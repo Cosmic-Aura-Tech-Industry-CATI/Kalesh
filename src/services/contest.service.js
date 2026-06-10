@@ -48,6 +48,7 @@ export class ContestService {
    * @returns {Promise<Object>} Resolves with the updated contest object.
    */
   static async updateContest(id, payload) {
+    console.log("Updating contest with id:", id, "and payload:", payload);
     const res = await axiosInstance.patch(
       API_ENDPOINTS.ADMIN.CONTEST.UPDATE_BY_ID(id),
       payload,
