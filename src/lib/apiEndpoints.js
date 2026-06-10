@@ -36,8 +36,9 @@ export const API_ENDPOINTS = {
     GET_BY_SLUG: (slug) => `/blogs/${slug}`,
     UPDATE_BY_SLUG: (slug) => `/blogs/${slug}`,
     DELETE_BY_SLUG: (slug) => `/blogs/${slug}`,
-    
+    SHARE_BY_SLUG: (slug) => `/blogs/${slug}/share`,
   },
+  
   JOBS: {
     GET_ALL: "/jobs",
     GET_ADMIN: "/jobs/admin",
@@ -90,6 +91,25 @@ export const API_ENDPOINTS = {
       BAN_USER: (id) => `/admin-panel/app-users/${id}/ban`,
       UNBAN_USER: (id) => `/admin-panel/app-users/${id}/unban`,
       WARN_USER: (id) => `/admin-panel/app-users/${id}/warn`,
+    },
+    
+    CONTEST: {
+      GET_ALL: "/admin-panel/contests",
+      CREATE: "/admin-panel/contests",
+      GET_BY_ID: (id) => `/admin-panel/contests/${id}`,
+      UPDATE_BY_ID: (id) => `/admin-panel/contests/${id}`,
+      DELETE_BY_ID: (id) => `/admin-panel/contests/${id}`,
+    },
+    
+    HIGHLIGHTS: {
+      GET_ALL: "/admin-panel/highlights",
+      CREATE: "/admin-panel/highlights",
+      UPDATE_BY_ID: (id) => `/admin-panel/highlights/${id}`,
+      DELETE_BY_ID: (id) => `/admin-panel/highlights/${id}`, 
+    },
+
+    DASHBOARD: {
+      GET_STATS: "/admin-panel/dashboard/stats",
     }
   },
 };

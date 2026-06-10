@@ -1,32 +1,52 @@
 import { Link, useLocation } from "react-router-dom";
 import {
   LayoutDashboard,
+  Images,
+  Trophy,
   AlertCircle,
-  FileText,
   Users,
   Ban,
+  Briefcase,
+  FileText,
+  UserCog,
   Crown,
   CreditCard,
   Shield,
   ScrollText,
   Settings,
-  Briefcase,
-  UserCog,
+  ImagePlus,
 } from "lucide-react";
 import "../style/sidebar.css";
 
 const menuItems = [
   { path: "/admin/dashboard", icon: LayoutDashboard, label: "Dashboard" },
+
+  { path: "/admin/highlights", icon: Images, label: "Highlights" },
+
+  { path: "/admin/contests", icon: Trophy, label: "Contests" },
+
+  { path: "/admin/wallpapers", icon: ImagePlus, label: "Wallpapers" },
+
   { path: "/admin/reported-polls", icon: AlertCircle, label: "Reports" },
+
   { path: "/admin/users", icon: Users, label: "Users" },
+
   { path: "/admin/banned-users", icon: Ban, label: "Banned Users" },
+
   { path: "/admin/jobs", icon: Briefcase, label: "Jobs Posting" },
+
   { path: "/admin/blogs", icon: FileText, label: "Blog" },
+
   { path: "/admin/admins", icon: UserCog, label: "Admins" },
+
   { path: "/admin/premium", icon: Crown, label: "Premium Users" },
+
   { path: "/admin/payments", icon: CreditCard, label: "Payments" },
+
   { path: "/admin/poll-moderation", icon: Shield, label: "Moderation" },
+
   { path: "/admin/logs", icon: ScrollText, label: "Activity Logs" },
+
   { path: "/admin/settings", icon: Settings, label: "Settings" },
 ];
 

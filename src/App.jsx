@@ -2,11 +2,11 @@ import { useEffect, Suspense, lazy } from "react";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { Routes, Route, useLocation } from "react-router-dom";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
+import { Toaster } from "react-hot-toast";
 
 import ScrollbarTop from "./components/ScrollbarTop";
 import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
-import { Toaster } from "react-hot-toast";
 
 import ApplicationDetails from "./pages/ApplicationDetails";
 import UnauthorizedModal from "./components/UnauthorizedModal";
@@ -31,8 +31,14 @@ import AdminLayout from "./admin/layout/AdminLayout";
 import AdminBlog from "./admin/pages/AdminBlog";
 import AdminBlogPage from "./admin/pages/AdminBlogPage";
 import AdminEditBlog from "./admin/pages/AdminEditBlog";
+import AdminCreateContest from "./admin/pages/AdminCreateContest";
+import AdminContestList from "./admin/pages/AdminContestList";
+import AdminEditContest from "./admin/pages/AdminEditContest";
+import AdminContestDetails from "./admin/pages/AdminContestDetails";
 
 import JobDetails from "./pages/JobDetails";
+import Highlights from "./admin/pages/Highlights";
+import Wallpapers from "./admin/pages/Wallpapers";
 
 // LAZY PUBLIC PAGES
 const Home = lazy(() => import("./pages/Home"));
@@ -80,17 +86,26 @@ function MainRoutes() {
             <Route path="/careers/:jobId" element={<JobDetails />} />
             <Route path="/contactus" element={<ContactUs />} />
             <Route path="/helpcenter" element={<HelpCenter />} />
-            <Route path="/termsandconditions" element={<TermsAndConditions />} />
+            <Route
+              path="/termsandconditions"
+              element={<TermsAndConditions />}
+            />
             <Route path="/privacypolicy" element={<PrivacyPolicy />} />
             <Route path="/faq" element={<FAQ />} />
             <Route path="/blog" element={<Blog />} />
             <Route path="/blog/viewpage" element={<Viewpage />} />
             <Route path="/blog/blogteam" element={<Blogteam />} />
             <Route path="/blog/:slug" element={<BlogDetail />} />
-            <Route path="/communityguidelines" element={<CommunityGuidelines />} />
+            <Route
+              path="/communityguidelines"
+              element={<CommunityGuidelines />}
+            />
             <Route path="/securityadvisory" element={<SecurityAdvisory />} />
 
-            <Route path="/application/:token" element={<ApplicationDetails />} />
+            <Route
+              path="/application/:token"
+              element={<ApplicationDetails />}
+            />
 
             {/* ADMIN LOGIN */}
             <Route path="/admin/login" element={<AdminLogin />} />
@@ -98,23 +113,45 @@ function MainRoutes() {
             {/* ADMIN ROUTES */}
             <Route path="/admin" element={<AdminLayout />}>
               <Route path="dashboard" element={<AdminDashboard />} />
+
               <Route path="reported-polls" element={<AdminReportedPolls />} />
+
               <Route path="poll-moderation" element={<AdminPollModeration />} />
+
               <Route path="users" element={<AdminUsers />} />
+
               <Route path="user/:userId" element={<UserDetails />} />
 
               <Route path="jobs" element={<JobsPosting />} />
 
-              {/* BLOG SYSTEM */}
+              <Route path="highlights" element={<Highlights />} />
+
+              <Route path="wallpapers" element={<Wallpapers />} />
+
               <Route path="blog" element={<AdminBlog />} />
+
               <Route path="blogs" element={<AdminBlogPage />} />
+
               <Route path="blog/edit/:slug" element={<AdminEditBlog />} />
 
+              <Route path="contest/create" element={<AdminCreateContest />} />
+
+              <Route path="contests" element={<AdminContestList />} />
+
+              <Route path="contest/edit/:id" element={<AdminEditContest />} />
+
+              <Route path="contest/:id" element={<AdminContestDetails />} />
+
               <Route path="banned-users" element={<AdminBannedUsers />} />
+
               <Route path="premium" element={<AdminPremium />} />
+
               <Route path="payments" element={<AdminPayments />} />
+
               <Route path="admins" element={<Admins />} />
+
               <Route path="logs" element={<AdminLogs />} />
+
               <Route path="settings" element={<AdminSettings />} />
             </Route>
           </Routes>
@@ -132,7 +169,7 @@ function App() {
     const setVh = () => {
       document.documentElement.style.setProperty(
         "--vh",
-        `${window.innerHeight * 0.01}px`
+        `${window.innerHeight * 0.01}px`,
       );
     };
 

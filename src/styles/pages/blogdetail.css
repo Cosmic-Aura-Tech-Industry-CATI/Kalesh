@@ -1,10 +1,20 @@
+/* =========================
+   MAIN CONTAINER
+========================= */
+
 .blog-detail-container {
-  max-width: 1100px;
+  width: 100%;
+  max-width: 1280px;
+
   margin: auto;
-  padding: 40px 20px;
+
+  padding: 40px 24px 120px;
+
+  position: relative;
 }
 
 /* ================= TOP BAR ================= */
+
 .blog-topbar {
   display: flex;
   justify-content: space-between;
@@ -17,24 +27,33 @@
   text-decoration: none;
   font-weight: 600;
   font-size: 1rem;
+
   display: flex;
   align-items: center;
   gap: 8px;
+
   transition: all 0.3s ease;
+
   padding: 10px 20px;
+
   border: 1px solid rgba(212, 175, 55, 0.3);
   border-radius: 8px;
+
+  background: transparent;
 }
 
 .back-btn:hover {
   border-color: #ff6a00;
   color: #ff6a00;
+
+  transform: translateY(-2px);
 }
 
 .blog-center {
   display: flex;
   align-items: center;
   gap: 10px;
+
   font-weight: 600;
 }
 
@@ -44,6 +63,7 @@
   letter-spacing: 0.5px;
 
   background: linear-gradient(135deg, #ff6a00, #ffd700);
+
   -webkit-background-clip: text;
   background-clip: text;
   -webkit-text-fill-color: transparent;
@@ -54,58 +74,111 @@
   height: 2.5rem;
 }
 
+/* SHARE BTN */
+
 .share-btn {
   background: linear-gradient(135deg, #ff6a00, #ff3c00);
+
   border: none;
-  padding: 10px 18px;
-  border-radius: 20px;
+
+  padding: 12px 22px;
+
+  border-radius: 30px;
+
   color: white;
+
   display: flex;
   align-items: center;
-  gap: 6px;
+  gap: 8px;
+
   cursor: pointer;
 
   transition: all 0.3s ease;
+
+  font-weight: 600;
+
+  box-shadow: 0 10px 25px rgba(255, 106, 0, 0.25);
 }
 
-/* 🔥 HOVER EFFECT */
 .share-btn:hover {
-  transform: translateY(-2px) scale(1.05);
+  transform: translateY(-3px) scale(1.03);
+
   box-shadow:
-    0 0 20px rgba(255, 106, 0, 0.6),
-    0 0 40px rgba(255, 60, 0, 0.4);
+    0 0 20px rgba(255, 106, 0, 0.45),
+    0 0 40px rgba(255, 60, 0, 0.2);
 }
 
-/* 🔽 CLICK EFFECT */
 .share-btn:active {
   transform: scale(0.95);
 }
 
-/* ================= HEADER ================= */
-.blog-header {
+/* =========================
+   HEADER SECTION
+========================= */
+
+.blog-detail-header {
   text-align: center;
-  margin-bottom: 20px;
+  max-width: 1000px;
+  margin: 0 auto 50px;
 }
 
-/* TITLE */
+/* =========================
+   TITLE
+========================= */
+
 .blog-title {
-  font-size: 48px;
+  font-size: clamp(2.4rem, 5vw, 4rem);
+
   font-weight: 800;
+
+  line-height: 1.12;
+
+  letter-spacing: -1.5px;
+
   background: linear-gradient(135deg, #ff6a00, #ffd700);
+
   -webkit-background-clip: text;
   background-clip: text;
   -webkit-text-fill-color: transparent;
-  margin-bottom: 15px;
-  margin-top: -10px;
+
+  margin: 0px auto 28px;
+
+  max-width: 1100px;
 }
 
-/* META */
+/* =========================
+   META
+========================= */
+
 .blog-meta {
   display: flex;
+
   justify-content: center;
-  gap: 20px;
-  color: #aaa;
-  font-size: 14px;
+  align-items: center;
+
+  gap: 24px;
+
+  color: #9e9e9e;
+
+  font-size: 15px;
+
+  margin-top: 20px;
+}
+
+.meta-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+
+  padding: 10px 18px;
+
+  border-radius: 40px;
+
+  background: rgba(255, 255, 255, 0.03);
+
+  border: 1px solid rgba(255, 255, 255, 0.06);
+
+  backdrop-filter: blur(10px);
 }
 
 .meta-item {
@@ -114,155 +187,649 @@
   gap: 6px;
 }
 
-/* AUTHOR */
+/* =========================
+   AUTHOR
+========================= */
+
 .blog-author {
   display: flex;
+
   justify-content: center;
   align-items: center;
-  margin-top: 20px;
-  gap: 12px;
+
+  gap: 16px;
+
+  margin-top: 28px;
 }
 
-/* 🔥 ICON CIRCLE (avatar style) */
 .author-icon {
-  width: 45px;
-  height: 45px;
+  width: 60px;
+  height: 60px;
+
   border-radius: 50%;
+
   background: linear-gradient(135deg, #ff6a00, #ff3c00);
 
   display: flex;
   align-items: center;
   justify-content: center;
+
+  box-shadow: 0 0 30px rgba(255, 106, 0, 0.35);
 }
 
-/* ICON COLOR */
+.author-info strong {
+  font-size: 22px;
+  color: #fff;
+}
+
+.author-info p {
+  color: #9c9c9c;
+
+  margin-top: 4px;
+
+  font-size: 14px;
+}
+
+/* ICON */
+
+.author-icon {
+  width: 52px;
+  height: 52px;
+
+  border-radius: 50%;
+
+  background: linear-gradient(135deg, #ff6a00, #ff3c00);
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  box-shadow: 0 0 25px rgba(255, 106, 0, 0.35);
+}
+
 .author-icon svg {
   color: white;
 }
 
-/* TEXT */
 .author-info {
   text-align: left;
 }
 
-.author-info p {
-  font-size: 13px;
-  color: #aaa;
+.author-info strong {
+  font-size: 20px;
 }
 
-/* IMAGE */
+.author-info p {
+  font-size: 14px;
+  color: #aaa;
+  margin-top: 4px;
+}
+
+/* =========================
+   BLOG IMAGE
+========================= */
+
 .blog-image {
   width: 100%;
-  height: 600px;
-  border-radius: 16px;
-  margin: 30px 0;
+
+  max-width: 1000px;
+
+  display: block;
+
+  margin: 50px auto 70px;
+
+  border-radius: 28px;
+
+  object-fit: contain;
+
+  background: linear-gradient(
+    145deg,
+    rgba(20, 20, 20, 0.98),
+    rgba(8, 8, 8, 0.98)
+  );
+
+  padding: 0px;
+
+  box-shadow:
+    0 0 50px rgba(255, 106, 0, 0.08),
+    0 20px 60px rgba(0, 0, 0, 0.45);
 }
 
-/* CONTENT */
+/* =========================
+   CONTENT AREA
+========================= */
+
 .blog-content {
-  max-width: 900px;
-  margin: 60px auto;
-  font-size: 18px;
-  line-height: 1.9;
-  color: #bfbfbf;
+  max-width: 960px;
+
+  margin: auto;
+
+  font-size: 20px;
+
+  line-height: 2;
+
+  color: #d0d0d0;
+
+  letter-spacing: 0.2px;
 }
 
-/* 🔥 HEADING STYLE */
+/* =========================
+   HEADINGS
+========================= */
+
 .blog-content h2 {
-  font-size: 34px;
-  font-weight: 700;
-  color: #ffffff;
-  margin-bottom: 10px;
+  font-size: clamp(2rem, 4vw, 3rem);
+
+  font-weight: 800;
+
+  line-height: 1.25;
+
+  color: #fff;
+
+  margin: 80px 0 25px;
+
   position: relative;
 }
 
-/* 🔥 YELLOW UNDERLINE */
 .blog-content h2::after {
   content: "";
+
   display: block;
-  width: 60px;
-  height: 3px;
+
+  width: 85px;
+  height: 4px;
+
+  margin-top: 12px;
+
+  border-radius: 30px;
+
   background: linear-gradient(90deg, #ff6a00, #ffd700);
-  margin-top: 8px;
-  border-radius: 2px;
 }
 
 .blog-content h3 {
-  font-size: 22px;
-  font-weight: 700;
-  color: #ffffff;
-  margin-bottom: 10px;
-  position: relative;
-}
+  font-size: clamp(1.5rem, 3vw, 2.1rem);
 
-.blog-content h3::after {
-  content: "";
-  display: block;
-  width: 60px;
-  height: 3px;
-  background: linear-gradient(90deg, #ff6a00, #ffd700);
-  margin-top: 8px;
-  border-radius: 2px;
+  color: #fff;
+
+  margin: 55px 0 20px;
+
+  font-weight: 700;
 }
 
 /* PARAGRAPH */
+
 .blog-content p {
-  margin-top: 15px;
-  margin-bottom: 15px;
-  color: #bfbfbf;
+  margin: 28px 0;
+
+  color: #cfcfcf;
 }
 
-/* RESET DEFAULT BULLETS */
+/* =========================
+   LISTS
+========================= */
+
 .blog-content ul {
-  list-style: none;
+  list-style: disc;
+  padding-left: 30px;
+}
+
+.blog-content ol {
+  list-style: decimal;
+  padding-left: 30px;
+}
+
+.blog-content ul li,
+.blog-content ol li {
+  padding-left: 0;
+  margin-bottom: 12px;
+}
+
+/* LIST ITEM */
+.blog-content li {
+  margin-bottom: 10px;
   padding-left: 0;
 }
 
-/* EACH ITEM */
-.blog-content li {
-  position: relative;
-  padding-left: 60px;
-  margin-bottom: 25px;
+.blog-content li::before {
+  display: none;
 }
 
-/* 🔥 NUMBER CIRCLE */
-.blog-content li::before {
-  content: counter(list-counter);
-  counter-increment: list-counter;
+/* =========================
+   SELECTION EFFECT
+========================= */
 
-  position: absolute;
-  left: 0;
-  top: 5px;
-
-  width: 40px;
-  height: 40px;
-  border-radius: 50%;
-
-  background: linear-gradient(135deg, #ff6a00, #ff3c00);
+.blog-content ::selection {
+  background: rgba(255, 106, 0, 0.3);
   color: white;
+}
+
+/* =========================
+   FLOATING LIKE BUTTON
+========================= */
+
+.floating-like-btn {
+  position: fixed;
+
+  right: 30px;
+  bottom: 35px;
+
+  width: 78px;
+  height: 78px;
+
+  border-radius: 50%;
 
   display: flex;
   align-items: center;
   justify-content: center;
 
-  font-weight: bold;
+  cursor: pointer;
+
+  z-index: 99999;
+
+  background: linear-gradient(
+    145deg,
+    rgba(40, 40, 40, 0.96),
+    rgba(15, 15, 15, 0.98)
+  );
+
+  border: 1px solid rgba(255, 255, 255, 0.12);
+
+  backdrop-filter: blur(18px);
+
+  box-shadow:
+    12px 12px 30px rgba(0, 0, 0, 0.6),
+    -6px -6px 18px rgba(255, 255, 255, 0.04),
+    inset 0 0 12px rgba(255, 255, 255, 0.03);
+
+  transition: all 0.35s ease;
+
+  overflow: hidden;
 }
 
-/* ENABLE COUNTER */
-.blog-content ul {
-  counter-reset: list-counter;
+/* INNER GLOW */
+
+.floating-like-btn::before {
+  content: "";
+
+  position: absolute;
+  inset: 0;
+
+  border-radius: 50%;
+
+  background: radial-gradient(circle, rgba(255, 48, 64, 0.28), transparent 70%);
+
+  opacity: 0;
+
+  transition: opacity 0.35s ease;
 }
 
-/* Agar list ke andar heading + text hai: */
+/* ICON */
 
-.blog-content li strong {
-  display: block;
-  font-size: 20px;
+.floating-like-btn svg {
+  color: white;
+
+  transition: all 0.35s ease;
+}
+
+/* HOVER */
+
+.floating-like-btn:hover {
+  transform: translateY(-8px) scale(1.08);
+
+  box-shadow:
+    0 0 30px rgba(255, 48, 64, 0.35),
+    0 0 60px rgba(255, 48, 64, 0.15);
+}
+
+/* ACTIVE */
+
+.floating-like-btn:active {
+  transform: scale(0.92);
+}
+
+/* LIKED */
+
+.floating-like-btn.liked {
+  background: linear-gradient(
+    145deg,
+    rgba(55, 15, 20, 0.98),
+    rgba(30, 5, 8, 0.98)
+  );
+
+  border: 1px solid rgba(255, 48, 64, 0.4);
+
+  box-shadow:
+    0 0 35px rgba(255, 48, 64, 0.5),
+    0 0 80px rgba(255, 48, 64, 0.2);
+}
+
+.floating-like-btn.liked::before {
+  opacity: 1;
+}
+
+.floating-like-btn.liked svg {
+  color: #ff3040;
+
+  transform: scale(1.15);
+}
+
+/* =========================
+   HEART SCREEN
+========================= */
+
+.heart-screen {
+  position: fixed;
+  inset: 0;
+
+  pointer-events: none;
+
+  z-index: 999999;
+}
+
+.screen-heart {
+  position: absolute;
+
+  font-size: 32px;
+
+  animation: floatingHeart 4.5s linear forwards;
+}
+
+/* HEART FLOAT */
+
+@keyframes floatingHeart {
+  0% {
+    transform: translateY(0) scale(0.5) rotate(0deg);
+
+    opacity: 0;
+  }
+
+  15% {
+    opacity: 1;
+  }
+
+  100% {
+    transform: translateY(-800px) translateX(200px) scale(1.8) rotate(360deg);
+
+    opacity: 0;
+  }
+}
+
+/* =========================
+   FLOATING TOAST
+========================= */
+
+.love-toast {
+  position: fixed;
+
+  right: 130px;
+  bottom: 55px;
+
+  padding: 16px 26px;
+
+  border-radius: 40px;
+
+  background: linear-gradient(
+    135deg,
+    rgba(255, 48, 64, 0.96),
+    rgba(255, 106, 0, 0.96)
+  );
+
+  color: white;
+
+  font-weight: 700;
+
+  z-index: 999999;
+
+  box-shadow: 0 0 30px rgba(255, 48, 64, 0.35);
+
+  animation: toastFloat 4s ease forwards;
+}
+
+/* TOAST ANIMATION */
+
+@keyframes toastFloat {
+  0% {
+    opacity: 0;
+
+    transform: translateY(20px) scale(0.8);
+  }
+
+  15% {
+    opacity: 1;
+
+    transform: translateY(0) scale(1);
+  }
+
+  85% {
+    opacity: 1;
+  }
+
+  100% {
+    opacity: 0;
+
+    transform: translateY(-60px) scale(0.9);
+  }
+}
+
+/* ================= RESPONSIVE ================= */
+
+@media (max-width: 992px) {
+  .blog-title {
+    font-size: 54px;
+  }
+}
+
+/* =========================
+   RESPONSIVE
+========================= */
+
+@media (max-width: 768px) {
+  .blog-detail-container {
+    padding: 30px 18px 110px;
+  }
+
+  .blog-topbar {
+    flex-direction: column;
+    gap: 20px;
+  }
+
+  .blog-title {
+    line-height: 1.18;
+  }
+
+  .blog-meta {
+    flex-wrap: wrap;
+    gap: 12px;
+  }
+
+  .blog-image {
+    border-radius: 20px;
+    padding: 8px;
+  }
+
+  .blog-content {
+    font-size: 17px;
+    line-height: 1.9;
+  }
+
+  .blog-content li {
+    padding-left: 60px;
+  }
+
+  .blog-content li::before {
+    width: 42px;
+    height: 42px;
+  }
+}
+
+@media (max-width: 480px) {
+  .blog-title {
+    font-size: 34px;
+  }
+
+  .blog-meta {
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .blog-content h2 {
+    font-size: 30px;
+  }
+
+  .blog-content h3 {
+    font-size: 24px;
+  }
+}
+
+/* =========================
+   COMMENTS SECTION
+========================= */
+
+.blog-comments-section {
+  max-width: 960px;
+  margin: 100px auto 0;
+}
+
+.comments-heading {
+  font-size: 2rem;
+  font-weight: 700;
+  margin-bottom: 30px;
   color: #fff;
-  margin-bottom: 5px;
 }
 
-.blog-content li p {
+.comment-form {
+  padding: 30px;
+  border-radius: 24px;
+
+  background: rgba(255, 255, 255, 0.03);
+
+  border: 1px solid rgba(255, 255, 255, 0.08);
+
+  backdrop-filter: blur(12px);
+
+  margin-bottom: 40px;
+}
+
+.comment-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+}
+
+.comment-form input,
+.comment-form textarea {
+  width: 100%;
+  padding: 16px 18px;
+
+  background: rgba(255, 255, 255, 0.04);
+
+  border: 1px solid rgba(255, 255, 255, 0.08);
+
+  color: white;
+
+  border-radius: 14px;
+
+  outline: none;
+
+  margin-bottom: 16px;
+}
+
+.comment-form input:focus,
+.comment-form textarea:focus {
+  border-color: #ff6a00;
+  box-shadow: 0 0 20px rgba(255, 106, 0, 0.15);
+}
+
+.comment-form textarea {
+  resize: vertical;
+  min-height: 140px;
+}
+
+.comment-submit-btn {
+  border: none;
+
+  padding: 14px 28px;
+
+  border-radius: 30px;
+
+  background: linear-gradient(135deg, #ff6a00, #ff3c00);
+
+  color: white;
+
+  font-weight: 600;
+
+  cursor: pointer;
+
+  transition: 0.3s;
+}
+
+.comment-submit-btn:hover {
+  transform: translateY(-2px);
+}
+
+.comments-list {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.comment-card {
+  padding: 24px;
+
+  border-radius: 20px;
+
+  background: rgba(255, 255, 255, 0.03);
+
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.comment-header {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+
+  margin-bottom: 14px;
+}
+
+.comment-avatar {
+  width: 48px;
+  height: 48px;
+
+  border-radius: 50%;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  font-weight: 700;
+
+  background: linear-gradient(135deg, #ff6a00, #ffd700);
+
+  color: white;
+}
+
+.comment-header h4 {
   margin: 0;
-  color: #bbb;
+  color: white;
+}
+
+.comment-header span {
+  font-size: 13px;
+  color: #999;
+}
+
+.comment-card p {
+  margin: 0;
+  color: #d0d0d0;
+  line-height: 1.8;
+}
+
+@media (max-width: 768px) {
+  .comment-row {
+    grid-template-columns: 1fr;
+  }
+
+  .comment-form {
+    padding: 20px;
+  }
 }

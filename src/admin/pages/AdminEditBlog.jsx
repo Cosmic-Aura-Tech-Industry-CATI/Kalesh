@@ -1,6 +1,8 @@
 import { useParams, useNavigate } from "react-router-dom";
 import { useGetBlogBySlug, useUpdateBlog } from "../../hooks/useBlogs";
 import { useEffect, useState } from "react";
+import ReactQuill from "react-quill";
+import "react-quill/dist/quill.snow.css";
 import "../style/adminEditBlog.css";
 
 export default function AdminEditBlog() {
@@ -13,97 +15,28 @@ export default function AdminEditBlog() {
   const blog = data?.data?.blog;
 
   const [title, setTitle] = useState("");
-  const [blocks, setBlocks] = useState([]);
+  const [content, setContent] = useState("");
   const [readTime, setReadTime] = useState("");
   const [featured, setFeatured] = useState(false);
 
-  // 🔥 HTML → BLOCKS CONVERT
-  const parseHTML = (html) => {
-    const temp = document.createElement("div");
-    temp.innerHTML = html;
-
-    const parsed = [];
-
-    temp.childNodes.forEach((node) => {
-      if (node.tagName === "H2") {
-        parsed.push({
-          id: crypto.randomUUID(),
-          type: "heading",
-          value: node.innerText,
-        });
-      }
-
-      if (node.tagName === "H3") {
-        parsed.push({
-          id: crypto.randomUUID(),
-          type: "subheading",
-          value: node.innerText,
-        });
-      }
-
-      if (node.tagName === "P") {
-        parsed.push({
-          id: crypto.randomUUID(),
-          type: "paragraph",
-          value: node.innerText,
-        });
-      }
-
-      if (node.tagName === "UL") {
-        const items = Array.from(node.querySelectorAll("li")).map(
-          (li) => li.innerText,
-        );
-
-        parsed.push({
-          id: crypto.randomUUID(),
-          type: "bullets",
-          value: items.join(", "),
-        });
-      }
-    });
-
-    return parsed;
+  const quillModules = {
+    toolbar: [
+      [{ header: [1, 2, 3, false] }],
+      ["bold", "italic", "underline"],
+      [{ list: "ordered" }, { list: "bullet" }],
+      ["clean"],
+    ],
   };
 
   // 🔥 LOAD DATA
   useEffect(() => {
     if (blog) {
       setTitle(blog.title);
-      setBlocks(parseHTML(blog.content || ""));
+      setContent(blog.content || "");
       setReadTime(blog.readTime || "");
       setFeatured(blog.featured || false);
     }
   }, [blog]);
-
-  // UPDATE BLOCK
-  const updateBlock = (id, value) => {
-    setBlocks((prev) => prev.map((b) => (b.id === id ? { ...b, value } : b)));
-  };
-
-  // DELETE BLOCK
-  const deleteBlock = (id) => {
-    setBlocks((prev) => prev.filter((b) => b.id !== id));
-  };
-
-  // HTML GENERATE
-  const generateHTML = () => {
-    let html = "";
-
-    blocks.forEach((block) => {
-      if (block.type === "heading") html += `<h2>${block.value}</h2>`;
-      if (block.type === "subheading") html += `<h3>${block.value}</h3>`;
-      if (block.type === "paragraph") html += `<p>${block.value}</p>`;
-      if (block.type === "bullets") {
-        html += "<ul>";
-        block.value.split(",").forEach((item) => {
-          html += `<li>${item.trim()}</li>`;
-        });
-        html += "</ul>";
-      }
-    });
-
-    return html;
-  };
 
   const handleUpdate = () => {
     updateBlog(
@@ -111,7 +44,7 @@ export default function AdminEditBlog() {
         slug,
         payload: {
           title,
-          content: generateHTML(),
+          content,
           readTime,
           featured,
         },
@@ -141,36 +74,14 @@ export default function AdminEditBlog() {
           onChange={(e) => setTitle(e.target.value)}
         />
 
-        {/* BLOCKS */}
-        {blocks.map((block) => (
-          <div key={block.id} className="edit-block">
-            <label>
-              {block.type === "heading" && "Heading"}
-              {block.type === "subheading" && "Sub Heading"}
-              {block.type === "paragraph" && "Paragraph"}
-              {block.type === "bullets" && "Bullet Points"}
-            </label>
+        <label>Blog Content</label>
 
-            {block.type === "paragraph" || block.type === "bullets" ? (
-              <textarea
-                value={block.value}
-                onChange={(e) => updateBlock(block.id, e.target.value)}
-              />
-            ) : (
-              <input
-                value={block.value}
-                onChange={(e) => updateBlock(block.id, e.target.value)}
-              />
-            )}
-
-            <button
-              className="edit-delete-btn"
-              onClick={() => deleteBlock(block.id)}
-            >
-              Delete
-            </button>
-          </div>
-        ))}
+        <ReactQuill
+          theme="snow"
+          value={content}
+          onChange={setContent}
+          modules={quillModules}
+        />
 
         {/* READ TIME */}
         <label>Read Time</label>
@@ -186,9 +97,18 @@ export default function AdminEditBlog() {
           Featured
         </label>
 
-        <button className="edit-blog-btn" onClick={handleUpdate}>
-          Update Blog
-        </button>
+        <div className="edit-blog-actions">
+          <button className="edit-blog-btn" onClick={handleUpdate}>
+            Update Blog
+          </button>
+
+          <button
+            className="edit-blog-close-btn"
+            onClick={() => navigate("/admin/blogs")}
+          >
+            Close
+          </button>
+        </div>
       </div>
     </div>
   );

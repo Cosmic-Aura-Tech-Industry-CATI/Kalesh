@@ -9,10 +9,24 @@ import {
 } from "lucide-react";
 
 import StatCard from "../components/StatCard";
-import { mockStats } from "../data/mockData";
+import { useGetDashboardStats } from "../../hooks/dashboard.hook";
 import "../style/dashboard.css"; // 👈 New CSS file
 
 export default function AdminDashboard() {
+  const { data, isLoading, isError } = useGetDashboardStats();
+
+  if (isLoading) {
+    return <div className="dashboard"><div className="text-white p-4">Loading dashboard...</div></div>;
+  }
+
+  if (isError) {
+    return <div className="dashboard"><div className="text-red-500 p-4">Failed to load dashboard stats.</div></div>;
+  }
+
+  const stats = data?.data || data || {};
+
+  const getTrendStr = (change = 0) => `${change > 0 ? "+" : ""}${change}% from last month`;
+
   return (
     <section className="dashboard">
       <header className="dashboard-header">
@@ -26,34 +40,34 @@ export default function AdminDashboard() {
       <div className="dashboard-primary-stats">
         <StatCard
           title="Total Users"
-          value={mockStats.totalUsers.toLocaleString()}
+          value={(stats.totalUsers?.value || 0).toLocaleString()}
           icon={Users}
-          trend="+12.5% from last month"
-          trendUp={true}
+          trend={getTrendStr(stats.totalUsers?.change)}
+          trendUp={(stats.totalUsers?.change || 0) >= 0}
         />
 
         <StatCard
           title="Active Users"
-          value={mockStats.activeUsers.toLocaleString()}
+          value={(stats.activeUsers?.value || 0).toLocaleString()}
           icon={TrendingUp}
-          trend="+8.3% from last month"
-          trendUp={true}
+          trend={getTrendStr(stats.activeUsers?.change)}
+          trendUp={(stats.activeUsers?.change || 0) >= 0}
         />
 
         <StatCard
           title="Total Polls"
-          value={mockStats.totalPolls.toLocaleString()}
+          value={(stats.totalPolls?.value || 0).toLocaleString()}
           icon={FileText}
-          trend="+15.2% from last month"
-          trendUp={true}
+          trend={getTrendStr(stats.totalPolls?.change)}
+          trendUp={(stats.totalPolls?.change || 0) >= 0}
         />
 
         <StatCard
           title="Reported Polls"
-          value={mockStats.reportedPolls}
+          value={(stats.reportedPolls?.value || 0).toLocaleString()}
           icon={AlertCircle}
-          trend="-5.1% from last month"
-          trendUp={false}
+          trend={getTrendStr(stats.reportedPolls?.change)}
+          trendUp={(stats.reportedPolls?.change || 0) >= 0}
         />
       </div>
 
@@ -61,24 +75,24 @@ export default function AdminDashboard() {
       <div className="dashboard-secondary-stats">
         <StatCard
           title="Banned Users"
-          value={mockStats.bannedUsers}
+          value={(stats.bannedUsers?.value || 0).toLocaleString()}
           icon={Ban}
         />
 
         <StatCard
           title="Premium Users"
-          value={mockStats.premiumUsers.toLocaleString()}
+          value={(stats.premiumUsers?.value || 0).toLocaleString()}
           icon={Crown}
-          trend="+24.6% from last month"
-          trendUp={true}
+          trend={getTrendStr(stats.premiumUsers?.change)}
+          trendUp={(stats.premiumUsers?.change || 0) >= 0}
         />
 
         <StatCard
           title="Monthly Revenue"
-          value={`₹${(mockStats.monthlyRevenue / 1000).toFixed(0)}K`}
+          value={`₹${((stats.monthlyRevenue?.value || 0) / 1000).toFixed(0)}K`}
           icon={DollarSign}
-          trend="+18.9% from last month"
-          trendUp={true}
+          trend={getTrendStr(stats.monthlyRevenue?.change)}
+          trendUp={(stats.monthlyRevenue?.change || 0) >= 0}
         />
       </div>
     </section>
