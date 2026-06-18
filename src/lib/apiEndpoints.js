@@ -110,6 +110,15 @@ export const API_ENDPOINTS = {
 
     DASHBOARD: {
       GET_STATS: "/admin-panel/dashboard/stats",
+    },
+
+    WALLPAPERS: {
+      GET_ALL: "/admin-panel/chat-wallpaper",
+      CREATE: "/admin-panel/chat-wallpaper",
+      UPDATE_BY_ID: (id) => `/admin-panel/chat-wallpaper/${id}`,
+      DELETE_BY_ID: (id) => `/admin-panel/chat-wallpaper/${id}/delete`,
+      UPDATE_PRICE_BY_ID: (id) => `/admin-panel/chat-wallpaper/${id}/price`,
+      SET_DEFAULT_BY_ID: (id) => `/admin-panel/chat-wallpaper/${id}/default`,
     }
   },
 };
