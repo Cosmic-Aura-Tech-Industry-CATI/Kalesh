@@ -6,8 +6,11 @@ export class AppUsersService {
    * Fetches all app users from the API.
    * @returns {Promise<Array<AppUser>>} Resolves with an array of app user objects.
    */
-  static async getAllAppUsers() {
-    const res = await axiosInstance.get(API_ENDPOINTS.ADMIN.APP_USER.GET_ALL);
+  static async getAllAppUsers(page = 1) {
+    const res = await axiosInstance.get(API_ENDPOINTS.ADMIN.APP_USER.GET_ALL, {
+      params: { page },
+    });
+
     return res.data;
   }
 
@@ -18,7 +21,7 @@ export class AppUsersService {
    */
   static async getAppUserById(id) {
     const res = await axiosInstance.get(
-      API_ENDPOINTS.ADMIN.APP_USER.GET_BY_ID(id)
+      API_ENDPOINTS.ADMIN.APP_USER.GET_BY_ID(id),
     );
     return res.data;
   }
@@ -29,7 +32,7 @@ export class AppUsersService {
    */
   static async getBannedUsers() {
     const res = await axiosInstance.get(
-      API_ENDPOINTS.ADMIN.APP_USER.GET_BANNED_USERS
+      API_ENDPOINTS.ADMIN.APP_USER.GET_BANNED_USERS,
     );
     return res.data;
   }
@@ -43,7 +46,7 @@ export class AppUsersService {
   static async banUser(id, payload) {
     const res = await axiosInstance.patch(
       API_ENDPOINTS.ADMIN.APP_USER.BAN_USER(id),
-      payload
+      payload,
     );
     return res.data;
   }
@@ -55,7 +58,7 @@ export class AppUsersService {
    */
   static async unbanUser(id) {
     const res = await axiosInstance.patch(
-      API_ENDPOINTS.ADMIN.APP_USER.UNBAN_USER(id)
+      API_ENDPOINTS.ADMIN.APP_USER.UNBAN_USER(id),
     );
     return res.data;
   }
@@ -69,7 +72,7 @@ export class AppUsersService {
   static async warnUser(id, payload) {
     const res = await axiosInstance.patch(
       API_ENDPOINTS.ADMIN.APP_USER.WARN_USER(id),
-      payload
+      payload,
     );
     return res.data;
   }

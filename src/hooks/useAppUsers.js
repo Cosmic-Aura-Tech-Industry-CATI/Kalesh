@@ -9,10 +9,11 @@ import { toastError, toastSuccess } from "../lib/toast";
  * and functions to refresh the query and check if the data is loading.
  * The query will only run if the id exists.
  */
-export const useGetAllAppUsers = () => {
+export const useGetAllAppUsers = (page = 1) => {
   return useQuery({
-    queryKey: ["app-users"],
-    queryFn: AppUsersService.getAllAppUsers,
+    queryKey: ["app-users", page],
+    queryFn: () => AppUsersService.getAllAppUsers(page),
+    keepPreviousData: true,
   });
 };
 
