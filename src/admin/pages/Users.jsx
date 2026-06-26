@@ -1,5 +1,6 @@
 import { useNavigate } from "react-router-dom";
-import React, { useState } from "react";
+import { useState, useEffect } from "react";
+import { Search } from "lucide-react";
 
 import Table from "../components/Table";
 import Button from "../components/Button";
@@ -14,7 +15,23 @@ import "../style/admin.css";
 export default function Users() {
   const navigate = useNavigate();
   const [page, setPage] = useState(1);
-  const { data: users, isLoading } = useGetAllAppUsers(page);
+  const [search, setSearch] = useState("");
+  const [debouncedSearch, setDebouncedSearch] = useState("");
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setDebouncedSearch(search);
+      setPage(1);
+    }, 500);
+
+    return () => clearTimeout(timer);
+  }, [search]);
+
+  const { data: users, isLoading } = useGetAllAppUsers({
+    page,
+    limit: 30,
+    search: debouncedSearch,
+  });
 
   const { mutate: warnUser } = useWarnUser();
   const { mutate: banUser } = useBanUser();
@@ -31,11 +48,6 @@ export default function Users() {
   };
 
   const handleView = (userId) => {
-    if (!isAdmin) {
-      alert("Access Denied");
-      return;
-    }
-
     navigate(`/admin/user/${userId}`);
   };
 
@@ -49,10 +61,8 @@ export default function Users() {
   if (isLoading || isAdminLoading) {
     return (
       <div className="admin-section">
-        <div className="admin-section-header">
-          <h1 className="admin-page-title">User Management</h1>
-          <div className="text-xs sm:text-sm text-gray-400">Loading...</div>
-        </div>
+        <h1 className="admin-page-title">User Management</h1>
+        <p className="text-gray-400 mt-4">Loading...</p>
       </div>
     );
   }
@@ -142,16 +152,51 @@ export default function Users() {
     },
   ];
 
-  const totalPages = Math.ceil(
-    (users?.totalAppUsers || 0) / (users?.limit || 10),
-  );
+  const totalPages = Math.ceil((users?.totalAppUsers || 0) / 30);
 
   return (
     <div className="admin-section">
-      <div className="admin-section-header">
-        <h1 className="admin-page-title">User Management</h1>
-        <div className="text-xs sm:text-sm text-gray-400">
-          {users?.totalAppUsers || 0} users
+      <div className="admin-section-header flex flex-col md:flex-row md:items-center md:justify-between gap-5">
+        <div>
+          <h1 className="admin-page-title">User Management</h1>
+          <p className="text-sm text-gray-400 mt-1">
+            Total Users:{" "}
+            <span className="text-orange-400 font-semibold">
+              {users?.totalAppUsers || 0}
+            </span>
+          </p>
+        </div>
+
+        <div className="relative w-full md:w-[420px]">
+          <Search
+            size={18}
+            className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400"
+          />
+
+          <input
+            type="text"
+            value={search}
+            onChange={(e) => setSearch(e.target.value)}
+            placeholder="Search username, anonymous name..."
+            className="
+        w-full
+        h-12
+        rounded-xl
+        border
+        border-[#323232]
+        bg-[#1A1A1A]
+        pl-12
+        pr-14
+        text-white
+        placeholder:text-gray-500
+        transition-all
+        duration-300
+        focus:border-orange-500
+        focus:ring-2
+        focus:ring-orange-500/20
+        outline-none
+      "
+          />
         </div>
       </div>
 

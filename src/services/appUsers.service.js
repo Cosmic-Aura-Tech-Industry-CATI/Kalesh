@@ -6,9 +6,11 @@ export class AppUsersService {
    * Fetches all app users from the API.
    * @returns {Promise<Array<AppUser>>} Resolves with an array of app user objects.
    */
-  static async getAllAppUsers(page = 1) {
+  static async getAllAppUsers(params) {
+    console.log("API Params:", params);
+
     const res = await axiosInstance.get(API_ENDPOINTS.ADMIN.APP_USER.GET_ALL, {
-      params: { page },
+      params,
     });
 
     return res.data;
