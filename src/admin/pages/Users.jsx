@@ -36,8 +36,8 @@ export default function Users() {
   const { data: searchedUsers, isLoading: searchLoading } =
     useSearchAppUsers(debouncedSearch);
 
-  const users = debouncedSearch ? searchedUsers : allUsers;
-  const isLoading = debouncedSearch ? searchLoading : allUsersLoading;
+  const users =
+    debouncedSearch.trim().length > 0 ? searchedUsers || allUsers : allUsers;
 
   const { mutate: warnUser } = useWarnUser();
   const { mutate: banUser } = useBanUser();
@@ -64,7 +64,7 @@ export default function Users() {
     }
   };
 
-  if (isLoading || isAdminLoading) {
+  if (allUsersLoading && !allUsers) {
     return (
       <div className="admin-section">
         <h1 className="admin-page-title">User Management</h1>
@@ -216,8 +216,17 @@ export default function Users() {
         </div>
       </div>
 
-      <div className="h-[500px] overflow-y-auto rounded-xl border border-white/20">
-        <Table columns={columns} data={users?.appUsers || []} />
+      <div className="relative">
+        {searchLoading && (
+          <div className="absolute top-3 right-4 z-10 flex items-center gap-2 rounded-lg bg-[#1a1a1a]/90 px-3 py-1 text-sm text-orange-400 shadow-lg">
+            <div className="h-4 w-4 animate-spin rounded-full border-2 border-orange-400 border-t-transparent"></div>
+            Searching...
+          </div>
+        )}
+
+        <div className="h-[500px] overflow-y-auto rounded-xl border border-white/20">
+          <Table columns={columns} data={users?.appUsers || []} />
+        </div>
       </div>
 
       {!debouncedSearch && (
