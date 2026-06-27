@@ -17,6 +17,22 @@ export class AppUsersService {
   }
 
   /**
+   * Search app users.
+   * @param {string} query
+   * @returns {Promise<Object>}
+   */
+  static async searchAppUsers(query) {
+    const res = await axiosInstance.get(API_ENDPOINTS.ADMIN.APP_USER.SEARCH, {
+      params: { query },
+    });
+
+    return {
+      appUsers: res.data.data || [],
+      totalAppUsers: res.data.results || 0,
+    };
+  }
+
+  /**
    * Fetches an app user by its id from the API.
    * @param {string} id - The id of the app user to be fetched.
    * @returns {Promise<AppUser>} Resolves with the app user object.
