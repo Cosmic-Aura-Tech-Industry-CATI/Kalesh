@@ -86,6 +86,7 @@ export const API_ENDPOINTS = {
 
     APP_USER: {
       GET_ALL: "/admin-panel/app-users",
+      SEARCH: "/admin-panel/app-users/search",
       GET_BY_ID: (id) => `/admin-panel/app-users/${id}`,
       GET_BANNED_USERS: "/admin-panel/app-users/banned",
       BAN_USER: (id) => `/admin-panel/app-users/${id}/ban`,

@@ -17,6 +17,14 @@ export const useGetAllAppUsers = (params) => {
   });
 };
 
+export const useSearchAppUsers = (query) => {
+  return useQuery({
+    queryKey: ["search-app-users", query],
+    queryFn: () => AppUsersService.searchAppUsers(query),
+    enabled: !!query,
+  });
+};
+
 /**
  * A hook that fetches an application user by its id from the API.
  * It returns the result of the useQuery hook.

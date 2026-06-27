@@ -6,6 +6,7 @@ import Table from "../components/Table";
 import Button from "../components/Button";
 import {
   useGetAllAppUsers,
+  useSearchAppUsers,
   useBanUser,
   useWarnUser,
 } from "../../hooks/useAppUsers";
@@ -27,11 +28,16 @@ export default function Users() {
     return () => clearTimeout(timer);
   }, [search]);
 
-  const { data: users, isLoading } = useGetAllAppUsers({
+  const { data: allUsers, isLoading: allUsersLoading } = useGetAllAppUsers({
     page,
     limit: 30,
-    search: debouncedSearch,
   });
+
+  const { data: searchedUsers, isLoading: searchLoading } =
+    useSearchAppUsers(debouncedSearch);
+
+  const users = debouncedSearch ? searchedUsers : allUsers;
+  const isLoading = debouncedSearch ? searchLoading : allUsersLoading;
 
   const { mutate: warnUser } = useWarnUser();
   const { mutate: banUser } = useBanUser();
@@ -94,7 +100,9 @@ export default function Users() {
               ? "bg-green-500/20 text-green-400"
               : status === "warned"
                 ? "bg-yellow-500/20 text-yellow-400"
-                : "bg-red-500/20 text-red-400"
+                : status === "deleted"
+                  ? "bg-gray-500/20 text-gray-300"
+                  : "bg-red-500/20 text-red-400"
           }`}
         >
           {status}
@@ -136,23 +144,31 @@ export default function Users() {
             </Button>
           )}
 
-          <Button
-            size="sm"
-            variant="warning"
-            onClick={() => handleWarn(row._id)}
-          >
-            Warn
-          </Button>
+          {row.moderationStatus !== "deleted" && (
+            <>
+              <Button
+                size="sm"
+                variant="warning"
+                onClick={() => handleWarn(row._id)}
+              >
+                Warn
+              </Button>
 
-          <Button size="sm" variant="danger" onClick={() => handleBan(row._id)}>
-            Ban
-          </Button>
+              <Button
+                size="sm"
+                variant="danger"
+                onClick={() => handleBan(row._id)}
+              >
+                Ban
+              </Button>
+            </>
+          )}
         </div>
       ),
     },
   ];
 
-  const totalPages = Math.ceil((users?.totalAppUsers || 0) / 30);
+  const totalPages = Math.ceil((allUsers?.totalAppUsers || 0) / 30);
 
   return (
     <div className="admin-section">
@@ -204,22 +220,24 @@ export default function Users() {
         <Table columns={columns} data={users?.appUsers || []} />
       </div>
 
-      <div className="flex justify-center gap-3 mt-4">
-        <Button disabled={page === 1} onClick={() => setPage(page - 1)}>
-          Previous
-        </Button>
+      {!debouncedSearch && (
+        <div className="flex justify-center gap-3 mt-4">
+          <Button disabled={page === 1} onClick={() => setPage(page - 1)}>
+            Previous
+          </Button>
 
-        <span className="text-gray-400 flex items-center">
-          Page {page} of {totalPages}
-        </span>
+          <span className="text-gray-400 flex items-center">
+            Page {page} of {totalPages}
+          </span>
 
-        <Button
-          disabled={page === totalPages}
-          onClick={() => setPage(page + 1)}
-        >
-          Next
-        </Button>
-      </div>
+          <Button
+            disabled={page === totalPages}
+            onClick={() => setPage(page + 1)}
+          >
+            Next
+          </Button>
+        </div>
+      )}
     </div>
   );
 }
