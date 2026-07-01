@@ -20,22 +20,17 @@ export default function Premium() {
 
   const [isGrantModalOpen, setIsGrantModalOpen] = useState(false);
 
-  const [limits, setLimits] = useState([{ key: "", value: "" }]);
-
-  const handleLimitChange = (index, field, value) => {
-    const updated = [...limits];
-    updated[index][field] = value;
-    setLimits(updated);
+  const initialLimitsState = {
+    maxPollOptions: 0,
+    dailyPolls: 0,
+    messageRequests: 0,
+    chatWallPaper: 0,
+    selectRandomUsers: 0,
+    maxGroupMembers: 0,
+    allowGIF: 0,
   };
 
-  const addLimit = () => {
-    setLimits([...limits, { key: "", value: "" }]);
-  };
-
-  const removeLimit = (index) => {
-    const updated = limits.filter((_, i) => i !== index);
-    setLimits(updated);
-  };
+  const [limits, setLimits] = useState(initialLimitsState);
 
   const [grantData, setGrantData] = useState({
     user: "",
@@ -79,20 +74,19 @@ export default function Premium() {
   // ==========================
 
   const onSubmit = (data) => {
-    // ✅ KEY-VALUE → OBJECT CONVERT
-    const limitsObject = {};
-
-    limits.forEach((item) => {
-      if (item.key) {
-        limitsObject[item.key] = Number(item.value);
-      }
-    });
-
     const payload = {
       ...data,
       features: data.features.split(",").map((f) => f.trim()),
       durationInDays: Number(data.durationInDays),
-      limits: limitsObject,
+      limits: {
+        maxPollOptions: Number(limits.maxPollOptions || 0),
+        dailyPolls: Number(limits.dailyPolls || 0),
+        messageRequests: Number(limits.messageRequests || 0),
+        chatWallPaper: Number(limits.chatWallPaper || 0),
+        selectRandomUsers: Number(limits.selectRandomUsers || 0),
+        maxGroupMembers: Number(limits.maxGroupMembers || 0),
+        allowGIF: limits.allowGIF ? 1 : 0,
+      },
     };
 
     if (editingPlanId) {
@@ -102,8 +96,8 @@ export default function Premium() {
           onSuccess: () => {
             setIsCreateModal(false);
             setEditingPlanId(null);
-            reset();
-            setLimits([{ key: "", value: "" }]); // ✅ reset bhi
+            reset(); // form fields
+            setLimits(initialLimitsState); // limits state
           },
         },
       );
@@ -112,7 +106,7 @@ export default function Premium() {
         onSuccess: () => {
           setIsCreateModal(false);
           reset();
-          setLimits([{ key: "", value: "" }]); // ✅ reset bhi
+          setLimits(initialLimitsState);
         },
       });
     }
@@ -167,18 +161,12 @@ export default function Premium() {
     setValue("durationInDays", plan.durationInDays);
     setValue("features", plan.features ? plan.features.join(", ") : "");
     setIsCreateModal(true);
-
-    if (plan.limits) {
-      const formattedLimits = Object.entries(plan.limits).map(
-        ([key, value]) => ({
-          key,
-          value,
-        }),
-      );
-      setLimits(formattedLimits);
-    } else {
-      setLimits([{ key: "", value: "" }]);
-    }
+ 
+    setLimits({
+      ...initialLimitsState,
+      ...plan.limits,
+      allowGIF: plan.limits?.allowGIF === 1,
+    });
   };
 
   // ==========================
@@ -373,8 +361,8 @@ export default function Premium() {
         onClose={() => {
           setIsCreateModal(false);
           setEditingPlanId(null);
-          reset();
-          setLimits([{ key: "", value: "" }]);
+          reset(); // form fields
+          setLimits(initialLimitsState); // limits state
         }}
         title={editingPlanId ? "Edit Plan" : "Create Plan"}
       >
@@ -437,52 +425,95 @@ export default function Premium() {
           </div>
 
           <div>
-            <label className="admin-form-label">Limits</label>
-
-            <div className="space-y-2">
-              {limits.map((item, index) => (
-                <div key={index} className="flex gap-2 items-center">
-                  {/* KEY */}
-                  <input
-                    placeholder="Limit Key"
-                    className="admin-form-input"
-                    value={item.key}
-                    onChange={(e) =>
-                      handleLimitChange(index, "key", e.target.value)
-                    }
-                  />
-
-                  {/* VALUE */}
-                  <input
-                    type="number"
-                    placeholder="Value"
-                    className="admin-form-input"
-                    value={item.value}
-                    onChange={(e) =>
-                      handleLimitChange(index, "value", e.target.value)
-                    }
-                  />
-
-                  {/* REMOVE */}
-                  <button
-                    type="button"
-                    onClick={() => removeLimit(index)}
-                    className="text-red-400"
-                  >
-                    ✕
-                  </button>
-                </div>
-              ))}
+            <label className="admin-form-label mb-2">Limits</label>
+            <div className="grid grid-cols-2 gap-4">
+              <div>
+                <label className="admin-form-label text-xs">Max Poll Options</label>
+                <input
+                  type="number"
+                  placeholder="Max Poll Options"
+                  className="admin-form-input"
+                  value={limits.maxPollOptions}
+                  onChange={(e) =>
+                    setLimits({ ...limits, maxPollOptions: e.target.value })
+                  }
+                />
+              </div>
+              <div>
+                <label className="admin-form-label text-xs">Daily Polls</label>
+                <input
+                  type="number"
+                  placeholder="Daily Polls"
+                  className="admin-form-input"
+                  value={limits.dailyPolls}
+                  onChange={(e) =>
+                    setLimits({ ...limits, dailyPolls: e.target.value })
+                  }
+                />
+              </div>
+              <div>
+                <label className="admin-form-label text-xs">Message Requests</label>
+                <input
+                  type="number"
+                  placeholder="Message Requests"
+                  className="admin-form-input"
+                  value={limits.messageRequests}
+                  onChange={(e) =>
+                    setLimits({ ...limits, messageRequests: e.target.value })
+                  }
+                />
+              </div>
+              <div>
+                <label className="admin-form-label text-xs">Chat Wallpaper</label>
+                <input
+                  type="number"
+                  placeholder="Chat Wallpaper"
+                  className="admin-form-input"
+                  value={limits.chatWallPaper}
+                  onChange={(e) =>
+                    setLimits({ ...limits, chatWallPaper: e.target.value })
+                  }
+                />
+              </div>
+              <div>
+                <label className="admin-form-label text-xs">Select Random Users</label>
+                <input
+                  type="number"
+                  placeholder="Select Random Users"
+                  className="admin-form-input"
+                  value={limits.selectRandomUsers}
+                  onChange={(e) =>
+                    setLimits({ ...limits, selectRandomUsers: e.target.value })
+                  }
+                />
+              </div>
+              <div>
+                <label className="admin-form-label text-xs">Max Group Members</label>
+                <input
+                  type="number"
+                  placeholder="Max Group Members"
+                  className="admin-form-input"
+                  value={limits.maxGroupMembers}
+                  onChange={(e) =>
+                    setLimits({ ...limits, maxGroupMembers: e.target.value })
+                  }
+                />
+              </div>
+              <div className="col-span-2 flex items-center gap-2">
+                <input
+                  type="checkbox"
+                  id="allowGIF"
+                  className="w-4 h-4"
+                  checked={limits.allowGIF}
+                  onChange={(e) =>
+                    setLimits({ ...limits, allowGIF: e.target.checked })
+                  }
+                />
+                <label htmlFor="allowGIF" className="text-sm text-gray-300">
+                  Allow GIF
+                </label>
+              </div>
             </div>
-
-            {/* ADD BUTTON */}
-            <button
-              type="button"
-              onClick={addLimit}
-              className="mt-2 text-sm text-[#ff6a00]"
-            >
-              + Add Limit
-            </button>
           </div>
 
           <div>
