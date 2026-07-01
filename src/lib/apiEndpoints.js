@@ -86,6 +86,7 @@ export const API_ENDPOINTS = {
 
     APP_USER: {
       GET_ALL: "/admin-panel/app-users",
+      SEARCH: "/admin-panel/app-users/search",
       GET_BY_ID: (id) => `/admin-panel/app-users/${id}`,
       GET_BANNED_USERS: "/admin-panel/app-users/banned",
       BAN_USER: (id) => `/admin-panel/app-users/${id}/ban`,
@@ -110,6 +111,15 @@ export const API_ENDPOINTS = {
 
     DASHBOARD: {
       GET_STATS: "/admin-panel/dashboard/stats",
+    },
+
+    WALLPAPERS: {
+      GET_ALL: "/admin-panel/chat-wallpaper",
+      CREATE: "/admin-panel/chat-wallpaper",
+      UPDATE_BY_ID: (id) => `/admin-panel/chat-wallpaper/${id}`,
+      DELETE_BY_ID: (id) => `/admin-panel/chat-wallpaper/${id}/delete`,
+      UPDATE_PRICE_BY_ID: (id) => `/admin-panel/chat-wallpaper/${id}/price`,
+      SET_DEFAULT_BY_ID: (id) => `/admin-panel/chat-wallpaper/${id}/default`,
     }
   },
 };
