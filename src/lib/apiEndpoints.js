@@ -4,7 +4,7 @@ export const API_ENDPOINTS = {
     VERIFY_OTP: "/auth/verify-otp",
     FORGET_PASSWORD: "/auth/forget-password",
     RESET_PASSWORD: "/auth/reset-password",
-    CHANGE_PASSWORD: "/auth/change-password"
+    CHANGE_PASSWORD: "/auth/change-password",
   },
 
   APPLICATION: {
@@ -38,7 +38,7 @@ export const API_ENDPOINTS = {
     DELETE_BY_SLUG: (slug) => `/blogs/${slug}`,
     SHARE_BY_SLUG: (slug) => `/blogs/${slug}/share`,
   },
-  
+
   JOBS: {
     GET_ALL: "/jobs",
     GET_ADMIN: "/jobs/admin",
@@ -93,7 +93,7 @@ export const API_ENDPOINTS = {
       UNBAN_USER: (id) => `/admin-panel/app-users/${id}/unban`,
       WARN_USER: (id) => `/admin-panel/app-users/${id}/warn`,
     },
-    
+
     CONTEST: {
       GET_ALL: "/admin-panel/contests",
       CREATE: "/admin-panel/contests",
@@ -101,12 +101,12 @@ export const API_ENDPOINTS = {
       UPDATE_BY_ID: (id) => `/admin-panel/contests/${id}`,
       DELETE_BY_ID: (id) => `/admin-panel/contests/${id}`,
     },
-    
+
     HIGHLIGHTS: {
       GET_ALL: "/admin-panel/highlights",
       CREATE: "/admin-panel/highlights",
       UPDATE_BY_ID: (id) => `/admin-panel/highlights/${id}`,
-      DELETE_BY_ID: (id) => `/admin-panel/highlights/${id}`, 
+      DELETE_BY_ID: (id) => `/admin-panel/highlights/${id}`,
     },
 
     DASHBOARD: {
@@ -120,6 +120,21 @@ export const API_ENDPOINTS = {
       DELETE_BY_ID: (id) => `/admin-panel/chat-wallpaper/${id}/delete`,
       UPDATE_PRICE_BY_ID: (id) => `/admin-panel/chat-wallpaper/${id}/price`,
       SET_DEFAULT_BY_ID: (id) => `/admin-panel/chat-wallpaper/${id}/default`,
-    }
+    },
+
+    APP_PAGES: {
+      GET_ALL: "/admin-panel/app-pages",
+
+      GET_BY_CATEGORY: (category) =>
+        `/admin-panel/app-pages/category/${category}`,
+
+      GET_BY_ID: (id) => `/admin-panel/app-pages/${id}`,
+
+      CREATE: "/admin-panel/app-pages",
+
+      UPDATE: (id) => `/admin-panel/app-pages/${id}`,
+
+      DELETE: (id) => `/admin-panel/app-pages/${id}`,
+    },
   },
 };

@@ -39,6 +39,7 @@ import AdminContestDetails from "./admin/pages/AdminContestDetails";
 import JobDetails from "./pages/JobDetails";
 import Highlights from "./admin/pages/Highlights";
 import Wallpapers from "./admin/pages/Wallpapers";
+import CMSManagement from "./admin/pages/CMSManagement";
 
 // LAZY PUBLIC PAGES
 const Home = lazy(() => import("./pages/Home"));
@@ -127,6 +128,8 @@ function MainRoutes() {
               <Route path="highlights" element={<Highlights />} />
 
               <Route path="wallpapers" element={<Wallpapers />} />
+
+              <Route path="cms" element={<CMSManagement />} />
 
               <Route path="blog" element={<AdminBlog />} />
 
