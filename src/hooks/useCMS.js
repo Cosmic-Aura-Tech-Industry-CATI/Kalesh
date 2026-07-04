@@ -1,23 +1,21 @@
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { CMSService } from "../services/cms.service";
 
-/* ==========================================
-   GET ALL PAGES
-========================================== */
+//======================================
+// GET ALL PAGES
+//======================================
 
-export const useGetAllPages = (params = {}) => {
+export const useGetAllPages = () => {
   return useQuery({
-    queryKey: ["cms-pages", params],
+    queryKey: ["cms-pages"],
 
-    queryFn: () => CMSService.getAllPages(params),
-
-    staleTime: 1000 * 60 * 5,
+    queryFn: () => CMSService.getAllPages(),
   });
 };
 
-/* ==========================================
-   GET PAGE BY CATEGORY
-========================================== */
+//======================================
+// GET PAGE BY CATEGORY
+//======================================
 
 export const useGetPageByCategory = (category) => {
   return useQuery({
@@ -29,41 +27,31 @@ export const useGetPageByCategory = (category) => {
   });
 };
 
-/* ==========================================
-   GET PAGE BY ID
-========================================== */
-
-export const useGetPageById = (id) => {
-  return useQuery({
-    queryKey: ["cms-page-id", id],
-
-    queryFn: () => CMSService.getPageById(id),
-
-    enabled: !!id,
-  });
-};
-
-/* ==========================================
-   CREATE PAGE
-========================================== */
+//======================================
+// CREATE PAGE
+//======================================
 
 export const useCreatePage = () => {
   const queryClient = useQueryClient();
 
   return useMutation({
-    mutationFn: (data) => CMSService.createPage(data),
+    mutationFn: (payload) => CMSService.createPage(payload),
 
-    onSuccess: () => {
+    onSuccess: (_, variables) => {
       queryClient.invalidateQueries({
         queryKey: ["cms-pages"],
+      });
+
+      queryClient.invalidateQueries({
+        queryKey: ["cms-page", variables.category],
       });
     },
   });
 };
 
-/* ==========================================
-   UPDATE PAGE
-========================================== */
+//======================================
+// UPDATE PAGE
+//======================================
 
 export const useUpdatePage = () => {
   const queryClient = useQueryClient();
@@ -79,17 +67,13 @@ export const useUpdatePage = () => {
       queryClient.invalidateQueries({
         queryKey: ["cms-page", variables.data.category],
       });
-
-      queryClient.invalidateQueries({
-        queryKey: ["cms-page-id", variables.id],
-      });
     },
   });
 };
 
-/* ==========================================
-   DELETE PAGE
-========================================== */
+//======================================
+// DELETE PAGE
+//======================================
 
 export const useDeletePage = () => {
   const queryClient = useQueryClient();
