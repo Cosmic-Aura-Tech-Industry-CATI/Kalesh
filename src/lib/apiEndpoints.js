@@ -136,5 +136,15 @@ export const API_ENDPOINTS = {
 
       DELETE: (id) => `/admin-panel/app-pages/${id}`,
     },
+
+    INTEREST: {
+      GET_ALL: "/admin/interests",
+
+      CREATE: "/admin/interests",
+
+      UPDATE: (id) => `/admin/interests/${id}`,
+
+      DELETE: (id) => `/admin/interests/${id}`,
+    },
   },
 };
