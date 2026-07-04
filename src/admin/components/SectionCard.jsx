@@ -1,5 +1,8 @@
-import { Type, AlignLeft } from "lucide-react";
+import { Type, Heading, AlignLeft } from "lucide-react";
 
+import ParagraphEditor from "./ParagraphEditor";
+import BulletEditor from "./BulletEditor";
+import RichBulletEditor from "./RichBulletEditor";
 import SectionToolbar from "./SectionToolbar";
 
 const SECTION_TYPES = [
@@ -22,7 +25,7 @@ export default function SectionCard({
   index,
   totalSections,
 
-  onChange,
+  onUpdate,
 
   onDelete,
   onDuplicate,
@@ -30,39 +33,122 @@ export default function SectionCard({
   onMoveUp,
   onMoveDown,
 }) {
-  //---------------------------------
-  // HANDLE CHANGE
-  //---------------------------------
+  //--------------------------------------
+  // INPUT CHANGE
+  //--------------------------------------
 
   const handleInput = (e) => {
     const { name, value } = e.target;
 
-    onChange(section.id, name, value);
+    if (name === "type") {
+      let defaultContent = "";
+
+      switch (value) {
+        case "paragraph":
+          defaultContent = "";
+
+          break;
+
+        case "bullet_list":
+          defaultContent = [""];
+
+          break;
+
+        case "rich_bullet_list":
+          defaultContent = [
+            {
+              title: "",
+              description: "",
+            },
+          ];
+
+          break;
+
+        default:
+          defaultContent = "";
+      }
+
+      onUpdate(section.id, "type", value);
+
+      onUpdate(section.id, "content", defaultContent);
+
+      return;
+    }
+
+    onUpdate(section.id, name, value);
+  };
+
+  //--------------------------------------
+  // CONTENT CHANGE
+  //--------------------------------------
+
+  const handleContentChange = (value) => {
+    onUpdate(section.id, "content", value);
   };
 
   return (
     <div className="cms-section-card">
-      {/* ========================= */}
+      {/*====================================*/}
       {/* TOOLBAR */}
-      {/* ========================= */}
+      {/*====================================*/}
 
       <SectionToolbar
-        index={index}
+        sectionNumber={index + 1}
         totalSections={totalSections}
+        isFirst={index === 0}
+        isLast={index === totalSections - 1}
         onDelete={() => onDelete(section.id)}
         onDuplicate={() => onDuplicate(section.id)}
         onMoveUp={() => onMoveUp(section.id)}
         onMoveDown={() => onMoveDown(section.id)}
       />
 
-      {/* ========================= */}
-      {/* TYPE */}
-      {/* ========================= */}
+      {/*====================================*/}
+      {/* HEADING */}
+      {/*====================================*/}
 
       <div className="cms-group">
         <label>
-          <Type size={15} />
-          Section Type
+          <Heading size={16} />
+          Heading
+        </label>
+
+        <input
+          type="text"
+          name="heading"
+          placeholder="Enter section heading"
+          value={section.heading}
+          onChange={handleInput}
+        />
+      </div>
+
+      {/*====================================*/}
+      {/* INTRO */}
+      {/*====================================*/}
+
+      <div className="cms-group mt-5">
+        <label>
+          <AlignLeft size={16} />
+          Intro Text
+        </label>
+
+        <textarea
+          rows={4}
+          name="introText"
+          placeholder="Enter intro text"
+          value={section.introText}
+          onChange={handleInput}
+        />
+      </div>
+
+      {/*====================================*/}
+      {/* TYPE */}
+      {/*====================================*/}
+
+      <div className="cms-group mt-5">
+        <label>
+          <Type size={16} />
+          Content Type
         </label>
 
         <select name="type" value={section.type} onChange={handleInput}>
@@ -74,71 +160,51 @@ export default function SectionCard({
         </select>
       </div>
 
-      {/* ========================= */}
-      {/* HEADING */}
-      {/* ========================= */}
+      {/*====================================*/}
+      {/* DYNAMIC EDITOR */}
+      {/*====================================*/}
 
-      <div className="cms-group mt-5">
-        <label>
-          <Type size={15} />
-          Heading
-        </label>
+      <div className="cms-editor-area">
+        {/* ==================================== */}
+        {/* PARAGRAPH */}
+        {/* ==================================== */}
 
-        <input
-          type="text"
-          name="heading"
-          value={section.heading}
-          onChange={handleInput}
-          placeholder="Enter section heading"
-        />
-      </div>
-
-      {/* ========================= */}
-      {/* INTRO */}
-      {/* ========================= */}
-
-      <div className="cms-group mt-5">
-        <label>
-          <AlignLeft size={15} />
-          Intro Text
-        </label>
-
-        <textarea
-          rows={3}
-          name="introText"
-          value={section.introText}
-          onChange={handleInput}
-          placeholder="Enter short introduction..."
-        />
-      </div>
-
-      {/* ========================= */}
-      {/* CONTENT PLACEHOLDER */}
-      {/* ========================= */}
-
-      <div className="cms-editor-placeholder">
         {section.type === "paragraph" && (
-          <div>
-            <h4>Paragraph Editor</h4>
-
-            <p>Next Part me paragraph editor yaha render hoga.</p>
-          </div>
+          <ParagraphEditor
+            value={typeof section.content === "string" ? section.content : ""}
+            onChange={handleContentChange}
+          />
         )}
+
+        {/* ==================================== */}
+        {/* BULLET LIST */}
+        {/* ==================================== */}
 
         {section.type === "bullet_list" && (
-          <div>
-            <h4>Bullet List Editor</h4>
-
-            <p>Next Part me bullet list editor yaha render hoga.</p>
-          </div>
+          <BulletEditor
+            value={Array.isArray(section.content) ? section.content : [""]}
+            onChange={handleContentChange}
+          />
         )}
 
-        {section.type === "rich_bullet_list" && (
-          <div>
-            <h4>Rich Bullet List Editor</h4>
+        {/* ==================================== */}
+        {/* RICH BULLET */}
+        {/* ==================================== */}
 
-            <p>Next Part me rich bullet editor yaha render hoga.</p>
-          </div>
+        {section.type === "rich_bullet_list" && (
+          <RichBulletEditor
+            value={
+              Array.isArray(section.content)
+                ? section.content
+                : [
+                    {
+                      title: "",
+                      description: "",
+                    },
+                  ]
+            }
+            onChange={handleContentChange}
+          />
         )}
       </div>
     </div>

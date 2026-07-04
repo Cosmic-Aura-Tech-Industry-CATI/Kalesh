@@ -1,9 +1,9 @@
 import { useEffect, useState } from "react";
 import { Save, Plus } from "lucide-react";
+import toast from "react-hot-toast";
 
 import Button from "../components/Button";
-import ContentBlock from "../components/ContentBlock";
-import AddBlockMenu from "../components/AddBlockMenu";
+import SectionCard from "../components/SectionCard";
 
 import "../style/cmsManagement.css";
 
@@ -20,13 +20,13 @@ const PAGE_CATEGORIES = [
   },
   {
     label: "Terms & Conditions",
-    value: "terms_conditions",
+    value: "terms_and_conditions",
   },
 ];
 
 export default function CMSManagement() {
   //--------------------------------------
-  // PAGE
+  // PAGE DATA
   //--------------------------------------
 
   const [pageData, setPageData] = useState({
@@ -35,31 +35,27 @@ export default function CMSManagement() {
   });
 
   //--------------------------------------
-  // BLOCKS
+  // SECTIONS
   //--------------------------------------
 
-  const [blocks, setBlocks] = useState([]);
+  const [sections, setSections] = useState([]);
 
   //--------------------------------------
-  // BLOCK MENU
+  // API HOOKS
   //--------------------------------------
 
-  const [showBlockMenu, setShowBlockMenu] = useState(false);
-
-  //--------------------------------------
-  // API
-  //--------------------------------------
-
-  const { data: pageResponse, isLoading } = useGetPageByCategory(
-    pageData.category,
-  );
+  const {
+    data: pageResponse,
+    isLoading,
+    refetch,
+  } = useGetPageByCategory(pageData.category);
 
   const { mutate: createPage, isPending: creating } = useCreatePage();
 
   const { mutate: updatePage, isPending: updating } = useUpdatePage();
 
   //--------------------------------------
-  // HANDLE PAGE INPUT
+  // PAGE INPUT
   //--------------------------------------
 
   const handlePageChange = (e) => {
@@ -72,6 +68,22 @@ export default function CMSManagement() {
   };
 
   //--------------------------------------
+  // SECTION TEMPLATE
+  //--------------------------------------
+
+  const createEmptySection = () => ({
+    id: Date.now() + Math.random(),
+
+    heading: "",
+
+    introText: "",
+
+    type: "paragraph",
+
+    content: "",
+  });
+
+  //--------------------------------------
   // LOAD PAGE
   //--------------------------------------
 
@@ -80,83 +92,109 @@ export default function CMSManagement() {
 
     const page = pageResponse.data || pageResponse.page || pageResponse;
 
-    if (!page) return;
+    if (!page) {
+      setSections([]);
+      return;
+    }
 
     setPageData({
       category: page.category || "",
-
       title: page.title || "",
     });
 
-    if (page.blocks?.length) {
-      setBlocks(
-        page.blocks.map((block) => ({
-          id: crypto.randomUUID(),
-
-          type: block.type,
-
-          content: block.content,
-        })),
-      );
-    } else if (page.sections) {
-      // Backward compatibility
-      const converted = [];
-
-      page.sections.forEach((item) => {
-        if (item.heading) {
-          converted.push({
-            id: Date.now() + Math.random(),
-
-            type: "heading",
-
-            content: item.heading,
-          });
-        }
-
-        if (item.introText) {
-          converted.push({
-            id: Date.now() + Math.random(),
-
-            type: "intro",
-
-            content: item.introText,
-          });
-        }
-
-        if (item.type === "paragraph") {
-          converted.push({
-            id: Date.now() + Math.random(),
-
-            type: "paragraph",
-
-            content: item.content,
-          });
-        }
-
-        if (item.type === "bullet_list") {
-          converted.push({
-            id: Date.now() + Math.random(),
-
-            type: "bullet_list",
-
-            content: item.content,
-          });
-        }
-
-        if (item.type === "rich_bullet_list") {
-          converted.push({
-            id: Date.now() + Math.random(),
-
-            type: "rich_bullet_list",
-
-            content: item.content,
-          });
-        }
-      });
-
-      setBlocks(converted);
-    }
+    setSections(
+      (page.sections || []).map((section) => ({
+        id: Date.now() + Math.random(),
+        heading: section.heading || "",
+        introText: section.introText || "",
+        type: section.type || "paragraph",
+        content:
+          section.content ??
+          (section.type === "bullet_list"
+            ? [""]
+            : section.type === "rich_bullet_list"
+              ? [
+                  {
+                    title: "",
+                    description: "",
+                  },
+                ]
+              : ""),
+      })),
+    );
   }, [pageResponse]);
+
+  //--------------------------------------
+  // SAVE PAGE
+  //--------------------------------------
+
+  const handleSave = () => {
+    if (!pageData.category) {
+      toast.error("Please select page category.");
+      return;
+    }
+
+    if (!pageData.title.trim()) {
+      toast.error("Please enter page title.");
+      return;
+    }
+
+    if (sections.length === 0) {
+      toast.error("Please add at least one section.");
+      return;
+    }
+
+    const payload = {
+      title: pageData.title.trim(),
+
+      category: pageData.category,
+
+      sections: sections.map((section) => ({
+        heading: section.heading.trim(),
+
+        introText: section.introText.trim(),
+
+        type: section.type,
+
+        content: section.content,
+      })),
+    };
+
+    const existingPage =
+      pageResponse?.data || pageResponse?.page || pageResponse;
+
+    if (existingPage?._id) {
+      updatePage(
+        {
+          id: existingPage._id,
+          data: payload,
+        },
+        {
+          onSuccess: () => {
+            toast.success("Page updated successfully.");
+            refetch();
+          },
+          onError: (error) => {
+            toast.error(
+              error?.response?.data?.message || "Unable to update page.",
+            );
+          },
+        },
+      );
+
+      return;
+    }
+
+    createPage(payload, {
+      onSuccess: () => {
+        toast.success("Page created successfully.");
+        refetch();
+      },
+      onError: (error) => {
+        toast.error(error?.response?.data?.message || "Unable to create page.");
+      },
+    });
+  };
 
   //--------------------------------------
   // ADD BLOCK
@@ -290,62 +328,174 @@ export default function CMSManagement() {
   };
 
   //--------------------------------------
-  // SAVE PAGE
+  // CONVERT BLOCKS TO SECTIONS
   //--------------------------------------
 
-  const handleSave = () => {
-    if (!pageData.category) {
-      alert("Please select category.");
+  const convertBlocksToSections = () => {
+    const sections = [];
 
-      return;
+    let currentSection = null;
+
+    blocks.forEach((block) => {
+      if (block.type === "heading") {
+        if (currentSection) {
+          sections.push(currentSection);
+        }
+
+        currentSection = {
+          heading: block.content,
+          introText: "",
+          type: "paragraph",
+          content: "",
+        };
+
+        return;
+      }
+
+      if (!currentSection) {
+        currentSection = {
+          heading: "",
+          introText: "",
+          type: "paragraph",
+          content: "",
+        };
+      }
+
+      if (block.type === "intro") {
+        currentSection.introText = block.content;
+      }
+
+      if (block.type === "paragraph") {
+        currentSection.type = "paragraph";
+        currentSection.content = block.content;
+      }
+
+      if (block.type === "bullet_list") {
+        currentSection.type = "bullet_list";
+        currentSection.content = block.content;
+      }
+
+      if (block.type === "rich_bullet_list") {
+        currentSection.type = "rich_bullet_list";
+        currentSection.content = block.content;
+      }
+    });
+
+    if (currentSection) {
+      sections.push(currentSection);
     }
 
-    if (!pageData.title.trim()) {
-      alert("Please enter title.");
+    return sections;
+  };
 
-      return;
-    }
+  //--------------------------------------
+  // ADD SECTION
+  //--------------------------------------
 
-    const payload = {
-      title: pageData.title,
+  const addSection = () => {
+    setSections((prev) => [...prev, createEmptySection()]);
+  };
 
-      slug: pageData.title
-        .toLowerCase()
-        .trim()
-        .replace(/\s+/g, "-")
-        .replace(/[^\w-]+/g, ""),
+  //--------------------------------------
+  // DELETE SECTION
+  //--------------------------------------
 
-      category: pageData.category,
+  const deleteSection = (id) => {
+    setSections((prev) => prev.filter((section) => section.id !== id));
+  };
 
-      blocks: blocks.map((block) => ({
-        type: block.type,
+  //--------------------------------------
+  // DUPLICATE SECTION
+  //--------------------------------------
 
-        content: block.content,
-      })),
-    };
+  const duplicateSection = (id) => {
+    setSections((prev) => {
+      const index = prev.findIndex((item) => item.id === id);
 
-    const existingPage =
-      pageResponse?.data || pageResponse?.page || pageResponse;
+      if (index === -1) return prev;
 
-    if (existingPage?._id) {
-      updatePage(
-        {
-          id: existingPage._id,
-          data: payload,
-        },
-        {
-          onSuccess: () => {
-            alert("Page Updated Successfully");
-          },
-        },
-      );
-    } else {
-      createPage(payload, {
-        onSuccess: () => {
-          alert("Page Created Successfully");
-        },
-      });
-    }
+      const duplicate = {
+        ...prev[index],
+
+        id: Date.now() + Math.random(),
+
+        heading: `${prev[index].heading}`,
+
+        introText: `${prev[index].introText}`,
+
+        content: Array.isArray(prev[index].content)
+          ? JSON.parse(JSON.stringify(prev[index].content))
+          : prev[index].content,
+      };
+
+      const updated = [...prev];
+
+      updated.splice(index + 1, 0, duplicate);
+
+      return updated;
+    });
+  };
+
+  //--------------------------------------
+  // MOVE SECTION UP
+  //--------------------------------------
+
+  const moveSectionUp = (id) => {
+    setSections((prev) => {
+      const updated = [...prev];
+
+      const index = updated.findIndex((item) => item.id === id);
+
+      if (index <= 0) return prev;
+
+      [updated[index - 1], updated[index]] = [
+        updated[index],
+        updated[index - 1],
+      ];
+
+      return updated;
+    });
+  };
+
+  //--------------------------------------
+  // MOVE SECTION DOWN
+  //--------------------------------------
+
+  const moveSectionDown = (id) => {
+    setSections((prev) => {
+      const updated = [...prev];
+
+      const index = updated.findIndex((item) => item.id === id);
+
+      if (index === -1 || index === updated.length - 1) {
+        return prev;
+      }
+
+      [updated[index], updated[index + 1]] = [
+        updated[index + 1],
+        updated[index],
+      ];
+
+      return updated;
+    });
+  };
+
+  //--------------------------------------
+  // UPDATE SECTION
+  //--------------------------------------
+
+  const updateSection = (id, field, value) => {
+    setSections((prev) =>
+      prev.map((section) => {
+        if (section.id !== id) return section;
+
+        return {
+          ...section,
+
+          [field]: value,
+        };
+      }),
+    );
   };
 
   //--------------------------------------
@@ -362,13 +512,13 @@ export default function CMSManagement() {
 
   return (
     <div className="cms-page">
-      {/* ================= HEADER ================= */}
+      {/* ========================= HEADER ========================= */}
 
       <div className="cms-header">
         <div>
           <h1>CMS Management</h1>
 
-          <p>Manage Privacy Policy & Terms and Conditions pages.</p>
+          <p>Manage Privacy Policy & Terms & Conditions Pages</p>
         </div>
 
         <Button onClick={handleSave} disabled={creating || updating}>
@@ -380,7 +530,7 @@ export default function CMSManagement() {
         </Button>
       </div>
 
-      {/* ================= PAGE DETAILS ================= */}
+      {/* ========================= PAGE DETAILS ========================= */}
 
       <div className="cms-card">
         <h2>Page Details</h2>
@@ -414,7 +564,7 @@ export default function CMSManagement() {
             <input
               type="text"
               name="title"
-              placeholder="Enter page title"
+              placeholder="Enter Page Title"
               value={pageData.title}
               onChange={handlePageChange}
             />
@@ -422,51 +572,44 @@ export default function CMSManagement() {
         </div>
       </div>
 
-      {/* ================= CONTENT ================= */}
+      {/* ========================= SECTIONS ========================= */}
 
       <div className="cms-card">
         <div className="cms-section-header">
-          <h2>Content Blocks</h2>
+          <h2>Sections</h2>
 
-          <div className="cms-actions">
-            <Button onClick={() => setShowBlockMenu(true)}>
-              <div className="cms-btn">
-                <Plus size={18} />
-                Add Block
-              </div>
-            </Button>
-          </div>
+          <Button onClick={addSection}>
+            <div className="cms-btn">
+              <Plus size={18} />
+              Add Section
+            </div>
+          </Button>
         </div>
 
-        {blocks.length === 0 ? (
+        {sections.length === 0 ? (
           <div className="cms-empty">
-            No content added yet.
-            <br />
-            Use the buttons above to start building the page.
+            <h3>No Sections Added</h3>
+
+            <p>Click "Add Section" to create your first content section.</p>
           </div>
         ) : (
           <div className="cms-sections">
-            {blocks.map((block, index) => (
-              <ContentBlock
-                key={block.id}
-                block={block}
+            {sections.map((section, index) => (
+              <SectionCard
+                key={section.id}
+                section={section}
                 index={index}
-                totalBlocks={blocks.length}
-                onUpdate={updateBlock}
-                onDelete={deleteBlock}
-                onDuplicate={duplicateBlock}
-                onMoveUp={moveBlockUp}
-                onMoveDown={moveBlockDown}
+                totalSections={sections.length}
+                onUpdate={updateSection}
+                onDelete={deleteSection}
+                onDuplicate={duplicateSection}
+                onMoveUp={moveSectionUp}
+                onMoveDown={moveSectionDown}
               />
             ))}
           </div>
         )}
       </div>
-      <AddBlockMenu
-        open={showBlockMenu}
-        onClose={() => setShowBlockMenu(false)}
-        onSelect={addBlock}
-      />
     </div>
   );
 }

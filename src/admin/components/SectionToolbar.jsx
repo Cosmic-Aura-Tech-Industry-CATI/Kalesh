@@ -1,53 +1,63 @@
 import {
-  Type,
-  List,
-  ListOrdered,
   Trash2,
+  Copy,
   ChevronUp,
   ChevronDown,
-  Copy,
+  LayoutPanelTop,
 } from "lucide-react";
 
 export default function SectionToolbar({
-  index,
+  sectionNumber,
   totalSections,
+
+  isFirst,
+  isLast,
+
+  onDelete,
+  onDuplicate,
+
   onMoveUp,
   onMoveDown,
-  onDuplicate,
-  onDelete,
 }) {
   return (
     <div className="section-toolbar">
+      {/* LEFT */}
+
       <div className="section-toolbar-left">
-        <div className="section-number">Section {index + 1}</div>
+        <div className="section-badge">
+          <LayoutPanelTop size={16} />
+          Section {sectionNumber}
+        </div>
       </div>
 
+      {/* RIGHT */}
+
       <div className="section-toolbar-right">
-        {/* Move Up */}
+        {/* MOVE UP */}
 
         <button
           type="button"
           className="toolbar-btn"
+          disabled={isFirst}
           onClick={onMoveUp}
-          disabled={index === 0}
           title="Move Up"
         >
-          <ChevronUp size={16} />
+          <ChevronUp size={18} />
         </button>
 
-        {/* Move Down */}
+        {/* MOVE DOWN */}
 
         <button
           type="button"
           className="toolbar-btn"
+          disabled={isLast}
           onClick={onMoveDown}
-          disabled={index === totalSections - 1}
           title="Move Down"
         >
-          <ChevronDown size={16} />
+          <ChevronDown size={18} />
         </button>
 
-        {/* Duplicate */}
+        {/* DUPLICATE */}
 
         <button
           type="button"
@@ -55,18 +65,18 @@ export default function SectionToolbar({
           onClick={onDuplicate}
           title="Duplicate"
         >
-          <Copy size={16} />
+          <Copy size={18} />
         </button>
 
-        {/* Delete */}
+        {/* DELETE */}
 
         <button
           type="button"
-          className="toolbar-btn toolbar-danger"
+          className="toolbar-btn danger"
           onClick={onDelete}
           title="Delete"
         >
-          <Trash2 size={16} />
+          <Trash2 size={18} />
         </button>
       </div>
     </div>
