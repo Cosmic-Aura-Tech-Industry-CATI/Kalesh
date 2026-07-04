@@ -5,12 +5,9 @@ export class InterestService {
   /**
    * Get all interests
    */
-  static async getAllInterests(params = {}) {
+  static async getAllInterests() {
     const res = await axiosInstance.get(
       API_ENDPOINTS.ADMIN.INTEREST.GET_ALL,
-      {
-        params,
-      }
     );
 
     return res.data;

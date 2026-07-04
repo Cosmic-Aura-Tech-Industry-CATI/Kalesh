@@ -13,10 +13,7 @@ export default function InterestTable({
   if (!loading && interests.length === 0) {
     return (
       <div className="interest-empty-state">
-        <img src="/empty.svg" width={140} />
-
         <h3>No Interests Yet</h3>
-
         <p>Click on "Add Interest" to create your first interest.</p>
       </div>
     );

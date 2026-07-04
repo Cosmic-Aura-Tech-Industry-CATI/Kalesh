@@ -4,10 +4,10 @@ import { InterestService } from "../services/InterestService";
 /**
  * Get All Interests
  */
-export const useGetInterests = (params = {}) => {
+export const useGetInterests = () => {
   return useQuery({
-    queryKey: ["interests", params],
-    queryFn: () => InterestService.getAllInterests(params),
+    queryKey: ["interests"],
+    queryFn: () => InterestService.getAllInterests(),
     keepPreviousData: true,
   });
 };

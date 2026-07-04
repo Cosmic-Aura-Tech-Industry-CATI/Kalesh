@@ -32,6 +32,8 @@ export default function CMSManagement() {
   const [pageData, setPageData] = useState({
     category: "",
     title: "",
+    isSystemPage: false,
+    isProtected: false,
   });
 
   //--------------------------------------
@@ -64,6 +66,8 @@ export default function CMSManagement() {
     setPageData((prev) => ({
       ...prev,
       [name]: value,
+      ...(e.target.type === "checkbox" && {
+        [name]: e.target.checked }),
     }));
   };
 
@@ -100,6 +104,8 @@ export default function CMSManagement() {
     setPageData({
       category: page.category || "",
       title: page.title || "",
+      isProtected: page.isProtected || false,
+      isSystemPage: page.isSystemPage || false,
     });
 
     setSections(
@@ -148,6 +154,8 @@ export default function CMSManagement() {
       title: pageData.title.trim(),
 
       category: pageData.category,
+      isProtected: pageData.isProtected,
+      isSystemPage: pageData.isSystemPage,
 
       sections: sections.map((section) => ({
         heading: section.heading.trim(),
@@ -568,6 +576,29 @@ export default function CMSManagement() {
               value={pageData.title}
               onChange={handlePageChange}
             />
+          </div>
+
+          {/* CHECKBOXES */}
+          <div className="cms-checkbox-container">
+            <label className="cms-checkbox-label">
+              <input
+                type="checkbox"
+                name="isSystemPage"
+                checked={pageData.isSystemPage}
+                onChange={handlePageChange}
+              />
+              <span>System Page</span>
+            </label>
+
+            <label className="cms-checkbox-label">
+              <input
+                type="checkbox"
+                name="isProtected"
+                checked={pageData.isProtected}
+                onChange={handlePageChange}
+              />
+              <span>Protected Page</span>
+            </label>
           </div>
         </div>
       </div>

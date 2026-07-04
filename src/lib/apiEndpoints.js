@@ -123,28 +123,20 @@ export const API_ENDPOINTS = {
     },
 
     APP_PAGES: {
-      GET_ALL: "/admin-panel/app-pages",
-
+      GET_ALL: "/admin-panel/app-page",
       GET_BY_CATEGORY: (category) =>
-        `/admin-panel/app-pages/category/${category}`,
-
-      GET_BY_ID: (id) => `/admin-panel/app-pages/${id}`,
-
-      CREATE: "/admin-panel/app-pages",
-
-      UPDATE: (id) => `/admin-panel/app-pages/${id}`,
-
-      DELETE: (id) => `/admin-panel/app-pages/${id}`,
+        `/admin-panel/app-page/category/${category}`,
+      GET_BY_ID: (id) => `/admin-panel/app-page/${id}`,
+      CREATE: "/admin-panel/app-page",
+      UPDATE: (id) => `/admin-panel/app-page/${id}`,
+      DELETE: (id) => `/admin-panel/app-page/${id}`,
     },
 
     INTEREST: {
-      GET_ALL: "/admin/interests",
-
-      CREATE: "/admin/interests",
-
-      UPDATE: (id) => `/admin/interests/${id}`,
-
-      DELETE: (id) => `/admin/interests/${id}`,
+      GET_ALL: "/admin-panel/interest",
+      CREATE: "/admin-panel/interest",
+      UPDATE: (id) => `/admin-panel/interest/${id}`,
+      DELETE: (id) => `/admin-panel/interest/${id}`,
     },
   },
 };

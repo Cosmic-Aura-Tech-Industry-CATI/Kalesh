@@ -1,4 +1,4 @@
-import { useMemo, useState } from "react";
+import { useState } from "react";
 import "../style/interests.css";
 
 import InterestTable from "../components/InterestTable";
@@ -13,22 +13,15 @@ import {
   useGetInterests,
   useUpdateInterest,
 } from "../../hooks/useInterests";
-import useDebounce from "../../hooks/useDebounce";
 
 export default function Interests() {
-  const [search, setSearch] = useState("");
-
   const [openModal, setOpenModal] = useState(false);
-
   const [deleteModal, setDeleteModal] = useState(false);
 
   const [selectedInterest, setSelectedInterest] = useState(null);
 
-  const debouncedSearch = useDebounce(search, 500);
 
-  const { data, isLoading } = useGetInterests({
-    search: debouncedSearch,
-  });
+  const { data, isLoading } = useGetInterests();
 
   const createMutation = useCreateInterest();
 
@@ -37,12 +30,6 @@ export default function Interests() {
   const deleteMutation = useDeleteInterest();
 
   const interests = data?.data || data || [];
-
-  const filteredInterests = useMemo(() => {
-    return interests.filter((item) =>
-      item.name.toLowerCase().includes(debouncedSearch.toLowerCase()),
-    );
-  }, [interests, debouncedSearch]);
 
   const handleCreate = (payload) => {
     createMutation.mutate(payload, {
@@ -113,14 +100,6 @@ export default function Interests() {
         </button>
       </div>
 
-      <div className="interest-search">
-        <input
-          type="text"
-          placeholder="Search Interest..."
-          value={search}
-          onChange={(e) => setSearch(e.target.value)}
-        />
-      </div>
 
       <InterestTable
         loading={isLoading}
