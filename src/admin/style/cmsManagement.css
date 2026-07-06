@@ -37,6 +37,13 @@ HEADER
   font-size: 14px;
 }
 
+.cms-loading {
+  margin-left: 12px;
+  color: #ff6b00;
+  font-size: 13px;
+  font-weight: 500;
+}
+
 /*==================================================
 BUTTON
 ==================================================*/

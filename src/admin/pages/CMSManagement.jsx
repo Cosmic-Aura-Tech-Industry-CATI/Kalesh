@@ -49,7 +49,7 @@ export default function CMSManagement() {
   const {
     data: pageResponse,
     isLoading,
-    refetch,
+    isFetching,
   } = useGetPageByCategory(pageData.category);
 
   const { mutate: createPage, isPending: creating } = useCreatePage();
@@ -61,13 +61,21 @@ export default function CMSManagement() {
   //--------------------------------------
 
   const handlePageChange = (e) => {
-    const { name, value } = e.target;
+    const { name, value, type, checked } = e.target;
+
+    // Category change par sirf category update karo
+    if (name === "category") {
+      setPageData((prev) => ({
+        ...prev,
+        category: value,
+      }));
+
+      return;
+    }
 
     setPageData((prev) => ({
       ...prev,
-      [name]: value,
-      ...(e.target.type === "checkbox" && {
-        [name]: e.target.checked }),
+      [name]: type === "checkbox" ? checked : value,
     }));
   };
 
@@ -101,12 +109,12 @@ export default function CMSManagement() {
       return;
     }
 
-    setPageData({
-      category: page.category || "",
+    setPageData((prev) => ({
+      ...prev,
       title: page.title || "",
       isProtected: page.isProtected || false,
       isSystemPage: page.isSystemPage || false,
-    });
+    }));
 
     setSections(
       (page.sections || []).map((section) => ({
@@ -506,18 +514,6 @@ export default function CMSManagement() {
     );
   };
 
-  //--------------------------------------
-  // LOADING
-  //--------------------------------------
-
-  if (isLoading) {
-    return (
-      <div className="cms-page">
-        <div className="cms-card">Loading...</div>
-      </div>
-    );
-  }
-
   return (
     <div className="cms-page">
       {/* ========================= HEADER ========================= */}
@@ -541,7 +537,10 @@ export default function CMSManagement() {
       {/* ========================= PAGE DETAILS ========================= */}
 
       <div className="cms-card">
-        <h2>Page Details</h2>
+        <h2>
+          Page Details
+          {isFetching && <span className="cms-loading">Loading...</span>}
+        </h2>
 
         <div className="cms-grid">
           {/* CATEGORY */}

@@ -24,6 +24,8 @@ export const useGetPageByCategory = (category) => {
     queryFn: () => CMSService.getPageByCategory(category),
 
     enabled: !!category,
+
+    placeholderData: (previousData) => previousData,
   });
 };
 
