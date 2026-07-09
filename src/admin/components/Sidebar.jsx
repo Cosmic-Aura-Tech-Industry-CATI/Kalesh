@@ -31,7 +31,7 @@ const menuItems = [
 
   { path: "/admin/interests", icon: Tags, label: "Interests" },
 
-  { path: "/admin/cms", icon: FileBadge2, label: "CMS Management" },
+  
 
   { path: "/admin/reported-polls", icon: AlertCircle, label: "Reports" },
 
