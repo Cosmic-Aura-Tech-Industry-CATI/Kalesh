@@ -39,8 +39,10 @@ import AdminContestDetails from "./admin/pages/AdminContestDetails";
 import JobDetails from "./pages/JobDetails";
 import Highlights from "./admin/pages/Highlights";
 import Wallpapers from "./admin/pages/Wallpapers";
-import CMSManagement from "./admin/pages/CMSManagement";
+
 import Interests from "./admin/pages/Interests";
+import LegalPages from "./admin/pages/legalPages/LegalPages";
+import LegalPageEditor from "./admin/pages/legalPages/LegalPageEditor";
 
 // LAZY PUBLIC PAGES
 const Home = lazy(() => import("./pages/Home"));
@@ -132,7 +134,18 @@ function MainRoutes() {
 
               <Route path="interests" element={<Interests />} />
 
-              <Route path="cms" element={<CMSManagement />} />
+              {/* ===== LEGAL PAGES ===== */}
+
+              <Route path="legal-pages" element={<LegalPages />} />
+
+              <Route path="legal-pages/new" element={<LegalPageEditor />} />
+
+              <Route
+                path="legal-pages/edit/:slug"
+                element={<LegalPageEditor />}
+              />
+
+              {/* ===== BLOG & CONTESTS ===== */}
 
               <Route path="blog" element={<AdminBlog />} />
 

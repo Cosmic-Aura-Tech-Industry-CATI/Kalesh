@@ -1,0 +1,880 @@
+/* ===================================================
+CARD
+=================================================== */
+
+.legal-card {
+  position: relative;
+
+  overflow: hidden;
+
+  background: #171923;
+
+  border: 1px solid #2f3447;
+
+  border-radius: 20px;
+
+  padding: 24px;
+
+  display: flex;
+
+  flex-direction: column;
+
+  gap: 22px;
+
+  transition:
+    transform 0.35s ease,
+    border-color 0.35s ease,
+    box-shadow 0.35s ease,
+    background 0.35s ease;
+}
+
+/* Gradient Overlay */
+
+.legal-card::before {
+  content: "";
+
+  position: absolute;
+
+  inset: 0;
+
+  border-radius: inherit;
+
+  background: linear-gradient(
+    135deg,
+    rgba(255, 152, 0, 0.08),
+    transparent 40%,
+    rgba(255, 122, 24, 0.05)
+  );
+
+  opacity: 0;
+
+  transition: 0.35s;
+
+  pointer-events: none;
+}
+
+/* ===================================================
+CARD HOVER
+=================================================== */
+
+.legal-card:hover {
+  transform: translateY(-8px);
+
+  border-color: #ff9800;
+
+  background: #1b1e2a;
+
+  box-shadow:
+    0 18px 40px rgba(0, 0, 0, 0.35),
+    0 0 0 1px rgba(255, 152, 0, 0.12),
+    0 0 30px rgba(255, 152, 0, 0.1);
+}
+
+.legal-card:hover::before {
+  opacity: 1;
+}
+
+/* ==========================================
+Header
+========================================== */
+
+.legal-card-header {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+}
+
+/* ===================================================
+HEADER
+=================================================== */
+
+.legal-card-header {
+  transition: 0.35s;
+}
+
+.legal-card:hover .legal-card-header {
+  transform: translateX(4px);
+}
+
+/* ==========================================
+Icon
+========================================== */
+
+.legal-card-icon {
+  width: 64px;
+
+  height: 64px;
+
+  flex-shrink: 0;
+
+  border-radius: 18px;
+
+  display: flex;
+
+  justify-content: center;
+
+  align-items: center;
+
+  background: linear-gradient(
+    135deg,
+    rgba(255, 152, 0, 0.18),
+    rgba(255, 122, 24, 0.08)
+  );
+
+  border: 1px solid rgba(255, 152, 0, 0.28);
+
+  color: #ff9800;
+
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.05),
+    0 8px 20px rgba(255, 152, 0, 0.12);
+}
+
+/* ===================================================
+ICON
+=================================================== */
+
+.legal-card-icon {
+  transition:
+    transform 0.35s,
+    box-shadow 0.35s,
+    background 0.35s;
+}
+
+.legal-card:hover .legal-card-icon {
+  transform: rotate(-6deg) scale(1.08);
+
+  box-shadow: 0 12px 25px rgba(255, 152, 0, 0.18);
+}
+
+/* ==========================================
+Info
+========================================== */
+
+.legal-card-info {
+  flex: 1;
+
+  display: flex;
+
+  flex-direction: column;
+
+  gap: 10px;
+}
+
+.legal-card-info h3 {
+  margin: 0;
+
+  color: #fff;
+
+  font-size: 21px;
+
+  font-weight: 700;
+
+  line-height: 1.3;
+}
+
+.legal-card-info p {
+  margin: 0;
+
+  color: #9ea6bc;
+
+  font-size: 13px;
+
+  word-break: break-word;
+}
+
+/* ==========================================
+Slug
+========================================== */
+
+.legal-card-slug {
+  width: max-content;
+
+  max-width: 100%;
+
+  padding: 6px 12px;
+
+  border-radius: 999px;
+
+  background: #23293a;
+
+  border: 1px solid #32384d;
+
+  color: #9fa7bc;
+
+  font-size: 12px;
+
+  font-weight: 600;
+
+  letter-spacing: 0.3px;
+
+  overflow: hidden;
+
+  text-overflow: ellipsis;
+
+  white-space: nowrap;
+}
+
+/* ==========================================
+Body
+========================================== */
+
+.legal-card-body {
+  display: flex;
+
+  flex-direction: column;
+
+  gap: 0;
+}
+
+/* ==========================================
+Info Row
+========================================== */
+
+.legal-info-row {
+  display: flex;
+
+  justify-content: space-between;
+
+  align-items: center;
+
+  padding: 18px 0;
+
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.legal-info-row:last-child {
+  border-bottom: none;
+}
+
+.legal-info-left {
+  display: flex;
+
+  flex-direction: column;
+
+  gap: 6px;
+}
+
+/* ==========================================
+Label
+========================================== */
+
+.legal-label {
+  color: #8f97ac;
+
+  font-size: 12px;
+
+  font-weight: 600;
+
+  letter-spacing: 0.5px;
+
+  text-transform: uppercase;
+}
+
+/* ==========================================
+Value
+========================================== */
+
+.legal-value {
+  color: white;
+
+  font-size: 15px;
+
+  font-weight: 700;
+
+  line-height: 1.4;
+}
+
+/* ==========================================
+Status Badges
+========================================== */
+
+.legal-status-badges {
+  display: flex;
+
+  flex-wrap: wrap;
+
+  gap: 10px;
+
+  margin-top: 6px;
+}
+
+.legal-status-badge {
+  display: flex;
+
+  align-items: center;
+
+  gap: 7px;
+
+  padding: 7px 14px;
+
+  border-radius: 999px;
+
+  font-size: 12px;
+
+  font-weight: 600;
+
+  border: 1px solid transparent;
+
+  backdrop-filter: blur(10px);
+
+  transition: 0.25s;
+}
+
+.legal-status-badge svg {
+  flex-shrink: 0;
+}
+
+/* ===================================================
+STATUS BADGES
+=================================================== */
+
+.legal-status-badge {
+  transition:
+    transform 0.25s,
+    background 0.25s,
+    border-color 0.25s;
+}
+
+.legal-status-badge:hover {
+  transform: translateY(-2px) scale(1.04);
+}
+
+/* ==========================================
+System
+========================================== */
+
+.legal-status-badge.system {
+  color: #ffb347;
+
+  background: rgba(255, 152, 0, 0.14);
+
+  border-color: rgba(255, 152, 0, 0.28);
+}
+
+/* ==========================================
+Custom
+========================================== */
+
+.legal-status-badge.custom {
+  color: #87bfff;
+
+  background: rgba(59, 130, 246, 0.12);
+
+  border-color: rgba(59, 130, 246, 0.25);
+}
+
+/* ==========================================
+Protected
+========================================== */
+
+.legal-status-badge.protected {
+  color: #ff8d8d;
+
+  background: rgba(239, 68, 68, 0.12);
+
+  border-color: rgba(239, 68, 68, 0.25);
+}
+
+/* ==========================================
+Active
+========================================== */
+
+.legal-status-badge.active {
+  color: #67e8a4;
+
+  background: rgba(34, 197, 94, 0.12);
+
+  border-color: rgba(34, 197, 94, 0.25);
+}
+
+/* ==========================================
+Hover
+========================================== */
+
+.legal-status-badge:hover {
+  transform: translateY(-2px);
+}
+
+/* ===================================================
+FOOTER
+=================================================== */
+
+.legal-card-footer {
+  display: grid;
+
+  grid-template-columns: repeat(3, 1fr);
+
+  gap: 12px;
+
+  margin-top: 30px;
+}
+
+/* ===================================================
+ACTION BUTTON
+=================================================== */
+
+.legal-action {
+  display: flex;
+
+  align-items: center;
+
+  justify-content: center;
+
+  gap: 8px;
+
+  height: 48px;
+
+  border-radius: 12px;
+
+  border: none;
+
+  cursor: pointer;
+
+  font-size: 14px;
+
+  font-weight: 600;
+
+  transition: 0.25s;
+
+  overflow: hidden;
+}
+
+.legal-action:hover:not(:disabled) {
+  transform: translateY(-2px) scale(1.03);
+}
+
+.legal-action svg {
+  width: 18px;
+
+  height: 18px;
+}
+
+/* ===================================================
+CLICK
+=================================================== */
+
+.legal-action:active:not(:disabled) {
+  transform: scale(0.97);
+}
+
+/* ===================================================
+ENTRY
+=================================================== */
+
+.legal-card {
+  animation: cardFade 0.45s ease;
+}
+
+@keyframes cardFade {
+  from {
+    opacity: 0;
+
+    transform: translateY(20px);
+  }
+
+  to {
+    opacity: 1;
+
+    transform: translateY(0);
+  }
+}
+
+/* ===================================================
+PREVIEW
+=================================================== */
+
+.legal-action.preview {
+  background: #1e2d4a;
+
+  color: #7ec0ff;
+
+  border: 1px solid #2f4b78;
+}
+
+.legal-action.preview:hover {
+  background: #29426a;
+
+  transform: translateY(-2px);
+
+  box-shadow: 0 8px 20px rgba(58, 134, 255, 0.25);
+}
+
+/* ===================================================
+EDIT
+=================================================== */
+
+.legal-action.edit {
+  background: #3a2d17;
+
+  color: #ffb84d;
+
+  border: 1px solid #8a5a06;
+}
+
+.legal-action.edit:hover {
+  background: #523d1d;
+
+  transform: translateY(-2px);
+
+  box-shadow: 0 8px 20px rgba(255, 166, 0, 0.25);
+}
+
+/* ===================================================
+DELETE
+=================================================== */
+
+.legal-action.delete {
+  background: #3a1d22;
+
+  color: #ff7d7d;
+
+  border: 1px solid #7a2f37;
+}
+
+.legal-action.delete:hover:not(:disabled) {
+  background: #51242b;
+
+  transform: translateY(-2px);
+
+  box-shadow: 0 8px 20px rgba(255, 82, 82, 0.22);
+}
+
+.legal-action.delete:disabled {
+  opacity: 0.45;
+
+  cursor: not-allowed;
+
+  transform: none;
+
+  box-shadow: none;
+}
+
+/* ===================================================
+DISABLED
+=================================================== */
+
+.legal-action:disabled {
+  opacity: 0.45;
+
+  cursor: not-allowed;
+
+  transform: none;
+
+  box-shadow: none;
+}
+
+.legal-action:disabled:hover {
+  transform: none;
+
+  background: rgba(239, 68, 68, 0.12);
+}
+
+/* =========================================================
+DELETE MODAL
+========================================================= */
+
+.legal-modal-overlay {
+  position: fixed;
+
+  inset: 0;
+
+  background: rgba(0, 0, 0, 0.72);
+
+  display: flex;
+
+  justify-content: center;
+
+  align-items: center;
+
+  padding: 20px;
+
+  z-index: 999;
+}
+
+.legal-delete-modal {
+  width: 440px;
+
+  max-width: 100%;
+
+  background: #181b25;
+
+  border: 1px solid #32384d;
+
+  border-radius: 20px;
+
+  padding: 30px;
+
+  animation: modalIn 0.25s ease;
+}
+
+@keyframes modalIn {
+  from {
+    transform: translateY(15px) scale(0.96);
+    opacity: 0;
+  }
+
+  to {
+    transform: translateY(0) scale(1);
+    opacity: 1;
+  }
+}
+
+.legal-delete-icon {
+  width: 80px;
+
+  height: 80px;
+
+  margin: 0 auto 18px;
+
+  display: flex;
+
+  align-items: center;
+
+  justify-content: center;
+
+  border-radius: 50%;
+
+  background: rgba(239, 68, 68, 0.12);
+
+  color: #ff6666;
+}
+
+.legal-delete-modal h2 {
+  color: white;
+
+  text-align: center;
+
+  margin-bottom: 12px;
+}
+
+.legal-delete-modal p {
+  color: #a7aec3;
+
+  line-height: 1.7;
+
+  text-align: center;
+
+  margin-bottom: 18px;
+}
+
+.legal-warning-box {
+  padding: 14px;
+
+  border-radius: 12px;
+
+  background: rgba(255, 152, 0, 0.12);
+
+  border: 1px solid rgba(255, 152, 0, 0.25);
+
+  color: #ffbf5f;
+
+  font-size: 14px;
+
+  margin-bottom: 22px;
+}
+
+.legal-delete-actions {
+  display: flex;
+
+  gap: 14px;
+}
+
+.legal-cancel-btn,
+.legal-confirm-btn {
+  flex: 1;
+
+  border: none;
+
+  cursor: pointer;
+
+  padding: 13px;
+
+  border-radius: 12px;
+
+  font-weight: 600;
+
+  transition: 0.25s;
+}
+
+.legal-cancel-btn {
+  background: #272d40;
+
+  color: white;
+}
+
+.legal-cancel-btn:hover {
+  background: #32394d;
+}
+
+.legal-confirm-btn {
+  background: #dc2626;
+
+  color: white;
+}
+
+.legal-confirm-btn:hover {
+  background: #b91c1c;
+}
+
+.legal-confirm-btn:disabled {
+  opacity: 0.5;
+
+  cursor: not-allowed;
+}
+
+/* =========================================================
+RESPONSIVE
+========================================================= */
+
+@media (max-width: 768px) {
+  .legal-card-footer {
+    grid-template-columns: 1fr;
+  }
+
+  .legal-delete-actions {
+    flex-direction: column;
+  }
+
+  .legal-meta {
+    flex-direction: column;
+
+    gap: 8px;
+  }
+}
+
+/* ===================================================
+RESPONSIVE
+=================================================== */
+
+/* -------------------------------
+Large Desktop (3 Cards)
+-------------------------------- */
+
+.legal-pages-grid {
+  display: grid;
+
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+
+  gap: 24px;
+}
+
+/* -------------------------------
+Laptop
+-------------------------------- */
+
+@media (max-width: 1400px) {
+  .legal-pages-grid {
+    grid-template-columns: repeat(3, 1fr);
+
+    gap: 20px;
+  }
+}
+
+/* -------------------------------
+Tablet
+-------------------------------- */
+
+@media (max-width: 1100px) {
+  .legal-pages-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+/* -------------------------------
+Large Mobile
+-------------------------------- */
+
+@media (max-width: 768px) {
+  .legal-pages-grid {
+    grid-template-columns: 1fr;
+
+    gap: 18px;
+  }
+
+  .legal-card {
+    padding: 20px;
+  }
+
+  .legal-card-header {
+    gap: 14px;
+  }
+
+  .legal-card-icon {
+    width: 56px;
+
+    height: 56px;
+  }
+
+  .legal-card-info h3 {
+    font-size: 18px;
+  }
+
+  .legal-card-footer {
+    grid-template-columns: 1fr;
+
+    gap: 10px;
+  }
+
+  .legal-action {
+    width: 100%;
+
+    justify-content: center;
+  }
+}
+
+/* -------------------------------
+Small Mobile
+-------------------------------- */
+
+@media (max-width: 480px) {
+  .legal-pages-grid {
+    gap: 16px;
+  }
+
+  .legal-card {
+    padding: 18px;
+
+    border-radius: 18px;
+  }
+
+  .legal-card-icon {
+    width: 50px;
+
+    height: 50px;
+  }
+
+  .legal-card-info h3 {
+    font-size: 17px;
+  }
+
+  .legal-card-slug {
+    max-width: 180px;
+  }
+
+  .legal-info-row {
+    padding: 14px 0;
+  }
+
+  .legal-status-badges {
+    gap: 8px;
+  }
+
+  .legal-status-badge {
+    font-size: 11px;
+
+    padding: 6px 10px;
+  }
+
+  .legal-action {
+    font-size: 13px;
+
+    padding: 11px;
+  }
+
+  .legal-action svg {
+    width: 16px;
+
+    height: 16px;
+  }
+}
