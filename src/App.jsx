@@ -41,6 +41,8 @@ import Highlights from "./admin/pages/Highlights";
 import Wallpapers from "./admin/pages/Wallpapers";
 
 import Interests from "./admin/pages/Interests";
+import LegalPages from "./admin/pages/legalPages/LegalPages";
+import LegalPageEditor from "./admin/pages/legalPages/LegalPageEditor";
 
 // LAZY PUBLIC PAGES
 const Home = lazy(() => import("./pages/Home"));
@@ -132,7 +134,18 @@ function MainRoutes() {
 
               <Route path="interests" element={<Interests />} />
 
-              
+              {/* ===== LEGAL PAGES ===== */}
+
+              <Route path="legal-pages" element={<LegalPages />} />
+
+              <Route path="legal-pages/new" element={<LegalPageEditor />} />
+
+              <Route
+                path="legal-pages/edit/:slug"
+                element={<LegalPageEditor />}
+              />
+
+              {/* ===== BLOG & CONTESTS ===== */}
 
               <Route path="blog" element={<AdminBlog />} />
 

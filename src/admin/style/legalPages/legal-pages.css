@@ -1,0 +1,393 @@
+/* =========================================================
+LEGAL PAGES
+========================================================= */
+
+.legal-pages {
+  display: flex;
+
+  flex-direction: column;
+
+  gap: 30px;
+
+  width: 100%;
+}
+
+/* =========================================================
+HEADER
+========================================================= */
+
+.legal-pages-header {
+  display: flex;
+
+  justify-content: space-between;
+
+  align-items: center;
+
+  gap: 20px;
+
+  flex-wrap: wrap;
+}
+
+.legal-page-title {
+  margin: 0;
+
+  font-size: 32px;
+
+  font-weight: 700;
+
+  color: #fff;
+}
+
+.legal-page-subtitle {
+  margin-top: 8px;
+
+  color: #98a1b8;
+
+  font-size: 15px;
+
+  line-height: 1.7;
+}
+
+/* =========================================================
+CREATE BUTTON
+========================================================= */
+
+.legal-create-btn {
+  display: flex;
+
+  align-items: center;
+
+  gap: 10px;
+
+  border: none;
+
+  cursor: pointer;
+
+  padding: 14px 22px;
+
+  border-radius: 14px;
+
+  background: linear-gradient(135deg, #ff9800, #ffb300);
+
+  color: white;
+
+  font-size: 15px;
+
+  font-weight: 600;
+
+  transition: 0.25s;
+}
+
+.legal-create-btn:hover {
+  transform: translateY(-2px);
+
+  box-shadow: 0 12px 30px rgba(255, 152, 0, 0.35);
+}
+
+.legal-create-btn:active {
+  transform: scale(0.98);
+}
+
+/* =========================================================
+GRID
+========================================================= */
+
+.legal-pages-grid {
+  display: grid;
+
+  grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+
+  gap: 24px;
+}
+
+/* =========================================================
+LOADING
+========================================================= */
+
+.legal-loading {
+  grid-column: 1/-1;
+
+  display: flex;
+
+  flex-direction: column;
+
+  justify-content: center;
+
+  align-items: center;
+
+  gap: 18px;
+
+  min-height: 350px;
+
+  color: #b5bdd1;
+}
+
+.spin {
+  animation: legalSpin 0.8s linear infinite;
+}
+
+@keyframes legalSpin {
+  from {
+    transform: rotate(0deg);
+  }
+
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* =========================================================
+ERROR
+========================================================= */
+
+.legal-error {
+  grid-column: 1/-1;
+
+  min-height: 320px;
+
+  display: flex;
+
+  flex-direction: column;
+
+  justify-content: center;
+
+  align-items: center;
+
+  text-align: center;
+
+  gap: 12px;
+}
+
+.legal-error h3 {
+  color: #ff6b6b;
+
+  font-size: 24px;
+}
+
+.legal-error p {
+  color: #9ea7bc;
+
+  max-width: 420px;
+
+  line-height: 1.7;
+}
+
+/* =========================================================
+EMPTY STATE
+========================================================= */
+
+.legal-empty {
+  grid-column: 1/-1;
+
+  display: flex;
+
+  justify-content: center;
+
+  align-items: center;
+
+  min-height: 420px;
+}
+
+.legal-empty-card {
+  width: 100%;
+
+  max-width: 620px;
+
+  padding: 50px;
+
+  text-align: center;
+
+  background: #171b25;
+
+  border: 1px dashed #363f57;
+
+  border-radius: 20px;
+}
+
+.legal-empty-icon {
+  width: 90px;
+
+  height: 90px;
+
+  margin: auto;
+
+  border-radius: 50%;
+
+  display: flex;
+
+  justify-content: center;
+
+  align-items: center;
+
+  background: rgba(255, 152, 0, 0.1);
+
+  color: #ff9800;
+
+  margin-bottom: 22px;
+}
+
+.legal-empty-card h2 {
+  color: white;
+
+  font-size: 28px;
+
+  margin-bottom: 12px;
+}
+
+.legal-empty-card p {
+  color: #99a3b8;
+
+  line-height: 1.8;
+
+  margin-bottom: 30px;
+}
+
+.legal-empty-card button {
+  border: none;
+
+  cursor: pointer;
+
+  padding: 14px 26px;
+
+  border-radius: 12px;
+
+  background: linear-gradient(135deg, #ff9800, #ffb300);
+
+  color: white;
+
+  font-size: 15px;
+
+  font-weight: 600;
+
+  transition: 0.25s;
+}
+
+.legal-empty-card button:hover {
+  transform: translateY(-2px);
+
+  box-shadow: 0 12px 30px rgba(255, 152, 0, 0.35);
+}
+
+/* =========================================================
+SECTION DIVIDER
+========================================================= */
+
+.legal-divider {
+  width: 100%;
+
+  height: 1px;
+
+  background: #2d3447;
+}
+
+/* =========================================================
+PAGE STATS
+========================================================= */
+
+.legal-stats {
+  display: flex;
+
+  gap: 16px;
+
+  flex-wrap: wrap;
+}
+
+.legal-stat {
+  min-width: 180px;
+
+  background: #171b25;
+
+  border: 1px solid #2d3447;
+
+  border-radius: 16px;
+
+  padding: 18px;
+}
+
+.legal-stat-label {
+  color: #8f98b0;
+
+  font-size: 13px;
+
+  margin-bottom: 10px;
+}
+
+.legal-stat-value {
+  color: white;
+
+  font-size: 26px;
+
+  font-weight: 700;
+}
+
+/* =========================================================
+SKELETON
+========================================================= */
+
+.legal-skeleton {
+  height: 260px;
+
+  border-radius: 18px;
+
+  background: linear-gradient(90deg, #1c202c 25%, #262c3a 50%, #1c202c 75%);
+
+  background-size: 200% 100%;
+
+  animation: skeletonLoading 1.4s infinite;
+}
+
+@keyframes skeletonLoading {
+  from {
+    background-position: 200% 0;
+  }
+
+  to {
+    background-position: -200% 0;
+  }
+}
+
+/* =========================================================
+RESPONSIVE
+========================================================= */
+
+@media (max-width: 992px) {
+  .legal-pages-header {
+    flex-direction: column;
+
+    align-items: flex-start;
+  }
+
+  .legal-create-btn {
+    width: 100%;
+
+    justify-content: center;
+  }
+}
+
+@media (max-width: 768px) {
+  .legal-pages-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .legal-page-title {
+    font-size: 28px;
+  }
+
+  .legal-empty-card {
+    padding: 35px 25px;
+  }
+}
+
+@media (max-width: 480px) {
+  .legal-page-title {
+    font-size: 24px;
+  }
+
+  .legal-page-subtitle {
+    font-size: 14px;
+  }
+
+  .legal-stat {
+    width: 100%;
+  }
+}

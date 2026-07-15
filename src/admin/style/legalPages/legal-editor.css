@@ -1,0 +1,3280 @@
+.legal-editor-page {
+  display: flex;
+
+  flex-direction: column;
+
+  gap: 30px;
+}
+
+.legal-editor-header {
+  display: flex;
+
+  align-items: center;
+
+  gap: 20px;
+}
+
+.legal-editor-header h1 {
+  color: white;
+
+  font-size: 30px;
+
+  font-weight: 700;
+}
+
+.legal-back-btn {
+  display: flex;
+
+  align-items: center;
+
+  gap: 8px;
+
+  border: none;
+
+  cursor: pointer;
+
+  background: #20242f;
+
+  color: white;
+
+  padding: 10px 18px;
+
+  border-radius: 10px;
+
+  transition: 0.25s;
+}
+
+.legal-back-btn:hover {
+  background: #2b3040;
+}
+
+.legal-editor-placeholder {
+  min-height: 500px;
+
+  display: flex;
+
+  justify-content: center;
+
+  align-items: center;
+
+  flex-direction: column;
+
+  border: 1px dashed #35384d;
+
+  border-radius: 16px;
+
+  background: #171923;
+}
+
+.legal-editor-placeholder h2 {
+  color: white;
+
+  margin-bottom: 10px;
+}
+
+.legal-editor-placeholder p {
+  color: #9097ad;
+}
+
+.legal-editor-page {
+  display: flex;
+
+  flex-direction: column;
+
+  gap: 25px;
+}
+
+/* ==========================
+Toolbar
+========================== */
+
+.legal-editor-toolbar {
+  display: flex;
+
+  justify-content: space-between;
+
+  align-items: center;
+
+  gap: 20px;
+
+  flex-wrap: wrap;
+}
+
+.editor-toolbar-right {
+  display: flex;
+
+  gap: 12px;
+}
+
+.editor-btn {
+  display: flex;
+
+  align-items: center;
+
+  gap: 8px;
+
+  border: none;
+
+  cursor: pointer;
+
+  padding: 12px 20px;
+
+  border-radius: 10px;
+
+  font-weight: 600;
+
+  transition: 0.25s;
+}
+
+.editor-btn.secondary {
+  background: #222634;
+
+  color: white;
+}
+
+.editor-btn.secondary:hover {
+  background: #2d3243;
+}
+
+.editor-btn.preview {
+  background: #263246;
+
+  color: #8ec5ff;
+}
+
+.editor-btn.preview:hover {
+  background: #32415b;
+}
+
+.editor-btn.save {
+  background: linear-gradient(135deg, #ff7b18, #ffb800);
+
+  color: white;
+}
+
+.editor-btn.save:hover {
+  transform: translateY(-2px);
+}
+
+/* ==========================
+Cards
+========================== */
+
+.legal-editor-card,
+.editor-section-card {
+  background: #181b25;
+
+  border: 1px solid #31384c;
+
+  border-radius: 16px;
+
+  padding: 24px;
+}
+
+.section-header {
+  margin-bottom: 20px;
+}
+
+.section-header h3 {
+  color: white;
+
+  font-size: 20px;
+}
+
+/* ==========================
+Inputs
+========================== */
+
+.editor-group {
+  display: flex;
+
+  flex-direction: column;
+
+  gap: 10px;
+
+  margin-bottom: 22px;
+}
+
+.editor-group label {
+  color: white;
+
+  font-weight: 600;
+}
+
+.editor-group input,
+.editor-group textarea,
+.editor-group select {
+  background: #11141d;
+
+  border: 1px solid #32384d;
+
+  color: white;
+
+  border-radius: 10px;
+
+  padding: 14px;
+
+  font-size: 15px;
+
+  outline: none;
+}
+
+.editor-group input:focus,
+.editor-group textarea:focus,
+.editor-group select:focus {
+  border-color: #ff9800;
+}
+
+/* ==========================
+Responsive
+========================== */
+
+@media (max-width: 768px) {
+  .legal-editor-toolbar {
+    flex-direction: column;
+
+    align-items: stretch;
+  }
+
+  .editor-toolbar-right {
+    width: 100%;
+  }
+
+  .editor-btn {
+    flex: 1;
+
+    justify-content: center;
+  }
+}
+
+/* =====================================================
+EDITOR TOOLBAR
+===================================================== */
+
+.editor-toolbar {
+  position: sticky;
+
+  top: 18px;
+
+  z-index: 100;
+
+  display: flex;
+
+  justify-content: space-between;
+
+  align-items: center;
+
+  gap: 20px;
+
+  padding: 18px 22px;
+
+  border-radius: 18px;
+
+  background: rgba(23, 25, 35, 0.94);
+
+  border: 1px solid #30364a;
+
+  backdrop-filter: blur(18px);
+
+  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.25);
+
+  transition: 0.25s;
+}
+
+.editor-toolbar-left,
+.editor-toolbar-center,
+.editor-toolbar-right {
+  display: flex;
+
+  align-items: center;
+}
+
+.editor-toolbar-right {
+  gap: 12px;
+}
+
+/* ===================================================
+BUTTONS
+=================================================== */
+
+.editor-toolbar-btn {
+  display: flex;
+
+  align-items: center;
+
+  justify-content: center;
+
+  gap: 8px;
+
+  border: none;
+
+  cursor: pointer;
+
+  padding: 12px 18px;
+
+  border-radius: 12px;
+
+  font-size: 14px;
+
+  font-weight: 600;
+
+  transition: 0.25s;
+}
+
+.editor-toolbar-btn svg {
+  flex-shrink: 0;
+}
+
+.editor-toolbar-btn.secondary {
+  background: #252b3b;
+
+  color: #fff;
+}
+
+.editor-toolbar-btn.secondary:hover {
+  background: #32394d;
+
+  transform: translateY(-2px);
+}
+
+.editor-toolbar-btn.preview {
+  background: #24354d;
+
+  color: #87c5ff;
+}
+
+.editor-toolbar-btn.preview:hover {
+  background: #2f4566;
+
+  transform: translateY(-2px);
+}
+
+.editor-toolbar-btn.save {
+  background: linear-gradient(135deg, #ff9800, #ffb300);
+
+  color: white;
+}
+
+.editor-toolbar-btn.save:hover:not(:disabled) {
+  transform: translateY(-2px);
+
+  box-shadow: 0 10px 25px rgba(255, 152, 0, 0.3);
+}
+
+.editor-toolbar-btn:disabled {
+  opacity: 0.55;
+
+  cursor: not-allowed;
+}
+
+/* ===================================================
+BUTTONS
+=================================================== */
+
+.add-item-btn {
+  align-self: flex-start;
+
+  border: none;
+
+  cursor: pointer;
+
+  background: linear-gradient(135deg, #ff9800, #ffb300);
+
+  color: white;
+
+  padding: 12px 18px;
+
+  border-radius: 10px;
+
+  font-weight: 600;
+
+  transition: 0.25s;
+}
+
+.add-item-btn:hover {
+  transform: translateY(-2px);
+}
+
+.remove-item-btn {
+  border: none;
+
+  cursor: pointer;
+
+  background: #ef44441a;
+
+  color: #ff7a7a;
+
+  padding: 10px 14px;
+
+  border-radius: 10px;
+
+  transition: 0.25s;
+}
+
+.remove-item-btn:hover {
+  background: #ef444433;
+}
+
+/* ===================================================
+STATUS
+=================================================== */
+
+.editor-status {
+  display: flex;
+
+  align-items: center;
+
+  gap: 10px;
+
+  font-size: 14px;
+
+  font-weight: 600;
+}
+
+.status-dot {
+  width: 10px;
+
+  height: 10px;
+
+  border-radius: 50%;
+}
+
+.editor-status.saved {
+  color: #4ade80;
+}
+
+.editor-status.saved .status-dot {
+  background: #4ade80;
+}
+
+.editor-status.unsaved {
+  color: #fbbf24;
+}
+
+.editor-status.unsaved .status-dot {
+  background: #fbbf24;
+}
+
+/* ===================================================
+LOADER
+=================================================== */
+
+.spin {
+  animation: spin 0.8s linear infinite;
+}
+
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* ===================================================
+RESPONSIVE
+=================================================== */
+
+@media (max-width: 900px) {
+  .editor-toolbar {
+    flex-direction: column;
+
+    align-items: stretch;
+  }
+
+  .editor-toolbar-left,
+  .editor-toolbar-center,
+  .editor-toolbar-right {
+    width: 100%;
+
+    justify-content: center;
+  }
+
+  .editor-toolbar-right {
+    display: grid;
+
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .editor-toolbar-btn {
+    justify-content: center;
+  }
+}
+
+/* =====================================================
+SAVE STATUS
+===================================================== */
+
+.save-status {
+  display: flex;
+
+  align-items: center;
+
+  gap: 10px;
+
+  padding: 10px 16px;
+
+  border-radius: 999px;
+
+  font-size: 13px;
+
+  font-weight: 600;
+
+  transition: 0.25s;
+}
+
+.save-status.saved {
+  color: #4ade80;
+
+  background: rgba(74, 222, 128, 0.12);
+
+  border: 1px solid rgba(74, 222, 128, 0.25);
+}
+
+.save-status.unsaved {
+  color: #fbbf24;
+
+  background: rgba(251, 191, 36, 0.12);
+
+  border: 1px solid rgba(251, 191, 36, 0.25);
+}
+
+.save-status.saving {
+  color: #60a5fa;
+
+  background: rgba(96, 165, 250, 0.12);
+
+  border: 1px solid rgba(96, 165, 250, 0.25);
+}
+
+.save-status-spinner {
+  animation: editorSpin 0.8s linear infinite;
+}
+
+@keyframes editorSpin {
+  from {
+    transform: rotate(0);
+  }
+
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* ====================================================
+LEGAL EDITOR
+==================================================== */
+
+.legal-editor {
+  display: flex;
+
+  flex-direction: column;
+
+  gap: 24px;
+}
+
+/* ====================================================
+CARD
+==================================================== */
+
+.legal-editor-card {
+  background: #181b25;
+
+  border: 1px solid #31384c;
+
+  border-radius: 16px;
+
+  padding: 24px;
+}
+
+.editor-card-title {
+  color: #fff;
+
+  font-size: 22px;
+
+  margin-bottom: 24px;
+}
+
+/* ====================================================
+SECTION HEADER
+==================================================== */
+
+.editor-section-header {
+  display: flex;
+
+  justify-content: space-between;
+
+  align-items: center;
+
+  margin-bottom: 24px;
+}
+
+.editor-section-header h2 {
+  color: white;
+
+  font-size: 22px;
+}
+
+.editor-section-header span {
+  color: #9aa3b8;
+
+  font-size: 14px;
+}
+
+/* ====================================================
+EMPTY
+==================================================== */
+
+.empty-sections {
+  border: 2px dashed #394055;
+
+  border-radius: 14px;
+
+  padding: 50px 20px;
+
+  text-align: center;
+}
+
+.empty-sections h3 {
+  color: white;
+
+  margin-bottom: 10px;
+}
+
+.empty-sections p {
+  color: #9098ad;
+}
+
+/* ===================================================
+ADD SECTION
+=================================================== */
+
+.add-section-menu {
+  position: relative;
+
+  display: inline-block;
+}
+
+/* Trigger */
+
+.add-section-trigger {
+  display: flex;
+
+  align-items: center;
+
+  justify-content: center;
+
+  gap: 10px;
+
+  border: none;
+
+  cursor: pointer;
+
+  padding: 14px 24px;
+
+  border-radius: 14px;
+
+  font-size: 15px;
+
+  font-weight: 600;
+
+  color: #fff;
+
+  background: linear-gradient(135deg, #ff9800, #ffb300);
+
+  transition: 0.25s;
+}
+
+.add-section-trigger:hover {
+  transform: translateY(-2px);
+
+  box-shadow: 0 12px 24px rgba(255, 152, 0, 0.3);
+}
+
+/* Dropdown */
+
+.add-section-dropdown {
+  position: absolute;
+
+  left: 0;
+
+  top: calc(100% + 12px);
+
+  width: 320px;
+
+  background: #181b25;
+
+  border: 1px solid #31384c;
+
+  border-radius: 18px;
+
+  overflow: hidden;
+
+  backdrop-filter: blur(18px);
+
+  box-shadow: 0 25px 50px rgba(0, 0, 0, 0.45);
+
+  animation: dropdownIn 0.22s ease;
+
+  z-index: 200;
+}
+
+.add-section-dropdown button {
+  width: 100%;
+
+  border: none;
+
+  background: none;
+
+  cursor: pointer;
+
+  display: flex;
+
+  align-items: flex-start;
+
+  gap: 16px;
+
+  padding: 18px;
+
+  color: #fff;
+
+  text-align: left;
+
+  transition: 0.25s;
+}
+
+.add-section-dropdown button:hover {
+  background: #252b3c;
+}
+
+.add-section-dropdown svg {
+  color: #ff9800;
+
+  flex-shrink: 0;
+
+  margin-top: 2px;
+}
+
+.add-section-dropdown h4 {
+  margin: 0;
+
+  font-size: 15px;
+
+  font-weight: 700;
+}
+
+.add-section-dropdown p {
+  margin-top: 4px;
+
+  color: #9ca4b8;
+
+  font-size: 13px;
+
+  line-height: 1.5;
+}
+
+/* Animation */
+
+@keyframes dropdownIn {
+  from {
+    opacity: 0;
+
+    transform: translateY(-8px) scale(0.98);
+  }
+
+  to {
+    opacity: 1;
+
+    transform: translateY(0) scale(1);
+  }
+}
+/* ===========================================
+SECTION CARD
+=========================================== */
+
+.section-card {
+  background: #181b25;
+
+  border: 1px solid #31384c;
+
+  border-radius: 16px;
+
+  padding: 24px;
+
+  display: flex;
+
+  flex-direction: column;
+
+  gap: 22px;
+}
+
+.section-card-header {
+  display: flex;
+
+  justify-content: space-between;
+
+  align-items: center;
+
+  padding-bottom: 14px;
+
+  border-bottom: 1px solid #2e3447;
+}
+
+.section-card-header h3 {
+  color: white;
+
+  font-size: 20px;
+
+  font-weight: 600;
+}
+
+/* =====================================================
+SECTION TOOLBAR
+===================================================== */
+
+.section-toolbar {
+  display: flex;
+
+  align-items: center;
+
+  gap: 10px;
+}
+
+/* ========================================= */
+
+.section-toolbar-btn {
+  width: 42px;
+
+  height: 42px;
+
+  border: none;
+
+  cursor: pointer;
+
+  border-radius: 12px;
+
+  display: flex;
+
+  align-items: center;
+
+  justify-content: center;
+
+  background: #242938;
+
+  color: #d9dce5;
+
+  transition:
+    background 0.25s,
+    transform 0.25s,
+    color 0.25s,
+    box-shadow 0.25s;
+}
+
+/* ========================================= */
+
+.section-toolbar-btn:hover:not(:disabled) {
+  background: #31384d;
+
+  color: white;
+
+  transform: translateY(-2px);
+
+  box-shadow: 0 8px 18px rgba(0, 0, 0, 0.2);
+}
+
+/* ========================================= */
+
+.section-toolbar-btn:active:not(:disabled) {
+  transform: scale(0.94);
+}
+
+/* ========================================= */
+
+.section-toolbar-btn:disabled {
+  opacity: 0.35;
+
+  cursor: not-allowed;
+
+  transform: none;
+
+  box-shadow: none;
+}
+
+/* ========================================= */
+
+.section-toolbar-btn.danger {
+  background: rgba(239, 68, 68, 0.12);
+
+  color: #ff8f8f;
+
+  border: 1px solid rgba(239, 68, 68, 0.18);
+}
+
+.section-toolbar-btn.danger:hover {
+  background: rgba(239, 68, 68, 0.22);
+
+  color: white;
+
+  box-shadow: 0 10px 22px rgba(239, 68, 68, 0.2);
+}
+
+/* ===========================================
+ADD SECTION MENU
+=========================================== */
+
+.add-section-menu {
+  position: relative;
+
+  display: inline-block;
+}
+
+/* Trigger */
+
+.add-section-trigger {
+  display: flex;
+
+  align-items: center;
+
+  gap: 10px;
+
+  border: none;
+
+  cursor: pointer;
+
+  padding: 14px 24px;
+
+  border-radius: 12px;
+
+  color: white;
+
+  font-weight: 600;
+
+  background: linear-gradient(135deg, #ff7a18, #ffb800);
+
+  transition: 0.25s;
+}
+
+.add-section-trigger:hover {
+  transform: translateY(-2px);
+
+  box-shadow: 0 10px 25px rgba(255, 145, 0, 0.35);
+}
+
+/* Dropdown */
+
+.add-section-dropdown {
+  position: absolute;
+
+  top: 110%;
+
+  left: 0;
+
+  width: 300px;
+
+  background: #181b25;
+
+  border: 1px solid #31384c;
+
+  border-radius: 16px;
+
+  overflow: hidden;
+
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.45);
+
+  z-index: 100;
+}
+
+.add-section-dropdown button {
+  width: 100%;
+
+  border: none;
+
+  cursor: pointer;
+
+  background: none;
+
+  color: white;
+
+  padding: 16px 18px;
+
+  display: flex;
+
+  align-items: flex-start;
+
+  gap: 14px;
+
+  transition: 0.25s;
+
+  text-align: left;
+}
+
+.add-section-dropdown button:hover {
+  background: #242a3a;
+}
+
+.add-section-dropdown svg {
+  color: #ff9800;
+
+  flex-shrink: 0;
+
+  margin-top: 2px;
+}
+
+.add-section-dropdown h4 {
+  margin: 0;
+
+  font-size: 15px;
+
+  font-weight: 600;
+}
+
+.add-section-dropdown p {
+  margin-top: 4px;
+
+  color: #8f96aa;
+
+  font-size: 13px;
+
+  line-height: 1.5;
+}
+
+.sections-wrapper {
+  display: flex;
+
+  flex-direction: column;
+
+  gap: 24px;
+}
+
+/* ===========================================
+BULLET LIST
+=========================================== */
+
+.bullet-wrapper {
+  display: flex;
+
+  flex-direction: column;
+
+  gap: 14px;
+}
+
+.bullet-item {
+  display: flex;
+
+  gap: 10px;
+}
+
+.bullet-item input {
+  flex: 1;
+}
+
+.bullet-item button {
+  border: none;
+
+  cursor: pointer;
+
+  padding: 0 16px;
+
+  border-radius: 8px;
+
+  background: #ff4d4f;
+
+  color: white;
+}
+
+/* ===========================================
+RICH BULLET
+=========================================== */
+
+.rich-wrapper {
+  display: flex;
+
+  flex-direction: column;
+
+  gap: 20px;
+}
+
+.rich-card {
+  background: #202433;
+
+  padding: 18px;
+
+  border-radius: 12px;
+
+  display: flex;
+
+  flex-direction: column;
+
+  gap: 12px;
+}
+
+.rich-card button {
+  align-self: flex-end;
+
+  border: none;
+
+  cursor: pointer;
+
+  background: #ff4d4f;
+
+  color: white;
+
+  padding: 8px 16px;
+
+  border-radius: 8px;
+}
+
+/* ===========================================
+ADD BUTTON
+=========================================== */
+
+.add-item-btn {
+  border: none;
+
+  cursor: pointer;
+
+  background: #ff9800;
+
+  color: white;
+
+  padding: 12px;
+
+  border-radius: 10px;
+
+  font-weight: 600;
+}
+
+/*  ========================new css======================== */
+
+/* ==========================================================
+EDITOR PAGE LAYOUT
+========================================================== */
+
+.legal-editor-page {
+  width: 100%;
+
+  display: flex;
+
+  flex-direction: column;
+
+  gap: 28px;
+
+  padding-bottom: 40px;
+}
+
+.legal-editor {
+  display: flex;
+
+  flex-direction: column;
+
+  gap: 24px;
+}
+
+/* ==========================================================
+EDITOR TOOLBAR
+========================================================== */
+
+.editor-toolbar {
+  position: sticky;
+
+  top: 18px;
+
+  z-index: 50;
+
+  display: flex;
+
+  justify-content: space-between;
+
+  align-items: center;
+
+  gap: 20px;
+
+  padding: 18px 22px;
+
+  border-radius: 18px;
+
+  background: rgba(22, 25, 34, 0.94);
+
+  border: 1px solid #31384c;
+
+  backdrop-filter: blur(14px);
+
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.25);
+}
+
+.editor-toolbar-left,
+.editor-toolbar-center,
+.editor-toolbar-right {
+  display: flex;
+
+  align-items: center;
+}
+
+.editor-toolbar-right {
+  gap: 12px;
+}
+
+/* ==========================================================
+BUTTONS
+========================================================== */
+
+.editor-toolbar-btn {
+  border: none;
+
+  cursor: pointer;
+
+  display: flex;
+
+  align-items: center;
+
+  justify-content: center;
+
+  gap: 8px;
+
+  padding: 12px 18px;
+
+  border-radius: 12px;
+
+  font-size: 14px;
+
+  font-weight: 600;
+
+  transition: 0.25s;
+}
+
+.editor-toolbar-btn svg {
+  flex-shrink: 0;
+}
+
+.editor-toolbar-btn.secondary {
+  background: #232938;
+
+  color: #fff;
+}
+
+.editor-toolbar-btn.secondary:hover {
+  background: #30384d;
+}
+
+.editor-toolbar-btn.preview {
+  background: #1f334c;
+
+  color: #8bc3ff;
+}
+
+.editor-toolbar-btn.preview:hover {
+  background: #2b4566;
+}
+
+.editor-toolbar-btn.save {
+  background: linear-gradient(135deg, #ff9800, #ffb300);
+
+  color: white;
+}
+
+.editor-toolbar-btn.save:hover:not(:disabled) {
+  transform: translateY(-2px);
+
+  box-shadow: 0 12px 25px rgba(255, 152, 0, 0.3);
+}
+
+.editor-toolbar-btn:disabled {
+  cursor: not-allowed;
+
+  opacity: 0.55;
+}
+
+/* ==========================================================
+SAVE STATUS
+========================================================== */
+
+.save-status {
+  display: flex;
+
+  align-items: center;
+
+  gap: 10px;
+
+  padding: 10px 16px;
+
+  border-radius: 999px;
+
+  font-size: 13px;
+
+  font-weight: 600;
+
+  transition: 0.25s;
+}
+
+.save-status.saved {
+  color: #4ade80;
+
+  background: rgba(74, 222, 128, 0.12);
+
+  border: 1px solid rgba(74, 222, 128, 0.25);
+}
+
+.save-status.unsaved {
+  color: #fbbf24;
+
+  background: rgba(251, 191, 36, 0.12);
+
+  border: 1px solid rgba(251, 191, 36, 0.25);
+}
+
+.save-status.saving {
+  color: #60a5fa;
+
+  background: rgba(96, 165, 250, 0.12);
+
+  border: 1px solid rgba(96, 165, 250, 0.25);
+}
+
+.save-status svg {
+  flex-shrink: 0;
+}
+
+/* ==========================================================
+SPINNER
+========================================================== */
+
+.spin {
+  animation: editorSpin 0.8s linear infinite;
+}
+
+.save-status-spinner {
+  animation: editorSpin 0.8s linear infinite;
+}
+
+@keyframes editorSpin {
+  from {
+    transform: rotate(0deg);
+  }
+
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* ==========================================================
+EDITOR CARDS
+========================================================== */
+
+.legal-editor-card {
+  background: #181b25;
+
+  border: 1px solid #31384c;
+
+  border-radius: 18px;
+
+  padding: 24px;
+}
+
+.editor-card-title {
+  margin: 0 0 24px;
+
+  color: white;
+
+  font-size: 22px;
+
+  font-weight: 700;
+}
+
+/* ==========================================================
+SECTION HEADER
+========================================================== */
+
+.editor-section-header {
+  display: flex;
+
+  justify-content: space-between;
+
+  align-items: center;
+
+  margin-bottom: 24px;
+}
+
+.editor-section-header h2 {
+  margin: 0;
+
+  color: white;
+
+  font-size: 22px;
+
+  font-weight: 700;
+}
+
+.editor-section-header span {
+  padding: 6px 12px;
+
+  border-radius: 999px;
+
+  background: #252b3b;
+
+  color: #aeb6ca;
+
+  font-size: 12px;
+
+  font-weight: 600;
+}
+
+/* ==========================================================
+PAGE INFORMATION
+========================================================== */
+
+.editor-form {
+  display: flex;
+
+  flex-direction: column;
+
+  gap: 24px;
+}
+
+.editor-row {
+  display: grid;
+
+  grid-template-columns: 1fr 1fr;
+
+  gap: 20px;
+}
+
+/* ==========================================================
+FORM GROUP
+========================================================== */
+
+.editor-group {
+  display: flex;
+
+  flex-direction: column;
+
+  gap: 10px;
+}
+
+.editor-group label {
+  display: flex;
+
+  align-items: center;
+
+  gap: 8px;
+
+  color: #ffffff;
+
+  font-size: 14px;
+
+  font-weight: 600;
+
+  letter-spacing: 0.2px;
+}
+
+.editor-group small {
+  color: #8f97ab;
+
+  font-size: 12px;
+
+  line-height: 1.6;
+}
+
+/* ==========================================================
+INPUT
+========================================================== */
+
+.editor-group input,
+.editor-group textarea,
+.editor-group select {
+  width: 100%;
+
+  border: 1px solid #343b4f;
+
+  background: #11141d;
+
+  color: #ffffff;
+
+  border-radius: 12px;
+
+  padding: 14px 16px;
+
+  font-size: 15px;
+
+  font-family: inherit;
+
+  transition: 0.25s;
+
+  outline: none;
+}
+
+.editor-group textarea {
+  resize: vertical;
+
+  min-height: 120px;
+
+  line-height: 1.8;
+}
+
+.editor-group select {
+  cursor: pointer;
+
+  appearance: none;
+
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='18' height='18' fill='white' viewBox='0 0 24 24'%3E%3Cpath d='M7 10l5 5 5-5z'/%3E%3C/svg%3E");
+
+  background-repeat: no-repeat;
+
+  background-position: right 16px center;
+
+  padding-right: 46px;
+}
+
+/* ==========================================================
+PLACEHOLDER
+========================================================== */
+
+.editor-group input::placeholder,
+.editor-group textarea::placeholder {
+  color: #6f7689;
+}
+
+/* ==========================================================
+FOCUS
+========================================================== */
+
+.editor-group input:focus,
+.editor-group textarea:focus,
+.editor-group select:focus {
+  border-color: #ff9800;
+
+  box-shadow: 0 0 0 4px rgba(255, 152, 0, 0.12);
+
+  background: #151925;
+}
+
+/* ==========================================================
+READONLY
+========================================================== */
+
+.editor-group input:read-only {
+  background: #171b26;
+
+  cursor: not-allowed;
+
+  opacity: 0.9;
+}
+
+/* ==========================================================
+DISABLED
+========================================================== */
+
+.editor-group input:disabled,
+.editor-group textarea:disabled,
+.editor-group select:disabled {
+  opacity: 0.6;
+
+  cursor: not-allowed;
+}
+
+/* ==========================================================
+ERROR STATE
+========================================================== */
+
+.editor-group.error input,
+.editor-group.error textarea,
+.editor-group.error select {
+  border-color: #ef4444;
+
+  box-shadow: 0 0 0 4px rgba(239, 68, 68, 0.1);
+}
+
+.editor-error {
+  color: #ff7b7b;
+
+  font-size: 13px;
+
+  margin-top: -2px;
+}
+
+/* ==========================================================
+SUCCESS
+========================================================== */
+
+.editor-group.success input,
+.editor-group.success textarea,
+.editor-group.success select {
+  border-color: #22c55e;
+
+  box-shadow: 0 0 0 4px rgba(34, 197, 94, 0.1);
+}
+
+/* ==========================================================
+HELP TEXT
+========================================================== */
+
+.editor-help {
+  color: #98a2b6;
+
+  font-size: 13px;
+
+  line-height: 1.7;
+}
+
+/* ==========================================================
+FIELD DIVIDER
+========================================================== */
+
+.editor-divider {
+  width: 100%;
+
+  height: 1px;
+
+  background: #2d3346;
+
+  margin: 6px 0;
+}
+
+/* ==========================================================
+SECTION CARD
+========================================================== */
+
+.section-card {
+  background: #1a1d28;
+
+  border: 1px solid #31384c;
+
+  border-radius: 20px;
+
+  padding: 26px;
+
+  display: flex;
+
+  flex-direction: column;
+
+  gap: 24px;
+
+  transition: 0.25s;
+
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.15);
+}
+
+.section-card:hover {
+  border-color: #ff9800;
+
+  transform: translateY(-2px);
+
+  box-shadow: 0 16px 35px rgba(0, 0, 0, 0.22);
+}
+
+.section-card-title {
+  display: flex;
+
+  align-items: center;
+
+  gap: 16px;
+}
+
+.section-number {
+  width: 44px;
+
+  height: 44px;
+
+  border-radius: 12px;
+
+  display: flex;
+
+  align-items: center;
+
+  justify-content: center;
+
+  font-size: 18px;
+
+  font-weight: 700;
+
+  color: white;
+
+  background: linear-gradient(135deg, #ff9800, #ffb300);
+}
+
+.section-card-title h3 {
+  margin: 0;
+
+  color: white;
+
+  font-size: 20px;
+
+  font-weight: 700;
+}
+
+.section-card-title p {
+  margin-top: 4px;
+
+  color: #98a1b8;
+
+  font-size: 13px;
+}
+
+.section-card + .section-card {
+  margin-top: 24px;
+}
+
+/* ==========================================================
+SECTION HEADER
+========================================================== */
+
+.section-card-header {
+  display: flex;
+
+  justify-content: space-between;
+
+  align-items: flex-start;
+
+  gap: 20px;
+
+  padding-bottom: 20px;
+
+  border-bottom: 1px solid #2d3346;
+}
+
+.section-card-header h3 {
+  margin: 0;
+
+  color: #fff;
+
+  font-size: 20px;
+
+  font-weight: 700;
+}
+
+.section-number {
+  display: inline-flex;
+
+  align-items: center;
+
+  justify-content: center;
+
+  min-width: 34px;
+
+  height: 34px;
+
+  padding: 0 12px;
+
+  border-radius: 999px;
+
+  background: #252b3b;
+
+  color: #ffb84d;
+
+  font-size: 13px;
+
+  font-weight: 700;
+}
+
+/* ==========================================================
+SECTION BODY
+========================================================== */
+
+.section-card-body {
+  display: flex;
+
+  flex-direction: column;
+
+  gap: 22px;
+}
+
+/* ==========================================================
+SECTION TOOLBAR
+========================================================== */
+
+.section-toolbar {
+  display: flex;
+
+  align-items: center;
+
+  gap: 8px;
+
+  flex-wrap: wrap;
+}
+
+.section-toolbar-btn {
+  width: 40px;
+
+  height: 40px;
+
+  border: none;
+
+  cursor: pointer;
+
+  border-radius: 10px;
+
+  display: flex;
+
+  align-items: center;
+
+  justify-content: center;
+
+  background: #232939;
+
+  color: #d7dce9;
+
+  transition: 0.25s;
+}
+
+.section-toolbar-btn svg {
+  width: 18px;
+
+  height: 18px;
+}
+
+.section-toolbar-btn:hover:not(:disabled) {
+  background: #31394d;
+
+  color: #fff;
+
+  transform: translateY(-2px);
+}
+
+.section-toolbar-btn:disabled {
+  opacity: 0.4;
+
+  cursor: not-allowed;
+
+  transform: none;
+}
+
+/* ==========================================================
+BUTTON VARIANTS
+========================================================== */
+
+.section-toolbar-btn.move {
+  background: #243247;
+
+  color: #8ec5ff;
+}
+
+.section-toolbar-btn.move:hover:not(:disabled) {
+  background: #314560;
+}
+
+.section-toolbar-btn.duplicate {
+  background: #2b2d22;
+
+  color: #ffc86b;
+}
+
+.section-toolbar-btn.duplicate:hover:not(:disabled) {
+  background: #3b3d2f;
+}
+
+.section-toolbar-btn.delete {
+  background: #3a2023;
+
+  color: #ff8d8d;
+}
+
+.section-toolbar-btn.delete:hover:not(:disabled) {
+  background: #54282d;
+
+  color: #fff;
+}
+
+/* ==========================================================
+SECTION LABEL
+========================================================== */
+
+.section-type {
+  display: inline-flex;
+
+  align-items: center;
+
+  gap: 8px;
+
+  padding: 8px 14px;
+
+  border-radius: 999px;
+
+  background: #242b3b;
+
+  color: #aeb7ca;
+
+  font-size: 12px;
+
+  font-weight: 600;
+}
+
+/* ==========================================================
+DIVIDER
+========================================================== */
+
+.section-divider {
+  width: 100%;
+
+  height: 1px;
+
+  background: #2d3447;
+}
+
+/* ==========================================================
+DRAG PLACEHOLDER (Future)
+========================================================== */
+
+.section-card.dragging {
+  opacity: 0.55;
+
+  transform: scale(0.98);
+}
+
+.section-card.drop-target {
+  border-color: #ff9800;
+
+  box-shadow: 0 0 0 2px rgba(255, 152, 0, 0.18);
+}
+
+/* ==========================================================
+SECTION ACTIONS
+========================================================== */
+
+.section-actions {
+  display: flex;
+
+  justify-content: space-between;
+
+  align-items: center;
+
+  gap: 20px;
+
+  flex-wrap: wrap;
+}
+
+/* ==========================================================
+RESPONSIVE
+========================================================== */
+
+@media (max-width: 768px) {
+  .section-card {
+    padding: 18px;
+  }
+
+  .section-card-header {
+    flex-direction: column;
+
+    align-items: flex-start;
+
+    gap: 14px;
+  }
+
+  .section-toolbar {
+    width: 100%;
+
+    justify-content: flex-start;
+
+    flex-wrap: wrap;
+  }
+}
+
+/* ==========================================================
+CONTENT AREA
+========================================================== */
+
+.content-wrapper {
+  display: flex;
+
+  flex-direction: column;
+
+  gap: 20px;
+}
+
+/* ===================================================
+PARAGRAPH
+=================================================== */
+
+.editor-paragraph {
+  min-height: 220px;
+
+  resize: vertical;
+}
+
+/* ===================================================
+BULLET LIST
+=================================================== */
+
+.bullet-wrapper {
+  display: flex;
+
+  flex-direction: column;
+
+  gap: 14px;
+}
+
+.bullet-item {
+  display: flex;
+
+  align-items: center;
+
+  gap: 12px;
+}
+
+.bullet-dot {
+  width: 26px;
+
+  height: 26px;
+
+  border-radius: 50%;
+
+  display: flex;
+
+  justify-content: center;
+
+  align-items: center;
+
+  background: #ff980015;
+
+  color: #ff9800;
+
+  font-weight: 700;
+
+  flex-shrink: 0;
+}
+
+.bullet-item input {
+  flex: 1;
+}
+
+/* ===================================================
+RICH BULLET
+=================================================== */
+
+.rich-wrapper {
+  display: flex;
+
+  flex-direction: column;
+
+  gap: 18px;
+}
+
+.rich-card {
+  background: #202433;
+
+  border: 1px solid #31384c;
+
+  border-radius: 14px;
+
+  padding: 18px;
+
+  display: flex;
+
+  flex-direction: column;
+
+  gap: 14px;
+}
+
+/* ==========================================================
+EMPTY CONTENT
+========================================================== */
+
+.content-empty {
+  padding: 40px;
+
+  border: 2px dashed #3a4156;
+
+  border-radius: 16px;
+
+  text-align: center;
+
+  color: #98a2b8;
+}
+
+.content-empty svg {
+  margin-bottom: 16px;
+
+  color: #ff9800;
+}
+
+.content-empty h4 {
+  color: white;
+
+  margin-bottom: 8px;
+}
+
+.content-empty p {
+  line-height: 1.7;
+}
+
+/* ==========================================================
+CONTENT BADGE
+========================================================== */
+
+.content-badge {
+  display: inline-flex;
+
+  align-items: center;
+
+  gap: 8px;
+
+  padding: 8px 14px;
+
+  border-radius: 999px;
+
+  background: #252b3b;
+
+  color: #9fb8ff;
+
+  font-size: 12px;
+
+  font-weight: 600;
+}
+
+/* ==========================================================
+INPUT SPACING
+========================================================== */
+
+.bullet-item + .bullet-item {
+  margin-top: 4px;
+}
+
+.rich-card + .rich-card {
+  margin-top: 2px;
+}
+
+/* ==========================================================
+ANIMATION
+========================================================== */
+
+.rich-card,
+.bullet-item {
+  animation: fadeSection 0.25s ease;
+}
+
+@keyframes fadeSection {
+  from {
+    opacity: 0;
+
+    transform: translateY(8px);
+  }
+
+  to {
+    opacity: 1;
+
+    transform: translateY(0);
+  }
+}
+
+/* ==========================================================
+RESPONSIVE
+========================================================== */
+
+@media (max-width: 768px) {
+  .bullet-item {
+    flex-wrap: wrap;
+  }
+
+  .bullet-index {
+    display: none;
+  }
+
+  .bullet-remove {
+    width: 100%;
+  }
+
+  .add-item-btn {
+    width: 100%;
+
+    justify-content: center;
+  }
+
+  .rich-card-header {
+    flex-direction: column;
+
+    align-items: flex-start;
+  }
+
+  .rich-remove {
+    width: 100%;
+  }
+}
+
+/* ==========================================================
+ADD SECTION WRAPPER
+========================================================== */
+
+.add-section-wrapper {
+  display: flex;
+
+  justify-content: center;
+
+  align-items: center;
+
+  margin-top: 24px;
+}
+
+/* ==========================================================
+ADD SECTION MENU
+========================================================== */
+
+.add-section-menu {
+  position: relative;
+
+  display: inline-flex;
+
+  flex-direction: column;
+}
+
+/* ==========================================================
+TRIGGER BUTTON
+========================================================== */
+
+.add-section-trigger {
+  display: flex;
+
+  align-items: center;
+
+  justify-content: center;
+
+  gap: 10px;
+
+  border: none;
+
+  cursor: pointer;
+
+  padding: 14px 24px;
+
+  border-radius: 14px;
+
+  background: linear-gradient(135deg, #ff9800, #ffb300);
+
+  color: white;
+
+  font-size: 15px;
+
+  font-weight: 600;
+
+  transition: 0.25s;
+}
+
+.add-section-trigger:hover {
+  transform: translateY(-2px);
+
+  box-shadow: 0 14px 28px rgba(255, 152, 0, 0.3);
+}
+
+.add-section-trigger svg {
+  flex-shrink: 0;
+}
+
+/* ==========================================================
+DROPDOWN
+========================================================== */
+
+.add-section-dropdown {
+  position: absolute;
+
+  top: calc(100% + 12px);
+
+  left: 50%;
+
+  transform: translateX(-50%);
+
+  width: 320px;
+
+  background: #181b25;
+
+  border: 1px solid #31384c;
+
+  border-radius: 18px;
+
+  overflow: hidden;
+
+  box-shadow: 0 25px 45px rgba(0, 0, 0, 0.45);
+
+  animation: dropdownIn 0.22s ease;
+
+  z-index: 100;
+}
+
+@keyframes dropdownIn {
+  from {
+    opacity: 0;
+
+    transform: translateX(-50%) translateY(-8px);
+  }
+
+  to {
+    opacity: 1;
+
+    transform: translateX(-50%) translateY(0);
+  }
+}
+
+/* ==========================================================
+MENU ITEM
+========================================================== */
+
+.add-section-item {
+  width: 100%;
+
+  border: none;
+
+  cursor: pointer;
+
+  background: none;
+
+  color: white;
+
+  display: flex;
+
+  align-items: flex-start;
+
+  gap: 14px;
+
+  padding: 18px;
+
+  text-align: left;
+
+  transition: 0.25s;
+}
+
+.add-section-item + .add-section-item {
+  border-top: 1px solid #2d3447;
+}
+
+.add-section-item:hover {
+  background: #242a39;
+}
+
+.add-section-item svg {
+  color: #ff9800;
+
+  flex-shrink: 0;
+
+  margin-top: 2px;
+}
+
+.add-section-item-content {
+  flex: 1;
+}
+
+.add-section-item-content h4 {
+  margin: 0;
+
+  font-size: 15px;
+
+  font-weight: 700;
+
+  color: white;
+}
+
+.add-section-item-content p {
+  margin-top: 5px;
+
+  color: #96a0b5;
+
+  font-size: 13px;
+
+  line-height: 1.6;
+}
+
+/* ==========================================================
+EMPTY SECTION
+========================================================== */
+
+.empty-sections {
+  display: flex;
+
+  flex-direction: column;
+
+  align-items: center;
+
+  justify-content: center;
+
+  gap: 18px;
+
+  padding: 60px 40px;
+
+  border: 2px dashed #384056;
+
+  border-radius: 18px;
+
+  background: #181b25;
+
+  text-align: center;
+}
+
+.empty-sections-icon {
+  width: 82px;
+
+  height: 82px;
+
+  border-radius: 50%;
+
+  display: flex;
+
+  justify-content: center;
+
+  align-items: center;
+
+  background: rgba(255, 152, 0, 0.12);
+
+  color: #ff9800;
+}
+
+.empty-sections h3 {
+  margin: 0;
+
+  color: white;
+
+  font-size: 24px;
+
+  font-weight: 700;
+}
+
+.empty-sections p {
+  max-width: 520px;
+
+  color: #97a1b8;
+
+  line-height: 1.8;
+
+  font-size: 15px;
+}
+
+/* ==========================================================
+EMPTY ACTION
+========================================================== */
+
+.empty-sections-action {
+  margin-top: 10px;
+
+  display: flex;
+
+  justify-content: center;
+}
+
+.empty-sections-action button {
+  display: flex;
+
+  align-items: center;
+
+  justify-content: center;
+
+  gap: 10px;
+
+  border: none;
+
+  cursor: pointer;
+
+  padding: 14px 24px;
+
+  border-radius: 14px;
+
+  background: linear-gradient(135deg, #ff9800, #ffb300);
+
+  color: white;
+
+  font-size: 15px;
+
+  font-weight: 600;
+
+  transition: 0.25s;
+}
+
+.empty-sections-action button:hover {
+  transform: translateY(-2px);
+
+  box-shadow: 0 14px 30px rgba(255, 152, 0, 0.3);
+}
+
+/* ==========================================================
+HELP TEXT
+========================================================== */
+
+.add-section-help {
+  margin-top: 14px;
+
+  text-align: center;
+
+  color: #8d97ad;
+
+  font-size: 13px;
+}
+
+/* ==========================================================
+RESPONSIVE
+========================================================== */
+
+@media (max-width: 768px) {
+  .add-section-dropdown {
+    width: 100%;
+
+    min-width: 300px;
+
+    left: 0;
+
+    transform: none;
+  }
+
+  .add-section-item {
+    padding: 16px;
+  }
+
+  .empty-sections {
+    padding: 40px 20px;
+  }
+
+  .empty-sections h3 {
+    font-size: 20px;
+  }
+
+  .empty-sections p {
+    font-size: 14px;
+  }
+
+  .empty-sections-action {
+    width: 100%;
+  }
+
+  .empty-sections-action button {
+    width: 100%;
+  }
+}
+
+/* ==========================================================
+SCROLLBAR
+========================================================== */
+
+.legal-editor-page::-webkit-scrollbar,
+.legal-editor::-webkit-scrollbar,
+.rich-wrapper::-webkit-scrollbar,
+.bullet-wrapper::-webkit-scrollbar {
+  width: 8px;
+
+  height: 8px;
+}
+
+.legal-editor-page::-webkit-scrollbar-track,
+.legal-editor::-webkit-scrollbar-track,
+.rich-wrapper::-webkit-scrollbar-track,
+.bullet-wrapper::-webkit-scrollbar-track {
+  background: #151922;
+}
+
+.legal-editor-page::-webkit-scrollbar-thumb,
+.legal-editor::-webkit-scrollbar-thumb,
+.rich-wrapper::-webkit-scrollbar-thumb,
+.bullet-wrapper::-webkit-scrollbar-thumb {
+  background: #40485f;
+
+  border-radius: 20px;
+}
+
+.legal-editor-page::-webkit-scrollbar-thumb:hover,
+.legal-editor::-webkit-scrollbar-thumb:hover,
+.rich-wrapper::-webkit-scrollbar-thumb:hover,
+.bullet-wrapper::-webkit-scrollbar-thumb:hover {
+  background: #ff9800;
+}
+
+/* ==========================================================
+GLOBAL TRANSITIONS
+========================================================== */
+
+.legal-editor * {
+  transition:
+    background 0.25s ease,
+    color 0.25s ease,
+    border-color 0.25s ease,
+    box-shadow 0.25s ease,
+    transform 0.25s ease;
+}
+
+/* ==========================================================
+CARD HOVER
+========================================================== */
+
+.legal-editor-card,
+.section-card,
+.rich-card {
+  animation: fadeUp 0.35s ease;
+}
+
+.legal-editor-card:hover,
+.section-card:hover {
+  transform: translateY(-2px);
+}
+
+/* ==========================================================
+BUTTON ANIMATION
+========================================================== */
+
+.editor-toolbar-btn,
+.section-toolbar-btn,
+.add-section-trigger,
+.add-item-btn,
+.bullet-remove,
+.rich-remove {
+  transition: all 0.25s ease;
+}
+
+.editor-toolbar-btn:active,
+.section-toolbar-btn:active,
+.add-section-trigger:active,
+.add-item-btn:active {
+  transform: scale(0.96);
+}
+
+/* ==========================================================
+INPUT ANIMATION
+========================================================== */
+
+.editor-group input,
+.editor-group textarea,
+.editor-group select {
+  transition:
+    border-color 0.25s ease,
+    background 0.25s ease,
+    box-shadow 0.25s ease;
+}
+
+.editor-group input:hover,
+.editor-group textarea:hover,
+.editor-group select:hover {
+  border-color: #4b5470;
+}
+
+/* ==========================================================
+FADE
+========================================================== */
+
+@keyframes fadeUp {
+  from {
+    opacity: 0;
+
+    transform: translateY(14px);
+  }
+
+  to {
+    opacity: 1;
+
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes scaleIn {
+  from {
+    opacity: 0;
+
+    transform: scale(0.96);
+  }
+
+  to {
+    opacity: 1;
+
+    transform: scale(1);
+  }
+}
+
+/* ==========================================================
+MOBILE
+========================================================== */
+
+@media (max-width: 992px) {
+  .editor-toolbar {
+    flex-direction: column;
+
+    align-items: stretch;
+  }
+
+  .editor-toolbar-left,
+  .editor-toolbar-center,
+  .editor-toolbar-right {
+    width: 100%;
+
+    justify-content: center;
+  }
+
+  .editor-toolbar-right {
+    display: grid;
+
+    grid-template-columns: 1fr 1fr;
+
+    gap: 12px;
+  }
+
+  .save-status {
+    justify-content: center;
+  }
+}
+
+@media (max-width: 768px) {
+  .legal-editor-page {
+    gap: 20px;
+  }
+
+  .legal-editor-card,
+  .section-card {
+    padding: 18px;
+  }
+
+  .editor-row {
+    grid-template-columns: 1fr;
+  }
+
+  .editor-toolbar {
+    padding: 16px;
+  }
+
+  .editor-toolbar-btn {
+    width: 100%;
+
+    justify-content: center;
+  }
+
+  .editor-toolbar-right {
+    grid-template-columns: 1fr;
+  }
+
+  .editor-section-header {
+    flex-direction: column;
+
+    align-items: flex-start;
+
+    gap: 12px;
+  }
+
+  .section-card-header {
+    flex-direction: column;
+
+    align-items: flex-start;
+  }
+
+  .section-toolbar {
+    width: 100%;
+
+    flex-wrap: wrap;
+  }
+
+  .section-toolbar-btn {
+    flex: 1;
+
+    min-width: 52px;
+  }
+
+  .bullet-item {
+    flex-direction: column;
+
+    align-items: stretch;
+  }
+
+  .bullet-remove {
+    width: 100%;
+  }
+
+  .rich-card-header {
+    flex-direction: column;
+
+    align-items: flex-start;
+  }
+
+  .rich-remove {
+    width: 100%;
+  }
+
+  .add-section-trigger {
+    width: 100%;
+
+    justify-content: center;
+  }
+}
+
+@media (max-width: 480px) {
+  .editor-toolbar {
+    border-radius: 14px;
+  }
+
+  .legal-editor-card,
+  .section-card {
+    border-radius: 14px;
+  }
+
+  .editor-card-title {
+    font-size: 20px;
+  }
+
+  .editor-section-header h2 {
+    font-size: 20px;
+  }
+
+  .section-card-header h3 {
+    font-size: 18px;
+  }
+
+  .editor-group input,
+  .editor-group textarea,
+  .editor-group select {
+    font-size: 14px;
+
+    padding: 13px;
+  }
+
+  .add-section-dropdown {
+    width: 100%;
+
+    min-width: unset;
+  }
+}
+
+/* ==========================================================
+PRINT
+========================================================== */
+
+@media print {
+  .editor-toolbar,
+  .section-toolbar,
+  .add-section-wrapper {
+    display: none;
+  }
+
+  .legal-editor-card,
+  .section-card {
+    border: none;
+
+    box-shadow: none;
+
+    background: white;
+
+    color: black;
+  }
+}
+
+@media (max-width: 900px) {
+  .editor-toolbar {
+    flex-direction: column;
+
+    align-items: stretch;
+  }
+
+  .editor-toolbar-left,
+  .editor-toolbar-center,
+  .editor-toolbar-right {
+    width: 100%;
+
+    justify-content: center;
+  }
+
+  .editor-toolbar-right {
+    display: grid;
+
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .editor-toolbar-btn {
+    width: 100%;
+  }
+}
+
+@media (max-width: 600px) {
+  .editor-toolbar {
+    padding: 16px;
+  }
+
+  .editor-toolbar-right {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 768px) {
+  .editor-bottom-actions {
+    flex-direction: column-reverse;
+  }
+
+  .editor-bottom-btn {
+    width: 100%;
+  }
+}
+
+/* ==========================================================
+RESPONSIVE LAYOUT
+========================================================== */
+
+/* ==========================================
+Large Desktop
+========================================== */
+
+@media (min-width: 1400px) {
+  .legal-editor {
+    max-width: 1200px;
+
+    margin: 0 auto;
+  }
+}
+
+/* ==========================================
+Desktop
+========================================== */
+
+@media (max-width: 1200px) {
+  .legal-editor {
+    gap: 22px;
+  }
+}
+
+/* ==========================================
+Tablet
+========================================== */
+
+@media (max-width: 992px) {
+  .legal-editor-page {
+    gap: 22px;
+  }
+
+  .legal-editor-card {
+    padding: 22px;
+  }
+
+  .section-card {
+    padding: 22px;
+  }
+
+  /* Toolbar */
+
+  .editor-toolbar {
+    flex-wrap: wrap;
+
+    gap: 18px;
+  }
+
+  .editor-toolbar-left {
+    flex: 1;
+  }
+
+  .editor-toolbar-center {
+    order: 3;
+
+    width: 100%;
+
+    justify-content: center;
+  }
+
+  .editor-toolbar-right {
+    margin-left: auto;
+  }
+
+  /* Page Information */
+
+  .editor-row {
+    grid-template-columns: 1fr;
+  }
+
+  /* Section Header */
+
+  .section-card-header {
+    flex-direction: column;
+
+    align-items: flex-start;
+
+    gap: 18px;
+  }
+
+  .section-toolbar {
+    width: 100%;
+
+    justify-content: flex-end;
+  }
+}
+
+/* ==========================================
+Mobile
+========================================== */
+
+@media (max-width: 768px) {
+  .legal-editor-page {
+    gap: 20px;
+  }
+
+  .legal-editor {
+    gap: 20px;
+  }
+
+  .legal-editor-card {
+    padding: 18px;
+
+    border-radius: 16px;
+  }
+
+  .section-card {
+    padding: 18px;
+
+    border-radius: 16px;
+  }
+
+  /* Toolbar */
+
+  .editor-toolbar {
+    position: static;
+
+    padding: 16px;
+
+    flex-direction: column;
+
+    align-items: stretch;
+  }
+
+  .editor-toolbar-left,
+  .editor-toolbar-center,
+  .editor-toolbar-right {
+    width: 100%;
+
+    justify-content: center;
+  }
+
+  .editor-toolbar-right {
+    display: grid;
+
+    grid-template-columns: 1fr 1fr;
+
+    gap: 10px;
+  }
+
+  .editor-toolbar-btn {
+    width: 100%;
+
+    justify-content: center;
+  }
+
+  /* Page */
+
+  .editor-card-title {
+    font-size: 20px;
+  }
+
+  .editor-group {
+    margin-bottom: 20px;
+  }
+
+  .editor-group input,
+  .editor-group textarea,
+  .editor-group select {
+    font-size: 15px;
+
+    padding: 14px;
+  }
+
+  /* Section */
+
+  .section-card-title {
+    width: 100%;
+  }
+
+  .section-number {
+    width: 40px;
+
+    height: 40px;
+
+    font-size: 16px;
+  }
+
+  .section-card-title h3 {
+    font-size: 18px;
+  }
+
+  .section-toolbar {
+    justify-content: space-between;
+  }
+
+  .section-toolbar-btn {
+    flex: 1;
+
+    height: 42px;
+  }
+
+  /* Rich Bullet */
+
+  .rich-card {
+    padding: 16px;
+  }
+
+  /* Bottom Buttons */
+
+  .editor-bottom-actions {
+    flex-direction: column-reverse;
+
+    gap: 12px;
+  }
+
+  .editor-bottom-btn {
+    width: 100%;
+  }
+}
+
+/* ==========================================
+Small Mobile
+========================================== */
+
+@media (max-width: 480px) {
+  .legal-editor-card {
+    padding: 16px;
+  }
+
+  .section-card {
+    padding: 16px;
+  }
+
+  .editor-toolbar {
+    padding: 14px;
+  }
+
+  .editor-toolbar-right {
+    grid-template-columns: 1fr;
+  }
+
+  .save-status {
+    width: 100%;
+
+    justify-content: center;
+  }
+
+  .section-card-header {
+    gap: 14px;
+  }
+
+  .section-card-title {
+    gap: 12px;
+  }
+
+  .section-number {
+    width: 36px;
+
+    height: 36px;
+
+    font-size: 15px;
+  }
+
+  .bullet-item {
+    flex-direction: column;
+
+    align-items: stretch;
+  }
+
+  .bullet-dot {
+    display: none;
+  }
+
+  .remove-item-btn {
+    width: 100%;
+  }
+
+  .add-item-btn {
+    width: 100%;
+  }
+
+  .add-section-trigger {
+    width: 100%;
+
+    justify-content: center;
+  }
+
+  .add-section-dropdown {
+    width: 100%;
+  }
+}
+
+/* ==========================================
+Animation
+========================================== */
+
+.legal-editor-card,
+.section-card {
+  animation: fadeUp 0.35s ease;
+}
+
+@keyframes fadeUp {
+  from {
+    opacity: 0;
+
+    transform: translateY(12px);
+  }
+
+  to {
+    opacity: 1;
+
+    transform: translateY(0);
+  }
+}
+
+/* ================legalpage editor jsx============== */
+
+/* ===================================================
+BOTTOM ACTIONS
+=================================================== */
+
+.editor-bottom-actions {
+  display: flex;
+
+  justify-content: flex-end;
+
+  gap: 16px;
+
+  margin-top: 30px;
+
+  padding-top: 24px;
+
+  border-top: 1px solid #31384c;
+}
+
+/* Button */
+
+.editor-bottom-btn {
+  min-width: 180px;
+
+  border: none;
+
+  cursor: pointer;
+
+  border-radius: 12px;
+
+  padding: 14px 22px;
+
+  font-size: 15px;
+
+  font-weight: 600;
+
+  transition: 0.25s;
+}
+
+/* Preview */
+
+.editor-bottom-btn.preview {
+  background: #232938;
+
+  color: white;
+}
+
+.editor-bottom-btn.preview:hover {
+  background: #31384d;
+}
+
+/* Save */
+
+.editor-bottom-btn.save {
+  background: linear-gradient(135deg, #ff9800, #ffb300);
+
+  color: white;
+}
+
+.editor-bottom-btn.save:hover:not(:disabled) {
+  transform: translateY(-2px);
+
+  box-shadow: 0 12px 24px rgba(255, 152, 0, 0.3);
+}
+
+.editor-bottom-btn:disabled {
+  opacity: 0.55;
+
+  cursor: not-allowed;
+}
