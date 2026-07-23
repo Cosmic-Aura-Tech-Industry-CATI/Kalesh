@@ -106,11 +106,19 @@ export const API_ENDPOINTS = {
       GET_ALL: "/admin-panel/highlights",
       CREATE: "/admin-panel/highlights",
       UPDATE_BY_ID: (id) => `/admin-panel/highlights/${id}`,
+      GET_BY_CATEGORY: (category) => `/admin-panel/highlights/category/${category}`,
       DELETE_BY_ID: (id) => `/admin-panel/highlights/${id}`,
     },
 
     DASHBOARD: {
       GET_STATS: "/admin-panel/dashboard/stats",
+    },
+
+    HIGHLIGHT_CATEGORY: {
+      GET_ALL: "/admin-panel/highlight-category",
+      CREATE: "/admin-panel/highlight-category",
+      UPDATE_BY_ID: (id) => `/admin-panel/highlight-category/${id}`,
+      DELETE_BY_ID: (id) => `/admin-panel/highlight-category/${id}`,
     },
 
     WALLPAPERS: {

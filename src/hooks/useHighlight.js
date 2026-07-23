@@ -14,6 +14,19 @@ export const useGetAllHighlights = () => {
 };
 
 /**
+ * A hook that fetches highlights by category from the API.
+ * @param {string} category - The category of the highlights to be fetched.
+ * @returns {UseQueryResult} - The result of the useQuery hook.
+ */
+export const useGetHighlightsByCategory = (category) => {
+  return useQuery({
+    queryKey: ["highlights", "category", category],
+    queryFn: () => HighlightService.getHighlightsByCategory(category),
+    enabled: !!category,
+  });
+};
+
+/**
  * A hook that creates a new highlight.
  * Invalidates the "highlights" cache and shows a toast on success.
  * @returns {UseMutationResult} - The result of the useMutation hook.

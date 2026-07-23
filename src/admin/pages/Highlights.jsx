@@ -1,72 +1,103 @@
-import { useState } from "react";
-import { Sparkles, ImagePlus, Trophy, Flame, Star, Plus } from "lucide-react";
+import { useState, useEffect } from "react";
+import { useForm } from "react-hook-form";
+import {
+  Sparkles,
+  ImagePlus,
+  Trophy,
+  Flame,
+  Star,
+  Plus,
+  Edit,
+  Trash2,
+} from "lucide-react";
 
 import HighlightModal from "../components/HighlightModal";
 import HighlightCard from "../components/HighlightCard";
-import { useGetAllHighlights, useCreateHighlight, useDeleteHighlight } from "../../hooks/useHighlight";
+import {
+  useGetAllHighlights,
+  useCreateHighlight,
+  useDeleteHighlight,
+  useUpdateHighlight,
+  useGetHighlightsByCategory,
+} from "../../hooks/useHighlight";
+import {
+  useGetAllHighlightCategories,
+  useCreateHighlightCategory,
+  useUpdateHighlightCategory,
+  useDeleteHighlightCategory,
+} from "../../hooks/useHighlightCategory";
 import "../style/highlights.css";
 
 export default function Highlights() {
-  const [categories, setCategories] = useState([
-    {
-      key: "user",
-      label: "User of the Week",
-      icon: Trophy,
-    },
-    {
-      key: "post",
-      label: "Post of the Day",
-      icon: Flame,
-    },
-    {
-      key: "brand",
-      label: "Brand of the Week",
-      icon: Star,
-    },
-  ]);
-
-  const [activeCategory, setActiveCategory] = useState("user");
-
   const [openModal, setOpenModal] = useState(false);
+  const [categoryModal, setCategoryModal] = useState(false);
+  const [editingCategory, setEditingCategory] = useState(null);
+  const [editingHighlight, setEditingHighlight] = useState(null);
+  const [coverImageFile, setCoverImageFile] = useState(null);
+  const [activeCategoryId, setActiveCategoryId] = useState("");
 
-  const { data: highlightsResponse } = useGetAllHighlights();
   const { mutate: createHighlight } = useCreateHighlight();
+  const { mutate: updateHighlight } = useUpdateHighlight();
   const { mutate: deleteHighlightMutate } = useDeleteHighlight();
 
-  const highlights = highlightsResponse?.data || highlightsResponse || [];
+  // Fetch all highlights for stats
+  const { data: allHighlightsResponse } = useGetAllHighlights();
 
-  const [categoryModal, setCategoryModal] = useState(false);
+  const { data: highlightsResponse, isLoading: areHighlightsLoading } =
+    useGetHighlightsByCategory(activeCategoryId);
 
-  const [newCategory, setNewCategory] = useState("");
+  const { data: categoriesData, isLoading: areCategoriesLoading } =
+    useGetAllHighlightCategories();
+  const { mutate: createCategory, isPending: isCreatingCategory } =
+    useCreateHighlightCategory();
+  const { mutate: updateCategory, isPending: isUpdatingCategory } =
+    useUpdateHighlightCategory();
+  const { mutate: deleteCategory } = useDeleteHighlightCategory();
 
-  const addNewCategory = () => {
-    if (!newCategory.trim()) return;
+  const {
+    register,
+    handleSubmit,
+    reset,
+    setValue,
+    formState: { errors },
+  } = useForm();
 
-    const slug = newCategory.toLowerCase().replace(/\s+/g, "-");
+  // Highlights for the stats cards
+  const statsHighlights = allHighlightsResponse?.data || allHighlightsResponse || [];
+  // Highlights for the grid (filtered by active category)
+  const gridHighlights = highlightsResponse?.data || highlightsResponse || [];
+  const categories = categoriesData?.data || [];
 
-    const exists = categories.find((cat) => cat.key === slug);
+  useEffect(() => {
+    if (!activeCategoryId && categories.length > 0) {
+      setActiveCategoryId(categories[0]._id);
+    }
+  }, [categories, activeCategoryId]);
 
-    if (exists) {
-      alert("Category already exists");
-      return;
+  const onCategorySubmit = (data) => {
+    const formData = new FormData();
+    formData.append("type", data.type);
+
+    // Use the file from react-hook-form's data object
+    if (data.coverImage && data.coverImage.length > 0) {
+      formData.append("coverImage", data.coverImage[0]);
     }
 
-    setCategories((prev) => [
-      ...prev,
-      {
-        key: slug,
-        label: newCategory,
-        icon: Plus,
+    const options = {
+      onSuccess: () => {
+        setCategoryModal(false);
+        reset();
+        setCoverImageFile(null);
+        setEditingCategory(null);
       },
-    ]);
+    };
 
-    setNewCategory("");
-    setCategoryModal(false);
+    if (editingCategory) {
+      updateCategory({ id: editingCategory._id, payload: formData }, options);
+    } else {
+      createCategory(formData, options);
+    }
   };
-
-  const filteredHighlights = highlights.filter(
-    (item) => item.category === activeCategory,
-  );
 
   const handleAddHighlight = (data) => {
     const formData = new FormData();
@@ -81,13 +112,45 @@ export default function Highlights() {
       formData.append("media", data.files[0].file);
     }
 
-    createHighlight(formData);
+    const options = {
+      onSuccess: () => {
+        setOpenModal(false);
+        setEditingHighlight(null);
+      },
+    };
+
+    if (editingHighlight) {
+      updateHighlight({ id: editingHighlight._id, payload: formData }, options);
+    } else {
+      createHighlight(formData, options);
+    }
   };
 
   const deleteHighlight = (id) => {
     if (window.confirm("Are you sure you want to delete this highlight?")) {
-      deleteHighlightMutate(id);
+      deleteHighlightMutate(id, {
+        onSuccess: () => setEditingHighlight(null),
+      });
     }
+  };
+
+  const handleEditCategory = (category) => {
+    setEditingCategory(category);
+    setValue("type", category.type);
+    setCategoryModal(true);
+  };
+
+  const handleDeleteCategory = (category) => {
+    if (
+      window.confirm(`Are you sure you want to delete "${category.type}"?`)
+    ) {
+      deleteCategory(category._id);
+    }
+  };
+
+  const handleEditHighlight = (highlight) => {
+    setEditingHighlight(highlight);
+    setOpenModal(true);
   };
 
   return (
@@ -117,61 +180,66 @@ export default function Highlights() {
           <div className="highlight-stat-card">
             <Sparkles />
             <div>
-              <h2>{highlights.length}</h2>
+              <h2>{statsHighlights.length}</h2>
               <p>Total Highlights</p>
             </div>
           </div>
 
-          <div className="highlight-stat-card">
-            <Trophy />
-            <div>
-              <h2>{highlights.filter((i) => i.category === "user").length}</h2>
-              <p>User of Week</p>
+          {categories.map((cat) => (
+            <div className="highlight-stat-card" key={cat._id}>
+              <img
+                src={cat.coverImage}
+                alt={cat.type}
+                className="h-8 w-8 rounded-full object-cover"
+              />
+              <div>
+                <h2>
+                  {statsHighlights.filter((h) => h.category === cat._id).length}
+                </h2>
+                <p>{cat.type}</p>
+              </div>
             </div>
-          </div>
-
-          <div className="highlight-stat-card">
-            <Flame />
-            <div>
-              <h2>{highlights.filter((i) => i.category === "post").length}</h2>
-              <p>Post of Day</p>
-            </div>
-          </div>
-
-          <div className="highlight-stat-card">
-            <Star />
-            <div>
-              <h2>{highlights.filter((i) => i.category === "brand").length}</h2>
-              <p>Brand of Week</p>
-            </div>
-          </div>
+          ))}
         </div>
 
         {/* CATEGORY TABS */}
 
         <div className="highlight-tabs">
-          {categories.map((cat) => {
-            const Icon = cat.icon;
-
-            return (
-              <button
-                key={cat.key}
-                onClick={() => setActiveCategory(cat.key)}
-                className={`highlight-tab ${
-                  activeCategory === cat.key ? "active" : ""
-                }`}
-              >
-                <Icon size={18} />
-                {cat.label}
-              </button>
-            );
-          })}
+          {areCategoriesLoading ? (
+            <div>Loading categories...</div>
+          ) : (
+            categories.map((cat) => (
+              <div key={cat._id} className="highlight-tab-wrapper">
+                <button
+                  onClick={() => setActiveCategoryId(cat._id)}
+                  className={`highlight-tab ${
+                    activeCategoryId === cat._id ? "active" : ""
+                  }`}
+                >
+                  <img src={cat.coverImage} alt={cat.type} className="h-5 w-5 rounded-full object-cover" />
+                  {cat.type}
+                </button>
+                <div className="highlight-tab-actions">
+                  <button className="edit-category-btn" onClick={() => handleEditCategory(cat)}>
+                    <Edit size={12} />
+                  </button>
+                  <button className="delete-category-btn" onClick={() => handleDeleteCategory(cat)}>
+                    <Trash2 size={12} />
+                  </button>
+                </div>
+              </div>
+            ))
+          )}
 
           {/* ADD CATEGORY BUTTON */}
-
           <button
             className="highlight-add-category"
-            onClick={() => setCategoryModal(true)}
+            onClick={() => {
+              setEditingCategory(null);
+              reset();
+              setCoverImageFile(null);
+              setCategoryModal(true);
+            }}
           >
             <Plus size={18} />
           </button>
@@ -180,12 +248,13 @@ export default function Highlights() {
         {/* GRID */}
 
         <div className="highlights-grid">
-          {filteredHighlights.length > 0 ? (
-            filteredHighlights.map((item) => (
+          {areHighlightsLoading ? <div>Loading highlights...</div> : gridHighlights.length > 0 ? (
+            gridHighlights.map((item) => (
               <HighlightCard
                 key={item._id || item.id}
                 item={item}
                 deleteHighlight={() => deleteHighlight(item._id || item.id)}
+                editHighlight={() => handleEditHighlight(item)}
               />
             ))
           ) : (
@@ -196,46 +265,87 @@ export default function Highlights() {
         <HighlightModal
           open={openModal}
           onClose={() => setOpenModal(false)}
-          category={activeCategory}
+          category={
+            editingHighlight
+              ? categories.find((c) => c._id === editingHighlight.category)?.type
+              : categories.find((c) => c._id === activeCategoryId)?.type || ""
+          }
+          editingHighlight={editingHighlight}
           onSave={handleAddHighlight}
         />
       </div>
 
       {categoryModal && (
         <div className="category-modal-overlay">
-          <div className="category-modal">
+          <form className="category-modal" onSubmit={handleSubmit(onCategorySubmit)}>
             <div className="category-modal-header">
-              <h2>Create Category</h2>
-
-              <button onClick={() => setCategoryModal(false)}>✕</button>
+              <h2>{editingCategory ? "Edit" : "Create"} Category</h2>
+              <button type="button" onClick={() => setCategoryModal(false)}>
+                ✕
+              </button>
             </div>
 
             <div className="category-modal-body">
-              <input
-                type="text"
-                placeholder="Enter category name"
-                value={newCategory}
-                onChange={(e) => setNewCategory(e.target.value)}
-                className="category-input"
-              />
+              <div className="admin-form-group">
+                <label className="admin-form-label">Category Name</label>
+                <input
+                  type="text"
+                  placeholder="Enter category name"
+                  {...register("type", {
+                    required: "Type is required",
+                    minLength: {
+                      value: 3,
+                      message: "Type must be at least 3 characters",
+                    },
+                    maxLength: {
+                      value: 50,
+                      message: "Type cannot exceed 50 characters",
+                    },
+                  })}
+                  className="category-input"
+                />
+                {errors.type && (
+                  <span className="text-red-500 text-xs mt-1">
+                    {errors.type.message}
+                  </span>
+                )}
+              </div>
+
+              <div className="admin-form-group">
+                <label className="admin-form-label">
+                  Cover Image{" "}
+                  {editingCategory ? "(Leave empty to keep current)" : "*"}
+                </label>
+                <input
+                  type="file"
+                  accept="image/*"
+                  onChange={(e) => setCoverImageFile(e.target.files[0])}
+                  className="admin-form-input"
+                  {...register("coverImage", { required: !editingCategory })}
+                />
+                 {errors.coverImage && (
+                  <span className="text-red-500 text-xs mt-1">
+                    {errors.coverImage.message}
+                  </span>
+                )}
+              </div>
             </div>
 
             <div className="category-modal-footer">
-              <button
-                className="category-cancel-btn"
-                onClick={() => setCategoryModal(false)}
-              >
+              <button type="button" className="category-cancel-btn" onClick={() => setCategoryModal(false)}>
                 Cancel
               </button>
-
-              <button className="category-create-btn" onClick={addNewCategory}>
-                Create
+              <button
+                type="submit"
+                className="category-create-btn"
+                disabled={isCreatingCategory || isUpdatingCategory}
+              >
+                {isCreatingCategory || isUpdatingCategory ? "Saving..." : "Save"}
               </button>
             </div>
-          </div>
+          </form>
         </div>
       )}
-      
     </div>
   );
 }

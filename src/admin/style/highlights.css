@@ -20,6 +20,20 @@
   margin-bottom:30px;
 }
 
+.highlight-tab-wrapper {
+  position: relative;
+}
+
+.highlight-tab-actions {
+  position: absolute;
+  top: -8px;
+  right: -8px;
+  display: flex;
+  gap: 4px;
+  background-color: #1b1b1b;
+  border-radius: 20px;
+}
+
 .highlight-tab{
   background:#1b1b1b;
   border:1px solid rgba(255,255,255,0.1);
@@ -32,6 +46,30 @@
   cursor:pointer;
   transition:0.3s;
 }
+
+.edit-category-btn,
+.delete-category-btn {
+  background-color: #333;
+  color: white;
+  border: none;
+  border-radius: 50%;
+  width: 20px;
+  height: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+.edit-category-btn:hover {
+  background-color: #ff6a00;
+}
+
+.delete-category-btn:hover {
+  background-color: #ff2a2a;
+}
+
 
 .highlight-tab.active{
   background:linear-gradient(
