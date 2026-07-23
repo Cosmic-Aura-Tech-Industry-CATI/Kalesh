@@ -247,8 +247,6 @@ export default function LegalPageEditor() {
         },
         {
           onSuccess: () => {
-            toast.success("Page updated successfully.");
-
             setDirty(false);
 
             navigate("/admin/legal-pages", {
@@ -264,8 +262,6 @@ export default function LegalPageEditor() {
     } else {
       createPage(payload, {
         onSuccess: () => {
-          toast.success("Page created successfully.");
-
           setDirty(false);
 
           navigate("/admin/legal-pages", {

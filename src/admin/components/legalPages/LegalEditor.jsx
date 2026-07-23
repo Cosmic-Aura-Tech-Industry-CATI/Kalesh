@@ -98,15 +98,7 @@ export default function LegalEditor({
 
                 <option value="terms_and_conditions">Terms & Conditions</option>
 
-                <option value="community_guidelines">
-                  Community Guidelines
-                </option>
-
-                <option value="refund_policy">Refund Policy</option>
-
-                <option value="about_us">About Us</option>
-
-                <option value="other">Other</option>
+                
               </select>
 
               <small>Used for routing and organization.</small>
