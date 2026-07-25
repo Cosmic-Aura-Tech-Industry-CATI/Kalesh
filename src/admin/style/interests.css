@@ -1,0 +1,409 @@
+/* ===========================
+   Interest Management
+=========================== */
+
+.interest-page {
+  padding: 24px;
+  color: #fff;
+}
+
+.interest-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.interest-header h2 {
+  font-size: 28px;
+  font-weight: 700;
+}
+
+.add-interest-btn {
+  padding: 12px 20px;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  background: linear-gradient(135deg, #6366f1, #8b5cf6);
+  color: #fff;
+  font-weight: 600;
+  transition: 0.25s;
+}
+
+.add-interest-btn:hover {
+  transform: translateY(-2px);
+}
+
+/* ===========================
+   Search
+=========================== */
+
+.interest-search {
+  margin-bottom: 20px;
+}
+
+.interest-search input {
+  width: 100%;
+  padding: 14px 18px;
+  border-radius: 12px;
+  outline: none;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  background: rgba(255, 255, 255, 0.05);
+  color: white;
+}
+
+.interest-search input::placeholder {
+  color: rgba(255, 255, 255, 0.45);
+}
+
+/* ===========================
+   Table
+=========================== */
+
+.interest-table-wrapper {
+  overflow-x: auto;
+  border-radius: 16px;
+  background: rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(18px);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.interest-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.interest-table th {
+  padding: 16px;
+  text-align: left;
+  font-size: 14px;
+  background: rgba(255, 255, 255, 0.04);
+}
+
+.interest-table td {
+  padding: 16px;
+  border-top: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.interest-table tbody tr {
+  transition: 0.25s;
+}
+
+.interest-table tbody tr:hover {
+  background: rgba(255, 255, 255, 0.03);
+}
+
+/* ===========================
+   Icon
+=========================== */
+
+.interest-icon {
+  width: 48px;
+  height: 48px;
+  border-radius: 10px;
+  overflow: hidden;
+  background: rgba(255, 255, 255, 0.06);
+}
+
+.interest-icon img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+.interest-name {
+  font-weight: 600;
+}
+
+.interest-slug {
+  color: #9ca3af;
+}
+
+/* ===========================
+   Status
+=========================== */
+
+.interest-status {
+  padding: 6px 12px;
+  border-radius: 50px;
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.interest-status.active {
+  background: rgba(34, 197, 94, 0.18);
+  color: #22c55e;
+}
+
+.interest-status.inactive {
+  background: rgba(239, 68, 68, 0.18);
+  color: #ef4444;
+}
+
+/* ===========================
+   Action Buttons
+=========================== */
+
+.interest-actions {
+  display: flex;
+  gap: 10px;
+}
+
+.interest-edit-btn,
+.interest-delete-btn,
+.interest-save-btn,
+.interest-cancel-btn,
+.upload-btn,
+.remove-btn {
+  padding: 10px 16px;
+  border: none;
+  cursor: pointer;
+  border-radius: 10px;
+  font-weight: 600;
+  transition: 0.25s;
+}
+
+.interest-edit-btn {
+  background: #2563eb;
+  color: white;
+}
+
+.interest-delete-btn,
+.remove-btn {
+  background: #dc2626;
+  color: white;
+}
+
+.interest-save-btn {
+  background: #16a34a;
+  color: white;
+}
+
+.interest-cancel-btn {
+  background: rgba(255, 255, 255, 0.08);
+  color: white;
+}
+
+.interest-edit-btn:hover,
+.interest-delete-btn:hover,
+.interest-save-btn:hover,
+.interest-cancel-btn:hover,
+.upload-btn:hover,
+.remove-btn:hover {
+  transform: translateY(-2px);
+}
+
+
+/* ===========================
+   Button Loader
+=========================== */
+
+.button-loader {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+
+.spinner {
+  width: 16px;
+  height: 16px;
+  border: 2px solid rgba(255,255,255,.3);
+  border-top-color: #fff;
+  border-radius: 50%;
+  animation: spin .7s linear infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+
+/* ===========================
+   Loading & Empty
+=========================== */
+
+.interest-table-loading,
+.interest-empty-state {
+  padding: 50px;
+  text-align: center;
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 16px;
+}
+
+/* ===========================
+   Modal
+=========================== */
+
+.interest-modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.65);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 9999;
+}
+
+.interest-modal,
+.delete-modal {
+  width: 95%;
+  max-width: 520px;
+  border-radius: 18px;
+  background: #1f2937;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  padding: 24px;
+}
+
+.interest-modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 25px;
+}
+
+.interest-modal-close {
+  background: transparent;
+  color: white;
+  border: none;
+  cursor: pointer;
+  font-size: 22px;
+}
+
+.form-group {
+  margin-bottom: 20px;
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 8px;
+  font-weight: 600;
+}
+
+.form-group input {
+  width: 100%;
+  padding: 12px 14px;
+  border-radius: 10px;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  background: rgba(255, 255, 255, 0.05);
+  color: white;
+}
+
+.form-error {
+  display: block;
+  color: #ef4444;
+  margin-top: 6px;
+  font-size: 13px;
+}
+
+.interest-modal-footer,
+.delete-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 12px;
+  margin-top: 25px;
+}
+
+/* ===========================
+   Image Upload
+=========================== */
+
+.image-upload-wrapper {
+  width: 100%;
+}
+
+.image-upload-box {
+  height: 220px;
+  border: 2px dashed rgba(255, 255, 255, 0.15);
+  border-radius: 14px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  transition: 0.25s;
+  overflow: hidden;
+}
+
+.image-upload-box:hover {
+  border-color: #6366f1;
+}
+
+.image-preview {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+.upload-placeholder {
+  text-align: center;
+}
+
+.upload-icon {
+  font-size: 40px;
+  margin-bottom: 10px;
+}
+
+.upload-actions {
+  display: flex;
+  gap: 10px;
+  margin-top: 15px;
+}
+
+.upload-btn {
+  background: #2563eb;
+  color: white;
+}
+
+.remove-btn {
+  background: #dc2626;
+  color: white;
+}
+
+/* ===========================
+   Delete Modal
+=========================== */
+
+.delete-modal {
+  text-align: center;
+}
+
+.delete-icon {
+  font-size: 56px;
+  margin-bottom: 10px;
+}
+
+.delete-warning {
+  color: #f87171;
+  margin-top: 10px;
+}
+
+/* ===========================
+   Responsive
+=========================== */
+
+@media (max-width: 768px) {
+  .interest-page {
+    padding: 16px;
+  }
+
+  .interest-header {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 16px;
+  }
+
+  .interest-actions {
+    flex-direction: column;
+  }
+
+  .interest-modal,
+  .delete-modal {
+    width: calc(100% - 30px);
+  }
+
+  .upload-actions {
+    flex-direction: column;
+  }
+}

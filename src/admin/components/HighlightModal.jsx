@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { X, UploadCloud } from "lucide-react";
 
 export default function HighlightModal({
@@ -6,12 +6,31 @@ export default function HighlightModal({
   onClose,
   onSave,
   category,
+  editingHighlight,
 }) {
   const [header, setHeader] = useState("");
   const [description, setDescription] = useState("");
   const [link, setLink] = useState("");
   const [files, setFiles] = useState([]);
+  const [preview, setPreview] = useState("");
 
+  useEffect(() => {
+    if (open) {
+      if (editingHighlight) {
+        setHeader(editingHighlight.header || "");
+        setDescription(editingHighlight.description || "");
+        setLink(editingHighlight.link || "");
+        setPreview(editingHighlight.media || "");
+        setFiles([]);
+      } else {
+        setHeader("");
+        setDescription("");
+        setLink("");
+        setFiles([]);
+        setPreview("");
+      }
+    }
+  }, [open, editingHighlight]);
   if (!open) return null;
 
   const handleFiles = (e) => {
@@ -23,10 +42,11 @@ export default function HighlightModal({
     }));
 
     setFiles(previews);
+    setPreview("");
   };
 
   const handleSubmit = () => {
-    if (!header || files.length === 0) return;
+    if (!header || (files.length === 0 && !editingHighlight)) return;
 
     onSave({
       category,
@@ -123,14 +143,17 @@ export default function HighlightModal({
 
           <div className="preview-grid">
 
-            {files.map((file, index) => (
+            {files.length > 0 ? files.map((file, index) => (
               <img
                 key={index}
                 src={file.url}
                 alt=""
               />
-            ))}
-
+            )) : preview && (
+              <div className="preview-item">
+                <img src={preview} alt="Current media" />
+              </div>
+            )}
           </div>
 
         </div>

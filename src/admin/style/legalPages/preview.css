@@ -1,0 +1,342 @@
+/* ===========================================
+Overlay
+=========================================== */
+
+.preview-overlay {
+  position: fixed;
+
+  inset: 0;
+
+  background: rgba(0, 0, 0, 0.72);
+
+  backdrop-filter: blur(10px);
+
+  display: flex;
+
+  justify-content: center;
+
+  align-items: center;
+
+  z-index: 9999;
+
+  animation: fadeIn 0.25s ease;
+}
+
+/* ===========================================
+Modal
+=========================================== */
+
+.preview-modal {
+  width: 100%;
+  max-width: 440px;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  gap: 14px;
+
+  padding: 20px;
+}
+
+/* ===========================================
+Topbar
+=========================================== */
+
+.preview-topbar {
+  width: 100%;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  padding: 12px 16px;
+
+  border-radius: 14px;
+
+  background: #1f2432;
+
+  border: 1px solid #32384d;
+
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.25);
+}
+
+.preview-title {
+  display: flex;
+
+  align-items: center;
+
+  gap: 10px;
+
+  color: #fff;
+
+  font-weight: 600;
+}
+
+.preview-title svg {
+  color: #ff9800;
+}
+
+.preview-close {
+  width: 42px;
+
+  height: 42px;
+
+  border: none;
+
+  cursor: pointer;
+
+  border-radius: 12px;
+
+  background: #252b3b;
+
+  color: #fff;
+
+  transition: 0.25s;
+}
+
+.preview-close:hover {
+  background: #ff4d4f;
+
+  transform: rotate(90deg);
+}
+
+/* ===========================================
+Phone
+=========================================== */
+
+.phone-frame {
+  width: 330px;
+
+  height: 670px;
+
+  border-radius: 34px;
+
+  border: 8px solid #171717;
+
+  overflow: hidden;
+
+  background: white;
+
+  box-shadow: 0 20px 45px rgba(0, 0, 0, 0.45);
+
+  position: relative;
+}
+
+.phone-frame::before {
+  content: "";
+
+  position: absolute;
+
+  top: 8px;
+
+  left: 50%;
+
+  transform: translateX(-50%);
+
+  width: 88px;
+
+  height: 18px;
+
+  border-radius: 20px;
+
+  background: #111;
+
+  z-index: 100;
+}
+
+/* ===========================================
+Preview
+=========================================== */
+
+.mobile-preview {
+  height: 100%;
+
+  display: flex;
+
+  flex-direction: column;
+
+  background: #fff;
+}
+
+/* ===========================================
+Header
+=========================================== */
+
+.mobile-preview-header {
+  padding: 38px 18px 16px;
+
+  background: linear-gradient(135deg, #ff9800, #ffb300);
+
+  color: #fff;
+}
+
+.mobile-preview-header h2 {
+  margin: 0;
+
+  font-size: 20px;
+
+  font-weight: 700;
+}
+
+.mobile-preview-header span {
+  display: block;
+
+  margin-top: 8px;
+
+  font-size: 13px;
+
+  opacity: 0.9;
+}
+
+/* ===========================================
+Content
+=========================================== */
+
+.mobile-preview-content {
+  flex: 1;
+
+  overflow-y: auto;
+
+  padding: 18px;
+}
+
+.mobile-preview-content::-webkit-scrollbar {
+  width: 5px;
+}
+
+.mobile-preview-content::-webkit-scrollbar-thumb {
+  background: #ddd;
+
+  border-radius: 20px;
+}
+
+/* ===========================================
+Section
+=========================================== */
+
+.mobile-section {
+  margin-bottom: 20px;
+}
+
+.mobile-section h3 {
+  margin-bottom: 12px;
+
+  color: #111;
+
+  font-size: 20px;
+}
+
+.mobile-section p {
+  color: #555;
+
+  line-height: 1.7;
+}
+
+.intro {
+  color: #888;
+
+  margin-bottom: 14px;
+
+  font-style: italic;
+}
+
+/* ===========================================
+Bullet
+=========================================== */
+
+.mobile-section ul {
+  padding-left: 20px;
+
+  margin-top: 12px;
+}
+
+.mobile-section li {
+  margin-bottom: 10px;
+
+  color: #555;
+
+  line-height: 1.6;
+}
+
+/* ===========================================
+Rich
+=========================================== */
+
+.rich-wrapper {
+  display: flex;
+
+  flex-direction: column;
+
+  gap: 18px;
+}
+
+.rich-item {
+  padding: 12px;
+
+  border-radius: 10px;
+
+  background: #fafafa;
+
+  border: 1px solid #ededed;
+}
+
+.rich-item h4 {
+  margin-bottom: 8px;
+
+  color: #111;
+}
+
+.rich-item p {
+  color: #666;
+
+  margin: 0;
+}
+
+/* ===========================================
+Animations
+=========================================== */
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+/* ===========================================
+Responsive
+=========================================== */
+
+@media (max-width: 768px) {
+  .phone-frame {
+    width: 300px;
+
+    height: 620px;
+  }
+}
+
+@media (max-width: 480px) {
+  .phone-frame {
+    width: 100%;
+
+    height: 100vh;
+
+    border: none;
+
+    border-radius: 0;
+  }
+
+  .preview-modal {
+    width: 100%;
+
+    height: 100%;
+  }
+
+  .preview-topbar {
+    border-radius: 0;
+  }
+}

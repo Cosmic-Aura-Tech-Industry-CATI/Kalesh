@@ -15,6 +15,9 @@ import {
   ScrollText,
   Settings,
   ImagePlus,
+  FileBadge2,
+  Tags,
+  ShieldCheck,
 } from "lucide-react";
 import "../style/sidebar.css";
 
@@ -26,6 +29,14 @@ const menuItems = [
   { path: "/admin/contests", icon: Trophy, label: "Contests" },
 
   { path: "/admin/wallpapers", icon: ImagePlus, label: "Wallpapers" },
+
+  { path: "/admin/interests", icon: Tags, label: "Interests" },
+
+  {
+    path: "/admin/legal-pages",
+    icon: ShieldCheck,
+    label: "Legal Pages",
+  },
 
   { path: "/admin/reported-polls", icon: AlertCircle, label: "Reports" },
 

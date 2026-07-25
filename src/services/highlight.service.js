@@ -12,6 +12,15 @@ export class HighlightService {
   }
 
   /**
+   * Fetches highlights by category from the API.
+   * @param {string} category - The category of the highlights to be fetched.
+   * @returns {Promise<Array<any>>} Resolves with an array of highlight objects.
+   */
+  static async getHighlightsByCategory(category) {
+    const res = await axiosInstance.get(API_ENDPOINTS.ADMIN.HIGHLIGHTS.GET_BY_CATEGORY(category));
+    return res.data;
+  }
+  /**
    * Creates a new highlight.
    * @param {FormData|Object} payload - The highlight data to be created (FormData for file upload).
    * @returns {Promise<Object>} Resolves with the created highlight object.

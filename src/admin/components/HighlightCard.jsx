@@ -1,6 +1,6 @@
-import { Trash2, ExternalLink } from "lucide-react";
+import { Trash2, ExternalLink, Edit } from "lucide-react";
 
-export default function HighlightCard({ item, deleteHighlight }) {
+export default function HighlightCard({ item, deleteHighlight, editHighlight }) {
   return (
     <div className="highlight-card">
       <div className="highlight-media-wrapper">
@@ -26,8 +26,15 @@ export default function HighlightCard({ item, deleteHighlight }) {
 
       <div className="highlight-card-footer">
         <button
+          className="admin-btn-secondary"
+          onClick={editHighlight}
+        >
+          <Edit size={16} />
+          Edit
+        </button>
+        <button
           className="admin-btn-danger"
-          onClick={() => deleteHighlight(item.id)}
+          onClick={deleteHighlight}
         >
           <Trash2 size={16} />
           Delete
