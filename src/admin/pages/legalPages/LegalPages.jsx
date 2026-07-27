@@ -31,7 +31,7 @@ export default function LegalPages() {
   const [previewPage, setPreviewPage] = useState(null);
 
   const { mutate: deletePage, isPending } = useDeleteLegalPage();
-
+  // console.log(pages)
   // ===============================
   // Preview handle
   // ===============================
@@ -134,7 +134,7 @@ export default function LegalPages() {
                 page={page}
                 onPreview={handlePreview}
                 onEdit={(page) =>
-                  navigate(`/admin/legal-pages/edit/${page.slug}`)
+                  navigate(`/admin/legal-pages/edit/${page._id}`)
                 }
                 onDelete={handleDeleteClick}
               />
