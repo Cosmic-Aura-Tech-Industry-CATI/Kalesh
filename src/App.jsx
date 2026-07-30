@@ -141,7 +141,7 @@ function MainRoutes() {
               <Route path="legal-pages/new" element={<LegalPageEditor />} />
 
               <Route
-                path="legal-pages/edit/:slug"
+                path="legal-pages/edit/:id"
                 element={<LegalPageEditor />}
               />
 

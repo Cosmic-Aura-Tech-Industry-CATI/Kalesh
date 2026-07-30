@@ -18,9 +18,9 @@ import "../../style/legalPages/legal-editor.css";
 export default function LegalPageEditor() {
   const navigate = useNavigate();
 
-  const { slug } = useParams();
+  const { id } = useParams();
 
-  const isEdit = Boolean(slug);
+  const isEdit = Boolean(id);
 
   // =====================================
   // Create Mutation
@@ -36,8 +36,7 @@ export default function LegalPageEditor() {
   //enabled: isEdit,
   //});
 
-  const { data: pageData } = useGetLegalPage(slug);
-
+  const { data: pageData } = useGetLegalPage(id, { enabled: isEdit });
   const isPending = creating || updating;
 
   // ===============================
@@ -54,6 +53,10 @@ export default function LegalPageEditor() {
 
   const [previewOpen, setPreviewOpen] = useState(false);
 
+  const [isSystemPage, setIsSystemPage] = useState(false);
+
+  const [isProtected, setIsProtected] = useState(false);
+
   // Dirty state (Future auto detection)
   const [dirty, setDirty] = useState(false);
 
@@ -61,20 +64,16 @@ export default function LegalPageEditor() {
   //const [saving, setSaving] = useState(false);
 
   useEffect(() => {
-    console.log("pageData:", pageData);
-
     if (!pageData?.data?.page) return;
 
     const page = pageData.data.page;
-
-    console.log("Loaded page:", page);
 
     setPageId(page._id);
     setTitle(page.title);
     setCategory(page.category);
     setSections(page.sections || []);
-
-    console.log("Sections:", page.sections);
+    setIsSystemPage(page.isSystemPage || false);
+    setIsProtected(page.isProtected || false);
 
     setDirty(false);
   }, [pageData]);
@@ -214,9 +213,9 @@ export default function LegalPageEditor() {
         content: section.content,
       })),
 
-      isSystemPage: false,
+      isSystemPage,
 
-      isProtected: false,
+      isProtected,
     };
   };
 
@@ -282,12 +281,6 @@ export default function LegalPageEditor() {
 
   const isValid = title.trim() !== "" && category !== "" && sections.length > 0;
 
-  console.log({
-    title,
-    category,
-    sections,
-  });
-
   return (
     <>
       <div className="legal-editor-page">
@@ -299,6 +292,35 @@ export default function LegalPageEditor() {
           dirty={dirty}
           canSave={isValid}
         />
+
+        <div className="legal-editor-main-content">
+          {/* Other settings can be added here */}
+          <div className="page-settings-options">
+            <label className="page-setting-checkbox">
+              <input
+                type="checkbox"
+                checked={isSystemPage}
+                onChange={(e) => {
+                  setIsSystemPage(e.target.checked);
+                  setDirty(true);
+                }}
+              />
+              <span>System Page</span>
+            </label>
+
+            <label className="page-setting-checkbox">
+              <input
+                type="checkbox"
+                checked={isProtected}
+                onChange={(e) => {
+                  setIsProtected(e.target.checked);
+                  setDirty(true);
+                }}
+              />
+              <span>Protected Page</span>
+            </label>
+          </div>
+        </div>
 
         <LegalEditor
           title={title}
