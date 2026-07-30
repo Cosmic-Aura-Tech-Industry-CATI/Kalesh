@@ -101,7 +101,13 @@ export default function Highlights() {
 
   const handleAddHighlight = (data) => {
     const formData = new FormData();
-    formData.append("category", data.category);
+
+    if (editingHighlight) {
+      formData.append("category", editingHighlight.category);
+    } else {
+      formData.append("category", activeCategoryId);
+    }
+
     formData.append("header", data.header);
     formData.append("description", data.description);
     if (data.link) formData.append("link", data.link);
