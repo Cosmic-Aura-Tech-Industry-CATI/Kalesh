@@ -155,6 +155,20 @@ export default function BlogDetail() {
 
   const blog = blogResponse.data.blog;
 
+  const cleanedContent = blog.content
+    .replace(/<p><br><\/p>/gi, "")
+    .replace(/<p><br\/><\/p>/gi, "")
+    .replace(/<p>\s*<\/p>/gi, "")
+    .replace(/<h1>\s*<\/h1>/gi, "")
+    .replace(/<h2>\s*<\/h2>/gi, "")
+    .replace(/<h3>\s*<\/h3>/gi, "")
+    .replace(/<ul>\s*<\/ul>/gi, "")
+    .replace(/<ol>\s*<\/ol>/gi, "");
+
+  // 🔍 Debug
+  console.log("BLOG CONTENT HTML:");
+  console.log(blog.content);
+
   return (
     <div className="blog-detail-container">
       {/* ================= TOP BAR ================= */}
@@ -215,7 +229,14 @@ export default function BlogDetail() {
       {/* ================= IMAGE ================= */}
 
       {blog.image && (
-        <img src={blog.image} alt={blog.title} className="blog-image" />
+        <div
+          className="blog-image-wrapper"
+          style={{
+            backgroundImage: `url(${blog.image})`,
+          }}
+        >
+          <img src={blog.image} alt={blog.title} className="blog-image" />
+        </div>
       )}
 
       {/* ================= CONTENT ================= */}
@@ -223,7 +244,7 @@ export default function BlogDetail() {
       <div
         className="blog-content"
         dangerouslySetInnerHTML={{
-          __html: blog.content,
+          __html: cleanedContent,
         }}
       />
 
