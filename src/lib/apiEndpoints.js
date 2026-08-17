@@ -82,6 +82,7 @@ export const API_ENDPOINTS = {
       GET_USERS: "/admin-panel/subscriptions/users",
       GRANT_PLAN: `/admin-panel/subscriptions/grant`,
       REVOKE_PLAN_BY_ID: (id) => `/admin-panel/subscriptions/${id}/revoke`,
+      DEACTIVATE_BY_ID: (id) => `/admin-panel/subscriptions/${id}/deactivate`,
     },
 
     APP_USER: {

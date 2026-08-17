@@ -138,3 +138,26 @@ export const useRevokePlan = () => {
     },
   });
 };
+
+/**
+ * A hook that deactivates a subscription plan by its ID.
+ * Invalidates the "subscription-plans" cache and shows a toast on success.
+ * @returns {UseMutationResult} - The result of the useMutation hook.
+ */
+export const useDeactivatePlan = () => {
+  const queryClient = useQueryClient();
+
+  return useMutation({
+    mutationFn: (id) => SubscriptionService.deactivatePlan(id),
+    onSuccess: () => {
+      queryClient.invalidateQueries({
+        queryKey: ["subscription-plans"],
+      });
+      toastSuccess("Plan deactivated successfully");
+    },
+    onError: (err) => {
+      toastError(err?.response?.data?.message || "Failed to deactivate plan");
+      console.error(err);
+    },
+  });
+};

@@ -11,14 +11,19 @@ import {
   useGetSubscribedUsers,
   useGrantPlan,
   useRevokePlan,
+  useDeactivatePlan,
 } from "../../hooks/useSubscription";
 import "../style/admin.css";
 
 export default function Premium() {
   const [isCreateModal, setIsCreateModal] = useState(false);
   const [editingPlanId, setEditingPlanId] = useState(null);
+  const [badgeFile, setBadgeFile] = useState(null);
 
-  const [isGrantModalOpen, setIsGrantModalOpen] = useState(false);
+  const [profileGradient, setProfileGradient] = useState({
+    colors: "",
+    angle: 45,
+  });
 
   const initialLimitsState = {
     maxPollOptions: 0,
@@ -30,6 +35,7 @@ export default function Premium() {
     allowGIF: 0,
   };
 
+  const [isGrantModalOpen, setIsGrantModalOpen] = useState(false);
   const [limits, setLimits] = useState(initialLimitsState);
 
   const [grantData, setGrantData] = useState({
@@ -62,6 +68,7 @@ export default function Premium() {
 
   const { mutate: grantPlanMutate, isPending: isGranting } = useGrantPlan();
   const { mutate: revokePlanMutate } = useRevokePlan();
+  const { mutate: deactivatePlanMutate } = useDeactivatePlan();
 
   const plans = plansData?.data?.plans || plansData?.plans || [];
   const userSubs =
@@ -74,39 +81,64 @@ export default function Premium() {
   // ==========================
 
   const onSubmit = (data) => {
-    const payload = {
-      ...data,
-      features: data.features.split(",").map((f) => f.trim()),
-      durationInDays: Number(data.durationInDays),
-      limits: {
-        maxPollOptions: Number(limits.maxPollOptions || 0),
-        dailyPolls: Number(limits.dailyPolls || 0),
-        messageRequests: Number(limits.messageRequests || 0),
-        chatWallPaper: Number(limits.chatWallPaper || 0),
-        selectRandomUsers: Number(limits.selectRandomUsers || 0),
-        maxGroupMembers: Number(limits.maxGroupMembers || 0),
-        allowGIF: limits.allowGIF ? 1 : 0,
-      },
+    const formData = new FormData();
+
+    // Append basic fields from react-hook-form
+    formData.append("title", data.title);
+    formData.append("description", data.description);
+    formData.append("durationInDays", Number(data.durationInDays));
+
+    // Append stringified complex fields
+    const features = data.features.split(",").map((f) => f.trim());
+    formData.append("features", JSON.stringify(features));
+
+    const limitsPayload = {
+      maxPollOptions: Number(limits.maxPollOptions || 0),
+      dailyPolls: Number(limits.dailyPolls || 0),
+      messageRequests: Number(limits.messageRequests || 0),
+      chatWallPaper: Number(limits.chatWallPaper || 0),
+      selectRandomUsers: Number(limits.selectRandomUsers || 0),
+      maxGroupMembers: Number(limits.maxGroupMembers || 0),
+      allowGIF: limits.allowGIF ? 1 : 0,
     };
+    formData.append("limits", JSON.stringify(limitsPayload));
+
+    const gradientPayload = {
+      angle: Number(profileGradient.angle || 45),
+      colors: profileGradient.colors
+        .split(",")
+        .map((c) => c.trim())
+        .filter((c) => c), // Remove empty strings
+    };
+    formData.append("profileGradient", JSON.stringify(gradientPayload));
+
+    // Append badge file if it exists
+    if (badgeFile) {
+      formData.append("badge", badgeFile);
+    }
 
     if (editingPlanId) {
       updatePlanMutate(
-        { id: editingPlanId, payload },
+        { id: editingPlanId, payload: formData },
         {
           onSuccess: () => {
             setIsCreateModal(false);
             setEditingPlanId(null);
             reset(); // form fields
             setLimits(initialLimitsState); // limits state
+            setProfileGradient({ colors: "", angle: 45 });
+            setBadgeFile(null);
           },
         },
       );
     } else {
-      createPlanMutate(payload, {
+      createPlanMutate(formData, {
         onSuccess: () => {
           setIsCreateModal(false);
           reset();
-          setLimits(initialLimitsState);
+          setProfileGradient({ colors: "", angle: 45 });
+          setLimits(initialLimitsState); // Reset limits
+          setBadgeFile(null);
         },
       });
     }
@@ -143,12 +175,20 @@ export default function Premium() {
   // ACTIVATE / DEACTIVATE
   // ==========================
 
-  const togglePlan = (plan) => {
+  const handleActivate = (plan) => {
     updatePlanMutate({
       id: plan._id,
-      payload: { isActive: !plan.isActive },
+      payload: { isActive: true },
     });
   };
+
+  const handleDeactivate = (plan) => {
+    if (
+      window.confirm("Are you sure you want to deactivate this plan?")
+    ) {
+      deactivatePlanMutate(plan._id);
+    }
+  }
 
   // ==========================
   // EDIT PLAN
@@ -161,12 +201,17 @@ export default function Premium() {
     setValue("durationInDays", plan.durationInDays);
     setValue("features", plan.features ? plan.features.join(", ") : "");
     setIsCreateModal(true);
- 
+
     setLimits({
       ...initialLimitsState,
       ...plan.limits,
       allowGIF: plan.limits?.allowGIF === 1,
     });
+    setProfileGradient({
+      colors: plan.profileGradient?.colors?.join(', ') || "",
+      angle: plan.profileGradient?.angle || 45,
+    });
+    setBadgeFile(null); // Reset file input on edit
   };
 
   // ==========================
@@ -247,7 +292,13 @@ export default function Premium() {
           <Button
             size="sm"
             variant={row.isActive ? "danger" : "primary"}
-            onClick={() => togglePlan(row)}
+            onClick={() => {
+              if (row.isActive) {
+                handleDeactivate(row);
+              } else {
+                handleActivate(row);
+              }
+            }}
           >
             {row.isActive ? "Deactivate" : "Activate"}
           </Button>
@@ -361,6 +412,8 @@ export default function Premium() {
         onClose={() => {
           setIsCreateModal(false);
           setEditingPlanId(null);
+          setBadgeFile(null);
+          setProfileGradient({ colors: "", angle: 45 });
           reset(); // form fields
           setLimits(initialLimitsState); // limits state
         }}
@@ -412,6 +465,23 @@ export default function Premium() {
           </div>
 
           <div>
+            <label className="admin-form-label">
+              Badge Image {editingPlanId ? "(Opcional)" : ""}
+            </label>
+            <input
+              type="file"
+              accept="image/*"
+              className="admin-form-input"
+              onChange={(e) => setBadgeFile(e.target.files[0])}
+            />
+            {!badgeFile && editingPlanId && plans.find(p => p._id === editingPlanId)?.badge && (
+              <div className="mt-2 text-xs text-gray-400">
+                Insignia actual: <a href={plans.find(p => p._id === editingPlanId).badge} target="_blank" rel="noopener noreferrer" className="text-blue-400 hover:underline">Ver imagen</a>. Sube un nuevo archivo para reemplazarla.
+              </div>
+            )}
+          </div>
+
+          <div>
             <input
               placeholder="Features (comma separated)"
               className="admin-form-input"
@@ -422,6 +492,31 @@ export default function Premium() {
                 {errors.features.message}
               </span>
             )}
+          </div>
+
+          <div>
+            <label className="admin-form-label mb-2">Profile Gradient</label>
+            <div className="grid grid-cols-3 gap-4">
+              <div className="col-span-2">
+                <label className="admin-form-label text-xs">Colors (comma separated)</label>
+                <input
+                  placeholder="#ff0000, #00ff00"
+                  className="admin-form-input"
+                  value={profileGradient.colors}
+                  onChange={(e) => setProfileGradient({ ...profileGradient, colors: e.target.value })}
+                />
+              </div>
+              <div>
+                <label className="admin-form-label text-xs">Angle</label>
+                <input
+                  type="number"
+                  placeholder="45"
+                  className="admin-form-input"
+                  value={profileGradient.angle}
+                  onChange={(e) => setProfileGradient({ ...profileGradient, angle: e.target.value })}
+                />
+              </div>
+            </div>
           </div>
 
           <div>
