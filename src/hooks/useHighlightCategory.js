@@ -2,7 +2,7 @@ import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { HighlightCategoryService } from "../services/highlightCategory.service";
 import { toastError, toastSuccess } from "../lib/toast";
 
-const QUERY_KEY = ["highlight-categories"];
+const QUERY_KEY = ["highlightCategory"];
 
 /**
  * A hook that fetches all highlight categories from the API.

@@ -6,7 +6,7 @@ import { InterestService } from "../services/InterestService";
  */
 export const useGetInterests = () => {
   return useQuery({
-    queryKey: ["interests"],
+    queryKey: ["interest"],
     queryFn: () => InterestService.getAllInterests(),
     keepPreviousData: true,
   });
@@ -23,7 +23,7 @@ export const useCreateInterest = () => {
 
     onSuccess: () => {
       queryClient.invalidateQueries({
-        queryKey: ["interests"],
+        queryKey: ["interest"],
       });
     },
   });
@@ -40,7 +40,7 @@ export const useUpdateInterest = () => {
 
     onSuccess: () => {
       queryClient.invalidateQueries({
-        queryKey: ["interests"],
+        queryKey: ["interest"],
       });
     },
   });
@@ -57,7 +57,7 @@ export const useDeleteInterest = () => {
 
     onSuccess: () => {
       queryClient.invalidateQueries({
-        queryKey: ["interests"],
+        queryKey: ["interest"],
       });
     },
   });

@@ -10,7 +10,7 @@ import { toastError, toastSuccess } from "../lib/toast";
  */
 export const useGetAllBlogs = () => {
   return useQuery({
-    queryKey: ["blogs"],
+    queryKey: ["blog"],
     queryFn: BlogService.getAllBlogs,
   });
 };
@@ -47,7 +47,7 @@ export const useCreateBlog = () => {
     mutationFn: (payload) => BlogService.createBlog(payload),
     onSuccess: () => {
       queryClient.invalidateQueries({
-        queryKey: ["blogs"],
+        queryKey: ["blog"],
       });
       toastSuccess("Blog created successfully");
     },
@@ -75,7 +75,7 @@ export const useUpdateBlog = () => {
     mutationFn: ({ slug, payload }) => BlogService.updateBlog(slug, payload),
     onSuccess: (_, variables) => {
       queryClient.invalidateQueries({
-        queryKey: ["blogs"],
+        queryKey: ["blog"],
       });
       // Optional: you can invalidate the specific blog's query as well
       queryClient.invalidateQueries({
@@ -104,7 +104,7 @@ export const useDeleteBlog = () => {
     mutationFn: (slug) => BlogService.deleteBlog(slug),
     onSuccess: () => {
       queryClient.invalidateQueries({
-        queryKey: ["blogs"],
+        queryKey: ["blog"],
       });
       toastSuccess("Blog deleted successfully");
     },
@@ -122,13 +122,13 @@ export const useShareBlog = () => {
     mutationFn: (slug) => BlogService.shareBlog(slug),
     
     onMutate: async (slug) => {
-      await queryClient.cancelQueries({ queryKey: ["blogs"] });
+      await queryClient.cancelQueries({ queryKey: ["blog"] });
       await queryClient.cancelQueries({ queryKey: ["blogs", slug] });
 
-      const previousBlogs = queryClient.getQueryData(["blogs"]);
+      const previousBlogs = queryClient.getQueryData(["blog"]);
       const previousSingleBlog = queryClient.getQueryData(["blogs", slug]);
 
-      queryClient.setQueryData(["blogs"], (oldData) => {
+      queryClient.setQueryData(["blog"], (oldData) => {
         if (!oldData) return oldData;
         const isArray = Array.isArray(oldData);
         const blogsArray = isArray ? oldData : (oldData?.data?.blogs || oldData?.data || oldData?.blogs || []);
@@ -167,7 +167,7 @@ export const useShareBlog = () => {
     },
     
     onError: (err, slug, context) => {
-      queryClient.setQueryData(["blogs"], context.previousBlogs);
+      queryClient.setQueryData(["blog"], context.previousBlogs);
       queryClient.setQueryData(["blogs", slug], context.previousSingleBlog);
       toastError(err?.response?.data?.message || "Failed to share blog");
       console.error(err);

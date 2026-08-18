@@ -8,7 +8,7 @@ import { toastError, toastSuccess } from "../lib/toast";
  */
 export const useGetAllContests = () => {
   return useQuery({
-    queryKey: ["contests"],
+    queryKey: ["contest"],
     queryFn: ContestService.getAllContests,
   });
 };
@@ -38,7 +38,7 @@ export const useCreateContest = () => {
     mutationFn: (payload) => ContestService.createContest(payload),
     onSuccess: () => {
       queryClient.invalidateQueries({
-        queryKey: ["contests"],
+        queryKey: ["contest"],
       });
       toastSuccess("Contest created successfully");
     },
@@ -61,7 +61,7 @@ export const useUpdateContest = () => {
     mutationFn: ({ id, payload }) => ContestService.updateContest(id, payload),
     onSuccess: (_, variables) => {
       queryClient.invalidateQueries({
-        queryKey: ["contests"],
+        queryKey: ["contest"],
       });
       // Also invalidate the specific contest query
       queryClient.invalidateQueries({
@@ -88,7 +88,7 @@ export const useDeleteContest = () => {
     mutationFn: (id) => ContestService.deleteContest(id),
     onSuccess: () => {
       queryClient.invalidateQueries({
-        queryKey: ["contests"],
+        queryKey: ["contest"],
       });
       toastSuccess("Contest deleted successfully");
     },

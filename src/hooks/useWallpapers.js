@@ -8,7 +8,7 @@ import { toastError, toastSuccess } from "../lib/toast";
  */
 export const useGetAllWallpapers = () => {
   return useQuery({
-    queryKey: ["wallpapers"],
+    queryKey: ["wallpaper"],
     queryFn: WallpaperService.getAllWallpapers,
   });
 };
@@ -28,7 +28,7 @@ export const useCreateWallpaper = () => {
     mutationFn: (payload) => WallpaperService.createWallpaper(payload),
     onSuccess: () => {
       queryClient.invalidateQueries({
-        queryKey: ["wallpapers"],
+        queryKey: ["wallpaper"],
       });
       toastSuccess("Wallpaper created successfully");
     },
@@ -52,7 +52,7 @@ export const useUpdateWallpaper = () => {
     mutationFn: ({ id, payload }) => WallpaperService.updateWallpaper(id, payload),
     onSuccess: () => {
       queryClient.invalidateQueries({
-        queryKey: ["wallpapers"],
+        queryKey: ["wallpaper"],
       });
       toastSuccess("Wallpaper updated successfully");
     },
@@ -75,7 +75,7 @@ export const useDeleteWallpaper = () => {
     mutationFn: (id) => WallpaperService.deleteWallpaper(id),
     onSuccess: () => {
       queryClient.invalidateQueries({
-        queryKey: ["wallpapers"],
+        queryKey: ["wallpaper"],
       });
       toastSuccess("Wallpaper deleted successfully");
     },
@@ -99,7 +99,7 @@ export const useUpdateWallpaperPrice = () => {
     mutationFn: ({ id, payload }) => WallpaperService.updatePrice(id, payload),
     onSuccess: () => {
       queryClient.invalidateQueries({
-        queryKey: ["wallpapers"],
+        queryKey: ["wallpaper"],
       });
       toastSuccess("Wallpaper price updated successfully");
     },
@@ -123,7 +123,7 @@ export const useSetDefaultWallpaper = () => {
     mutationFn: (id) => WallpaperService.setDefault(id),
     onSuccess: () => {
       queryClient.invalidateQueries({
-        queryKey: ["wallpapers"],
+        queryKey: ["wallpaper"],
       });
       toastSuccess("Default wallpaper set successfully");
     },
