@@ -147,5 +147,9 @@ export const API_ENDPOINTS = {
       UPDATE: (id) => `/admin-panel/interest/${id}`,
       DELETE: (id) => `/admin-panel/interest/${id}`,
     },
+    
+    SUBSCRIBE_EVENT: {
+      STREAM: "/admin-panel/subscribe-event/updates/stream",
+    }
   },
 };

@@ -8,7 +8,7 @@ import { toastError, toastSuccess } from "../lib/toast";
  */
 export const useGetAllPlans = () => {
   return useQuery({
-    queryKey: ["subscription-plans"],
+    queryKey: ["subscription"],
     queryFn: SubscriptionService.getAllPlans,
   });
 };
@@ -25,7 +25,7 @@ export const useCreatePlan = () => {
     mutationFn: (payload) => SubscriptionService.createPlan(payload),
     onSuccess: () => {
       queryClient.invalidateQueries({
-        queryKey: ["subscription-plans"],
+        queryKey: ["subscription"],
       });
       toastSuccess("Plan created successfully");
     },
@@ -48,7 +48,7 @@ export const useUpdatePlan = () => {
       SubscriptionService.updatePlan(id, payload),
     onSuccess: () => {
       queryClient.invalidateQueries({
-        queryKey: ["subscription-plans"],
+        queryKey: ["subscription"],
       });
       toastSuccess("Plan updated successfully");
     },
@@ -71,7 +71,7 @@ export const useUpdatePrice = () => {
       SubscriptionService.updatePrice(id, payload),
     onSuccess: () => {
       queryClient.invalidateQueries({
-        queryKey: ["subscription-plans"],
+        queryKey: ["subscription"],
       });
       toastSuccess("Plan price updated successfully");
     },
@@ -151,7 +151,7 @@ export const useDeactivatePlan = () => {
     mutationFn: (id) => SubscriptionService.deactivatePlan(id),
     onSuccess: () => {
       queryClient.invalidateQueries({
-        queryKey: ["subscription-plans"],
+        queryKey: ["subscription"],
       });
       toastSuccess("Plan deactivated successfully");
     },

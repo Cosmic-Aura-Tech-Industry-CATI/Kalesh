@@ -8,7 +8,7 @@ import { toastError, toastSuccess } from "../lib/toast";
  */
 export const useGetAllHighlights = () => {
   return useQuery({
-    queryKey: ["highlights"],
+    queryKey: ["highlight"],
     queryFn: HighlightService.getAllHighlights,
   });
 };
@@ -38,7 +38,7 @@ export const useCreateHighlight = () => {
     mutationFn: (payload) => HighlightService.createHighlight(payload),
     onSuccess: () => {
       queryClient.invalidateQueries({
-        queryKey: ["highlights"],
+        queryKey: ["highlight"],
       });
       toastSuccess("Highlight created successfully");
     },
@@ -61,7 +61,7 @@ export const useUpdateHighlight = () => {
     mutationFn: ({ id, payload }) => HighlightService.updateHighlight(id, payload),
     onSuccess: (_, variables) => {
       queryClient.invalidateQueries({
-        queryKey: ["highlights"],
+        queryKey: ["highlight"],
       });
       // Also invalidate the specific highlight query
       queryClient.invalidateQueries({
@@ -88,7 +88,7 @@ export const useDeleteHighlight = () => {
     mutationFn: (id) => HighlightService.deleteHighlight(id),
     onSuccess: () => {
       queryClient.invalidateQueries({
-        queryKey: ["highlights"],
+        queryKey: ["highlight"],
       });
       toastSuccess("Highlight deleted successfully");
     },
