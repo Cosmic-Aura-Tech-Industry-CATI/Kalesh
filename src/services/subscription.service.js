@@ -21,7 +21,10 @@ export class SubscriptionService {
   static async createPlan(payload) {
     const res = await axiosInstance.post(
       API_ENDPOINTS.ADMIN.SUBSCRIPTION.CREATE,
-      payload
+      payload,
+      {
+        headers: { "Content-Type": "multipart/form-data" },
+      }
     );
     return res.data;
   }
@@ -35,7 +38,10 @@ export class SubscriptionService {
   static async updatePlan(id, payload) {
     const res = await axiosInstance.put(
       API_ENDPOINTS.ADMIN.SUBSCRIPTION.UPDATE_BY_ID(id),
-      payload
+      payload,
+      {
+        headers: { "Content-Type": "multipart/form-data" },
+      }
     );
     return res.data;
   }
@@ -86,6 +92,18 @@ export class SubscriptionService {
   static async revokePlan(id) {
     const res = await axiosInstance.patch(
       API_ENDPOINTS.ADMIN.SUBSCRIPTION.REVOKE_PLAN_BY_ID(id)
+    );
+    return res.data;
+  }
+
+  /**
+   * Deactivates a subscription plan by its id.
+   * @param {string} id - The id of the subscription to be deactivated.
+   * @returns {Promise<Object>} - Resolves with the deactivated subscription response.
+   */
+  static async deactivatePlan(id) {
+    const res = await axiosInstance.patch(
+      API_ENDPOINTS.ADMIN.SUBSCRIPTION.DEACTIVATE_BY_ID(id)
     );
     return res.data;
   }
