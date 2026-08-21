@@ -62,6 +62,10 @@ const Blogteam = lazy(() => import("./pages/Blogteam"));
 const BlogDetail = lazy(() => import("./pages/BlogDetail"));
 const Viewpage = lazy(() => import("./pages/Viewpage"));
 
+// TEAM PAGES (SEO / AEO / GEO OPTIMIZED)
+const Team = lazy(() => import("./pages/teams/Team"));
+const TeamMemberProfile = lazy(() => import("./pages/teams/TeamMemberProfile"));
+
 const queryClient = new QueryClient({
   defaultOptions: {
     queries: { staleTime: 0 },
@@ -79,7 +83,7 @@ function MainRoutes() {
       <ScrollbarTop />
 
       <main style={{ flex: 1 }}>
-        <Suspense fallback={<div>Loading...</div>}>
+        <Suspense fallback={<div className="min-h-screen bg-[#070707] flex items-center justify-center text-orange-500 font-bold">Loading...</div>}>
           <Routes>
             {/* PUBLIC ROUTES */}
             <Route path="/" element={<Home />} />
@@ -106,6 +110,32 @@ function MainRoutes() {
             />
             <Route path="/securityadvisory" element={<SecurityAdvisory />} />
 
+            {/* TEAM & LEADERSHIP ROUTES (EXACTLY 5 MEMBERS) */}
+            <Route path="/team" element={<Team />} />
+            <Route path="/team/:memberSlug" element={<TeamMemberProfile />} />
+
+            {/* DEDICATED CANONICAL PROFILE ROUTES */}
+            <Route
+              path="/shikhar-dixit"
+              element={<TeamMemberProfile forcedSlug="shikhar-dixit" />}
+            />
+            <Route
+              path="/swatantra-singh"
+              element={<TeamMemberProfile forcedSlug="swatantra-singh" />}
+            />
+            <Route
+              path="/nishkarsh-mishra"
+              element={<TeamMemberProfile forcedSlug="nishkarsh-mishra" />}
+            />
+            <Route
+              path="/mridul-mishra"
+              element={<TeamMemberProfile forcedSlug="mridul-mishra" />}
+            />
+            <Route
+              path="/sheelu-singh"
+              element={<TeamMemberProfile forcedSlug="sheelu-singh" />}
+            />
+
             <Route
               path="/application/:token"
               element={<ApplicationDetails />}
@@ -117,60 +147,36 @@ function MainRoutes() {
             {/* ADMIN ROUTES */}
             <Route path="/admin" element={<AdminLayout />}>
               <Route path="dashboard" element={<AdminDashboard />} />
-
               <Route path="reported-polls" element={<AdminReportedPolls />} />
-
               <Route path="poll-moderation" element={<AdminPollModeration />} />
-
               <Route path="users" element={<AdminUsers />} />
-
               <Route path="user/:userId" element={<UserDetails />} />
-
               <Route path="jobs" element={<JobsPosting />} />
-
               <Route path="highlights" element={<Highlights />} />
-
               <Route path="wallpapers" element={<Wallpapers />} />
-
               <Route path="interests" element={<Interests />} />
 
               {/* ===== LEGAL PAGES ===== */}
-
               <Route path="legal-pages" element={<LegalPages />} />
-
               <Route path="legal-pages/new" element={<LegalPageEditor />} />
-
               <Route
                 path="legal-pages/edit/:id"
                 element={<LegalPageEditor />}
               />
 
               {/* ===== BLOG & CONTESTS ===== */}
-
               <Route path="blog" element={<AdminBlog />} />
-
               <Route path="blogs" element={<AdminBlogPage />} />
-
               <Route path="blog/edit/:slug" element={<AdminEditBlog />} />
-
               <Route path="contest/create" element={<AdminCreateContest />} />
-
               <Route path="contests" element={<AdminContestList />} />
-
               <Route path="contest/edit/:id" element={<AdminEditContest />} />
-
               <Route path="contest/:id" element={<AdminContestDetails />} />
-
               <Route path="banned-users" element={<AdminBannedUsers />} />
-
               <Route path="premium" element={<AdminPremium />} />
-
               <Route path="payments" element={<AdminPayments />} />
-
               <Route path="admins" element={<Admins />} />
-
               <Route path="logs" element={<AdminLogs />} />
-
               <Route path="settings" element={<AdminSettings />} />
             </Route>
           </Routes>

@@ -33,7 +33,6 @@ function Navbar() {
 
   return (
     <nav className="navbar navbar-expand-lg navbar-dark px-4 sticky-top">
-      
       <NavLink className="navbar-brand d-flex align-items-center mx-4" to="/">
         <img
           src="/images/kalesh_navbar_logo.webp"
@@ -52,7 +51,6 @@ function Navbar() {
       </button>
 
       <div className="collapse navbar-collapse" id="menu" ref={menuRef}>
-        
         {/* Close Button */}
         <button
           className="mobile-menu-close"
@@ -72,43 +70,66 @@ function Navbar() {
         </div>
 
         <ul className="navbar-nav ms-auto gap-3 mx-4">
-
           <li className="nav-item">
-            <NavLink to="/" end className={getNavClass} onClick={handleLinkClick}>
+            <NavLink
+              to="/"
+              end
+              className={getNavClass}
+              onClick={handleLinkClick}
+            >
               Home
             </NavLink>
           </li>
 
           <li className="nav-item">
-            <NavLink to="/about" className={getNavClass} onClick={handleLinkClick}>
+            <NavLink
+              to="/about"
+              className={getNavClass}
+              onClick={handleLinkClick}
+            >
               About
             </NavLink>
           </li>
 
           <li className="nav-item">
-            <NavLink to="/privacy" className={getNavClass} onClick={handleLinkClick}>
+            <NavLink
+              to="/team"
+              className={getNavClass}
+              onClick={handleLinkClick}
+            >
+              Team
+            </NavLink>
+          </li>
+
+          <li className="nav-item">
+            <NavLink
+              to="/privacy"
+              className={getNavClass}
+              onClick={handleLinkClick}
+            >
               Privacy
             </NavLink>
           </li>
 
           <li className="nav-item">
-            <NavLink to="/blog" className={getNavClass} onClick={handleLinkClick}>
+            <NavLink
+              to="/blog"
+              className={getNavClass}
+              onClick={handleLinkClick}
+            >
               Blog
             </NavLink>
           </li>
 
           <li className="nav-item">
-            <NavLink to="/faq" className={getNavClass} onClick={handleLinkClick}>
-              FAQ
-            </NavLink>
-          </li>
-
-          <li className="nav-item">
-            <NavLink to="/careers" className={getNavClass} onClick={handleLinkClick}>
+            <NavLink
+              to="/careers"
+              className={getNavClass}
+              onClick={handleLinkClick}
+            >
               Careers
             </NavLink>
           </li>
-
         </ul>
 
         <div className="navbar-login-btn-container">
@@ -117,10 +138,7 @@ function Navbar() {
           </a>
         </div>
 
-        <div className="mobile-menu-copyright d-lg-none">
-          © 2026 Kalesh
-        </div>
-
+        <div className="mobile-menu-copyright d-lg-none">© 2026 Kalesh</div>
       </div>
     </nav>
   );
