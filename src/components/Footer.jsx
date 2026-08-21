@@ -51,6 +51,9 @@ function Footer() {
                 <Link to="/about">About Us</Link>
               </li>
               <li>
+                <Link to="/team">Team</Link>
+              </li>
+              <li>
                 <Link to="/careers">Careers</Link>
               </li>
               <li>
@@ -91,19 +94,19 @@ function Footer() {
 
             {/* Social Icons */}
             <div className="footer-bottom-social">
-              <a href="https://x.com/KaleshThe76740">
+              <a href="https://x.com/KaleshThe76740" target="_blank" rel="noopener noreferrer" aria-label="Kalesh on X">
                 <i className="fa-brands fa-x-twitter"></i>
               </a>
 
-              <a href="https://www.facebook.com/profile.php?id=61587629125145">
+              <a href="https://www.facebook.com/profile.php?id=61587629125145" target="_blank" rel="noopener noreferrer" aria-label="Kalesh on Facebook">
                 <i className="fa-brands fa-facebook-f"></i>
               </a>
 
-              <a href="https://www.instagram.com/thekalesh47?igsh=MTdqd3Y2aHBsOWFxMg==">
+              <a href="https://www.instagram.com/thekalesh47?igsh=MTdqd3Y2aHBsOWFxMg==" target="_blank" rel="noopener noreferrer" aria-label="Kalesh on Instagram">
                 <i className="fa-brands fa-instagram"></i>
               </a>
 
-              <a href="https://www.linkedin.com/company/kalesh47/">
+              <a href="https://www.linkedin.com/company/kalesh47/" target="_blank" rel="noopener noreferrer" aria-label="Kalesh on LinkedIn">
                 <i className="fa-brands fa-linkedin-in"></i>
               </a>
             </div>
