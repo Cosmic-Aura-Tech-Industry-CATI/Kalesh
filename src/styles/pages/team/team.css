@@ -1,0 +1,581 @@
+/* ==========================================================================
+   KALESH MAIN TEAM PAGE STYLES (src/styles/pages/team/team.css)
+   ========================================================================== */
+
+.kalesh-team-root {
+  background-color: #000000;
+  color: #ffffff;
+  min-height: 100vh;
+  font-family: inherit;
+  overflow-x: hidden;
+}
+
+/* 1. HERO SECTION */
+.team-hero-section {
+  position: relative;
+  background-color: #000000;
+  padding-top: 2.5rem;
+  padding-bottom: 3.5rem;
+  border-bottom: 1px solid #171717;
+  overflow: hidden;
+}
+
+.team-hero-glow {
+  position: absolute;
+  top: 50%;
+  right: 25%;
+  transform: translateY(-50%);
+  width: 35rem;
+  height: 30rem;
+  background: radial-gradient(
+    circle,
+    rgba(255, 85, 0, 0.12) 0%,
+    rgba(0, 0, 0, 0) 70%
+  );
+  filter: blur(80px);
+  pointer-events: none;
+}
+
+.team-hero-container {
+  max-width: 1500px;
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: 2rem;
+  padding-right: 2rem;
+  position: relative;
+  z-index: 10;
+}
+
+@media (min-width: 1024px) {
+  .team-hero-container {
+    padding-left: 4rem;
+    padding-right: 3rem;
+  }
+}
+
+.team-hero-title {
+  font-size: 2.75rem;
+  font-weight: 900;
+  letter-spacing: -0.03em;
+  line-height: 1.12;
+  color: #ffffff;
+}
+
+@media (min-width: 1024px) {
+  .team-hero-title {
+    font-size: 3.5rem;
+  }
+}
+
+.text-accent-orange {
+  color: #ff5500;
+}
+
+.team-hero-description {
+  font-size: 0.95rem;
+  color: #d4d4d4;
+  line-height: 1.65;
+  max-width: 32rem;
+}
+
+.hero-badges-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1rem;
+  max-width: 28rem;
+  padding-top: 0.5rem;
+}
+
+.hero-badge-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+.hero-badge-circle {
+  width: 3.25rem;
+  height: 3.25rem;
+  border-radius: 9999px;
+  background-color: #111111;
+  border: 1px solid #262626;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 0.6rem;
+  transition:
+    border-color 0.2s ease,
+    transform 0.2s ease;
+}
+
+.hero-badge-item:hover .hero-badge-circle {
+  border-color: rgba(255, 85, 0, 0.6);
+  transform: translateY(-2px);
+}
+
+.hero-badge-label {
+  font-size: 0.72rem;
+  color: #d4d4d4;
+  line-height: 1.25;
+}
+
+.team-hero-image-wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  width: 100%;
+}
+
+.team-hero-image {
+  width: 100%;
+  height: auto;
+  max-height: 530px;
+  object-fit: contain;
+  user-select: none;
+  pointer-events: none;
+}
+
+/* 2. CORE TEAM SECTION */
+.core-team-section {
+  padding-top: 4.5rem;
+  padding-bottom: 5.5rem;
+  max-width: 1380px;
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: 1.5rem;
+  padding-right: 1.5rem;
+}
+
+.section-header {
+  text-align: center;
+  max-width: 48rem;
+  margin-left: auto;
+  margin-right: auto;
+  margin-bottom: 3.5rem;
+}
+
+.section-heading {
+  font-size: 2.25rem;
+  font-weight: 800;
+  color: #ffffff;
+  letter-spacing: -0.02em;
+}
+
+.core-underline {
+  position: relative;
+  display: inline-block;
+}
+
+.core-underline::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: -4px;
+  width: 100%;
+  height: 4px;
+  background-color: #ff5500;
+  border-radius: 9999px;
+}
+
+.section-subheading {
+  margin-top: 1rem;
+  font-size: 0.95rem;
+  color: #a3a3a3;
+  line-height: 1.6;
+}
+
+.core-team-grid {
+  display: grid;
+  grid-template-columns: repeat(1, minmax(0, 1fr));
+  gap: 1.5rem;
+}
+
+@media (min-width: 640px) {
+  .core-team-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (min-width: 1024px) {
+  .core-team-grid {
+    grid-template-columns: repeat(5, minmax(0, 1fr));
+  }
+}
+
+.team-card {
+  background-color: #0b0b0b;
+  border: 1px solid #202020;
+  border-radius: 1.25rem;
+  padding: 1.35rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  transition: all 0.3s ease;
+}
+
+.team-card:hover {
+  border-color: rgba(255, 85, 0, 0.6);
+  transform: translateY(-4px);
+  box-shadow: 0 12px 30px rgba(255, 85, 0, 0.08);
+}
+
+.avatar-ring {
+  width: 6rem;
+  height: 6rem;
+  margin-left: auto;
+  margin-right: auto;
+  margin-bottom: 1rem;
+  border-radius: 9999px;
+  padding: 2px;
+  background: linear-gradient(45deg, #ff5500, #f59e0b, #ff7700);
+}
+
+.avatar-inner {
+  width: 100%;
+  height: 100%;
+  border-radius: 9999px;
+  background-color: #000000;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.avatar-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.3s ease;
+}
+
+.team-card:hover .avatar-img {
+  transform: scale(1.06);
+}
+
+.member-name {
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: #ffffff;
+}
+
+.member-role {
+  font-size: 0.72rem;
+  font-weight: 700;
+  color: #ff5500;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  margin-top: 0.2rem;
+}
+
+.member-tagline {
+  font-size: 0.75rem;
+  color: #a3a3a3;
+  margin-top: 0.6rem;
+  line-height: 1.5;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.social-links-bar {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.75rem;
+  margin-bottom: 1rem;
+  color: #737373;
+}
+
+.social-icon-btn {
+  padding: 0.25rem;
+  transition:
+    color 0.2s ease,
+    transform 0.2s ease;
+}
+
+.social-icon-btn:hover {
+  color: #ffffff;
+  transform: scale(1.15);
+}
+
+.read-more-btn {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.4rem;
+  padding: 0.55rem 0.75rem;
+  background-color: #121212;
+  border: 1px solid #262626;
+  color: #e5e5e5;
+  border-radius: 0.75rem;
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-decoration: none;
+  transition: all 0.2s ease;
+}
+
+.read-more-btn:hover {
+  background-color: #ff5500;
+  border-color: #ff5500;
+  color: #ffffff;
+}
+
+/* 3. WHY KALESH EXISTS (SEAMLESS BLEND) */
+.blended-card-wrapper {
+  background-color: #0b0b0b;
+  border: 1px solid rgba(255, 85, 0, 0.22);
+  border-radius: 1.75rem;
+  padding: 2.5rem 2rem;
+  position: relative;
+  overflow: hidden;
+}
+
+@media (min-width: 1024px) {
+  .blended-card-wrapper {
+    padding: 3rem 4rem;
+  }
+}
+
+.blended-card-title {
+  font-size: 2.25rem;
+  font-weight: 900;
+  color: #ffffff;
+  letter-spacing: -0.02em;
+  line-height: 1.15;
+}
+
+@media (min-width: 1024px) {
+  .blended-card-title {
+    font-size: 2.85rem;
+  }
+}
+
+.blended-card-desc {
+  font-size: 0.95rem;
+  color: #d4d4d4;
+  line-height: 1.65;
+  margin-top: 1rem;
+  max-width: 34rem;
+}
+
+.seamless-screen-img {
+  width: 100%;
+  height: auto;
+  max-width: 540px;
+  max-height: 480px;
+  object-fit: contain;
+  mix-blend-mode: screen;
+  -webkit-mask-image: radial-gradient(
+    ellipse 90% 90% at 50% 50%,
+    #000 65%,
+    transparent 100%
+  );
+  mask-image: radial-gradient(
+    ellipse 90% 90% at 50% 50%,
+    #000 65%,
+    transparent 100%
+  );
+  filter: drop-shadow(0 20px 50px rgba(255, 85, 0, 0.4));
+  user-select: none;
+  pointer-events: none;
+}
+
+/* 4. STATS BAR */
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1.25rem;
+}
+
+@media (min-width: 768px) {
+  .stats-grid {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+}
+
+.stat-box {
+  background-color: #0b0b0b;
+  border: 1px solid #1f1f1f;
+  border-radius: 1rem;
+  padding: 1.5rem;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.4rem;
+}
+
+.stat-number {
+  font-size: 1.75rem;
+  font-weight: 800;
+  color: #ffffff;
+}
+
+.stat-label {
+  font-size: 0.75rem;
+  color: #a3a3a3;
+  font-weight: 500;
+}
+
+/* ==========================================================================
+   5. BE A PART OF THE MOVEMENT (EXACT TARGET REFERENCE DESIGN)
+   ========================================================================== */
+.movement-card {
+  background: radial-gradient(
+    85% 85% at 85% 50%,
+    rgba(45, 18, 5, 0.45) 0%,
+    rgba(13, 13, 13, 0.95) 60%,
+    #090909 100%
+  );
+  border: 1px solid rgba(255, 85, 0, 0.25);
+  border-radius: 1.5rem;
+  padding: 2.75rem 2rem;
+  position: relative;
+  overflow: hidden;
+}
+
+@media (min-width: 1024px) {
+  .movement-card {
+    padding: 3.5rem 4rem;
+  }
+}
+
+.movement-title {
+  font-size: 2.25rem;
+  font-weight: 800;
+  color: #ffffff;
+  letter-spacing: -0.02em;
+  line-height: 1.18;
+}
+
+@media (min-width: 1024px) {
+  .movement-title {
+    font-size: 2.75rem;
+  }
+}
+
+.movement-description {
+  font-size: 1rem;
+  color: #a3a3a3;
+  line-height: 1.6;
+  margin-top: 1rem;
+  margin-bottom: 2.25rem;
+  max-width: 29rem;
+}
+
+.movement-buttons-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 1rem;
+}
+
+.btn-android {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.6rem;
+  padding: 0.8rem 1.6rem;
+  background-color: #ff5500;
+  color: #ffffff;
+  font-size: 0.9rem;
+  font-weight: 700;
+  border-radius: 0.65rem;
+  text-decoration: none;
+  transition: all 0.2s ease;
+  box-shadow: 0 4px 15px rgba(255, 85, 0, 0.25);
+}
+
+.btn-android:hover {
+  background-color: #ff6a1a;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(255, 85, 0, 0.4);
+}
+
+.btn-ios {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.6rem;
+  padding: 0.8rem 1.6rem;
+  background-color: #000000;
+  border: 1px solid rgba(255, 255, 255, 0.7);
+  color: #ffffff;
+  font-size: 0.9rem;
+  font-weight: 700;
+  border-radius: 0.65rem;
+  text-decoration: none;
+  transition: all 0.2s ease;
+}
+
+.btn-ios:hover {
+  background-color: #1a1a1a;
+  border-color: #ffffff;
+  transform: translateY(-2px);
+}
+
+.movement-image-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+}
+
+@media (min-width: 1024px) {
+  .movement-image-container {
+    justify-content: flex-end;
+  }
+}
+
+.movement-phone-img {
+  width: 100%;
+  max-width: 490px;
+  height: auto;
+  max-height: 450px;
+  object-fit: contain;
+  mix-blend-mode: screen;
+  -webkit-mask-image: radial-gradient(
+    ellipse 95% 95% at 50% 50%,
+    #000 65%,
+    transparent 100%
+  );
+  mask-image: radial-gradient(
+    ellipse 95% 95% at 50% 50%,
+    #000 65%,
+    transparent 100%
+  );
+  filter: drop-shadow(0 15px 40px rgba(255, 85, 0, 0.35));
+  user-select: none;
+  pointer-events: none;
+}
+
+/* 6. QUOTE FOOTER */
+.quote-footer-bar {
+  padding-top: 3rem;
+  padding-bottom: 3rem;
+  border-top: 1px solid #1a1a1a;
+  background-color: #000000;
+}
+
+.quote-logo-wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.quote-center-logo {
+  width: 3.85rem;
+  height: 3.85rem;
+  border-radius: 0.9rem;
+  object-fit: contain;
+  filter: drop-shadow(0 0 22px rgba(255, 85, 0, 0.45));
+  transition: transform 0.3s ease;
+}
+
+.quote-center-logo:hover {
+  transform: scale(1.1);
+  filter: drop-shadow(0 0 30px rgba(255, 85, 0, 0.65));
+}

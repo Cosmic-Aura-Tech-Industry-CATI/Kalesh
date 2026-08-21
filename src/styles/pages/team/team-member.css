@@ -1,0 +1,609 @@
+/* ==========================================================================
+   KALESH INDIVIDUAL PROFILE PAGE STYLES (src/styles/pages/team/team-member.css)
+   ========================================================================== */
+
+.profile-root {
+  background-color: #000000;
+  color: #ffffff;
+  min-height: 100vh;
+  font-family: inherit;
+  overflow-x: hidden;
+}
+
+.profile-page-container {
+  max-width: 1440px;
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: 1.5rem;
+  padding-right: 1.5rem;
+}
+
+@media (min-width: 1024px) {
+  .profile-page-container {
+    padding-left: 3.5rem;
+    padding-right: 3.5rem;
+  }
+}
+
+/* 1. TOP BREADCRUMB */
+.profile-breadcrumb-nav {
+  padding-top: 2rem;
+  padding-bottom: 0.75rem;
+}
+
+.profile-breadcrumb-list {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.85rem;
+  font-weight: 500;
+  color: #737373;
+}
+
+.breadcrumb-link {
+  color: #a3a3a3;
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+
+.breadcrumb-link:hover {
+  color: #ff5500;
+}
+
+.breadcrumb-separator {
+  color: #525252;
+  font-size: 0.75rem;
+}
+
+.breadcrumb-active {
+  color: #ff5500;
+  font-weight: 600;
+}
+
+/* 2. TOP HERO SECTION */
+.profile-top-hero {
+  position: relative;
+  padding-top: 1.5rem;
+  padding-bottom: 3rem;
+}
+
+.profile-ambient-glow {
+  position: absolute;
+  top: 45%;
+  left: 18%;
+  transform: translateY(-50%);
+  width: 32rem;
+  height: 32rem;
+  background: radial-gradient(
+    circle,
+    rgba(255, 85, 0, 0.16) 0%,
+    rgba(0, 0, 0, 0) 70%
+  );
+  filter: blur(90px);
+  pointer-events: none;
+}
+
+.profile-hero-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 2.5rem;
+  align-items: center;
+  position: relative;
+  z-index: 10;
+}
+
+@media (min-width: 1024px) {
+  .profile-hero-grid {
+    grid-template-columns: 330px 1fr;
+    gap: 4rem;
+  }
+}
+
+/* Glowing Avatar */
+.profile-avatar-container {
+  display: flex;
+  justify-content: center;
+  position: relative;
+}
+
+.profile-avatar-glowing-ring {
+  width: 18rem;
+  height: 18rem;
+  border-radius: 9999px;
+  padding: 3.5px;
+  background: linear-gradient(135deg, #ff5500 0%, #ff8800 50%, #f59e0b 100%);
+  box-shadow:
+    0 0 45px rgba(255, 85, 0, 0.38),
+    0 0 15px rgba(255, 85, 0, 0.2);
+  position: relative;
+}
+
+@media (min-width: 1024px) {
+  .profile-avatar-glowing-ring {
+    width: 20.5rem;
+    height: 20.5rem;
+  }
+}
+
+.profile-avatar-inner {
+  width: 100%;
+  height: 100%;
+  border-radius: 9999px;
+  background-color: #000000;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.profile-avatar-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* Right Details Column */
+.profile-info-col {
+  display: flex;
+  flex-direction: column;
+  gap: 1.1rem;
+  text-align: left;
+}
+
+.profile-name-row {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.profile-main-name {
+  font-size: 2.5rem;
+  font-weight: 900;
+  letter-spacing: -0.03em;
+  color: #ffffff;
+  line-height: 1.1;
+}
+
+@media (min-width: 1024px) {
+  .profile-main-name {
+    font-size: 3.35rem;
+  }
+}
+
+.verified-badge-icon {
+  width: 1.75rem;
+  height: 1.75rem;
+  flex-shrink: 0;
+}
+
+.profile-role-title {
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: #ff5500;
+  letter-spacing: -0.01em;
+}
+
+@media (min-width: 1024px) {
+  .profile-role-title {
+    font-size: 1.4rem;
+  }
+}
+
+.profile-quote-wrapper {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.5rem;
+}
+
+.quote-symbol {
+  font-size: 1.6rem;
+  font-family: Georgia, serif;
+  color: #ff5500;
+  line-height: 1;
+  font-weight: bold;
+}
+
+.profile-quote-text {
+  font-size: 0.95rem;
+  color: #d4d4d4;
+  line-height: 1.6;
+  font-style: italic;
+  max-width: 40rem;
+}
+
+.role-cards-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1.25rem;
+  padding-top: 0.25rem;
+  padding-bottom: 0.25rem;
+}
+
+@media (min-width: 640px) {
+  .role-cards-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+.role-box-card {
+  background-color: #0b0b0b;
+  border: 1px solid #1f1f1f;
+  border-radius: 1rem;
+  padding: 1rem 1.25rem;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  transition: border-color 0.2s ease;
+}
+
+.role-box-card:hover {
+  border-color: rgba(255, 85, 0, 0.4);
+}
+
+.role-box-icon-circle {
+  width: 2.4rem;
+  height: 2.4rem;
+  border-radius: 0.65rem;
+  background-color: rgba(255, 85, 0, 0.08);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #ff5500;
+  flex-shrink: 0;
+}
+
+.role-box-content {
+  overflow: hidden;
+}
+
+.role-box-label {
+  font-size: 0.72rem;
+  font-weight: 700;
+  color: #ff5500;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  line-height: 1.2;
+}
+
+.role-box-value {
+  font-size: 0.92rem;
+  font-weight: 700;
+  color: #ffffff;
+  margin-top: 0.2rem;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.profile-cta-buttons {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 1rem;
+  padding-top: 0.5rem;
+}
+
+.btn-primary-explore {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 0.85rem 1.85rem;
+  background-color: #ff5500;
+  color: #ffffff;
+  font-size: 0.9rem;
+  font-weight: 700;
+  border-radius: 0.75rem;
+  text-decoration: none;
+  box-shadow: 0 6px 20px rgba(255, 85, 0, 0.3);
+  transition: all 0.2s ease;
+}
+
+.btn-primary-explore:hover {
+  background-color: #ff6a1a;
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(255, 85, 0, 0.45);
+}
+
+.btn-dimisipedia-outline {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 0.85rem 1.85rem;
+  background-color: #0b0b0b;
+  border: 1px solid #2e2e2e;
+  color: #ffffff;
+  font-size: 0.9rem;
+  font-weight: 600;
+  border-radius: 0.75rem;
+  text-decoration: none;
+  transition: all 0.2s ease;
+}
+
+.btn-dimisipedia-outline:hover {
+  background-color: #141414;
+  border-color: #ff5500;
+  color: #ff5500;
+  transform: translateY(-2px);
+}
+
+/* 3. CONNECT WITH MEMBER SECTION */
+.connect-member-card {
+  background-color: #0b0b0b;
+  border: 1px solid #1f1f1f;
+  border-radius: 1.25rem;
+  padding: 1.5rem 2rem;
+  margin-bottom: 2rem;
+}
+
+.connect-member-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1.5rem;
+  align-items: center;
+}
+
+@media (min-width: 1024px) {
+  .connect-member-grid {
+    grid-template-columns: 240px 1fr;
+    gap: 2.5rem;
+  }
+}
+
+.connect-heading {
+  font-size: 1.25rem;
+  font-weight: 800;
+  color: #ffffff;
+}
+
+.connect-subheading {
+  font-size: 0.82rem;
+  color: #a3a3a3;
+  margin-top: 0.35rem;
+  line-height: 1.45;
+}
+
+.connect-cards-row {
+  display: grid;
+  grid-template-columns: repeat(1, minmax(0, 1fr));
+  gap: 0.85rem;
+}
+
+@media (min-width: 640px) {
+  .connect-cards-row {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (min-width: 1200px) {
+  .connect-cards-row {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+}
+
+.connect-platform-card {
+  background-color: #050505;
+  border: 1px solid #1c1c1c;
+  border-radius: 0.85rem;
+  padding: 0.75rem 1rem;
+  display: flex;
+  align-items: center;
+  gap: 0.85rem;
+  text-decoration: none;
+  transition: all 0.2s ease;
+}
+
+.connect-platform-card:hover {
+  border-color: rgba(255, 85, 0, 0.5);
+  transform: translateY(-2px);
+  background-color: #0e0e0e;
+}
+
+.connect-icon-box {
+  width: 2.35rem;
+  height: 2.35rem;
+  border-radius: 0.6rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.icon-box-x {
+  background-color: #141414;
+  color: #ffffff;
+}
+
+.icon-box-linkedin {
+  background-color: #0077b5;
+  color: #ffffff;
+}
+
+.icon-box-instagram {
+  background: linear-gradient(
+    45deg,
+    #f09433,
+    #e6683c,
+    #dc2743,
+    #cc2366,
+    #bc1888
+  );
+  color: #ffffff;
+}
+
+.icon-box-dimisipedia {
+  background-color: rgba(255, 85, 0, 0.12);
+  border: 1px solid rgba(255, 85, 0, 0.4);
+  color: #ff5500;
+}
+
+.connect-text-col {
+  overflow: hidden;
+}
+
+.connect-platform-name {
+  font-size: 0.78rem;
+  font-weight: 700;
+  color: #ffffff;
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+}
+
+.connect-platform-handle {
+  font-size: 0.72rem;
+  color: #888888;
+  margin-top: 0.1rem;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* ==========================================================================
+   4. ABOUT SECTION (EXACT AS TARGET IMAGE)
+   ========================================================================== */
+.about-section-card {
+  background-color: #0b0b0b;
+  border: 1px solid #1f1f1f;
+  border-radius: 1.25rem;
+  padding: 2rem 2.25rem;
+  margin-bottom: 2rem;
+}
+
+@media (min-width: 1024px) {
+  .about-section-card {
+    padding: 2.5rem 3rem;
+  }
+}
+
+.about-title {
+  font-size: 1.75rem;
+  font-weight: 800;
+  color: #ffffff;
+  margin-bottom: 1.25rem;
+  letter-spacing: -0.02em;
+}
+
+.about-body-text {
+  font-size: 0.95rem;
+  color: #d4d4d4;
+  line-height: 1.75;
+}
+
+.about-info-box {
+  background-color: #050505;
+  border: 1px solid #1a1a1a;
+  border-radius: 1.15rem;
+  padding: 1.75rem 1.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.75rem;
+}
+
+.about-info-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 1rem;
+}
+
+.about-info-icon-wrapper {
+  color: #ff5500;
+  flex-shrink: 0;
+  margin-top: 0.15rem;
+}
+
+.about-info-content {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.about-info-label {
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: #ff5500;
+  letter-spacing: 0.01em;
+}
+
+.about-info-value {
+  font-size: 0.88rem;
+  color: #d4d4d4;
+  line-height: 1.5;
+}
+
+/* ==========================================================================
+   5. THOUGHT ON KALESH SECTION (EXACT AS TARGET IMAGE)
+   ========================================================================== */
+.thought-section-card {
+  background-color: #0b0b0b;
+  border: 1px solid #1f1f1f;
+  border-radius: 1.25rem;
+  padding: 2rem 2.25rem;
+  margin-bottom: 2rem;
+}
+
+@media (min-width: 1024px) {
+  .thought-section-card {
+    padding: 2.25rem 3rem;
+  }
+}
+
+.thought-title {
+  font-size: 1.5rem;
+  font-weight: 800;
+  color: #ffffff;
+  margin-bottom: 1.25rem;
+  letter-spacing: -0.02em;
+}
+
+.thought-quote-container {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.75rem;
+  position: relative;
+}
+
+.thought-quote-text {
+  font-size: 0.95rem;
+  color: #d4d4d4;
+  line-height: 1.75;
+  font-style: normal;
+}
+
+/* 6. LOWER SECTIONS */
+.profile-section-card {
+  background-color: #0b0b0b;
+  border: 1px solid #1c1c1c;
+  border-radius: 1.25rem;
+  padding: 1.75rem;
+}
+
+.building-card-box {
+  background-color: #050505;
+  border: 1px solid #1a1a1a;
+  border-radius: 0.85rem;
+  padding: 1.25rem;
+}
+
+.faq-accordion-item {
+  background-color: #060606;
+  border: 1px solid #1c1c1c;
+  border-radius: 0.75rem;
+  overflow: hidden;
+}
+
+.faq-accordion-btn {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1rem;
+  background: transparent;
+  border: none;
+  color: #f5f5f5;
+  font-size: 0.875rem;
+  font-weight: 700;
+  text-align: left;
+  cursor: pointer;
+}
