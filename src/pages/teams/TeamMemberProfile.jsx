@@ -151,6 +151,18 @@ const TeamMemberProfile = ({ forcedSlug }) => {
   const currentSlug = forcedSlug || memberSlug;
   const [openFaq, setOpenFaq] = useState(0);
 
+  React.useEffect(() => {
+    window.scrollTo(0, 0);
+    document.documentElement.scrollTop = 0;
+    document.body.scrollTop = 0;
+  }, [currentSlug]);
+
+  const handleScrollTop = () => {
+    window.scrollTo(0, 0);
+    document.documentElement.scrollTop = 0;
+    document.body.scrollTop = 0;
+  };
+
   const member = teamMembers.find((m) => m.slug === currentSlug);
 
   if (!member) {
@@ -163,8 +175,12 @@ const TeamMemberProfile = ({ forcedSlug }) => {
       ? "Her Thought on Kalesh"
       : "His Thought on Kalesh";
   const relatedMembers = teamMembers.filter((m) => m.id !== member.id);
-  const pageTitle = `${member.name} — ${member.kaleshRole} of Kalesh | TheKalesh`;
-  const pageDescription = `Learn about ${member.name}, ${member.kaleshRole} at Kalesh and ${member.dimisiRole} at ${companyInfo.legalName}.`;
+  const pageTitle =
+    member.metaTitle ||
+    `${member.name} — ${member.kaleshRole} of Kalesh | TheKalesh`;
+  const pageDescription =
+    member.metaDescription ||
+    `Learn about ${member.name}, ${member.kaleshRole} at Kalesh and ${member.dimisiRole} at ${companyInfo.legalName}.`;
   const canonicalUrl = `${companyInfo.url}/${member.slug}/`;
 
   const verifiedSameAs = Object.values(member.socialLinks).filter(
@@ -179,16 +195,28 @@ const TeamMemberProfile = ({ forcedSlug }) => {
         "@id": `${canonicalUrl}#person`,
         name: member.name,
         jobTitle: member.kaleshRole,
-        description: member.bio,
+        description: member.metaDescription || member.bio,
         image: `${companyInfo.url}${member.avatar}`,
         url: canonicalUrl,
         sameAs: verifiedSameAs,
+        ...(member.knowsAbout ? { knowsAbout: member.knowsAbout } : {}),
         worksFor: [
           {
             "@type": "Organization",
             name: companyInfo.name,
-            legalName: companyInfo.legalName,
             url: companyInfo.url,
+            description: companyInfo.description,
+          },
+          {
+            "@type": "Organization",
+            name: "DIMISI Technologies Pvt Ltd",
+            url: member.socialLinks.dimisipedia || "https://dimisipedia.me",
+            address: {
+              "@type": "PostalAddress",
+              addressLocality: "Kanpur",
+              addressRegion: "Uttar Pradesh",
+              addressCountry: "India",
+            },
           },
         ],
       },
@@ -237,13 +265,13 @@ const TeamMemberProfile = ({ forcedSlug }) => {
           <nav aria-label="Breadcrumb">
             <ol className="profile-breadcrumb-list">
               <li>
-                <Link to="/" className="breadcrumb-link">
+                <Link to="/" onClick={handleScrollTop} className="breadcrumb-link">
                   Home
                 </Link>
               </li>
               <li className="breadcrumb-separator">&gt;</li>
               <li>
-                <Link to="/team" className="breadcrumb-link">
+                <Link to="/team" onClick={handleScrollTop} className="breadcrumb-link">
                   Team
                 </Link>
               </li>
@@ -318,7 +346,11 @@ const TeamMemberProfile = ({ forcedSlug }) => {
 
               {/* CTAs */}
               <div className="profile-cta-buttons">
-                <Link to="/" className="btn-primary-explore">
+                <Link
+                  to="/"
+                  onClick={handleScrollTop}
+                  className="btn-primary-explore"
+                >
                   <span>Explore Kalesh</span>
                   <span>→</span>
                 </Link>
@@ -445,7 +477,17 @@ const TeamMemberProfile = ({ forcedSlug }) => {
             {/* Left Column: Bio */}
             <div className="lg:col-span-7 space-y-4 text-left">
               <h2 className="about-title">About {member.name}</h2>
-              <p className="about-body-text">{member.bio}</p>
+              {typeof member.bio === "string" ? (
+                member.bio
+                  .split("\n\n")
+                  .map((para, idx) => (
+                    <p key={idx} className="about-body-text">
+                      {para}
+                    </p>
+                  ))
+              ) : (
+                <p className="about-body-text">{member.bio}</p>
+              )}
             </div>
 
             {/* Right Column: Experience, Education, Passion Inner Box */}
@@ -583,6 +625,7 @@ const TeamMemberProfile = ({ forcedSlug }) => {
               </h2>
               <Link
                 to="/team"
+                onClick={handleScrollTop}
                 className="text-xs text-[#ff5500] hover:underline font-semibold"
               >
                 View All 5 →
@@ -593,6 +636,7 @@ const TeamMemberProfile = ({ forcedSlug }) => {
                 <Link
                   key={rel.id}
                   to={`/${rel.slug}`}
+                  onClick={handleScrollTop}
                   className="bg-black border border-[#1f1f1f] hover:border-[#ff5500] p-4 rounded-xl flex items-center space-x-3 transition-all"
                 >
                   <div className="w-10 h-10 rounded-full bg-neutral-800 overflow-hidden shrink-0 border border-[#ff5500]/40">
