@@ -25,6 +25,9 @@ export const teamMembers = [
     name: "Shikhar Dixit",
     kaleshRole: "CEO & Founder",
     dimisiRole: "Director & Founder",
+    metaTitle: "Shikhar Dixit | CEO & Founder of Kalesh & DIMISI Technologies",
+    metaDescription:
+      "Discover the professional profile, vision, and core responsibilities of Shikhar Dixit, the visionary tech entrepreneur behind Kalesh—India's first real-time anonymous opinion platform for Gen-Z.",
     shortTagline: "Leading the vision and strategy for Kalesh.",
     avatar: "/images/team/Shikhar_Dixit.png",
     gallery: [
@@ -35,75 +38,77 @@ export const teamMembers = [
     ],
     heroQuote:
       "Kalesh is more than an app, it's a movement to bring back real conversations where every opinion is equal and nobody is judged.",
-    bio: "Shikhar Dixit is the visionary leader and founder of Kalesh, India's first real-time anonymous opinion & polling platform for Gen-Z. With a strong passion for building impactful digital products, he founded Kalesh to create a safe space where truth and authentic thoughts matter more than identities. He combines product thinking, business strategy, and community understanding to drive Kalesh's mission forward.",
-    experience: "Product Strategy, Business Growth, Community Building",
-    education: "Information Technology",
+    bio: "Shikhar Dixit is a visionary Indian tech entrepreneur, product strategist, and the CEO & Founder of Kalesh, India's premier real-time anonymous opinion and polling platform tailored for Gen-Z. Armed with a solid foundational background in Information Technology, Shikhar is driven by a deep passion for building high-impact digital products that solve real-world community problems.\n\nRecognizing the rising challenges of modern social media—such as toxic trolling, immediate judgment, and social pressure—he engineered Kalesh to serve as a safe, democratic digital ecosystem. His approach seamlessly blends intuitive product thinking, long-term business strategy, and a granular understanding of community dynamics to drive the platform's overarching mission forward.",
+    experience:
+      "Product Strategy, Business Growth, Community Building, Facial Recognition Systems",
+    education: "Information Technology (IT)",
     passion:
-      "Building products that create real impact and solve meaningful problems.",
+      "Building high-impact digital products that solve real-world community problems.",
     thoughtOnKalesh:
-      "We grew up in a world where speaking your mind came with consequences — judgment, trolling, screenshots, and social pressure. Kalesh is our answer to that. It's a platform where you can be 100% real, share your opinions, vote on what matters, and have honest conversations without revealing who you are. My goal is to build the largest network of real opinions in India, where truth is valued more than popularity.",
+      "We grew up in a world where speaking your mind came with consequences—judgment, trolling, screenshots, and social pressure. Kalesh is our answer to that. It’s a platform where you can be 100% real, share your opinions, vote on what matters, and have honest conversations without revealing who you are. My goal is to build the largest network of real opinions in India, where truth is valued more than popularity.",
     responsibilities: [
-      "Setting the company vision, mission and long-term strategy",
-      "Leading product direction, roadmap, and user experience",
-      "Business development & strategic brand partnerships",
-      "Investor relations, capital allocation & fundraising",
-      "Team leadership, talent acquisition & organizational culture",
-      "Marketing strategy, positioning, and Gen-Z growth loops",
-      "Ensuring platform integrity, community safety, and user trust",
+      "Strategic Vision: Setting the core company vision, foundational mission, and long-term business strategy.",
+      "Product Direction: Leading the end-to-end product roadmap, feature engineering, and user experience (UX) design.",
+      "Business Growth: Cultivating strategic brand partnerships, investor relations, and capital allocation frameworks.",
+      "Organizational Culture: Leading talent acquisition, corporate structuring, and team leadership.",
+      "Marketing Dynamics: Orchestrating product positioning, growth loops, and organic viral marketing loops for Gen-Z audiences.",
+      "Trust & Safety: Ensuring platform integrity, robust community moderation safety systems, and strict user anonymity protection.",
     ],
     whatTheyAreBuilding: [
       {
         title: "Vision & Strategy",
-        desc: "Building the long-term vision and positioning Kalesh as India's premier real-time opinion layer.",
+        desc: "Building the long-term roadmap and positioning Kalesh cleanly as India’s premier real-time opinion layer.",
       },
       {
         title: "Product Growth",
-        desc: "Driving product-market fit, viral user loops, live polling mechanics, and daily engagement.",
+        desc: "Driving absolute product-market fit (PMF), engineering viral user loops, building live polling mechanics, and boosting daily active engagement.",
       },
       {
         title: "Community & Trust",
-        desc: "Creating a secure, anonymous, and trusted environment for authentic Gen-Z discourse.",
+        desc: "Architecting a completely secure, highly trusted, and anonymous environment optimized for authentic Gen-Z discourse.",
       },
       {
         title: "Ecosystem & Partnerships",
-        desc: "Building strong brand collaborations, campus ambassador networks, and distribution channels.",
+        desc: "Generating deep brand collaborations, expanding localized campus ambassador networks, and scaling diversified digital distribution channels.",
       },
     ],
     socialLinks: {
-      x: "https://x.com/shikhardixit_",
-      xHandle: "@shikhardixit_",
-      linkedin: "https://www.linkedin.com/in/shikhardixit",
-      linkedinHandle: "/in/shikhardixit",
-      instagram: "https://www.instagram.com/shikhardixit_",
-      instagramHandle: "@shikhardixit_",
-      dimisipedia: "https://dimisipedia.com/shikhar-dixit",
+      x: "https://x.com/",
+      xHandle: "@shikhar_d",
+      linkedin: "https://linkedin.com/in/shikhar040",
+      linkedinHandle: "/in/shikhar040",
+      instagram: "https://instagram.com/shikhar_d",
+      instagramHandle: "@shikhar_d",
+      dimisipedia: "https://www.dimisipedia.me/people/shikhar-dixit",
     },
+    knowsAbout: [
+      "Product Strategy",
+      "Business Growth",
+      "Community Building",
+      "Facial Recognition Systems",
+      "Information Technology",
+      "Anonymity Systems",
+    ],
     faqs: [
       {
         question: "Who is Shikhar Dixit?",
         answer:
-          "Shikhar Dixit is an Indian tech entrepreneur, product strategist, and the CEO & Founder of Kalesh, as well as Director & Founder at DIMISI TECHNOLOGIES PVT LTD.",
+          "Shikhar Dixit is an Indian tech entrepreneur, product strategist, and founder. He is widely recognized as the CEO & Founder of Kalesh, as well as a Director & Founder at its parent entity, DIMISI Technologies Pvt Ltd.",
       },
       {
-        question: "What is Shikhar Dixit's role at Kalesh?",
+        question: "What is Shikhar Dixit’s role at Kalesh?",
         answer:
-          "Shikhar Dixit serves as the CEO & Founder of Kalesh, leading overall company strategy, product roadmap, investor relations, and brand vision.",
+          "Shikhar Dixit serves as the Chief Executive Officer (CEO) and Founder of Kalesh. He oversees the platform’s product engineering direction, corporate strategy, funding, and community safety guidelines.",
       },
       {
-        question: "What does Shikhar Dixit do at Kalesh?",
+        question: "What did Shikhar Dixit study?",
         answer:
-          "He oversees product direction, community safety algorithms, strategic growth initiatives, and platform positioning to provide a zero-judgment polling network for Gen-Z.",
+          "Shikhar Dixit holds an educational background in Information Technology (IT), which anchors his technical strategy in building facial recognition systems and anonymous network architectures.",
       },
       {
         question: "Who founded Kalesh?",
         answer:
-          "Kalesh was founded by Shikhar Dixit, together with co-founders Swatantra Singh (CTO) and Nishkarsh Mishra (CFO/COO) under DIMISI TECHNOLOGIES PVT LTD.",
-      },
-      {
-        question:
-          "What is Shikhar Dixit's position at DIMISI TECHNOLOGIES PVT LTD?",
-        answer:
-          "Shikhar Dixit holds the position of Director & Founder at DIMISI TECHNOLOGIES PVT LTD.",
+          "Kalesh was founded by tech entrepreneur Shikhar Dixit alongside the co-founding ecosystem at DIMISI Technologies Pvt Ltd to create a transparent, judgment-free zone for modern social expressions.",
       },
     ],
   },
