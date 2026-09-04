@@ -175,6 +175,18 @@ const Icons = {
 };
 
 const Team = () => {
+  React.useEffect(() => {
+    window.scrollTo(0, 0);
+    document.documentElement.scrollTop = 0;
+    document.body.scrollTop = 0;
+  }, []);
+
+  const handleScrollTop = () => {
+    window.scrollTo(0, 0);
+    document.documentElement.scrollTop = 0;
+    document.body.scrollTop = 0;
+  };
+
   const pageTitle = "Meet the Team Behind Kalesh | Leadership & Core Engineers";
   const pageDescription =
     "Meet the 5 builders behind Kalesh — India's first real-time anonymous opinion and live polling platform for Gen-Z. Zero judgment, 100% authentic expression.";
@@ -426,7 +438,11 @@ const Team = () => {
                   )}
                 </div>
 
-                <Link to={`/${member.slug}`} className="read-more-btn">
+                <Link
+                  to={`/${member.slug}`}
+                  onClick={handleScrollTop}
+                  className="read-more-btn"
+                >
                   <span>Read More</span>
                   <span>→</span>
                 </Link>
