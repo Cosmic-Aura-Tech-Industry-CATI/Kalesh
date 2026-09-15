@@ -2,7 +2,7 @@
   background: #0b0b0b;
   color: #fff;
   max-width: 980px;
-  margin: 0 auto;
+  margin: 6.5rem auto 2.5rem;
   border: 1px solid rgba(255, 106, 0, 0.18);
   border-radius: 22px;
   padding: clamp(22px, 3vw, 36px) !important;

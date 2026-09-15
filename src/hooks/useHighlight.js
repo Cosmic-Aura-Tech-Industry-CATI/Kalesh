@@ -40,6 +40,9 @@ export const useCreateHighlight = () => {
       queryClient.invalidateQueries({
         queryKey: ["highlight"],
       });
+      queryClient.invalidateQueries({
+        queryKey: ["highlights"],
+      });
       toastSuccess("Highlight created successfully");
     },
     onError: (err) => {
@@ -63,9 +66,8 @@ export const useUpdateHighlight = () => {
       queryClient.invalidateQueries({
         queryKey: ["highlight"],
       });
-      // Also invalidate the specific highlight query
       queryClient.invalidateQueries({
-        queryKey: ["highlights", variables.id],
+        queryKey: ["highlights"],
       });
       toastSuccess("Highlight updated successfully");
     },
@@ -89,6 +91,9 @@ export const useDeleteHighlight = () => {
     onSuccess: () => {
       queryClient.invalidateQueries({
         queryKey: ["highlight"],
+      });
+      queryClient.invalidateQueries({
+        queryKey: ["highlights"],
       });
       toastSuccess("Highlight deleted successfully");
     },

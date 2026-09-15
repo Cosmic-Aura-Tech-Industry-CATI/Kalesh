@@ -410,7 +410,7 @@
   position: relative;
   width: 100%;
   min-height: 90vh;
-  padding: 60px 0;
+  padding: 120px 0 60px 0;
   background: var(--color-dark);
   border-bottom: 1px solid rgba(212, 175, 55, 0.2);
   overflow-x: hidden;
@@ -1665,7 +1665,7 @@
 
 @media (max-width: 768px) {
   .home-hero {
-    padding: 40px 0;
+    padding: 95px 0 40px;
     text-align: center;
   }
 
@@ -2531,7 +2531,7 @@
   position: relative;
   width: 100%;
   min-height: 90vh;
-  padding: 60px 0;
+  padding: 120px 0 60px 0;
   background: var(--color-dark);
   border-bottom: 1px solid rgba(212, 175, 55, 0.2);
   overflow-x: hidden;
@@ -3786,7 +3786,7 @@
 
 @media (max-width: 768px) {
   .home-hero {
-    padding: 40px 0;
+    padding: 95px 0 40px;
     text-align: center;
   }
 
@@ -4247,7 +4247,7 @@
 @media (min-width: 768px) and (max-width: 819px) {
   .home-hero {
     min-height: auto !important;
-    padding: 30px 0 40px !important;
+    padding: 95px 0 40px !important;
   }
 
   .hero-image {
@@ -4333,7 +4333,7 @@
 @media (min-width: 820px) and (max-width: 1023px) {
   .home-hero {
     min-height: auto !important;
-    padding: 20px 0 30px !important;
+    padding: 100px 0 40px !important;
   }
 
   .hero-image {
@@ -4382,7 +4382,7 @@
 @media (min-width: 1024px) and (max-width: 1180px) {
   .home-hero {
     min-height: auto !important;
-    padding: 40px 0 !important;
+    padding: 110px 0 50px !important;
   }
 
   .hero-image {

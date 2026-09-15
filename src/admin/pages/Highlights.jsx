@@ -13,6 +13,7 @@ import {
 
 import HighlightModal from "../components/HighlightModal";
 import HighlightCard from "../components/HighlightCard";
+import { toastError } from "../../lib/toast";
 import {
   useGetAllHighlights,
   useCreateHighlight,
@@ -33,12 +34,17 @@ export default function Highlights() {
   const [categoryModal, setCategoryModal] = useState(false);
   const [editingCategory, setEditingCategory] = useState(null);
   const [editingHighlight, setEditingHighlight] = useState(null);
+  const [categoryToDelete, setCategoryToDelete] = useState(null);
+  const [highlightToDelete, setHighlightToDelete] = useState(null);
   const [coverImageFile, setCoverImageFile] = useState(null);
   const [activeCategoryId, setActiveCategoryId] = useState("");
 
-  const { mutate: createHighlight } = useCreateHighlight();
-  const { mutate: updateHighlight } = useUpdateHighlight();
-  const { mutate: deleteHighlightMutate } = useDeleteHighlight();
+  const { mutate: createHighlight, isPending: isCreatingHighlight } =
+    useCreateHighlight();
+  const { mutate: updateHighlight, isPending: isUpdatingHighlight } =
+    useUpdateHighlight();
+  const { mutate: deleteHighlightMutate, isPending: isDeletingHighlight } =
+    useDeleteHighlight();
 
   // Fetch all highlights for stats
   const { data: allHighlightsResponse } = useGetAllHighlights();
@@ -52,7 +58,8 @@ export default function Highlights() {
     useCreateHighlightCategory();
   const { mutate: updateCategory, isPending: isUpdatingCategory } =
     useUpdateHighlightCategory();
-  const { mutate: deleteCategory } = useDeleteHighlightCategory();
+  const { mutate: deleteCategory, isPending: isDeletingCategory } =
+    useDeleteHighlightCategory();
 
   const {
     register,
@@ -63,10 +70,22 @@ export default function Highlights() {
   } = useForm();
 
   // Highlights for the stats cards
-  const statsHighlights = allHighlightsResponse?.data || allHighlightsResponse || [];
+  const statsHighlights = Array.isArray(allHighlightsResponse?.data)
+    ? allHighlightsResponse.data
+    : Array.isArray(allHighlightsResponse)
+    ? allHighlightsResponse
+    : [];
   // Highlights for the grid (filtered by active category)
-  const gridHighlights = highlightsResponse?.data || highlightsResponse || [];
-  const categories = categoriesData?.data || [];
+  const gridHighlights = Array.isArray(highlightsResponse?.data)
+    ? highlightsResponse.data
+    : Array.isArray(highlightsResponse)
+    ? highlightsResponse
+    : [];
+  const categories = Array.isArray(categoriesData?.data)
+    ? categoriesData.data
+    : Array.isArray(categoriesData)
+    ? categoriesData
+    : [];
 
   useEffect(() => {
     if (!activeCategoryId && categories.length > 0) {
@@ -74,9 +93,42 @@ export default function Highlights() {
     }
   }, [categories, activeCategoryId]);
 
+  // Keyboard accessibility: Close modals on Escape
+  useEffect(() => {
+    const handleKeyDown = (e) => {
+      if (e.key === "Escape") {
+        if (categoryToDelete && !isDeletingCategory) {
+          setCategoryToDelete(null);
+        } else if (highlightToDelete && !isDeletingHighlight) {
+          setHighlightToDelete(null);
+        } else if (categoryModal && !isCreatingCategory && !isUpdatingCategory) {
+          setCategoryModal(false);
+          setEditingCategory(null);
+        } else if (openModal && !isCreatingHighlight && !isUpdatingHighlight) {
+          setOpenModal(false);
+          setEditingHighlight(null);
+        }
+      }
+    };
+
+    window.addEventListener("keydown", handleKeyDown);
+    return () => window.removeEventListener("keydown", handleKeyDown);
+  }, [
+    categoryToDelete,
+    highlightToDelete,
+    categoryModal,
+    openModal,
+    isDeletingCategory,
+    isDeletingHighlight,
+    isCreatingCategory,
+    isUpdatingCategory,
+    isCreatingHighlight,
+    isUpdatingHighlight,
+  ]);
+
   const onCategorySubmit = (data) => {
     const formData = new FormData();
-    formData.append("type", data.type);
+    formData.append("type", data.type.trim());
 
     // Use the file from react-hook-form's data object
     if (data.coverImage && data.coverImage.length > 0) {
@@ -100,20 +152,23 @@ export default function Highlights() {
   };
 
   const handleAddHighlight = (data) => {
-    const formData = new FormData();
+    const targetCategory = editingHighlight
+      ? editingHighlight.category
+      : activeCategoryId;
 
-    if (editingHighlight) {
-      formData.append("category", editingHighlight.category);
-    } else {
-      formData.append("category", activeCategoryId);
+    if (!targetCategory) {
+      toastError("Please select or create a category first.");
+      return;
     }
 
+    const formData = new FormData();
+    formData.append("category", targetCategory);
     formData.append("header", data.header);
     formData.append("description", data.description);
     if (data.link) formData.append("link", data.link);
 
     // Because the backend expects a single file (media is a String in the model),
-    // we should only append the first file instead of looping and appending multiple.
+    // we append the first file with field name 'media'
     if (data.files && data.files.length > 0) {
       formData.append("media", data.files[0].file);
     }
@@ -132,12 +187,18 @@ export default function Highlights() {
     }
   };
 
-  const deleteHighlight = (id) => {
-    if (window.confirm("Are you sure you want to delete this highlight?")) {
-      deleteHighlightMutate(id, {
-        onSuccess: () => setEditingHighlight(null),
-      });
-    }
+  const handleDeleteHighlight = (highlight) => {
+    setHighlightToDelete(highlight);
+  };
+
+  const confirmDeleteHighlight = () => {
+    if (!highlightToDelete) return;
+    const highlightId = highlightToDelete._id || highlightToDelete.id;
+    deleteHighlightMutate(highlightId, {
+      onSuccess: () => {
+        setHighlightToDelete(null);
+      },
+    });
   };
 
   const handleEditCategory = (category) => {
@@ -147,11 +208,22 @@ export default function Highlights() {
   };
 
   const handleDeleteCategory = (category) => {
-    if (
-      window.confirm(`Are you sure you want to delete "${category.type}"?`)
-    ) {
-      deleteCategory(category._id);
-    }
+    setCategoryToDelete(category);
+  };
+
+  const confirmDeleteCategory = () => {
+    if (!categoryToDelete) return;
+    deleteCategory(categoryToDelete._id, {
+      onSuccess: () => {
+        if (activeCategoryId === categoryToDelete._id) {
+          const remaining = categories.filter(
+            (c) => c._id !== categoryToDelete._id
+          );
+          setActiveCategoryId(remaining.length > 0 ? remaining[0]._id : "");
+        }
+        setCategoryToDelete(null);
+      },
+    });
   };
 
   const handleEditHighlight = (highlight) => {
@@ -173,7 +245,10 @@ export default function Highlights() {
 
           <button
             className="admin-btn-primary highlights-add-btn"
-            onClick={() => setOpenModal(true)}
+            onClick={() => {
+              setEditingHighlight(null);
+              setOpenModal(true);
+            }}
           >
             <ImagePlus size={18} />
             Add Highlight
@@ -259,7 +334,7 @@ export default function Highlights() {
               <HighlightCard
                 key={item._id || item.id}
                 item={item}
-                deleteHighlight={() => deleteHighlight(item._id || item.id)}
+                deleteHighlight={() => handleDeleteHighlight(item)}
                 editHighlight={() => handleEditHighlight(item)}
               />
             ))
@@ -270,23 +345,41 @@ export default function Highlights() {
 
         <HighlightModal
           open={openModal}
-          onClose={() => setOpenModal(false)}
+          onClose={() => {
+            setOpenModal(false);
+            setEditingHighlight(null);
+          }}
           category={
             editingHighlight
               ? categories.find((c) => c._id === editingHighlight.category)?.type
               : categories.find((c) => c._id === activeCategoryId)?.type || ""
           }
           editingHighlight={editingHighlight}
+          isLoading={isCreatingHighlight || isUpdatingHighlight}
           onSave={handleAddHighlight}
         />
       </div>
 
       {categoryModal && (
-        <div className="category-modal-overlay">
+        <div
+          className="category-modal-overlay"
+          onClick={(e) => {
+            if (e.target === e.currentTarget && !isCreatingCategory && !isUpdatingCategory) {
+              setCategoryModal(false);
+              setEditingCategory(null);
+            }
+          }}
+        >
           <form className="category-modal" onSubmit={handleSubmit(onCategorySubmit)}>
             <div className="category-modal-header">
               <h2>{editingCategory ? "Edit" : "Create"} Category</h2>
-              <button type="button" onClick={() => setCategoryModal(false)}>
+              <button
+                type="button"
+                onClick={() => {
+                  setCategoryModal(false);
+                  setEditingCategory(null);
+                }}
+              >
                 ✕
               </button>
             </div>
@@ -338,7 +431,15 @@ export default function Highlights() {
             </div>
 
             <div className="category-modal-footer">
-              <button type="button" className="category-cancel-btn" onClick={() => setCategoryModal(false)}>
+              <button
+                type="button"
+                className="category-cancel-btn"
+                onClick={() => {
+                  setCategoryModal(false);
+                  setEditingCategory(null);
+                }}
+                disabled={isCreatingCategory || isUpdatingCategory}
+              >
                 Cancel
               </button>
               <button
@@ -350,6 +451,118 @@ export default function Highlights() {
               </button>
             </div>
           </form>
+        </div>
+      )}
+
+      {/* ===== DELETE CATEGORY CONFIRMATION MODAL ===== */}
+      {categoryToDelete && (
+        <div
+          className="category-modal-overlay"
+          role="dialog"
+          aria-modal="true"
+          aria-labelledby="delete-category-modal-title"
+          onClick={(e) => {
+            if (e.target === e.currentTarget && !isDeletingCategory) {
+              setCategoryToDelete(null);
+            }
+          }}
+        >
+          <div className="category-delete-modal">
+            <div className="category-delete-icon-wrapper">
+              <div className="category-delete-icon-bg">
+                <Trash2 size={28} />
+              </div>
+            </div>
+
+            <div className="category-delete-content">
+              <h2 id="delete-category-modal-title">Delete Category?</h2>
+              <p className="category-delete-desc">
+                Are you sure you want to delete{" "}
+                <span className="category-delete-target-name">
+                  "{categoryToDelete.type}"
+                </span>
+                ?
+              </p>
+              <p className="category-delete-warning">
+                This action cannot be undone and will permanently remove this category.
+              </p>
+            </div>
+
+            <div className="category-delete-footer">
+              <button
+                type="button"
+                className="category-cancel-btn"
+                onClick={() => setCategoryToDelete(null)}
+                disabled={isDeletingCategory}
+              >
+                Cancel
+              </button>
+              <button
+                type="button"
+                className="category-delete-confirm-btn"
+                onClick={confirmDeleteCategory}
+                disabled={isDeletingCategory}
+              >
+                {isDeletingCategory ? "Deleting..." : "Delete"}
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* ===== DELETE HIGHLIGHT CONFIRMATION MODAL ===== */}
+      {highlightToDelete && (
+        <div
+          className="category-modal-overlay"
+          role="dialog"
+          aria-modal="true"
+          aria-labelledby="delete-highlight-modal-title"
+          onClick={(e) => {
+            if (e.target === e.currentTarget && !isDeletingHighlight) {
+              setHighlightToDelete(null);
+            }
+          }}
+        >
+          <div className="category-delete-modal">
+            <div className="category-delete-icon-wrapper">
+              <div className="category-delete-icon-bg">
+                <Trash2 size={28} />
+              </div>
+            </div>
+
+            <div className="category-delete-content">
+              <h2 id="delete-highlight-modal-title">Delete Highlight?</h2>
+              <p className="category-delete-desc">
+                Are you sure you want to delete{" "}
+                <span className="category-delete-target-name">
+                  "{highlightToDelete.header}"
+                </span>
+                ?
+              </p>
+              <p className="category-delete-warning">
+                This action cannot be undone and will permanently remove this highlight.
+              </p>
+            </div>
+
+            <div className="category-delete-footer">
+              <button
+                type="button"
+                className="category-cancel-btn"
+                onClick={() => setHighlightToDelete(null)}
+                disabled={isDeletingHighlight}
+              >
+                Cancel
+              </button>
+              <button
+                type="button"
+                className="category-delete-confirm-btn"
+                onClick={confirmDeleteHighlight}
+                disabled={isDeletingHighlight}
+              >
+                {isDeletingHighlight ? "Deleting..." : "Delete"}
+              </button>
+            </div>
+          </div>
         </div>
       )}
     </div>

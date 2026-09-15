@@ -145,7 +145,7 @@ export default function JobsPosting() {
   };
 
   return (
-    <div className="jobs-posting-page admin-section">
+    <div className="jobs-posting-page w-full">
       <div className="admin-section-header">
         <h1 className="admin-page-title">Jobs Posting</h1>
 
@@ -376,141 +376,147 @@ export default function JobsPosting() {
       )}
 
       {/* ================= JOBS TABLE ================= */}
-      <div className="admin-card">
+      <div className="admin-card !p-0 overflow-hidden card-shadow">
         {isLoading ? (
-          <div className="text-white p-4">Loading jobs...</div>
+          <div className="text-white p-6">Loading jobs...</div>
         ) : (
-          <table className="admin-table">
-            <thead>
-              <tr>
-                <th>Job Title</th>
-                <th>Job Description</th>
-                <th>Location</th>
-                <th>Skill</th>
-                <th>Experience</th>
-                <th>Expiry</th>
-                <th className="w-[120px] text-center">Status</th>
-                <th>Applicants</th>
-                <th>Actions</th>
-              </tr>
-            </thead>
+          <div className="overflow-x-auto w-full">
+            <table className="admin-table w-full">
+              <thead>
+                <tr>
+                  <th className="whitespace-nowrap">Job Title</th>
+                  <th className="min-w-[220px]">Job Description</th>
+                  <th className="whitespace-nowrap">Location</th>
+                  <th className="min-w-[160px] max-w-[280px]">Skill</th>
+                  <th className="whitespace-nowrap text-center">Experience</th>
+                  <th className="whitespace-nowrap">Expiry</th>
+                  <th className="whitespace-nowrap text-center">Status</th>
+                  <th className="whitespace-nowrap text-center">Applicants</th>
+                  <th className="whitespace-nowrap text-center">Actions</th>
+                </tr>
+              </thead>
 
-            <tbody>
-              {jobs.length > 0 ? (
-                jobs.map((job) => (
-                  <tr key={job._id || job.id}>
-                    <td>{job.title}</td>
-                    <td className="job-description-cell">
-                      <p
-                        className={`job-description-text ${
-                          expandedDescriptions[job._id || job.id]
-                            ? "expanded"
-                            : ""
-                        }`}
-                      >
-                        {job.description}
-                      </p>
-
-                      {job.description && job.description.length > 140 && (
-                        <button
-                          type="button"
-                          className="job-read-more-btn"
-                          onClick={() => toggleDescription(job._id || job.id)}
-                        >
-                          {expandedDescriptions[job._id || job.id]
-                            ? "Read less"
-                            : "Read more"}
-                        </button>
-                      )}
-                    </td>
-                    <td>{job.location}</td>
-                    <td>
-                      {Array.isArray(job.skill)
-                        ? job.skill.join(", ")
-                        : job.skill}
-                    </td>
-
-                    <td>{job.experience}</td>
-
-                    <td>{getDaysLeft(job.expiryDate)}</td>
-
-                    {/* ✅ STATUS COLUMN */}
-                    <td className="text-center">
-                      {job.isActive ? (
-                        <span className="inline-block px-4 py-1.5 text-sm font-semibold rounded-full bg-green-500/20 text-green-400 border border-green-400 whitespace-nowrap">
-                          Active
-                        </span>
-                      ) : (
-                        <span className="inline-block px-4 py-1.5 text-sm font-semibold rounded-full bg-red-500/20 text-red-400 border border-red-400 whitespace-nowrap">
-                          Inactive
-                        </span>
-                      )}
-                    </td>
-
-                    <td>
-                      <JobApplicationCount jobId={job._id || job.id} />
-                    </td>
-
-                    <td>
-                      <div className="flex items-center justify-center gap-2 h-full">
-                        {/* EDIT */}
-                        <button
-                          type="button"
-                          className="admin-btn-secondary"
-                          onClick={() => handleEdit(job)}
-                        >
-                          <Edit size={16} />
-                        </button>
-
-                        {/* DELETE */}
-                        <button
-                          type="button"
-                          className="admin-btn-danger"
-                          onClick={() => handleDelete(job._id || job.id)}
-                        >
-                          <Trash2 size={16} />
-                        </button>
-
-                        {/* INFO */}
-                        <button
-                          type="button"
-                          className="admin-btn-secondary"
-                          onClick={() => {
-                            setSelectedJob(job);
-                            setShowApplicantsModal(true);
-                          }}
-                        >
-                          <Info size={16} />
-                        </button>
-
-                        {/* TOGGLE ACTIVE */}
-                        <button
-                          type="button"
-                          className={`px-3 py-2 rounded-lg border transition-all duration-300 transform hover:scale-110 ${
-                            job.isActive
-                              ? "bg-green-500/20 text-green-400 border-green-400 hover:bg-green-500 hover:text-white hover:shadow-[0_0_20px_rgba(34,197,94,1)]"
-                              : "bg-gray-700 text-gray-300 border-gray-500 hover:bg-gray-600 hover:text-white"
+              <tbody>
+                {jobs.length > 0 ? (
+                  jobs.map((job) => (
+                    <tr key={job._id || job.id}>
+                      <td className="font-semibold text-white whitespace-nowrap">{job.title}</td>
+                      <td className="job-description-cell">
+                        <p
+                          className={`job-description-text ${
+                            expandedDescriptions[job._id || job.id]
+                              ? "expanded"
+                              : ""
                           }`}
-                          onClick={() => handleToggleStatus(job)}
                         >
-                          <Power
-                            className="transition-transform duration-300 group-hover:rotate-180"
-                            size={16}
-                          />
-                        </button>
-                      </div>
+                          {job.description}
+                        </p>
+
+                        {job.description && job.description.length > 140 && (
+                          <button
+                            type="button"
+                            className="job-read-more-btn"
+                            onClick={() => toggleDescription(job._id || job.id)}
+                          >
+                            {expandedDescriptions[job._id || job.id]
+                              ? "Read less"
+                              : "Read more"}
+                          </button>
+                        )}
+                      </td>
+                      <td className="whitespace-nowrap">{job.location}</td>
+                      <td className="job-skills-cell">
+                        {Array.isArray(job.skill)
+                          ? job.skill.join(", ")
+                          : job.skill}
+                      </td>
+
+                      <td className="text-center whitespace-nowrap">{job.experience}</td>
+
+                      <td className="whitespace-nowrap">{getDaysLeft(job.expiryDate)}</td>
+
+                      {/* ✅ STATUS COLUMN */}
+                      <td className="text-center whitespace-nowrap">
+                        {job.isActive ? (
+                          <span className="inline-block px-3 py-1 text-xs font-semibold rounded-full bg-green-500/20 text-green-400 border border-green-400 whitespace-nowrap">
+                            Active
+                          </span>
+                        ) : (
+                          <span className="inline-block px-3 py-1 text-xs font-semibold rounded-full bg-red-500/20 text-red-400 border border-red-400 whitespace-nowrap">
+                            Inactive
+                          </span>
+                        )}
+                      </td>
+
+                      <td className="text-center whitespace-nowrap">
+                        <JobApplicationCount jobId={job._id || job.id} />
+                      </td>
+
+                      <td>
+                        <div className="flex items-center justify-center gap-2 whitespace-nowrap">
+                          {/* EDIT */}
+                          <button
+                            type="button"
+                            className="admin-btn-secondary !p-2"
+                            onClick={() => handleEdit(job)}
+                            title="Edit Job"
+                          >
+                            <Edit size={16} />
+                          </button>
+
+                          {/* DELETE */}
+                          <button
+                            type="button"
+                            className="admin-btn-danger !p-2"
+                            onClick={() => handleDelete(job._id || job.id)}
+                            title="Delete Job"
+                          >
+                            <Trash2 size={16} />
+                          </button>
+
+                          {/* INFO */}
+                          <button
+                            type="button"
+                            className="admin-btn-secondary !p-2"
+                            onClick={() => {
+                              setSelectedJob(job);
+                              setShowApplicantsModal(true);
+                            }}
+                            title="View Applicants"
+                          >
+                            <Info size={16} />
+                          </button>
+
+                          {/* TOGGLE ACTIVE */}
+                          <button
+                            type="button"
+                            className={`p-2 rounded-lg border transition-all duration-300 transform hover:scale-110 ${
+                              job.isActive
+                                ? "bg-green-500/20 text-green-400 border-green-400 hover:bg-green-500 hover:text-white hover:shadow-[0_0_20px_rgba(34,197,94,1)]"
+                                : "bg-gray-700 text-gray-300 border-gray-500 hover:bg-gray-600 hover:text-white"
+                            }`}
+                            onClick={() => handleToggleStatus(job)}
+                            title={job.isActive ? "Deactivate Job" : "Activate Job"}
+                          >
+                            <Power
+                              className="transition-transform duration-300 group-hover:rotate-180"
+                              size={16}
+                            />
+                          </button>
+                        </div>
+                      </td>
+                    </tr>
+                  ))
+                ) : (
+                  <tr>
+                    <td colSpan="9" className="text-center text-gray-400 py-8">
+                      No jobs found
                     </td>
                   </tr>
-                ))
-              ) : (
-                <tr>
-                  <td colSpan="9" className="text-center text-gray-400 py-4">
-                    No jobs found
-                  </td>
-                </tr>
-              )}
-            </tbody>
-          </table>
+                )}
+              </tbody>
+            </table>
+          </div>
         )}
       </div>
 

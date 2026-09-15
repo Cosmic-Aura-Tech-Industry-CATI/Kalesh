@@ -1,6 +1,8 @@
-import { Trash2, ExternalLink, Edit } from "lucide-react";
+import { Trash2, ExternalLink, Edit, Clock } from "lucide-react";
 
 export default function HighlightCard({ item, deleteHighlight, editHighlight }) {
+  const isPending = !item.media || item.media === "pending";
+
   return (
     <div className="highlight-card">
       <div className="highlight-media-wrapper">
@@ -8,7 +10,14 @@ export default function HighlightCard({ item, deleteHighlight, editHighlight }) 
           className="highlight-media"
           onClick={() => item.link && window.open(item.link, "_blank")}
         >
-          <img src={item.media} alt="" />
+          {isPending ? (
+            <div className="h-full w-full flex flex-col items-center justify-center bg-gray-800 text-gray-400 p-4 text-center min-h-[160px]">
+              <Clock className="animate-spin mb-2 text-[#ff6b00]" size={24} />
+              <span className="text-xs">Processing media...</span>
+            </div>
+          ) : (
+            <img src={item.media} alt={item.header || ""} />
+          )}
 
           {item.link && (
             <div className="highlight-link-icon">

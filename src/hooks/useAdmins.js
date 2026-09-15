@@ -1,5 +1,6 @@
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { AdminUserService } from "../services/admins.service";
+import { AuthService } from "../services/auth.service";
 import { toastError, toastSuccess } from "../lib/toast";
 
 /**
@@ -181,5 +182,7 @@ export const useMe = () => {
   return useQuery({
     queryKey: ["me"],
     queryFn: AdminUserService.getMe,
+    enabled: AuthService.isAuthenticated(),
+    retry: false,
   });
-}
+};

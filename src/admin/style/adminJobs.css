@@ -4,36 +4,50 @@
 ====================================== */
 
 .jobs-posting-page {
-  padding: 4rem 0;
+  width: 100%;
 }
 
-.admin-section-header{
-  margin-bottom: 1rem;
+.admin-section-header {
+  margin-bottom: 1.5rem;
 }
 
 .admin-page-title {
-  line-height: 3.5rem;
+  line-height: 2.5rem;
   font-weight: 700;
 }
-/* Improve table spacing */
+
+/* Card enhancement */
+.jobs-posting-page .admin-card {
+  border-radius: 12px;
+}
+
+/* Table Layout and Responsive Reflow */
+.jobs-posting-page .admin-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
 .jobs-posting-page .admin-table th,
 .jobs-posting-page .admin-table td {
   vertical-align: middle;
+  padding: 0.875rem 1rem;
+}
+
+.jobs-posting-page .admin-table th {
+  white-space: nowrap;
+  font-size: 0.85rem;
+  letter-spacing: 0.025em;
 }
 
 .jobs-posting-page .admin-table td {
-  max-width: 250px;
-  word-break: break-word;
-}
-
-.jobs-posting-page .admin-table td:nth-child(2) {
-  white-space: normal;
+  font-size: 0.875rem;
+  color: #d1d5db;
 }
 
 .job-description-cell {
-  min-width: 220px;
-  max-width: 320px;
-  vertical-align: top;
+  min-width: 200px;
+  max-width: 420px;
+  vertical-align: middle;
 }
 
 .job-description-text {
@@ -41,10 +55,12 @@
   white-space: pre-line;
   line-height: 1.5;
   display: -webkit-box;
-  -webkit-line-clamp: 5;
-  line-clamp: 5;
+  -webkit-line-clamp: 3;
+  line-clamp: 3;
   -webkit-box-orient: vertical;
   overflow: hidden;
+  word-break: normal;
+  overflow-wrap: break-word;
 }
 
 .job-description-text.expanded {
@@ -56,44 +72,41 @@
   display: inline-flex;
   align-items: center;
   gap: 0.25rem;
-  margin-top: 0.45rem;
+  margin-top: 0.35rem;
   padding: 0;
   border: none;
   background: transparent;
   color: #ff8c42;
-  font-size: 0.82rem;
+  font-size: 0.8rem;
   font-weight: 600;
   cursor: pointer;
 }
 
-
-
-/* Card enhancement */
-.jobs-posting-page .admin-card {
-  border-radius: 12px;
+.job-read-more-btn:hover {
+  color: #ffa066;
+  text-decoration: underline;
 }
 
-.jobs-posting-page .admin-card {
-  overflow-x: auto;
+.job-skills-cell {
+  min-width: 150px;
+  max-width: 280px;
+  word-break: normal;
+  overflow-wrap: break-word;
+  line-height: 1.4;
+  color: #e5e7eb;
 }
-
 
 /* Responsive tweak */
 @media (max-width: 768px) {
-  .jobs-posting-page {
-    padding-top: 3rem;
-  }
-
   .job-description-cell {
     min-width: 180px;
-    max-width: 200px;
+    max-width: 260px;
   }
 
   .job-description-text {
-
-    -webkit-line-clamp: 4;
-    line-clamp: 4;
-    font-size: 0.92rem;
+    -webkit-line-clamp: 3;
+    line-clamp: 3;
+    font-size: 0.85rem;
   }
 
   .job-read-more-btn {

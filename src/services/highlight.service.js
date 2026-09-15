@@ -28,12 +28,7 @@ export class HighlightService {
   static async createHighlight(payload) {
     const res = await axiosInstance.post(
       API_ENDPOINTS.ADMIN.HIGHLIGHTS.CREATE,
-      payload,
-      {
-        headers: {
-          "Content-Type": "multipart/form-data",
-        },
-      }
+      payload
     );
     return res.data;
   }
@@ -45,14 +40,9 @@ export class HighlightService {
    * @returns {Promise<Object>} Resolves with the updated highlight object.
    */
   static async updateHighlight(id, payload) {
-    const res = await axiosInstance.patch(
+    const res = await axiosInstance.put(
       API_ENDPOINTS.ADMIN.HIGHLIGHTS.UPDATE_BY_ID(id),
-      payload,
-      {
-        headers: {
-          "Content-Type": "multipart/form-data",
-        },
-      }
+      payload
     );
     return res.data;
   }

@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { X } from "lucide-react";
+import { AuthService } from "../services/auth.service";
 
 export default function UnauthorizedModal() {
   const [open, setOpen] = useState(false);
@@ -19,12 +20,8 @@ export default function UnauthorizedModal() {
   }, []);
 
   const handleRelogin = () => {
-    // 👉 token remove karo
-    localStorage.removeItem("token");
-
+    AuthService.logout();
     setOpen(false);
-
-    // 👉 login page redirect
     navigate("/admin/login", { replace: true });
   };
 
