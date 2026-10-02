@@ -118,10 +118,11 @@ export const useVerifyOtp = () => {
      * @param {Object} data - The data returned from the mutation function.
      * It should contain the token and user data.
      * Stores the token in local storage and sets the user data in the query client.
-     * Navigates to the admin dashboard page.
      */
     onSuccess: (data) => {
-      queryClient.setQueryData(["user"], data);
+      const userData = data?.data?.user || data?.user || data?.data || data;
+      queryClient.setQueryData(["user"], userData);
+      queryClient.invalidateQueries({ queryKey: ["me"] });
       toastSuccess("OTP verified successfully");
     },
     /**

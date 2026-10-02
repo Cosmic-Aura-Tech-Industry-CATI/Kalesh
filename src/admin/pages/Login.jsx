@@ -9,6 +9,7 @@ import {
   useForgetPassword,
   useResetPassword,
 } from "../../hooks/useAuth";
+import { toastError } from "../../lib/toast";
 import "../style/admin.css";
 import "../style/login.css";
 
@@ -59,12 +60,17 @@ export default function Login() {
   };
 
   const handleVerifyOtp = async () => {
+    if (!otp || otp.trim().length === 0) {
+      return toastError("Please enter the 6-digit OTP");
+    }
+
     verifyOtp(
-      { email: emailForOtp, otp, otpType: "login" },
+      { email: emailForOtp, otp: otp.trim(), otpType: "login" },
       {
         onSuccess: () => {
           setShowOtp(false); // ✅ popup close
-          navigate("/admin/dashboard");
+          setOtp("");
+          navigate("/admin/dashboard", { replace: true });
         },
       },
     );

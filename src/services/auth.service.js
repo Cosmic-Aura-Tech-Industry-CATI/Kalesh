@@ -7,6 +7,29 @@ export class AuthService {
    */
   static async login(payload) {
     const res = await axiosInstance.post(API_ENDPOINTS.AUTH.LOGIN, payload);
+
+    const token =
+      res.data?.token ||
+      res.data?.data?.token ||
+      res.data?.accessToken ||
+      res.data?.data?.accessToken;
+
+    const user =
+      res.data?.user ||
+      res.data?.data?.user ||
+      res.data?.data?.admin ||
+      res.data?.admin;
+
+    if (token) {
+      localStorage.setItem("thekalesh.com-admin-token", token);
+      if (user) {
+        localStorage.setItem(
+          "thekalesh.com-admin",
+          JSON.stringify(user)
+        );
+      }
+    }
+
     return res.data;
   }
 
@@ -21,13 +44,27 @@ export class AuthService {
       payload
     );
 
-    if (res.data?.token) {
-      localStorage.setItem("thekalesh.com-admin-token", res.data.token);
+    const token =
+      res.data?.token ||
+      res.data?.data?.token ||
+      res.data?.accessToken ||
+      res.data?.data?.accessToken ||
+      res.data?.data?.jwt ||
+      res.data?.jwt;
 
-      if (res.data?.user) {
+    const user =
+      res.data?.user ||
+      res.data?.data?.user ||
+      res.data?.data?.admin ||
+      res.data?.admin;
+
+    if (token) {
+      localStorage.setItem("thekalesh.com-admin-token", token);
+
+      if (user) {
         localStorage.setItem(
           "thekalesh.com-admin",
-          JSON.stringify(res.data.user)
+          JSON.stringify(user)
         );
       }
     }
