@@ -7,6 +7,7 @@ import nish from "../assets/Nishkarsh_Mishra.png";
 import sheelu from "../assets/Sheelu_Singh.png";
 import mridul from "../assets/Mridul_Mishra.png";
 import sid from "../assets/Siddhant_Shekhar.png";
+import AboutSection from "../components/about/AboutSection";
 import "../styles/pages/about.css";
 
 function About() {
@@ -374,138 +375,8 @@ Launching soon.
         </section>
 
         {/* ================= ABOUT SECTION ================= */}
-        <section id="about" className="about-section">
-          <div className="container">
-            {/* Section Header */}
-            <div className="section-header">
-              <div className="section-title-wrapper">
-                <h1 className="section-title">About Us</h1>
-                <div className="title-underline">
-                  <div className="underline-line"></div>
-                  <div className="underline-dot"></div>
-                </div>
-              </div>
-            </div>
+        <AboutSection />
 
-            <div className="about-column mb-5">
-              <div className="about-card futuristic-card">
-                <div className="card-header"></div>
-                <div className="card-content">
-                  <p className="content-justify">
-                    Kalesh was created to challenge the way opinions are shared
-                    online. In a digital world dominated by profiles, likes,
-                    followers, and social validation, many people hesitate to
-                    express what they truly feel. Fear of judgment, screenshots,
-                    online backlash, and long-term reputation often silence
-                    honest voices. <br /> We believe opinions should be valued
-                    for their content, not the identity behind them. That’s why
-                    Kalesh is built as a fully anonymous, real-time opinion and
-                    polling platform where users can speak freely without
-                    pressure. <br /> Our platform empowers Gen-Z users,
-                    students, introverts, and creators to share thoughts, create
-                    live polls, and participate in discussions without revealing
-                    who they are. With instant engagement and no popularity
-                    bias, every opinion gets a fair chance to be heard. <br />{" "}
-                    At the same time, brands, colleges, and institutions gain
-                    access to honest, unbiased audience feedback in real time.
-                    Backed by strong moderation and safety controls, Kalesh
-                    offers a secure, judgment-free space designed for authentic
-                    expression. <br /> Kalesh isn’t just another social platform
-                    — it’s a shift toward real conversations, real opinions, and
-                    real engagement
-                  </p>
-                </div>
-              </div>
-            </div>
-
-            {/* Content Grid */}
-            <div className="about-content-grid">
-              {/* Left Column */}
-              <div className="about-column">
-                <div className="about-card futuristic-card">
-                  <div className="card-header">
-                    <div className="card-icon">
-                      <i className="fas fa-users"></i>
-                    </div>
-                    <h3>The Problem</h3>
-                  </div>
-                  <div className="card-content">
-                    <p>
-                      In today's digital ecosystem, most social media platforms
-                      are identity-driven and centered around public profiles,
-                      likes, and followers, which creates social pressure and
-                      discourages honest expression. Users often hesitate to
-                      share their real opinions due to fear of judgment, online
-                      backlash, screenshots, and long-term reputational impact.
-                    </p>
-                    <p>
-                      This environment particularly affects Gen-Z users,
-                      students, and introverts, who lack a safe and comfortable
-                      space to express themselves freely. Additionally, existing
-                      platforms prioritize reach based on popularity rather than
-                      content relevance, making it difficult for new users to be
-                      heard and preventing brands and institutions from
-                      receiving instant, unbiased audience feedback.
-                    </p>
-                  </div>
-                </div>
-              </div>
-
-              {/* Right Column */}
-              <div className="about-column">
-                <div className="about-card futuristic-card">
-                  <div className="card-header">
-                    <div className="card-icon">
-                      <i className="fas fa-bullseye"></i>
-                    </div>
-                    <h3>The Solution</h3>
-                  </div>
-                  <div className="card-content">
-                    <p>
-                      Kalesh solves this problem by offering a fully anonymous,
-                      real-time opinion and polling platform that removes
-                      identity pressure and promotes authentic participation.
-                      Users can create live polls, vote instantly, and engage in
-                      discussions without revealing their identity, ensuring
-                      opinions are judged by content rather than personal
-                      branding.
-                    </p>
-                    <p>
-                      The real-time engagement model allows users to participate
-                      immediately after joining, while colleges, brands, and
-                      creators gain access to honest and unbiased feedback. With
-                      strong moderation and safety controls, Kalesh provides a
-                      secure, judgment-free environment that enables genuine
-                      expression and meaningful engagement.
-                    </p>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            {/* Stats Section */}
-            <div className="stats-section">
-              <div className="stats-grid">
-                <div className="stat-item">
-                  <div className="stat-value">100%</div>
-                  <div className="stat-label">Anonymous</div>
-                </div>
-                <div className="stat-item">
-                  <div className="stat-value">Real-time</div>
-                  <div className="stat-label">Polling</div>
-                </div>
-                <div className="stat-item">
-                  <div className="stat-value">Zero</div>
-                  <div className="stat-label">Judgment</div>
-                </div>
-                <div className="stat-item">
-                  <div className="stat-value">Safe</div>
-                  <div className="stat-label">Space</div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </section>
 
         {/* ================= TEAM SECTION ================= */}
         <section id="team" className="team-section">
