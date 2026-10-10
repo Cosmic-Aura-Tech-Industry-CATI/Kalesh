@@ -306,13 +306,15 @@ function About() {
                       <div className="badge-glow"></div>
                     </div>
                     <div className="coming-soon-content">
-                      <p>
-                        <span className="highlight" style={{fontSize:"2.1rem"}}>Something Big is Coming</span> <br />
-                        <p style={{textAlign:"justify", marginTop:"20px"}}>
-                          Kalesh is redefining how people express, interact, and connect online.
-Anonymous. Instant. Unfiltered.
-Launching soon.
-                        </p>
+                      <div>
+                        <span className="highlight" style={{ fontSize: "2.1rem" }}>
+                          Something Big is Coming
+                        </span>
+                      </div>
+                      <p style={{ textAlign: "justify", marginTop: "20px" }}>
+                        Kalesh is redefining how people express, interact, and connect online.
+                        Anonymous. Instant. Unfiltered.
+                        Launching soon.
                       </p>
                       <button
                         className="notify-btn"
