@@ -1,8 +1,13 @@
 {
-	"rewrites": [
-		{
-			"source": "/(.*)",
-			"destination": "/index.html"
-		}
-	]
+  "$schema": "https://openapi.vercel.sh/vercel.json",
+  "rewrites": [
+    {
+      "source": "/post/:id",
+      "destination": "https://api-app.thekalesh.com/share/:id"
+    },
+    {
+      "source": "/(.*)",
+      "destination": "/index.html"
+    }
+  ]
 }
