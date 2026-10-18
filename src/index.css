@@ -7,7 +7,7 @@
 
 
 html, body {
-  overflow-x: hidden;
+  overflow-x: clip;
   scroll-behavior: auto;
   min-height: 100%;
   margin: 0;

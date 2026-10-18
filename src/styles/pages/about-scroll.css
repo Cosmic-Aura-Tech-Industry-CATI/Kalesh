@@ -1,0 +1,147 @@
+/* ===== About section v2: GSAP + Framer Motion + React Bits (all classes prefixed abt2-) ===== */
+.abt2-section {
+  --abt2-orange: #ff6a00;
+  --abt2-gold: #ffd700;
+  background: #0a0a0a;
+  color: #fff;
+  font-family: "Inter", "Segoe UI", system-ui, sans-serif;
+  position: relative;
+  /* NO overflow here or on any ancestor: sticky needs it */
+}
+.abt2-gradient-text {
+  background: linear-gradient(45deg, #ff6a00, #ff8c00, #ffd700);
+  -webkit-background-clip: text; background-clip: text;
+  -webkit-text-fill-color: transparent; color: transparent;
+}
+.abt2-sr {
+  position: absolute; width: 1px; height: 1px; margin: -1px; padding: 0;
+  overflow: hidden; clip: rect(0,0,0,0); white-space: nowrap; border: 0;
+}
+
+/* ---------- 1. HERO ---------- */
+.abt2-hero { position: relative; }
+.abt2-title-wrap {
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  height: 100svh;
+  display: flex;
+  align-items: center;
+  padding: 0 clamp(1rem, 5vw, 4rem);
+}
+.abt2-title-inner { transform-origin: left center; will-change: transform, opacity; }
+.abt2-title {
+  margin: 0;
+  font-size: clamp(3.2rem, 13vw, 12rem);
+  line-height: 1.02;
+  font-weight: 800;
+  letter-spacing: -0.035em;
+  color: #fff;
+  background: none;
+  -webkit-text-fill-color: #fff;
+}
+.abt2-title::before, .abt2-title::after { content: none !important; }
+.abt2-underline { display: flex; align-items: center; gap: 8px; margin-top: 1.5rem; }
+.abt2-underline-line { width: 90px; height: 4px; border-radius: 4px; background: linear-gradient(45deg, #ff6a00, #ff8c00, #ffd700); }
+.abt2-underline-dot { width: 10px; height: 10px; border-radius: 50%; background: #ffd700; box-shadow: 0 0 14px rgba(255,106,0,.8); }
+
+.abt2-phones {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  gap: clamp(.75rem, 3vw, 3rem);
+  margin-top: -25vh;
+  padding: 0 clamp(1rem, 4vw, 3rem) 12vh;
+}
+.abt2-phone { width: clamp(100px, 19vw, 300px); flex: 0 0 auto; will-change: transform; }
+.abt2-phone:nth-child(2) { margin-top: 10vh; }
+.abt2-phone:nth-child(4) { margin-top: 18vh; }
+.abt2-phone img {
+  display: block; width: 100%; height: auto;
+  border-radius: clamp(1rem, 2vw, 1.75rem);
+  border: 1px solid rgba(255,255,255,.12);
+  box-shadow: 0 30px 80px rgba(0,0,0,.6), 0 0 60px rgba(255,106,0,.12);
+  background: #151515;
+}
+@media (max-width: 600px) {
+  .abt2-phone:nth-child(4) { display: none; }
+  .abt2-phone { width: clamp(90px, 28vw, 160px); }
+}
+
+/* ---------- 2. STORY ---------- */
+.abt2-story {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: clamp(4rem, 12vw, 9rem) 20px clamp(2rem, 6vw, 4rem);
+}
+.abt2-reveal { margin: 0 0 clamp(2.5rem, 6vw, 4.5rem); }
+.abt2-story .scroll-reveal-text { text-align: left; color: #fff; }
+.abt2-story .abt2-lead { font-size: clamp(1.6rem, 3.6vw, 2.8rem); line-height: 1.4; font-weight: 700; letter-spacing: -0.01em; }
+.abt2-story .abt2-body { font-size: clamp(1.15rem, 2.2vw, 1.7rem); line-height: 1.6; font-weight: 500; color: rgba(255,255,255,.88); }
+.abt2-closing {
+  margin: clamp(1rem, 3vw, 2rem) 0 0;
+  font-size: clamp(1.3rem, 2.6vw, 2rem);
+  line-height: 1.5;
+  font-weight: 700;
+  text-align: left;
+  color: #fff;
+}
+
+/* ---------- 3. STACKING CARDS ---------- */
+.abt2-stack { max-width: 980px; margin: 0 auto; padding: 4rem 20px 2rem; }
+.abt2-slot { min-height: 85vh; min-height: 85svh; }
+.abt2-slot:last-child { min-height: 0; padding-bottom: 6rem; }
+.abt2-card {
+  position: sticky;
+  top: 14vh;
+  top: 14svh;
+  transform-origin: center top;
+  border-radius: 1.5rem;
+  padding: clamp(1.5rem, 3.5vw, 3rem);
+  border: 1px solid rgba(255,255,255,.1);
+  overflow: hidden;
+}
+.abt2-card h3 { margin: 0; font-size: clamp(1.5rem, 2.6vw, 2rem); font-weight: 800; color: #fff; }
+.abt2-card p { margin: 1.1rem 0 0; color: rgba(255,255,255,.78); line-height: 1.75; font-size: 1.05rem; text-align: left; }
+.abt2-card-head { display: flex; align-items: center; gap: .9rem; }
+.abt2-card-icon { display: grid; place-items: center; width: 46px; height: 46px; border-radius: 12px; background: rgba(255,106,0,.14); color: #ff8c00; }
+.abt2-card-problem { background: linear-gradient(160deg, #1d1210, #121212); }
+.abt2-card-solution { background: linear-gradient(160deg, #2a1507, #161008); border-color: rgba(255,106,0,.55); box-shadow: 0 -20px 60px rgba(0,0,0,.6), 0 0 50px rgba(255,106,0,.12); }
+.abt2-card-dim { position: absolute; inset: 0; background: #000; pointer-events: none; border-radius: inherit; }
+
+@media (max-width: 800px) {
+  /* no stacking on small screens: normal flow, tall text never gets clipped */
+  .abt2-slot { min-height: 0; margin-bottom: 1rem; }
+  .abt2-card { position: static; }
+}
+
+/* ---------- 4. STATS ---------- */
+.abt2-stats {
+  max-width: 1100px; margin: 0 auto;
+  padding: 2rem 20px clamp(4rem, 8vw, 7rem);
+  display: grid; grid-template-columns: repeat(4, 1fr); gap: 1rem; text-align: center;
+}
+.abt2-stat.card-spotlight {
+  border: 1px solid rgba(255,255,255,.1);
+  background-color: #111;
+  border-radius: 1.25rem;
+  padding: 1.75rem 1rem;
+}
+.abt2-stat-value {
+  font-size: clamp(1.6rem, 3.4vw, 2.6rem); font-weight: 800; line-height: 1.2;
+  background: linear-gradient(45deg, #ff6a00, #ffd700);
+  -webkit-background-clip: text; background-clip: text;
+  -webkit-text-fill-color: transparent; color: transparent;
+}
+.abt2-stat-label { margin-top: .4rem; font-size: .8rem; letter-spacing: .18em; text-transform: uppercase; color: rgba(255,255,255,.7); }
+@media (max-width: 800px) { .abt2-stats { grid-template-columns: repeat(2, 1fr); } }
+
+/* ---------- reduced motion: no pinning, everything visible ---------- */
+@media (prefers-reduced-motion: reduce) {
+  .abt2-title-wrap { position: static; height: auto; padding-top: 7rem; padding-bottom: 2rem; }
+  .abt2-phones { margin-top: 0; }
+  .abt2-card { position: static; }
+  .abt2-slot { min-height: 0; margin-bottom: 1rem; }
+}
