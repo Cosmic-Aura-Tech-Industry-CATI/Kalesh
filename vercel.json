@@ -3,7 +3,7 @@
   "rewrites": [
     {
       "source": "/post/:id",
-      "destination": "https://api-app.thekalesh.com/share/:id"
+      "destination": "https://api-app.thekalesh.com/api/v1/posts/share/:id"
     },
     {
       "source": "/(.*)",
