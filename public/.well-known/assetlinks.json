@@ -1,0 +1,12 @@
+[
+  {
+    "relation": ["delegate_permission/common.handle_all_urls"],
+    "target": {
+      "namespace": "android_app",
+      "package_name": "com.kalesh.app",
+      "sha256_cert_fingerprints": [
+        "CA:7A:79:02:6B:11:63:4E:5F:75:24:F8:77:53:D9:FC:DF:71:E1:37:D0:6B:70:3C:23:74:D7:C0:FA:0E:D0:19"
+      ]
+    }
+  }
+]
